@@ -6906,109 +6906,118 @@ form textarea:required:valid {
 
 
 /* conteúdo personalizado */
-
-/* conteúdo personalizado */
-.trabalho {
-    --t-speed: 0.5s;
-    --h-flex: 4;
-    --min-flex: 0.5;
-    width: 100%;
-    height: min(1000px, 90vh);
-    border-radius: 12px;
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
+.flex-container {
+  --t-speed: 1.2s;
+  --h-flex: 4;
+  --min-flex: 0.5;
+  width: 100%;
+  height: min(1000px, 90vh);
+  border-radius: 12px;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-/* Desktop - 5 colunas */
-.trabalho .column {
-    flex: 1 1 calc(20% - 10px);
-    height: 100%;
-    position: relative;
-    transition: all var(--t-speed) cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
+.flex-container .flex-item {
+  flex: 1 1 calc(20% - 10px);
+  height: 100%;
+  position: relative;
+  transition: all var(--t-speed) cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
 }
 
-.trabalho .column:not(:hover) {
-    flex: var(--min-flex);
+.flex-container .flex-item:not(:hover) {
+  flex: var(--min-flex);
 }
 
-.trabalho .column:hover,
-.trabalho .column:focus {
-    flex: var(--h-flex);
-    z-index: 1;
+.flex-container .flex-item:hover,
+.flex-container .flex-item:focus {
+  flex: var(--h-flex);
+  z-index: 1;
 }
 
-.trabalho .column img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform var(--t-speed) ease-in-out;
+.flex-container .flex-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--t-speed) ease-in-out;
 }
 
-.trabalho .column:hover img {
-    transform: scale(1.05);
+.flex-container .flex-item:hover img {
+  transform: scale(1.05);
 }
 
-/* Pseudo-elemento para a barra preta */
-.trabalho .column::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 15px;
-    height: 100%;
-    background: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
-    z-index: 1;
+.flex-container .flex-item:not(:first-child) {
+  position: relative;
 }
 
-/* Tablets grandes - 4 colunas */
+.flex-container .flex-item:not(:first-child)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 15px;
+  height: 100%;
+  background: linear-gradient(to right, rgba(0, 0, 0, 1), transparent);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.fitter {
+  object-fit: cover;
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+}
+
+
+/* Ajustes responsivos para ocultar colunas da direita */
+@media (max-width: 1400px) {
+  .flex-container .flex-item:nth-last-child(-n+1) {
+    display: none; /* Ocultar a última coluna */
+  }
+}
+
 @media (max-width: 1200px) {
-    .trabalho {
-        --h-flex: 3; /* Reduz o fator de expansão para telas menores */
-    }
-    .trabalho .column {
-        flex: 1 1 calc(25% - 10px); /* 4 colunas */
-    }
+  .flex-container .flex-item:nth-last-child(-n+2) {
+    display: none; /* Ocultar as duas últimas colunas */
+  }
 }
 
-/* Tablets - 3 colunas */
 @media (max-width: 900px) {
-    .trabalho {
-        --h-flex: 2.5;
-    }
-    .trabalho .column {
-        flex: 1 1 calc(33.333% - 10px); /* 3 colunas */
-    }
+  .flex-container .flex-item:nth-last-child(-n+3) {
+    display: none; /* Ocultar as três últimas colunas */
+  }
 }
 
-/* Celulares na horizontal - 2 colunas */
+/* Exibir apenas duas imagens entre 600px e 400px */
 @media (max-width: 600px) {
-    .trabalho {
-        --h-flex: 2;
-        height: min(800px, 80vh);
-    }
-    .trabalho .column {
-        flex: 1 1 calc(50% - 10px); /* 2 colunas */
-    }
+  .flex-container .flex-item {
+    display: none; /* Ocultar todas as colunas inicialmente */
+  }
+
+  .flex-container .flex-item:nth-child(-n+2) {
+    display: flex; /* Mostrar as duas primeiras colunas */
+  }
 }
 
-/* Celulares na vertical - 1 coluna */
+/* Exibir apenas uma imagem abaixo de 400px */
 @media (max-width: 400px) {
-    .trabalho {
-        --h-flex: 1.5;
-        height: min(600px, 70vh);
-    }
-    .trabalho .column {
-        flex: 1 1 100%; /* 1 coluna */
-    }
-}
+  .flex-container .flex-item {
+    display: none; /* Ocultar todas as colunas */
+  }
 
-/* Estilo para ocultar a barra da primeira coluna */
-.trabalho .column:first-child::before {
-    display: none;
-}
+  .flex-container .flex-item:nth-child(1) {
+    display: flex; /* Mostrar apenas a primeira coluna */
+  }
 
+  /* Para garantir que a imagem não desapareça */
+  .flex-item img {
+    display: block; /* Mostrar a imagem */
+    width: 100%; /* Ajustar a largura da imagem ao item */
+    height: auto; /* Manter a proporção */
+  }
+}
 
 
 /* ------------------------------------------------*/
