@@ -62963,9 +62963,9 @@ readers do not read off random characters that represent icons */
 
 .swiper:not(.swiper-watch-progress) .swiper-lazy-preloader,
 .swiper-watch-progress .swiper-slide-visible .swiper-lazy-preloader {
-  -webkit-animation: swiper-preloader-spin 1s infinite linear;
-     -moz-animation: swiper-preloader-spin 1s infinite linear;
-          animation: swiper-preloader-spin 1s infinite linear;
+  -webkit-animation: swiper-preloader-spin 50s infinite linear;
+     -moz-animation: swiper-preloader-spin 50s infinite linear;
+          animation: swiper-preloader-spin 50s infinite linear;
 }
 
 .swiper-lazy-preloader-white {

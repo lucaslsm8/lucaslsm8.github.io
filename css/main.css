@@ -56,6 +56,14 @@
 /* ------------------------------------------------*/
 /* Variables Start */
 /* ------------------------------------------------*/
+
+[data-theme="dark"] {
+  --base: #141414;
+  --base-rgb: 20, 20, 20;
+  --text-color: #F2F5FC;
+  /* Outras variáveis para o modo dark */
+}
+
 :root {
   --_size: 1.6rem;
   --_font-default: "Urbanist", sans-serif;
@@ -67,12 +75,12 @@
   --_animspeed-slow: 0.6s;
   --_animbezier: cubic-bezier(0.23, 0.65, 0.74, 1.09);
   /* light color scheme */
-  --base--light: #BABEC8;
-  --base-rgb--light: 186,190,200;
-  --base-shade--light: #989ba3;
-  --base-tint--light: #d8dde7;
+  --base--light: #F7F5F2;
+  --base-rgb--light: 247,245,242;
+  --base-shade--light: #EDE7F6;
+  --base-tint--light: #EDE7F6;
   --stroke-controls--light: #2C2E34;
-  --stroke-elements--light: #8F93A1;
+  --stroke-elements--light: #636776;
   --font-weight-base--light: 400;
   --font-weight-medium--light: 600;
   --t-bright--light: #151617;
@@ -4006,6 +4014,7 @@ form textarea:required:valid {
   }
 }
 
+
 .logo {
   display: -webkit-box;
   display: -moz-box;
@@ -4058,6 +4067,9 @@ form textarea:required:valid {
     padding-left: 1.6rem;
   }
 }
+
+
+
 
 .color {
   position: fixed;
@@ -5459,6 +5471,14 @@ form textarea:required:valid {
   background: var(--per-base);
 }
 
+.pswp__img {
+  object-fit: contain; /* Garante que a imagem não seja distorcida */
+  max-width: 100%; /* Impede que ultrapasse os limites horizontais */
+  max-height: 100%; /* Impede que ultrapasse os limites verticais */
+  width: auto; /* Define largura automática */
+  height: auto; /* Define altura automática */
+}
+
 .pswp__top-bar,
 .pswp__ui--fit .pswp__top-bar {
   height: 74px;
@@ -6415,6 +6435,7 @@ form textarea:required:valid {
     height: 600px;
   }
 }
+
 @media only screen and (min-width: 1600px) {
   .testimonials-card {
     height: 700px;
@@ -6437,6 +6458,7 @@ form textarea:required:valid {
   }
 }
 
+
 .testimonials-card__timage {
   position: relative;
   padding-left: 0;
@@ -6452,6 +6474,9 @@ form textarea:required:valid {
     padding-left: 2.5rem;
   }
 }
+
+
+
 
 .timage__inner {
   -moz-border-radius: var(--_radius);
@@ -7023,3 +7048,276 @@ form textarea:required:valid {
 /* ------------------------------------------------*/
 /* Features Contact Data End */
 /* ------------------------------------------------*/
+
+/* Logo adjustments for smaller screens */
+@media (max-width: 768px) {
+  .logo {
+    margin-right: 20px; /* Adjust as necessary */
+  }
+
+  .logo-text {
+    font-size: 2.4rem; /* Adjust text size */
+  }
+
+  .header__navigation {
+    margin-left: auto; /* Pushes the menu to the right */
+  }
+}
+
+@media (max-width: 1400px) {
+  .logo {
+    margin-right: 20px; /* Adjust as necessary */
+  }
+
+  .logo-text {
+    font-size: 1.7rem; /* Adjust text size */
+  }
+
+  .header__navigation {
+    margin-left: auto; /* Pushes the menu to the right */
+  }
+}
+
+/* Padding and margin adjustments for testimonials on smaller screens */
+@media (max-width: 768px) {
+  .testimonials-slider {
+    margin: 20px; /* Add space around the slider */
+    padding: 10px; /* Add internal space for better visualization */
+  }
+
+  .testimonials-card {
+    margin-bottom: 20px; /* Space between testimonial cards */
+  }
+
+  .testimonials-card__descr {
+    padding: 10px; /* Add padding for better readability */
+  }
+
+  .testimonials-card {
+    margin-left: auto;
+    margin-right: auto; /* Center align testimonial cards */
+  }
+}
+
+@media (max-width: 1200px) {
+  .testimonials-slider {
+    margin: 1.5rem; /* Add space around the slider */
+    padding: 1.5rem; /* Add internal space for better visualization */
+  }
+
+  .testimonials-card {
+    margin-bottom: 20px; /* Space between testimonial cards */
+  }
+
+  .testimonials-card__descr {
+    padding: 1.5rem; /* Add padding for better readability */
+  }
+
+  .testimonials-card {
+    margin-left: auto;
+    margin-right: auto; /* Center align testimonial cards */
+  }
+}
+
+/* Ensure box-sizing is set correctly */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.container .row a {
+  margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+  .container .row a {
+    margin-bottom: 15px; /* Ajuste o valor conforme a necessidade */
+  }
+}
+
+.container .row a img {
+  transition: transform 0.3s ease;
+}
+
+.container .row a:hover img {
+  transform: scale(1.05);
+}
+
+/* Container da galeria */
+.nova-galeria {
+  display: flex;
+  flex-wrap: wrap; /* Permite quebrar linha */
+  gap: 15px; /* Espaçamento entre imagens */
+  margin-top: 6rem;
+  justify-content: center; /* Centraliza as imagens quando houver sobra de espaço */
+}
+
+/* Configuração das figuras (thumbnails) */
+.nova-galeria figure {
+  flex: 1 1 auto; /* Ajusta dinamicamente o tamanho */
+  max-width: var(--thumbnail-width, 275px); /* Controla o tamanho máximo pelo CSS */
+  margin: 0; /* Remove margem padrão */
+}
+
+/* Imagens dentro das figuras */
+.nova-galeria img {
+  width: 100%; /* Ocupa toda a largura da figura */
+  height: auto; /* Mantém a proporção original */
+  border-radius: 8px; /* Borda arredondada */
+  object-fit: cover; /* Corta a imagem para caber perfeitamente */
+}
+
+/* Responsividade: imagens empilhadas em telas pequenas */
+@media (max-width: 768px) {
+  .nova-galeria figure {
+    flex: 1 1 100%; /* Cada figura ocupa 100% da largura */
+  }
+}
+
+/* Container da galeria2 */
+.nova-galeria2 {
+  display: flex;
+  flex-wrap: wrap; /* Permite quebrar linha */
+  gap: 15px; /* Espaçamento entre imagens */
+  margin-top: 6rem;
+  justify-content: center; /* Centraliza as imagens quando houver sobra de espaço */
+}
+
+/* Configuração das figuras (thumbnails) */
+.nova-galeria2 figure {
+  flex: 1 1 auto; /* Ajusta dinamicamente o tamanho */
+  max-width: var(--thumbnail-width, 175px); /* Controla o tamanho máximo pelo CSS */
+  margin: 0; /* Remove margem padrão */
+}
+
+/* Imagens dentro das figuras */
+.nova-galeria2 img {
+  width: 100%; /* Ocupa toda a largura da figura */
+  height: auto; /* Mantém a proporção original */
+  border-radius: 8px; /* Borda arredondada */
+  object-fit: cover; /* Corta a imagem para caber perfeitamente */
+}
+
+/* Responsividade: imagens empilhadas em telas pequenas */
+@media (max-width: 768px) {
+  .nova-galeria2 figure {
+    flex: 1 1 100%; /* Cada figura ocupa 100% da largura */
+  }
+}
+
+/* Estilo para o título "Meu Papel" */
+.project__subtitle {
+  font: normal var(--font-weight-medium) 2rem var(--_font-accent);
+  color: var(--t-bright);
+  margin-bottom: 1.5rem; /* Espaçamento para dar respiro abaixo do título */
+}
+
+/* Estilo para os parágrafos dentro da seção */
+.project__descr p {
+  font: normal var(--font-weight-base) 1.8rem var(--_font-default);
+  color: var(--t-bright);
+  line-height: 1.6;
+}
+
+/* Estilo para a lista de responsabilidades */
+.project__descr ul {
+  padding-left: 20px;
+  font-size: 1.6rem;
+  line-height: 2;
+  color: var(--t-bright);
+  list-style-type: disc; /* Garante que os marcadores apareçam */
+}
+
+.project__descr li {
+  margin-bottom: 1.6rem; /* Espaço entre os itens da lista */
+}
+
+.project__descr strong {
+  font-weight: 600; /* Destaque para as responsabilidades */
+}
+
+/* Ajuste para telas grandes */
+@media only screen and (min-width: 1200px) {
+  .project__subtitle {
+    font-size: 2.4rem;
+  }
+}
+
+  .project__descr p {
+    font-size: 2rem;
+  }
+
+  .project__descr ul {
+    font-size: 1.8rem;
+  }
+
+  /* Estilo geral para os títulos dentro do Project Block */
+.project__block h3, .project__block .project__subtitle {
+  font: normal var(--font-weight-medium) 2rem var(--_font-accent);
+  color: var(--t-bright);
+  margin-bottom: 1.5rem; /* Espaçamento abaixo dos títulos */
+  font-weight: var(--font-weight-medium); /* Garantir que todos os títulos tenham o mesmo peso */
+}
+
+/* Estilo para os parágrafos dentro do Project Block */
+.project__block p {
+  font: normal var(--font-weight-base) 1.8rem var(--_font-default);
+  color: var(--t-bright);
+  line-height: 1.6;
+  margin-bottom: 1.6rem; /* Espaçamento entre os parágrafos */
+}
+
+/* Estilo para a lista dentro do Project Block */
+.project__block ul {
+  padding-left: 20px;
+  font-size: 1.6rem;
+  line-height: 2;
+  color: var(--t-bright);
+  list-style-type: disc; /* Marcadores visíveis */
+}
+
+.project__block li {
+  margin-bottom: 1.6rem; /* Espaçamento entre os itens da lista */
+}
+
+.project__block strong {
+  font-weight: 600; /* Destaque para os itens importantes na lista */
+}
+
+/* Ajuste para telas grandes */
+@media only screen and (min-width: 1200px) {
+  .project__block h3, .project__block .project__subtitle {
+    font-size: 2.4rem;
+  }
+
+  .project__block p {
+    font-size: 2rem;
+  }
+
+  .project__block ul {
+    font-size: 1.8rem;
+  }
+}
+
+/* Estilo para o título do projeto no popup */
+.project__block h3 {
+  font-size: 4rem; /* Aumenta o tamanho do título */
+  font-weight: var(--font-weight-medium); /* Mantém o peso da fonte consistente */
+  color: var(--t-bright); /* Mantém a cor do texto */
+  margin-bottom: 2rem; /* Mais espaçamento abaixo do título */
+}
+
+/* Ajuste responsivo para telas grandes */
+@media only screen and (min-width: 1200px) {
+  .project__block h3 {
+    font-size: 5rem; /* Tamanho maior para telas grandes */
+  }
+}
+
+@media only screen and (min-width: 1600px) {
+  .project__block h3 {
+    font-size: 6rem; /* Tamanho ainda maior para telas maiores */
+  }
+}
+
+
+
