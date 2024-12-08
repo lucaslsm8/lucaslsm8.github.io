@@ -392,8 +392,11 @@ if (!testimonialsSlider) {
   const swiper = new Swiper('.swiper-testimonials', {
     slidesPerView: 1,
     spaceBetween: 20,
-    autoplay: true,
-    speed: 1000,
+    autoplay: {
+      delay: 20000, // Delay of 20 seconds before starting the autoplay
+      disableOnInteraction: false,
+    },
+    speed: 2000,
     loop: true,
     loopFillGroupWithBlank: true,
     pagination: {
@@ -457,8 +460,8 @@ $(function() {
   // --------------------------------------------- //
   // Layout Masonry After Each Image Loads Start
   // --------------------------------------------- //
-  $('.my-gallery').imagesLoaded().progress( function() {
-    $('.my-gallery').masonry('layout');
+  $('.my-gallery, .nova-galeria').imagesLoaded().progress( function() {
+    $('.my-gallery, .nova-galeria').masonry('layout');
   });
   // --------------------------------------------- //
   // Layout Masonry After Each Image Loads End
@@ -636,3 +639,12 @@ window.addEventListener('DOMContentLoaded', () => {
 // --------------------------------------------- //
 // Color Switch End
 // --------------------------------------------- //
+
+document.addEventListener("DOMContentLoaded", function () {
+  document.documentElement.setAttribute("data-theme", "dark");
+});
+
+$(document).on("click", '[data-toggle="lightbox"]', function(event) {
+  event.preventDefault();
+  $(this).ekkoLightbox();
+});

@@ -145,21 +145,24 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 
         // define options (if needed)
         options = {
-
             showHideOpacity: true,
-
-            // define gallery index (for URL)
             galleryUID: galleryElement.getAttribute('data-pswp-uid'),
-
             getThumbBoundsFn: function(index) {
-                // See Options -> getThumbBoundsFn section of documentation for more info
-                var thumbnail = items[index].el.getElementsByTagName('img')[0], // find thumbnail
+                var thumbnail = items[index].el.getElementsByTagName('img')[0],
                     pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
                     rect = thumbnail.getBoundingClientRect();
-
-                return {x:rect.left, y:rect.top + pageYScroll, w:rect.width};
-            }
-
+                return {x: rect.left, y: rect.top + pageYScroll, w: rect.width};
+            },
+            initialZoomLevel: 'fit', // Ajuste inicial à tela
+            maxZoomLevel: 1, // Zoom máximo no tamanho real
+            allowPanToNext: false, // Evita panning para próxima imagem
+            padding: {
+                top: 20,
+                bottom: 20,
+                left: 20,
+                right: 20
+            },
+            bgOpacity: 0.8 // Fundo semitransparente
         };
 
         // PhotoSwipe opened from URL
@@ -211,4 +214,5 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 };
 
 // execute above function
-initPhotoSwipeFromDOM('.my-gallery');
+initPhotoSwipeFromDOM('.my-gallery, .nova-galeria, .nova-galeria2');
+
