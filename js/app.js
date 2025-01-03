@@ -55,6 +55,7 @@ const fadeInItems = document.querySelectorAll('.loading__fade');
 function startLoader() {
   let counterElement = document.querySelector(".loader__count .count__text");
   let currentValue = 0;
+
   function updateCounter() {
     if (currentValue < 100) {
       let increment = Math.floor(Math.random() * 10) + 1;
@@ -74,26 +75,47 @@ imgLoad.on('done', instance => {
 });
 
 function hideLoader() {
-  gsap.to(".loader__count", { duration: 0.8, ease: 'power2.in', y: "100%", delay: 1.8 });
-  gsap.to(".loader__wrapper", { duration: 0.8, ease: 'power4.in', y: "-100%", delay: 2.2 });
+  gsap.to(".loader__count", {
+    duration: 0.8,
+    ease: 'power2.in',
+    y: "100%",
+    delay: 1.8
+  });
+  gsap.to(".loader__wrapper", {
+    duration: 0.8,
+    ease: 'power4.in',
+    y: "-100%",
+    delay: 2.2
+  });
   setTimeout(() => {
     document.getElementById("loader").classList.add("loaded");
   }, 3200);
 }
 
 function pageAppearance() {
-  gsap.set(loadingItems, { opacity: 0 })
-  gsap.to(loadingItems, { 
+  gsap.set(loadingItems, {
+    opacity: 0
+  })
+  gsap.to(loadingItems, {
     duration: 1.1,
     ease: 'power4',
-    startAt: {y: 120},
+    startAt: {
+      y: 120
+    },
     y: 0,
     opacity: 1,
     delay: 0.8,
     stagger: 0.05
   }, '>-=1.1');
-  gsap.set(fadeInItems, { opacity: 0 });
-  gsap.to(fadeInItems, { duration: 0.8, ease: 'none', opacity: 1, delay: 3.2 });
+  gsap.set(fadeInItems, {
+    opacity: 0
+  });
+  gsap.to(fadeInItems, {
+    duration: 0.8,
+    ease: 'none',
+    opacity: 1,
+    delay: 3.2
+  });
 }
 // --------------------------------------------- //
 // Loader & Loading Animation End
@@ -116,17 +138,17 @@ const scrollSpy = new bootstrap.ScrollSpy(document.body, {
 // --------------------------------------------- //
 const toTop = document.querySelector("#to-top");
 
-toTop.addEventListener("click", function(event){
-  event.preventDefault()
+toTop.addEventListener("click", function (event) {
+  event.preventDefault();
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
 });
 
-toTop.addEventListener("click", () => gsap.to(window, { 
-  scrollTo: 0, 
-  ease: 'power4.inOut',
-  duration: 2,
-}));
-
-gsap.set(toTop, { opacity: 0 });
+gsap.set(toTop, {
+  opacity: 0
+});
 
 gsap.to(toTop, {
   opacity: 1,
@@ -145,21 +167,27 @@ gsap.to(toTop, {
 // --------------------------------------------- //
 // Stacking Cards Start
 // --------------------------------------------- //
-const cards  = document.querySelectorAll('.stack-item');
-const stickySpace  = document.querySelector('.stack-offset');
+const cards = document.querySelectorAll('.stack-item');
+const stickySpace = document.querySelector('.stack-offset');
 const animation = gsap.timeline();
 let cardHeight;
 
-if(document.querySelector(".stack-item")) {
+if (document.querySelector(".stack-item")) {
 
-  function initCards(){
+  function initCards() {
     animation.clear();
     cardHeight = cards[0].offsetHeight;
     //console.log("initCards()", cardHeight);
     cards.forEach((card, index) => {
-      if(index > 0){
-        gsap.set(card, {y:index * cardHeight});
-        animation.to(card, {y:0, duration:index*0.5, ease:"none"},0);
+      if (index > 0) {
+        gsap.set(card, {
+          y: index * cardHeight
+        });
+        animation.to(card, {
+          y: 0,
+          duration: index * 0.5,
+          ease: "none"
+        }, 0);
       }
     });
   };
@@ -169,7 +197,7 @@ if(document.querySelector(".stack-item")) {
     trigger: ".stack-wrapper",
     start: "top top",
     pin: true,
-    end: ()=>`+=${(cards.length * cardHeight) + stickySpace.offsetHeight}`,
+    end: () => `+=${(cards.length * cardHeight) + stickySpace.offsetHeight}`,
     scrub: true,
     animation: animation,
     //markers: true,
@@ -204,87 +232,175 @@ animateInUp.forEach((element) => {
 
 // Animation Cards Stack
 // Grid 2x
-if(document.querySelector(".animate-card-2")) {
-  gsap.set(".animate-card-2", {y: 100, opacity: 0});
+if (document.querySelector(".animate-card-2")) {
+  gsap.set(".animate-card-2", {
+    y: 100,
+    opacity: 0
+  });
   ScrollTrigger.batch(".animate-card-2", {
     interval: 0.1,
     batchMax: 2,
     duration: 6,
     onEnter: batch => gsap.to(batch, {
-      opacity: 1, 
+      opacity: 1,
       y: 0,
       ease: 'sine',
-      stagger: {each: 0.15, grid: [1, 2]}, 
+      stagger: {
+        each: 0.15,
+        grid: [1, 2]
+      },
       overwrite: true
     }),
-    onLeave: batch => gsap.set(batch, {opacity: 1, y: 0, overwrite: true}),
-    onEnterBack: batch => gsap.to(batch, {opacity: 1, y: 0, stagger: 0.15, overwrite: true}),
-    onLeaveBack: batch => gsap.set(batch, {opacity: 0, y: 100, overwrite: true})
+    onLeave: batch => gsap.set(batch, {
+      opacity: 1,
+      y: 0,
+      overwrite: true
+    }),
+    onEnterBack: batch => gsap.to(batch, {
+      opacity: 1,
+      y: 0,
+      stagger: 0.15,
+      overwrite: true
+    }),
+    onLeaveBack: batch => gsap.set(batch, {
+      opacity: 0,
+      y: 100,
+      overwrite: true
+    })
   });
-  ScrollTrigger.addEventListener("refreshInit", () => gsap.set(".animate-card-2", {y: 0, opacity: 1}));
+  ScrollTrigger.addEventListener("refreshInit", () => gsap.set(".animate-card-2", {
+    y: 0,
+    opacity: 1
+  }));
 };
 
 // Grid 3x
-if(document.querySelector(".animate-card-3")) {
-  gsap.set(".animate-card-3", {y: 50, opacity: 0});
+if (document.querySelector(".animate-card-3")) {
+  gsap.set(".animate-card-3", {
+    y: 50,
+    opacity: 0
+  });
   ScrollTrigger.batch(".animate-card-3", {
     interval: 0.1,
     batchMax: 3,
     duration: 3,
     onEnter: batch => gsap.to(batch, {
-      opacity: 1, 
+      opacity: 1,
       y: 0,
       ease: 'sine',
-      stagger: {each: 0.15, grid: [1, 3]}, 
+      stagger: {
+        each: 0.15,
+        grid: [1, 3]
+      },
       overwrite: true
     }),
-    onLeave: batch => gsap.set(batch, {opacity: 1, y: 0, overwrite: true}),
-    onEnterBack: batch => gsap.to(batch, {opacity: 1, y: 0, stagger: 0.15, overwrite: true}),
-    onLeaveBack: batch => gsap.set(batch, {opacity: 0, y: 50, overwrite: true})
+    onLeave: batch => gsap.set(batch, {
+      opacity: 1,
+      y: 0,
+      overwrite: true
+    }),
+    onEnterBack: batch => gsap.to(batch, {
+      opacity: 1,
+      y: 0,
+      stagger: 0.15,
+      overwrite: true
+    }),
+    onLeaveBack: batch => gsap.set(batch, {
+      opacity: 0,
+      y: 50,
+      overwrite: true
+    })
   });
-  ScrollTrigger.addEventListener("refreshInit", () => gsap.set(".animate-card-3", {y: 0, opacity: 1}));
+  ScrollTrigger.addEventListener("refreshInit", () => gsap.set(".animate-card-3", {
+    y: 0,
+    opacity: 1
+  }));
 };
 
 // Grid 4x
-if(document.querySelector(".animate-card-4")) {
-  gsap.set(".animate-card-4", {y: 50, opacity: 0});
+if (document.querySelector(".animate-card-4")) {
+  gsap.set(".animate-card-4", {
+    y: 50,
+    opacity: 0
+  });
   ScrollTrigger.batch(".animate-card-4", {
     interval: 0.1,
     batchMax: 4,
     delay: 1000,
     onEnter: batch => gsap.to(batch, {
-      opacity: 1, 
+      opacity: 1,
       y: 0,
       ease: 'sine',
-      stagger: {each: 0.15, grid: [1, 4]}, 
+      stagger: {
+        each: 0.15,
+        grid: [1, 4]
+      },
       overwrite: true
     }),
-    onLeave: batch => gsap.set(batch, {opacity: 1, y: 0, overwrite: true}),
-    onEnterBack: batch => gsap.to(batch, {opacity: 1, y: 0, stagger: 0.15, overwrite: true}),
-    onLeaveBack: batch => gsap.set(batch, {opacity: 0, y: 50, overwrite: true})
+    onLeave: batch => gsap.set(batch, {
+      opacity: 1,
+      y: 0,
+      overwrite: true
+    }),
+    onEnterBack: batch => gsap.to(batch, {
+      opacity: 1,
+      y: 0,
+      stagger: 0.15,
+      overwrite: true
+    }),
+    onLeaveBack: batch => gsap.set(batch, {
+      opacity: 0,
+      y: 50,
+      overwrite: true
+    })
   });
-  ScrollTrigger.addEventListener("refreshInit", () => gsap.set(".animate-card-4", {y: 0, opacity: 1}));
+  ScrollTrigger.addEventListener("refreshInit", () => gsap.set(".animate-card-4", {
+    y: 0,
+    opacity: 1
+  }));
 };
 
 // Grid 5x
-if(document.querySelector(".animate-card-5")) {
-  gsap.set(".animate-card-5", {y: 50, opacity: 0});
+if (document.querySelector(".animate-card-5")) {
+  gsap.set(".animate-card-5", {
+    y: 50,
+    opacity: 0
+  });
   ScrollTrigger.batch(".animate-card-5", {
     interval: 0.1,
     batchMax: 5,
     delay: 1000,
     onEnter: batch => gsap.to(batch, {
-      opacity: 1, 
+      opacity: 1,
       y: 0,
       ease: 'sine',
-      stagger: {each: 0.15, grid: [1, 5]}, 
+      stagger: {
+        each: 0.15,
+        grid: [1, 5]
+      },
       overwrite: true
     }),
-    onLeave: batch => gsap.set(batch, {opacity: 1, y: 0, overwrite: true}),
-    onEnterBack: batch => gsap.to(batch, {opacity: 1, y: 0, stagger: 0.15, overwrite: true}),
-    onLeaveBack: batch => gsap.set(batch, {opacity: 0, y: 50, overwrite: true})
+    onLeave: batch => gsap.set(batch, {
+      opacity: 1,
+      y: 0,
+      overwrite: true
+    }),
+    onEnterBack: batch => gsap.to(batch, {
+      opacity: 1,
+      y: 0,
+      stagger: 0.15,
+      overwrite: true
+    }),
+    onLeaveBack: batch => gsap.set(batch, {
+      opacity: 0,
+      y: 50,
+      overwrite: true
+    })
   });
-  ScrollTrigger.addEventListener("refreshInit", () => gsap.set(".animate-card-5", {y: 0, opacity: 1}));
+  ScrollTrigger.addEventListener("refreshInit", () => gsap.set(".animate-card-5", {
+    y: 0,
+    opacity: 1
+  }));
 };
 // --------------------------------------------- //
 // Scroll Animations End
@@ -294,8 +410,10 @@ if(document.querySelector(".animate-card-5")) {
 // Fade-in Type Effect Start
 // --------------------------------------------- //
 const splitTypes = document.querySelectorAll(".reveal-type");
-splitTypes.forEach((char,i) => {
-  const text = new SplitType(char, { types: 'words, chars' });
+splitTypes.forEach((char, i) => {
+  const text = new SplitType(char, {
+    types: 'words, chars'
+  });
   gsap.from(text.chars, {
     scrollTrigger: {
       trigger: char,
@@ -325,17 +443,17 @@ const initMarquee = () => {
     items.forEach((itemBlock) => {
       marqueeObject.el = itemBlock.querySelector(".items__container");
       marqueeObject.width = marqueeObject.el.offsetWidth;
-			marqueeObject.el.innerHTML += marqueeObject.el.innerHTML;
+      marqueeObject.el.innerHTML += marqueeObject.el.innerHTML;
       //let dirFromLeft = "-=50%";
-			let dirFromRight = "+=50%";
+      let dirFromRight = "+=50%";
       let master = gsap
         .timeline()
         //.add(marquee(marqueeObject.el, 20, dirFromLeft), 0);
         .add(marquee(marqueeObject.el, 20, dirFromRight), 0);
-      let tween = gsap.to(master, { 
-        duration: 1.5, 
-        timeScale: 1, 
-        paused: true 
+      let tween = gsap.to(master, {
+        duration: 1.5,
+        timeScale: 1,
+        paused: true
       });
       let timeScaleClamp = gsap.utils.clamp(1, 6);
       ScrollTrigger.create({
@@ -345,7 +463,7 @@ const initMarquee = () => {
           master.timeScale(timeScaleClamp(Math.abs(self.getVelocity() / 200)));
           tween.invalidate().restart();
         }
-			});
+      });
     });
   }
 };
@@ -370,7 +488,7 @@ initMarquee();
 // Parallax (apply parallax effect to any element with a data-speed attribute) Start
 // ------------------------------------------------------------------------------ //
 gsap.to("[data-speed]", {
-  y: (i, el) => (1 - parseFloat(el.getAttribute("data-speed"))) * ScrollTrigger.maxScroll(window) ,
+  y: (i, el) => (1 - parseFloat(el.getAttribute("data-speed"))) * ScrollTrigger.maxScroll(window),
   ease: "none",
   scrollTrigger: {
     start: 0,
@@ -413,15 +531,15 @@ if (!testimonialsSlider) {
 // Swiper Slider Start
 // --------------------------------------------- //
 
-$(window).on("load", function() {
-   
+$(window).on("load", function () {
+
   "use strict";
-  
+
   // --------------------------------------------- //
   // Typed.js Plugin Settings Start
   // --------------------------------------------- //
   var animatedHeadline = $(".animated-type");
-  if(animatedHeadline.length){
+  if (animatedHeadline.length) {
     var typed = new Typed('#typed', {
       stringsElement: '#typed-strings',
       loop: true,
@@ -436,7 +554,7 @@ $(window).on("load", function() {
 
 });
 
-$(function() {
+$(function () {
 
   "use strict";
 
@@ -460,7 +578,7 @@ $(function() {
   // --------------------------------------------- //
   // Layout Masonry After Each Image Loads Start
   // --------------------------------------------- //
-  $('.my-gallery, .nova-galeria').imagesLoaded().progress( function() {
+  $('.my-gallery, .nova-galeria').imagesLoaded().progress(function () {
     $('.my-gallery, .nova-galeria').masonry('layout');
   });
   // --------------------------------------------- //
@@ -470,7 +588,7 @@ $(function() {
   // --------------------------------------------- //
   // Smooth Scrolling Start
   // --------------------------------------------- //
-  $('a[href*="#"]').not('[href="#"]').not('[href="#0"]').click(function(event) {
+  $('a[href*="#"]').not('[href="#"]').not('[href="#0"]').click(function (event) {
     if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
       var target = $(this.hash);
       target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
@@ -478,13 +596,13 @@ $(function() {
         event.preventDefault();
         $('html, body').animate({
           scrollTop: target.offset().top
-        }, 1000, function() {
+        }, 1000, function () {
           var $target = $(target);
           $target.focus();
           if ($target.is(":focus")) {
             return false;
           } else {
-            $target.attr('tabindex','-1');
+            $target.attr('tabindex', '-1');
             $target.focus();
           };
         });
@@ -499,18 +617,24 @@ $(function() {
   // Buttons Hover Effect Start
   // --------------------------------------------- //
   $('.hover-default, .hover-circle, .circle, .inner-video-trigger, .socials-cards__link')
-  .on('mouseenter', function(e) {
-    var parentOffset = $(this).offset(),
-      relX = e.pageX - parentOffset.left,
-      relY = e.pageY - parentOffset.top;
-    $(this).find('em').css({top:relY, left:relX})
-  })
-  .on('mouseout', function(e) {
-    var parentOffset = $(this).offset(),
-      relX = e.pageX - parentOffset.left,
-      relY = e.pageY - parentOffset.top;
-    $(this).find('em').css({top:relY, left:relX})
-  });
+    .on('mouseenter', function (e) {
+      var parentOffset = $(this).offset(),
+        relX = e.pageX - parentOffset.left,
+        relY = e.pageY - parentOffset.top;
+      $(this).find('em').css({
+        top: relY,
+        left: relX
+      })
+    })
+    .on('mouseout', function (e) {
+      var parentOffset = $(this).offset(),
+        relX = e.pageX - parentOffset.left,
+        relY = e.pageY - parentOffset.top;
+      $(this).find('em').css({
+        top: relY,
+        left: relX
+      })
+    });
   // --------------------------------------------- //
   // Buttons Hover Effect Start
   // --------------------------------------------- //
@@ -518,8 +642,8 @@ $(function() {
   // --------------------------------------------- //
   // SVG Fallback Start
   // --------------------------------------------- //
-  if(!Modernizr.svg) {
-    $("img[src*='svg']").attr("src", function() {
+  if (!Modernizr.svg) {
+    $("img[src*='svg']").attr("src", function () {
       return $(this).attr("src").replace(".svg", ".png");
     });
   };
@@ -532,11 +656,10 @@ $(function() {
   // --------------------------------------------- //
   try {
     $.browserSelector();
-    if($("html").hasClass("chrome")) {
+    if ($("html").hasClass("chrome")) {
       $.smoothScroll();
     }
-  } catch(err) {
-  };
+  } catch (err) {};
   // --------------------------------------------- //
   // Chrome Smooth Scroll End
   // --------------------------------------------- //
@@ -544,7 +667,9 @@ $(function() {
   // --------------------------------------------- //
   // Images Moving Ban Start
   // --------------------------------------------- //
-  $("img, a").on("dragstart", function(event) { event.preventDefault(); });
+  $("img, a").on("dragstart", function (event) {
+    event.preventDefault();
+  });
   // --------------------------------------------- //
   // Images Moving Ban End
   // --------------------------------------------- //
@@ -553,11 +678,10 @@ $(function() {
   // Detecting Mobile/Desktop Start
   // --------------------------------------------- //
   var isMobile = false;
-  if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+  if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     $('html').addClass('touch');
     isMobile = true;
-  }
-  else {
+  } else {
     $('html').addClass('no-touch');
     isMobile = false;
   }
@@ -570,10 +694,12 @@ $(function() {
   // --------------------------------------------- //
   // PhotoSwipe Gallery Images Replace Start
   // --------------------------------------------- //
-  $('.gallery__link').each(function(){
+  $('.gallery__link').each(function () {
     $(this)
-    .append('<div class="picture"></div>')
-    .children('.picture').css({'background-image': 'url('+ $(this).attr('data-image') +')'});
+      .append('<div class="picture"></div>')
+      .children('.picture').css({
+        'background-image': 'url(' + $(this).attr('data-image') + ')'
+      });
   });
   // --------------------------------------------- //
   // PhotoSwipe Gallery Images Replace End
@@ -582,16 +708,16 @@ $(function() {
   // --------------------------------------------- //
   // Contact Form Start
   // --------------------------------------------- //
-  $("#contact-form").submit(function() { //Change
+  $("#contact-form").submit(function () { //Change
     var th = $(this);
     $.ajax({
       type: "POST",
       url: "mail.php", //Change
       data: th.serialize()
-    }).done(function() {
+    }).done(function () {
       $('.contact').find('.form').addClass('is-hidden');
       $('.contact').find('.form__reply').addClass('is-visible');
-      setTimeout(function() {
+      setTimeout(function () {
         // Done Functions
         $('.contact').find('.form__reply').removeClass('is-visible');
         $('.contact').find('.form').delay(300).removeClass('is-hidden');
@@ -611,20 +737,20 @@ $(function() {
 // --------------------------------------------- //
 const themeBtn = document.querySelector('.color-switcher');
 
-function getCurrentTheme(){
+function getCurrentTheme() {
   let theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   localStorage.getItem('template.theme') ? theme = localStorage.getItem('template.theme') : null;
   return theme;
 }
 
-function loadTheme(theme){
+function loadTheme(theme) {
   const root = document.querySelector(':root');
   root.setAttribute('color-scheme', `${theme}`);
 };
 
 themeBtn.addEventListener('click', () => {
   let theme = getCurrentTheme();
-  if(theme === 'dark'){
+  if (theme === 'dark') {
     theme = 'light';
   } else {
     theme = 'dark';
@@ -644,7 +770,166 @@ document.addEventListener("DOMContentLoaded", function () {
   document.documentElement.setAttribute("data-theme", "dark");
 });
 
-$(document).on("click", '[data-toggle="lightbox"]', function(event) {
+$(document).on("click", '[data-toggle="lightbox"]', function (event) {
   event.preventDefault();
   $(this).ekkoLightbox();
 });
+
+// Phone Carousel - Versão melhorada
+document.addEventListener('DOMContentLoaded', function () {
+  const carousel = document.querySelector('.carousel');
+  const items = document.querySelectorAll('.carousel-item');
+  const prevBtn = document.querySelector('.carousel-button.prev');
+  const nextBtn = document.querySelector('.carousel-button.next');
+
+  let currentIndex = 0;
+  const totalItems = items.length;
+
+  function updateCarousel() {
+    items.forEach((item, index) => {
+      // Calcula a diferença da posição atual
+      let diff = index - currentIndex;
+
+      // Ajusta para loop circular
+      if (diff < -2) diff += totalItems;
+      if (diff > 2) diff -= totalItems;
+
+      // Define transformação baseada na posição
+      let translateX = diff * 60; // Distância entre slides
+      let translateZ = Math.abs(diff) * -100; // Profundidade
+      let rotation = diff * 15; // Rotação
+      let opacity = 1 - (Math.abs(diff) * 0.3); // Opacidade
+
+      // Aplica transformações
+      item.style.transform = `translateX(${translateX}%) translateZ(${translateZ}px) rotateY(${rotation}deg)`;
+      item.style.opacity = opacity;
+      item.style.zIndex = 5 - Math.abs(diff);
+
+      // Adiciona/remove classe active
+      item.classList.toggle('active', index === currentIndex);
+    });
+  }
+
+  prevBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+    updateCarousel();
+  });
+
+  nextBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % totalItems;
+    updateCarousel();
+  });
+
+  // Inicializa o carrossel
+  updateCarousel();
+});
+
+// Scroll Spy aprimorado
+$(document).ready(function () {
+  const sections = $('.main-content div[id]');
+  const navLinks = $('.sidebar-nav .nav-link');
+  const fixedOffset = 130; // Altura do header (80px) + padding do conteúdo (50px)
+
+  // Função para atualizar o menu ativo
+  function updateActiveSection() {
+    const scrollPosition = $(window).scrollTop();
+
+    // Encontra a seção atual
+    sections.each(function () {
+      const top = $(this).offset().top - fixedOffset;
+      const bottom = top + $(this).outerHeight();
+
+      if (scrollPosition >= top && scrollPosition < bottom) {
+        navLinks.removeClass('active');
+        navLinks.filter('[href="#' + $(this).attr('id') + '"]').addClass('active');
+        return false;
+      }
+    });
+  }
+
+  // Atualiza ao carregar e ao rolar
+  updateActiveSection();
+  $(window).on('scroll', updateActiveSection);
+
+  // Scroll suave ao clicar
+  navLinks.on('click', function (e) {
+    e.preventDefault();
+    const target = $($(this).attr('href'));
+
+    $('html, body').animate({
+      scrollTop: target.offset().top - fixedOffset
+    }, {
+      duration: 500,
+      easing: 'easeInOutCubic'
+    });
+  });
+});
+
+// Function to scroll to a section with offset
+function scrollToSectionWithOffset(sectionId) {
+  const headerHeight = document.querySelector('header').offsetHeight;
+  const additionalOffset = 20; // Ajuste adicional para garantir que o título não fique oculto
+  const section = document.getElementById(sectionId);
+  const sectionPosition = section.offsetTop - headerHeight - additionalOffset;
+
+  window.scrollTo({
+    top: sectionPosition,
+    behavior: 'smooth'
+  });
+}
+
+// Event listener for menu clicks
+document.querySelectorAll('.menu-item').forEach(item => {
+  item.addEventListener('click', function (event) {
+    event.preventDefault();
+    const targetSectionId = this.getAttribute('href').substring(1);
+    scrollToSectionWithOffset(targetSectionId);
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Verifica se estamos na página do projeto (procura pelo menu lateral)
+  const sidebarNav = document.querySelector('.sidebar-nav');
+  
+  if (sidebarNav) {
+    const sidebarLinks = sidebarNav.querySelectorAll('.nav-link');
+    
+    // Adiciona evento de clique apenas aos links do menu lateral
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+        
+        if (targetSection) {
+          const headerOffset = 100; // Ajuste este valor conforme necessário
+          const offsetTop = targetSection.offsetTop - headerOffset;
+          
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  }
+});
+
+function updateCarouselSize() {
+  const carousel = document.getElementById('carousel');
+  if (!carousel) return;
+  
+  const width = window.innerWidth;
+  const container = carousel.closest('.carousel-container');
+  
+  if (width <= 768) {
+    container.style.overflow = 'hidden';
+  } else {
+    container.style.overflow = 'visible';
+  }
+}
+
+// Adicione os listeners
+window.addEventListener('load', updateCarouselSize);
+window.addEventListener('resize', _.debounce(updateCarouselSize, 250));
