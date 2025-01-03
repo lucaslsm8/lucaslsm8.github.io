@@ -9018,3 +9018,59 @@ form textarea:required:valid {
   }
 }
 
+/* Ajuste das tags em mobile */
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.tag {
+  display: inline-flex;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
+  font-size: 14px;
+  color: var(--t-bright);
+  border: 1px solid var(--stroke-elements); /* Adicionado borda */
+}
+
+/* Ajustes específicos para mobile */
+@media (max-width: 768px) {
+  .project-tags {
+    gap: 8px; /* Reduz o espaçamento entre tags */
+    margin-bottom: 24px;
+  }
+
+  .tag {
+    padding: 6px 12px; /* Reduz o padding */
+    font-size: 12px; /* Reduz o tamanho da fonte */
+    white-space: nowrap; /* Evita quebra de texto */
+    background: var(--base); /* Fundo sólido */
+    border: 1px solid var(--stroke-elements); /* Garante que a borda seja visível */
+  }
+
+  /* Ajuste do container das tags */
+  .project-header {
+    padding: 100px 20px 40px; /* Ajusta o padding do header */
+  }
+
+  /* Garante que o texto dentro das tags seja visível */
+  .tag span {
+    color: var(--t-bright);
+  }
+}
+
+/* Ajuste adicional para telas muito pequenas */
+@media (max-width: 360px) {
+  .project-tags {
+    gap: 6px;
+  }
+
+  .tag {
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+}
+
