@@ -2656,7 +2656,6 @@ form textarea:required:valid {
   top: auto;
   right: auto;
   bottom: auto;
-  left: auto;
   left: 50%;
   top: 50%;
   bottom: auto;
@@ -7494,28 +7493,70 @@ form textarea:required:valid {
 /* ------------------------------------------------*/
 .testimonials-slider {
   position: relative;
-  overflow: hidden;
+  overflow: visible; /* Permite que o conteúdo ultrapasse o container */
+  height: auto;
+  margin-bottom: 60px; /* Espaço extra para conteúdo que ultrapassa */
 }
 
+/* Ajustes no Swiper */
 .swiper-testimonials {
-  padding-bottom: 4.8rem;
+  position: relative;
+  height: auto !important; /* Força altura automática */
+  padding-bottom: 60px; /* Espaço para navegação */
 }
 
-@media only screen and (min-width: 1200px) {
-  .swiper-testimonials {
-    padding-bottom: 5rem;
+.swiper-slide {
+  height: auto !important; /* Força altura automática */
+}
+
+/* Ajustes no card de testimonial */
+.testimonials-card {
+  position: relative;
+  height: auto !important; /* Força altura automática */
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ajustes no container fluid */
+.container-fluid.p-0.fullheight-l {
+  height: auto !important;
+  min-height: unset;
+}
+
+/* Ajustes na row */
+.row.g-0.d-flex.align-items-stretch.fullheight-l {
+  height: auto !important;
+  min-height: unset;
+}
+
+/* Ajustes nas colunas */
+.testimonials-card__tdata,
+.testimonials-card__timage {
+  height: auto !important;
+  min-height: unset;
+}
+
+/* Ajuste na imagem */
+.timage__inner {
+  height: auto !important;
+  min-height: 300px; /* Altura mínima para a imagem */
+}
+
+.timage__inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+  .testimonials-card {
+    padding: 20px;
   }
-}
-
-@media only screen and (min-width: 1400px) {
-  .swiper-testimonials {
-    padding-bottom: 7.2rem;
-  }
-}
-
-@media only screen and (min-width: 1600px) {
-  .swiper-testimonials {
-    padding-bottom: 7.6rem;
+  
+  .timage__inner {
+    min-height: 250px;
   }
 }
 
@@ -8387,209 +8428,6 @@ form textarea:required:valid {
   }
 }
 
-/* Phone Carousel Styles - Versão ajustada */
-.phone-carousel-container {
-  position: relative;
-  width: 300px;
-  /* Ajustado para largura do iPhone */
-  height: 620px;
-  /* Ajustado para altura proporcional */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 6rem auto;
-}
-
-.phone-mockup {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-}
-
-.mockup-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.carousel {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  perspective: 1200px;
-  transform-style: preserve-3d;
-  /* Adicionado para melhorar o efeito 3D */
-}
-
-.carousel-item {
-  position: absolute;
-  width: 89%;
-  /* Aumentado para preencher melhor a tela */
-  height: 91%;
-  /* Aumentado para preencher melhor a tela */
-  top: 6%;
-  /* Ajustado para alinhar com a parte superior da tela */
-  left: 6%;
-  /* Ajustado para centralizar horizontalmente */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.5s ease-in-out;
-  transform-origin: center center -300px;
-}
-
-.carousel-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 28px 28px 0 0;
-  /* Arredondamento apenas no topo */
-}
-
-/* Ajuste do posicionamento das imagens laterais */
-.carousel-item:not(.active) {
-  opacity: 0.6;
-  pointer-events: none;
-}
-
-/* Responsividade ajustada */
-@media only screen and (max-width: 768px) {
-  .phone-carousel-container {
-    width: 280px;
-    height: 580px;
-  }
-}
-
-@media only screen and (min-width: 1200px) {
-  .phone-carousel-container {
-    width: 300px;
-    height: 620px;
-  }
-}
-
-#carousel {
-  height: 530px;
-  width: 960px;
-  position: relative;
-  margin: 0 auto;
-  margin-bottom: 0.5em;
-  overflow: visible; /* Mudado de hidden para visible */
-  perspective: 1000px;
-  min-height: 500px; /* Adicionado altura mínima */
-}
-
-#carousel .shadow {
-  -moz-box-shadow: 0px 16px 26px #888888;
-  -webkit-box-shadow: 0px 16px 26px #888888;
-  box-shadow: 0px 16px 26px #888888;
-}
-
-#carousel .slide {
-  position: absolute;
-  visibility: visible;
-  opacity: 1;
-  width: auto; /* Adicionado */
-  height: auto; /* Adicionado */
-  min-width: 200px; /* Adicionado */
-}
-
-#carousel .slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-#carousel .slide a:hover img {
-  margin-top: 2px;
-}
-
-#carousel .slide p {
-  position: relative;
-  padding: 0;
-  margin: 0;
-  height: 100%
-}
-
-#carousel .slide span {
-  background-color: #000;
-  color: #fff;
-  font-size: 0.8em;
-  font-family: sans-serif;
-  position: absolute;
-  padding: 5px;
-  width: 100%;
-  bottom: 0;
-  z-index: 99;
-}
-
-#carousel .navigate-left,
-#carousel .navigate-right {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #333;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.3s ease;
-  z-index: 1000;
-}
-
-#carousel .navigate-left:hover,
-#carousel .navigate-right:hover {
-  background: none;
-}
-
-#carousel .navigate-left {
-  left: 50%;
-  margin-left: -260px;
-}
-
-#carousel .navigate-right {
-  left: 50%;
-  margin-left: 220px;
-}
-
-#carousel .navigate-left img,
-#carousel .navigate-right img {
-  width: 20px;
-  height: 20px;
-  filter: invert(1);
-  /* This will make the arrow icons white */
-}
-
-#carousel .navigate-left i,
-#carousel .navigate-right i {
-  color: white;
-  font-size: 16px;
-}
-
-#carousel .central-overlay {
-  position: absolute;
-  top: 50%; /* Ajustado de 50% para 48% para subir um pouco */
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1001;
-  pointer-events: none;
-}
-
-#carousel .central-overlay img {
-  width: 100%;
-  height: auto;
-  display: block;
-  max-width: 375px; /* Opcional: para garantir tamanho máximo consistente */
-}
-
-/* Adicione ao final do arquivo */
-
 /* Estilos para o layout de duas colunas */
 .sidebar-nav {
   padding: 50px;
@@ -8670,21 +8508,12 @@ form textarea:required:valid {
   }
 }
 
+
 /* Estilos gerais */
 .project-showcase {
   min-height: 400px;
   margin: 0;
   padding: 0;
-}
-
-#carousel {
-  width: min(960px, 90vw);
-  height: 530px;
-  min-height: 300px;
-  position: relative;
-  margin: 0 auto;
-  overflow: visible;
-  perspective: 1000px;
 }
 
 .navigate-left,
@@ -8715,14 +8544,6 @@ form textarea:required:valid {
   align-items: center;
   justify-content: center;
   position: relative;
-}
-
-.carousel-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  overflow: hidden;
 }
 
 .project-header {
@@ -8774,16 +8595,6 @@ form textarea:required:valid {
 }
 
 /* Media Queries */
-@media (max-width: 1200px) {
-  #carousel .navigate-left {
-    left: calc(4%);
-  }
-
-  #carousel .navigate-right {
-    right: calc(4%);
-  }
-}
-
 @media (max-width: 768px) {
   .project-showcase {
     min-height: 400px;
@@ -8810,24 +8621,6 @@ form textarea:required:valid {
     margin-bottom: 0;
   }
 
-  #carousel {
-    width: 95vw;
-    height: auto;
-    min-height: 300px;
-  }
-
-  #carousel .navigate-left {
-    left: calc(10%);
-  }
-
-  #carousel .navigate-right {
-    right: calc(10%);
-  }
-
-  .carousel-wrapper {
-    padding: 0 10px;
-  }
-
   .slide {
     max-width: 400px;
   }
@@ -8843,7 +8636,7 @@ form textarea:required:valid {
 
 @media (min-width: 768px) {
   .project-header {
-    padding: 120px 5rem;
+    padding: 80px 5rem;
   }
 
   .project-description {
@@ -8853,22 +8646,14 @@ form textarea:required:valid {
 
 @media (min-width: 1200px) {
   .project-header {
-    padding: 120px 5rem 80px;
+    padding: 80px 5rem 80px;
     max-width: none;
-  }
-
-  #carousel .navigate-left {
-    left: calc(2%);
-  }
-
-  #carousel .navigate-right {
-    right: calc(2%);
   }
 }
 
 @media (min-width: 1600px) {
   .project-header {
-    padding: 120px 10rem;
+    padding: 80px 10rem;
   }
 
   .project-description {
@@ -8884,7 +8669,7 @@ form textarea:required:valid {
 
 @media (min-width: 2560px) {
   .project-header {
-    padding: 120px 80px;
+    padding: 80px 80px;
   }
 }
 
@@ -8894,39 +8679,17 @@ form textarea:required:valid {
   }
 }
 
+@media (max-width: 991px) {
+  .sidebar-nav {
+    display: none; /* Oculta o menu lateral em telas menores que 768px */
+  }
+}
+
 /* Ajustes do carrossel para mobile */
 @media (max-width: 768px) {
-  #carousel {
-    width: calc(100% - 40px); /* Margem de 20px de cada lado */
-    height: auto;
-    min-height:510px;
-    margin: 0 auto;
-    overflow: hidden;
-  }
-
-  .carousel-container {
-    padding: 20px;
-    overflow: visible;
-    margin: 0 auto;
-  }
-
-  /* Esconde as setas de navegação em mobile */
-  #carousel .navigate-left,
-  #carousel .navigate-right {
-    display: none;
-  }
-
-  /* Ajuste da data para não sobrepor */
   .project__data {
     margin-top: 40px;
     padding: 0 20px;
-  }
-
-  /* Ajuste do container do carrossel */
-  .carousel-wrapper {
-    width: 100%;
-    padding: 0;
-    margin: 0 auto;
   }
 
   /* Ajuste das slides */
@@ -8945,7 +8708,7 @@ form textarea:required:valid {
 /* Ajuste do header para mobile */
 @media (max-width: 768px) {
   .project-header {
-    padding-top: 60px; /* Aumentado de 40px para 120px */
+    padding-top: 40px; /* Aumentado de 40px para 120px */
     padding-bottom: 40px;
     margin-top: 40px; /* Adicionado margem extra no topo */
   }
@@ -8967,7 +8730,7 @@ form textarea:required:valid {
 /* Ajuste adicional para telas muito pequenas */
 @media (max-width: 480px) {
   .project-header {
-    padding-top: 60px; /* Ainda mais espaço para telas menores */
+    padding-top: 40px; /* Ainda mais espaço para telas menores */
   }
 }
 
@@ -9053,7 +8816,7 @@ form textarea:required:valid {
 
   /* Ajuste do container das tags */
   .project-header {
-    padding: 100px 20px 40px; /* Ajusta o padding do header */
+    padding: 40px 20px 40px; /* Ajusta o padding do header */
   }
 
   /* Garante que o texto dentro das tags seja visível */
@@ -9071,6 +8834,587 @@ form textarea:required:valid {
   .tag {
     padding: 4px 10px;
     font-size: 11px;
+  }
+}
+
+/* Estilos unificados para tags */
+.tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    background: var(--base);
+    border: 1px solid var(--stroke-elements);
+    border-radius: 100px;
+    font-size: 14px;
+    color: var(--t-bright);
+    margin: 4px;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.tag:hover {
+    background: var(--t-bright);
+    color: var(--base);
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding: 0;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .tag {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+    
+    .project-tags {
+        gap: 6px;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .tag {
+        font-size: 11px;
+        padding: 4px 10px;
+    }
+    
+    .project-tags {
+        gap: 4px;
+    }
+}
+
+/* Swiper */
+
+.slide {
+    position: absolute;
+    width: auto;
+    height: 100%;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.slide img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    border-radius: 28px;
+    aspect-ratio: 0.462; /* Proporção específica para phones (similar ao iPhone) */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Swiper */
+
+.swiper {
+  width: 100%;
+  padding-top: 10px;
+}
+
+.swiper-slide {
+  width: 800px;
+  height: 400px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+  filter: blur(1px);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: self-start;
+}
+
+.swiper-slide-active {
+  filter: blur(0px);
+}
+
+.swiper-pagination-bullet,
+.swiper-pagination-bullet-active {
+  background: #fff;
+}
+
+.swiper-slide--one {
+  background: url(/2.png) no-repeat 50% 50% / cover;
+}
+
+.swiper-slide--two {
+  background: url("/2.png") no-repeat 50% 50% / cover;
+}
+
+.swiper-slide--three {
+  background: url("/2.png") no-repeat 50% 50% / cover;
+}
+
+.swiper-slide--four {
+  background: url("/2.png") no-repeat 50% 50% / cover;
+}
+
+.swiper-slide--five {
+  background: url("/2.png") no-repeat 50% 50% / cover;
+}
+
+.swiper-3d .swiper-slide-shadow-left,
+.swiper-3d .swiper-slide-shadow-right {
+  background-image: none;
+}
+
+/* Infinite Scroll Tags Animation */
+.tag-list {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  position: relative; /* Mantém position relative aqui */
+  padding: 1.5rem 0; /* Reduzido de 3rem para 1.5rem */
+  overflow: hidden;
+}
+
+/* Estilo dos cards de imagem */
+
+.loop-slider .inner {
+  display: flex;
+  width: fit-content;
+  animation-name: loop;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: var(--direction);
+  animation-duration: var(--duration);
+  padding: 0.5rem 0; /* Reduzido de 1rem para 0.5rem */
+}
+
+.loop-slider .image-card {
+  width: 300px; /* Ajuste conforme necessário */
+  height: 150px; /* Ajuste conforme necessário */
+  margin-right: 1rem;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.2),
+    0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+
+}
+
+.loop-slider .image-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.loop-slider .image-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.3),
+    0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.loop-slider .image-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Fade effect */
+.fade {
+  pointer-events: none;
+  background: linear-gradient(90deg, #1e293b, transparent 30%, transparent 70%, #1e293b);
+  position: absolute;
+  inset: 0;
+}
+
+@keyframes loop {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .loop-slider .image-card {
+    width: 220px;
+    height: 140px;
+    margin-right: 1.5rem;
+  }
+  
+  .tag-list {
+    padding: 1rem 0;
+    gap: 1rem 0;
+  }
+}
+
+.loop-slider {
+  position: relative; /* Adiciona position relative ao slider */
+}
+
+/* Ajuste para garantir que as imagens fiquem abaixo do fade */
+.loop-slider .inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* Ajuste do fade para ficar por cima */
+.fade {
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    var(--base) 0%,
+    transparent 20%,
+    transparent 80%,
+    var(--base) 100%
+  );
+  position: absolute;
+  inset: 0;
+  z-index: 10; /* Aumentado o z-index para garantir que fique por cima */
+}
+
+.loop-slider {
+  position: relative; /* Adiciona position relative ao slider */
+}
+
+/* Ajuste para garantir que as imagens fiquem abaixo do fade */
+.loop-slider .inner {
+  position: relative;
+  z-index: 1;
+}
+
+.full-width-image-container {
+    width: 100%;
+    margin: 4rem 0;
+    padding: 0 24px; /* Mantém consistência com o padding do conteúdo */
+}
+
+.full-width-image {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .full-width-image-container {
+        padding: 0 16px;
+        margin: 3rem 0;
+    }
+}
+
+@media (min-width: 1200px) {
+    .full-width-image-container {
+        max-width: 1200px;
+        margin: 5rem auto;
+    }
+    
+    .full-width-image {
+        border-radius: 16px;
+    }
+}
+
+@media (min-width: 1920px) {
+    .full-width-image-container {
+        max-width: 1400px;
+    }
+}
+
+/* Estilo base do swiper */
+
+/* Swiper Base Styles */
+.swiper {
+  width: 100%;
+  padding-top: 10px;
+}
+
+.swiper-slide {
+  width: 800px;
+  height: 400px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: self-start;
+  overflow: hidden;
+}
+
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Swiper Navigation */
+.swiper-button-prev,
+.swiper-button-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  content: none !important;
+}
+
+.swiper-button-prev i,
+.swiper-button-next i {
+  color: white;
+  font-size: 16px;
+}
+
+.swiper-button-disabled {
+  display: none;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  background: none;
+}
+
+.swiper-button-prev:hover i,
+.swiper-button-next:hover i {
+  color: #000000;
+}
+
+/* Swiper 3D Effects */
+.swiper-3d .swiper-slide-shadow-left,
+.swiper-3d .swiper-slide-shadow-right {
+  background-image: none;
+}
+
+/* Swiper Mobile Styles */
+@media (max-width: 768px) {
+  .swiper:not(.custom-swiper) {
+    height: auto;
+    padding: 0 0;
+  }
+
+  .swiper:not(.custom-swiper) .swiper-slide {
+    width: 100% !important;
+    height: auto !important;
+    margin-bottom: 24px;
+    filter: none;
+    transform: none !important;
+    border-radius: 12px;
+  }
+
+  .swiper:not(.custom-swiper) .swiper-slide img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+  }
+
+  .swiper:not(.custom-swiper) .swiper-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    transform: none !important;
+    padding: 0 !important;
+  }
+
+  .swiper:not(.custom-swiper) .swiper-3d {
+    perspective: none !important;
+  }
+
+  .swiper:not(.custom-swiper) .swiper-3d .swiper-slide-shadow-left,
+  .swiper:not(.custom-swiper) .swiper-3d .swiper-slide-shadow-right,
+  .swiper:not(.custom-swiper) .swiper-pagination,
+  .swiper:not(.custom-swiper) .swiper-button-prev,
+  .swiper:not(.custom-swiper) .swiper-button-next {
+    display: none;
+  }
+}
+
+/* Larger Screens */
+@media (min-width: 480px) and (max-width: 768px) {
+  .swiper {
+    padding: 0 24px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .swiper {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1920px) {
+  .swiper {
+    max-width: 1400px;
+  }
+}
+
+
+/* App Swiper */
+
+/* Estilos específicos para o primeiro swiper (após o título) */
+.custom-swiper.swiper {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 0; /* Removido o padding-bottom */
+}
+
+/* Esconde as setas de navegação em mobile */
+@media (max-width: 768px) {
+  .custom-swiper .swiper-button-prev,
+  .custom-swiper .swiper-button-next {
+    display: none;
+  }
+}
+
+.custom-swiper .swiper-slide {
+  width: 228px !important;
+  height: 489px !important;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: self-start;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.custom-swiper .swiper-slide:not(.swiper-slide-active) {
+  filter: blur(1px);
+  transform: scale(0.85);
+}
+
+.custom-swiper .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.custom-swiper .swiper-slide-active {
+  filter: blur(0);
+  transform: scale(1);
+}
+
+/* Estilos específicos para as setas do primeiro swiper */
+.custom-swiper .swiper-button-prev,
+.custom-swiper .swiper-button-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Remove o conteúdo padrão das setas do Swiper */
+.custom-swiper .swiper-button-prev::after,
+.custom-swiper .swiper-button-next::after {
+  content: none !important;
+}
+
+/* Ajusta a posição das setas para ficarem mais próximas */
+.custom-swiper .swiper-button-prev {
+  left: 35%; /* Aumentado de 25% para 35% */
+}
+
+.custom-swiper .swiper-button-next {
+  right: 35%; /* Aumentado de 25% para 35% */
+}
+
+/* Estilo dos ícones dentro das setas */
+.custom-swiper .swiper-button-prev i,
+.custom-swiper .swiper-button-next i {
+  color: white;
+  font-size: 16px;
+}
+
+/* Efeito hover nas setas */
+.custom-swiper .swiper-button-prev:hover,
+.custom-swiper .swiper-button-next:hover {
+  background: none;
+}
+
+.custom-swiper .swiper-button-prev:hover i,
+.custom-swiper .swiper-button-next:hover i {
+  color: #000000;
+}
+
+/* Esconde setas desabilitadas */
+.custom-swiper .swiper-button-disabled {
+  display: none;
+}
+
+@media (min-width: 768px) {
+    .project-header {
+        margin-top: 80px; /* Aumenta o espaço entre o menu e o início do conteúdo */
+    }
+}
+
+/* Para telas ainda maiores, podemos aumentar um pouco mais */
+@media (min-width: 1200px) {
+    .project-header {
+        margin-top: 100px;
+    }
+}
+
+/* App Swiper */
+.custom-swiper.swiper {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 0; /* Removido o padding-bottom */
+}
+
+/* Esconde as setas de navegação em mobile */
+@media (max-width: 768px) {
+  .custom-swiper .swiper-button-prev,
+  .custom-swiper .swiper-button-next {
+    display: none;
+  }
+}
+
+.custom-swiper .swiper-slide {
+  width: 229px !important;
+  height: 489px !important;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: self-start;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+/* App Swiper */
+.custom-swiper.swiper {
+  width: 100%;
+  padding-top: 0; /* Removido o padding-top */
+  padding-bottom: 0;
+}
+
+/* Esconde as setas de navegação em mobile */
+@media (max-width: 768px) {
+  .custom-swiper .swiper-button-prev,
+  .custom-swiper .swiper-button-next {
+    display: none;
   }
 }
 
