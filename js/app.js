@@ -43,6 +43,20 @@
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Animação dos elementos com loading__item
+gsap.utils.toArray('.loading__item').forEach(item => {
+  gsap.from(item, {
+    opacity: 0,
+    y: 50,
+    duration: 1,
+    scrollTrigger: {
+      trigger: item,
+      start: "top bottom-=100",
+      toggleActions: "play none none reverse"
+    }
+  });
+});
+
 // --------------------------------------------- //
 // Loader & Loading Animation Start
 // --------------------------------------------- //
@@ -510,6 +524,7 @@ if (!testimonialsSlider) {
   const swiper = new Swiper('.swiper-testimonials', {
     slidesPerView: 1,
     spaceBetween: 20,
+    initialSlide: 2,
     autoplay: {
       delay: 20000, // Delay of 20 seconds before starting the autoplay
       disableOnInteraction: false,
@@ -573,16 +588,6 @@ $(function () {
   });
   // --------------------------------------------- //
   // Magnific Popup End
-  // --------------------------------------------- //
-
-  // --------------------------------------------- //
-  // Layout Masonry After Each Image Loads Start
-  // --------------------------------------------- //
-  $('.my-gallery, .nova-galeria').imagesLoaded().progress(function () {
-    $('.my-gallery, .nova-galeria').masonry('layout');
-  });
-  // --------------------------------------------- //
-  // Layout Masonry After Each Image Loads End
   // --------------------------------------------- //
 
   // --------------------------------------------- //
@@ -766,62 +771,40 @@ window.addEventListener('DOMContentLoaded', () => {
 // Color Switch End
 // --------------------------------------------- //
 
-document.addEventListener("DOMContentLoaded", function () {
-  document.documentElement.setAttribute("data-theme", "dark");
-});
-
 $(document).on("click", '[data-toggle="lightbox"]', function (event) {
   event.preventDefault();
   $(this).ekkoLightbox();
 });
 
-// Phone Carousel - Versão melhorada
-document.addEventListener('DOMContentLoaded', function () {
-  const carousel = document.querySelector('.carousel');
-  const items = document.querySelectorAll('.carousel-item');
-  const prevBtn = document.querySelector('.carousel-button.prev');
-  const nextBtn = document.querySelector('.carousel-button.next');
+// Unified scroll handling function
+function smoothScrollTo(targetElement, offset = 0) {
+  if (!targetElement) return;
+  
+  // Pega a altura do header fixo
+  const header = document.querySelector('header');
+  const headerHeight = header ? header.offsetHeight : 0;
+  
+  // Calcula a posição real do elemento alvo
+  const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+  
+  // Ajusta o scroll para alinhar com o topo do conteúdo
+  window.scrollTo({
+    top: targetPosition - headerHeight - offset,
+    behavior: 'smooth'
+  });
+}
 
-  let currentIndex = 0;
-  const totalItems = items.length;
-
-  function updateCarousel() {
-    items.forEach((item, index) => {
-      // Calcula a diferença da posição atual
-      let diff = index - currentIndex;
-
-      // Ajusta para loop circular
-      if (diff < -2) diff += totalItems;
-      if (diff > 2) diff -= totalItems;
-
-      // Define transformação baseada na posição
-      let translateX = diff * 60; // Distância entre slides
-      let translateZ = Math.abs(diff) * -100; // Profundidade
-      let rotation = diff * 15; // Rotação
-      let opacity = 1 - (Math.abs(diff) * 0.3); // Opacidade
-
-      // Aplica transformações
-      item.style.transform = `translateX(${translateX}%) translateZ(${translateZ}px) rotateY(${rotation}deg)`;
-      item.style.opacity = opacity;
-      item.style.zIndex = 5 - Math.abs(diff);
-
-      // Adiciona/remove classe active
-      item.classList.toggle('active', index === currentIndex);
-    });
+// Event delegation para links do menu lateral
+document.addEventListener('click', function(e) {
+  const sidebarLink = e.target.closest('.sidebar-nav .nav-link');
+  if (sidebarLink) {
+    e.preventDefault();
+    const targetId = sidebarLink.getAttribute('href').substring(1);
+    const targetElement = document.getElementById(targetId);
+    
+    // Usa um offset específico para o menu lateral
+    smoothScrollTo(targetElement, 20); // Ajuste este valor conforme necessário
   }
-
-  prevBtn.addEventListener('click', () => {
-    currentIndex = (currentIndex - 1 + totalItems) % totalItems;
-    updateCarousel();
-  });
-
-  nextBtn.addEventListener('click', () => {
-    currentIndex = (currentIndex + 1) % totalItems;
-    updateCarousel();
-  });
-
-  // Inicializa o carrossel
-  updateCarousel();
 });
 
 // Scroll Spy aprimorado
@@ -855,66 +838,58 @@ $(document).ready(function () {
   navLinks.on('click', function (e) {
     e.preventDefault();
     const target = $($(this).attr('href'));
+    const currentScroll = $(window).scrollTop();
+    const targetOffset = target.offset().top - fixedOffset;
 
-    $('html, body').animate({
-      scrollTop: target.offset().top - fixedOffset
+    // Scroll direto para a posição
+    $('html, body').stop().animate({
+      scrollTop: targetOffset
     }, {
       duration: 500,
-      easing: 'easeInOutCubic'
+      easing: 'easeInOutCubic',
+      start: function() {
+        // Previne outros eventos de scroll durante a animação
+        $(window).off('scroll', updateActiveSection);
+      },
+      complete: function() {
+        // Reativa os eventos de scroll após a animação
+        $(window).on('scroll', updateActiveSection);
+        updateActiveSection();
+      }
     });
   });
 });
 
-// Function to scroll to a section with offset
-function scrollToSectionWithOffset(sectionId) {
-  const headerHeight = document.querySelector('header').offsetHeight;
-  const additionalOffset = 20; // Ajuste adicional para garantir que o título não fique oculto
-  const section = document.getElementById(sectionId);
-  const sectionPosition = section.offsetTop - headerHeight - additionalOffset;
+function initScrollSpy() {
+  const sections = document.querySelectorAll('.main-content div[id]');
+  const navLinks = document.querySelectorAll('.sidebar-nav .nav-link');
+  const headerOffset = document.querySelector('header')?.offsetHeight || 0;
+  const scrollOffset = headerOffset + 20; // Ajuste fino adicional
 
-  window.scrollTo({
-    top: sectionPosition,
-    behavior: 'smooth'
-  });
-}
+  function updateActiveSection() {
+    const scrollPosition = window.scrollY + scrollOffset;
 
-// Event listener for menu clicks
-document.querySelectorAll('.menu-item').forEach(item => {
-  item.addEventListener('click', function (event) {
-    event.preventDefault();
-    const targetSectionId = this.getAttribute('href').substring(1);
-    scrollToSectionWithOffset(targetSectionId);
-  });
-});
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionBottom = sectionTop + section.offsetHeight;
 
-document.addEventListener('DOMContentLoaded', function() {
-  // Verifica se estamos na página do projeto (procura pelo menu lateral)
-  const sidebarNav = document.querySelector('.sidebar-nav');
-  
-  if (sidebarNav) {
-    const sidebarLinks = sidebarNav.querySelectorAll('.nav-link');
-    
-    // Adiciona evento de clique apenas aos links do menu lateral
-    sidebarLinks.forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        const targetId = this.getAttribute('href').substring(1);
-        const targetSection = document.getElementById(targetId);
-        
-        if (targetSection) {
-          const headerOffset = 100; // Ajuste este valor conforme necessário
-          const offsetTop = targetSection.offsetTop - headerOffset;
-          
-          window.scrollTo({
-            top: offsetTop,
-            behavior: 'smooth'
-          });
-        }
-      });
+      if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${section.id}`) {
+            link.classList.add('active');
+          }
+        });
+      }
     });
   }
-});
+
+  window.addEventListener('scroll', updateActiveSection);
+  updateActiveSection();
+}
+
+// Initialize on DOM load
+document.addEventListener('DOMContentLoaded', initScrollSpy);
 
 function updateCarouselSize() {
   const carousel = document.getElementById('carousel');
@@ -930,6 +905,15 @@ function updateCarouselSize() {
   }
 }
 
-// Adicione os listeners
-window.addEventListener('load', updateCarouselSize);
-window.addEventListener('resize', _.debounce(updateCarouselSize, 250));
+document.addEventListener('DOMContentLoaded', function() {
+    // Verifica se o jQuery e Masonry existem
+    if (typeof jQuery !== 'undefined' && typeof jQuery.fn.masonry !== 'undefined') {
+        // Inicializa o Masonry
+        $('.grid').masonry({
+            itemSelector: '.grid-item',
+            columnWidth: '.grid-sizer',
+            percentPosition: true
+        });
+    }
+});
+
