@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- Page Title -->
@@ -43,12 +43,13 @@
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#BABEC8">
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#141414">
     <meta name="msapplication-navbutton-color" content="#141414">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
     <!-- Custom Browser Color End -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
 </head>
 
-<body>
+<body data-bs-spy="scroll" data-bs-target=".sidebar-nav" data-bs-offset="200">
 
     <!-- Loader Start -->
     <div id="loader" class="loader">
@@ -70,37 +71,37 @@
             <nav id="menu" class="menu">
                 <ul class="menu__list d-flex justify-content-start">
                     <li class="menu__item">
-                        <a class="menu__link btn" href="#home">
+                        <a class="menu__link btn" href="index.html/#home">
                             <span class="menu__caption">Home</span>
                             <i class="ph ph-house-simple"></i>
                         </a>
                     </li>
                     <li class="menu__item">
-                        <a class="menu__link btn" href="#portfolio">
+                        <a class="menu__link btn" href="index.html#portfolio">
                             <span class="menu__caption">Portfólio</span>
                             <i class="ph ph-squares-four"></i>
                         </a>
                     </li>
                     <li class="menu__item">
-                        <a class="menu__link btn" href="#about">
+                        <a class="menu__link btn" href="index.html#about">
                             <span class="menu__caption">Sobre</span>
                             <i class="ph ph-user"></i>
                         </a>
                     </li>
                     <li class="menu__item">
-                        <a class="menu__link btn" href="#services">
+                        <a class="menu__link btn" href="index.html#services">
                             <span class="menu__caption">Especialidades</span>
                             <i class="ph ph-sticker"></i>
                         </a>
                     </li>
                     <li class="menu__item">
-                        <a class="menu__link btn" href="#resume">
+                        <a class="menu__link btn" href="index.html#resume">
                             <span class="menu__caption">Curriculum</span>
                             <i class="ph ph-article"></i>
                         </a>
                     </li>
                     <li class="menu__item">
-                        <a class="menu__link btn" href="#contact">
+                        <a class="menu__link btn" href="index.html#contact">
                             <span class="menu__caption">Contato</span>
                             <i class="ph ph-envelope"></i>
                         </a>
@@ -114,7 +115,7 @@
 
     <!-- Fixed Logo Start -->
     <div class="logo loading__fade">
-        <a href="#home" class="logo__link">
+        <a href="index.html" class="logo__link">
             <!-- logo icon -->
             <img src="img/favicon/Asuka.svg" alt="Logo Icon" style="width: 35px; height: 35px;">
             <!-- logo text -->
@@ -143,7 +144,7 @@
                                 <div class="main-wrapper">
                                     <div class="project-header">
                                         <h1 class="project-title">Lighthouse App</h1>
-                                        
+
                                         <div class="project-tags">
                                             <span class="tag">Mobile App</span>
                                             <span class="tag">B2B SaaS</span>
@@ -151,309 +152,555 @@
                                             <span class="tag">Product Design</span>
                                             <span class="tag">Data Visualization</span>
                                         </div>
-                                        
+
                                         <div class="project-description">
-                                            Lighthouse - Produção é um app mobile da Vale que oferece dados em tempo real, gráficos dinâmicos e notificações 
-                                            personalizáveis, permitindo decisões rápidas e comunicação eficiente. Uma solução essencial para a gestão de 
+                                            Lighthouse - Produção é um app mobile da Vale que oferece dados em tempo
+                                            real, gráficos dinâmicos e notificações
+                                            personalizáveis, permitindo decisões rápidas e comunicação eficiente. Uma
+                                            solução essencial para a gestão de
                                             produção, desenvolvida como MVP.
                                         </div>
                                     </div>
                                 </div>
 
-                                <section class="project-showcase">
-                                    <div class="container-fluid">
-                                      <div class="carousel-wrapper">
-                                        <div class="carousel-container">
-                                          <div id="carousel">
-                                            <!-- Slides -->
-                                            <div class="slides-container">
-                                              <div class="slide">
-                                                <img alt="Project Screenshot 1" src="1.png">
-                                              </div>
-                                              <div class="slide">
-                                                <img alt="Project Screenshot 2" src="1.png">
-                                              </div>
-                                              <div class="slide">
-                                                <img alt="Project Screenshot 3" src="1.png">
-                                              </div>
-                                              <div class="slide">
-                                                <img alt="Project Screenshot 4" src="1.png">
-                                              </div>
-                                              <div class="slide">
-                                                <img alt="Project Screenshot 5" src="1.png">
-                                              </div>
-                                            </div>
-                                  
-                                            <!-- Navigation -->
-                                            <div class="carousel-navigation">
-                                              <button class="navigate-left">
-                                                <i class="ph ph-arrow-left"></i>
-                                              </button>
-                                              <button class="navigate-right">
-                                                <i class="ph ph-arrow-right"></i>
-                                              </button>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
+                                <div class="custom-swiper swiper">
+                                    <div class="swiper-button-prev">
+                                        <i class="ph ph-arrow-left"></i>
                                     </div>
-                                  </section>
+                                    <div class="swiper-button-next">
+                                        <i class="ph ph-arrow-right"></i>
+                                    </div>
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <img src="/1.png" alt="Slide 1">
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <img src="/1.png" alt="Slide 2">
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <img src="/1.png" alt="Slide 3">
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <img src="/1.png" alt="Slide 4">
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <img src="/1.png" alt="Slide 5">
+                                        </div>
+                                    </div>
+                                </div>
 
-                             <!-- Project Data Section Start -->
-                             <div class="content__block">
-                                <div class="project__data">
-                                    <div class="container-fluid p-0">
-                                        <div class="row g-0">
-                                            <!-- project data single item -->
-                                            <div class="col-12 col-md-3 grid-item pdata__item">
-                                                <p class="data__title tagline-chapter small type-basic-160lh">
-                                                    Tipo</p>
-                                                <p class="data__descr small type-basic-160lh">
-                                                    PowerBI Dashboard</p>
-                                            </div>
-                                            <!-- project data single item -->
-                                            <div class="col-12 col-md-3 grid-item pdata__item">
-                                                <p class="data__title tagline-chapter small type-basic-160lh">
-                                                    Ano</p>
-                                                <p class="data__descr small type-basic-160lh">
-                                                    2022</p>
-                                            </div>
-                                            <!-- project data single item -->
-                                            <div class="col-12 col-md-3 grid-item pdata__item">
-                                                <p class="data__title tagline-chapter small type-basic-160lh">
-                                                    Papel</p>
-                                                <p class="data__descr small type-basic-160lh">
-                                                    Lead Product Designer</p>
-                                            </div>
-                                            <!-- project data single item -->
-                                            <div class="col-12 col-md-3 grid-item pdata__item">
-                                                <p class="data__title tagline-chapter small type-basic-160lh">
-                                                    Cliente</p>
-                                                <p class="data__descr small type-basic-160lh">
-                                                    Vale</p>
+
+                                <!-- Project Data Section Start -->
+                                <div class="content__block loading__item">
+                                    <div class="project__data">
+                                        <div class="container-fluid p-0">
+                                            <div class="row g-0">
+                                                <!-- project data single item -->
+                                                <div class="col-12 col-md-3 grid-item pdata__item">
+                                                    <p class="data__title tagline-chapter small type-basic-160lh">
+                                                        Tipo</p>
+                                                    <p class="data__descr small type-basic-160lh">
+                                                        PowerBI Dashboard</p>
+                                                </div>
+                                                <!-- project data single item -->
+                                                <div class="col-12 col-md-3 grid-item pdata__item">
+                                                    <p class="data__title tagline-chapter small type-basic-160lh">
+                                                        Ano</p>
+                                                    <p class="data__descr small type-basic-160lh">
+                                                        2022</p>
+                                                </div>
+                                                <!-- project data single item -->
+                                                <div class="col-12 col-md-3 grid-item pdata__item">
+                                                    <p class="data__title tagline-chapter small type-basic-160lh">
+                                                        Papel</p>
+                                                    <p class="data__descr small type-basic-160lh">
+                                                        Lead Product Designer</p>
+                                                </div>
+                                                <!-- project data single item -->
+                                                <div class="col-12 col-md-3 grid-item pdata__item">
+                                                    <p class="data__title tagline-chapter small type-basic-160lh">
+                                                        Cliente</p>
+                                                    <p class="data__descr small type-basic-160lh">
+                                                        Vale</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- Project Data Section End -->
+                                <!-- Project Data Section End -->
 
-                            <!-- New Two-Column Layout Start -->
-                            <div class="container-fluid p-0">
-                                <div class="row g-0">
-                                    <div class="col-12 col-lg-3">
-                                        <nav class="sidebar-nav" role="navigation" aria-label="Menu lateral">
-                                            <ul class="nav flex-column list-unstyled">
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="#overview" aria-current="page">Overview</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="#desafio" aria-current="page">Desafio</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="#papel">Papel</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="#solucao">Solução</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="#impacto">Impacto</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="#galeria">Galeria</a>
-                                                </li>
-                                            </ul>
-                                        </nav>
-                                    </div>
+                                <!-- New Two-Column Layout Start -->
+                                <div class="container-fluid p-0">
+                                    <div class="row g-0">
+                                        <div class="col-12 col-lg-3">
+                                            <nav class="sidebar-nav loading__item" role="navigation" aria-label="Menu lateral">
+                                                <ul class="nav flex-column list-unstyled">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="#overview"
+                                                            aria-current="page">Overview</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="#desafio"
+                                                            aria-current="page">Desafio</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="#papel">Papel</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="#solucao">Solução</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="#impacto">Impacto</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="#galeria">Galeria</a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
 
-                                    <!-- Main Content -->
-                                    <div class="col-12 col-lg-9">
-                                        <div class="main-content">
-                                            <div id="overview" class="project__block">
-                                                <h3>Project Overview</h3>
-                                                <p class="type-basic-160lh">
-                                                    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                                                    accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-                                                    quae ab illo inventore veritatis et quasi architecto beatae
-                                                    vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
-                                                    voluptas sit aspernatur aut odit aut fugit, sed quia
-                                                    consequuntur magni dolores eos qui ratione voluptatem sequi
-                                                    nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
-                                                    sit amet, consectetur, adipisci velit, sed quia non numquam eius
-                                                    modi tempora incidunt ut labore et dolore magnam aliquam quaerat
-                                                    voluptatem. Ut enim ad minima veniam, quis nostrum
-                                                    exercitationem ullam corporis suscipit laboriosam, nisi ut
-                                                    aliquid ex ea commodi consequatur? Quis autem vel eum iure
-                                                    reprehenderit qui in ea voluptate velit esse quam nihil
-                                                    molestiae consequatur, vel illum qui dolorem eum fugiat quo
-                                                    voluptas nulla pariatur?"
-                                                </p>
-                                            </div>
+                                        <!-- Main Content -->
+                                        <div class="col-12 col-lg-9">
+                                            <div class="main-content">
+                                                <div id="overview" class="project__block loading__item">
+                                                    <h3>Project Overview</h3>
+                                                    <p class="type-basic-160lh">
+                                                        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+                                                        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+                                                        quae ab illo inventore veritatis et quasi architecto beatae
+                                                        vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
+                                                        voluptas sit aspernatur aut odit aut fugit, sed quia
+                                                        consequuntur magni dolores eos qui ratione voluptatem sequi
+                                                        nesciunt..."
+                                                    </p>
+                                                    <div>
+                                                        <div class="regular-swiper swiper">
+                                                            <div class="swiper-button-prev">
+                                                                <i class="ph ph-arrow-left"></i>
+                                                            </div>
+                                                            <div class="swiper-button-next">
+                                                                <i class="ph ph-arrow-right"></i>
+                                                            </div>
 
-                                            <!-- Challenge Section -->
-                                            <div id="desafio" class="project__block">
-                                                <h3>O Desafio</h3>
-                                                <p class="type-basic-160lh">
-                                                    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                                                    accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-                                                    quae ab illo inventore veritatis et quasi architecto beatae
-                                                    vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
-                                                    voluptas sit aspernatur aut odit aut fugit, sed quia
-                                                    consequuntur magni dolores eos qui ratione voluptatem sequi
-                                                    nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
-                                                    sit amet, consectetur, adipisci velit, sed quia non numquam eius
-                                                    modi tempora incidunt ut labore et dolore magnam aliquam quaerat
-                                                    voluptatem. Ut enim ad minima veniam, quis nostrum
-                                                    exercitationem ullam corporis suscipit laboriosam, nisi ut
-                                                    aliquid ex ea commodi consequatur? Quis autem vel eum iure
-                                                    reprehenderit qui in ea voluptate velit esse quam nihil
-                                                    molestiae consequatur, vel illum qui dolorem eum fugiat quo
-                                                    voluptas nulla pariatur?"
-                                                </p>
-                                            </div>
 
-                                            <!-- Role Section -->
-                                            <div id="papel" class="project__block">
-                                                <h3>Meu Papel</h3>
-                                                <p class="type-basic-160lh">
-                                                    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                                                    accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-                                                    quae ab illo inventore veritatis et quasi architecto beatae
-                                                    vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
-                                                    voluptas sit aspernatur aut odit aut fugit, sed quia
-                                                    consequuntur magni dolores eos qui ratione voluptatem sequi
-                                                    nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
-                                                    sit amet, consectetur, adipisci velit, sed quia non numquam eius
-                                                    modi tempora incidunt ut labore et dolore magnam aliquam quaerat
-                                                    voluptatem. Ut enim ad minima veniam, quis nostrum
-                                                    exercitationem ullam corporis suscipit laboriosam, nisi ut
-                                                    aliquid ex ea commodi consequatur? Quis autem vel eum iure
-                                                    reprehenderit qui in ea voluptate velit esse quam nihil
-                                                    molestiae consequatur, vel illum qui dolorem eum fugiat quo
-                                                    voluptas nulla pariatur?"
-                                                </p>
-                                            </div>
+                                                            <div class="swiper-wrapper">
+                                                                <div
+                                                                    class="swiper-slide swiper-slide--one mobile-stack">
+                                                                    <img src="/2.png" alt="Slide 1">
+                                                                </div>
+                                                                <div
+                                                                    class="swiper-slide swiper-slide--two mobile-stack">
+                                                                    <img src="/2.png" alt="Slide 2">
+                                                                </div>
+                                                                <div
+                                                                    class="swiper-slide swiper-slide--three mobile-stack">
+                                                                    <img src="/2.png" alt="Slide 3">
+                                                                </div>
+                                                                <div
+                                                                    class="swiper-slide swiper-slide--four mobile-stack">
+                                                                    <img src="/2.png" alt="Slide 4">
+                                                                </div>
+                                                                <div
+                                                                    class="swiper-slide swiper-slide--five mobile-stack">
+                                                                    <img src="/2.png" alt="Slide 5">
+                                                                </div>
+                                                            </div>
+                                                            <div class="swiper-pagination"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-                                            <!-- Solution Section -->
-                                            <div id="solucao" class="project__block">
-                                                <h3>A Solução</h3>
-                                                <p class="type-basic-160lh">
-                                                    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                                                    accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-                                                    quae ab illo inventore veritatis et quasi architecto beatae
-                                                    vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
-                                                    voluptas sit aspernatur aut odit aut fugit, sed quia
-                                                    consequuntur magni dolores eos qui ratione voluptatem sequi
-                                                    nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
-                                                    sit amet, consectetur, adipisci velit, sed quia non numquam eius
-                                                    modi tempora incidunt ut labore et dolore magnam aliquam quaerat
-                                                    voluptatem. Ut enim ad minima veniam, quis nostrum
-                                                    exercitationem ullam corporis suscipit laboriosam, nisi ut
-                                                    aliquid ex ea commodi consequatur? Quis autem vel eum iure
-                                                    reprehenderit qui in ea voluptate velit esse quam nihil
-                                                    molestiae consequatur, vel illum qui dolorem eum fugiat quo
-                                                    voluptas nulla pariatur?"
-                                                </p>
-                                            </div>
 
-                                            <!-- Impact Section -->
-                                            <div id="impacto" class="project__block">
-                                                <h3>O Impacto</h3>
-                                                <p class="type-basic-160lh">
-                                                    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                                                    accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-                                                    quae ab illo inventore veritatis et quasi architecto beatae
-                                                    vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
-                                                    voluptas sit aspernatur aut odit aut fugit, sed quia
-                                                    consequuntur magni dolores eos qui ratione voluptatem sequi
-                                                    nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
-                                                    sit amet, consectetur, adipisci velit, sed quia non numquam eius
-                                                    modi tempora incidunt ut labore et dolore magnam aliquam quaerat
-                                                    voluptatem. Ut enim ad minima veniam, quis nostrum
-                                                    exercitationem ullam corporis suscipit laboriosam, nisi ut
-                                                    aliquid ex ea commodi consequatur? Quis autem vel eum iure
-                                                    reprehenderit qui in ea voluptate velit esse quam nihil
-                                                    molestiae consequatur, vel illum qui dolorem eum fugiat quo
-                                                    voluptas nulla pariatur?"
-                                                </p>
-                                            </div>
+                                                <!-- Challenge Section -->
+                                                <div id="desafio" class="project__block loading__item">
+                                                    <h3>O Desafio</h3>
+                                                    <p class="type-basic-160lh">
+                                                        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+                                                        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+                                                        quae ab illo inventore veritatis et quasi architecto beatae
+                                                        vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
+                                                        voluptas sit aspernatur aut odit aut fugit, sed quia
+                                                        consequuntur magni dolores eos qui ratione voluptatem sequi
+                                                        nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
+                                                        sit amet, consectetur, adipisci velit, sed quia non numquam eius
+                                                        modi tempora incidunt ut labore et dolore magnam aliquam quaerat
+                                                        voluptatem. Ut enim ad minima veniam, quis nostrum
+                                                        exercitationem ullam corporis suscipit laboriosam, nisi ut
+                                                        aliquid ex ea commodi consequatur? Quis autem vel eum iure
+                                                        reprehenderit qui in ea voluptate velit esse quam nihil
+                                                        molestiae consequatur, vel illum qui dolorem eum fugiat quo
+                                                        voluptas nulla pariatur?"
+                                                    </p>
 
-                                            <!-- Gallery Section -->
-                                            <div id="galeria" class="project__block">
-                                                <h3>Galeria</h3>
-                                                <p class="type-basic-160lh">
-                                                    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                                                    accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-                                                    quae ab illo inventore veritatis et quasi architecto beatae
-                                                    vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
-                                                    voluptas sit aspernatur aut odit aut fugit, sed quia
-                                                    consequuntur magni dolores eos qui ratione voluptatem sequi
-                                                    nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
-                                                    sit amet, consectetur, adipisci velit, sed quia non numquam eius
-                                                    modi tempora incidunt ut labore et dolore magnam aliquam quaerat
-                                                    voluptatem. Ut enim ad minima veniam, quis nostrum
-                                                    exercitationem ullam corporis suscipit laboriosam, nisi ut
-                                                    aliquid ex ea commodi consequatur? Quis autem vel eum iure
-                                                    reprehenderit qui in ea voluptate velit esse quam nihil
-                                                    molestiae consequatur, vel illum qui dolorem eum fugiat quo
-                                                    voluptas nulla pariatur?"
-                                                </p>
+                                                    <div class="infinite-scroll-section"></div>
+                                                    <div class="tag-list">
+                                                        <div class="fade"></div>
+
+                                                        <div class="loop-slider"
+                                                            style="--duration:15951ms; --direction:normal;">
+                                                            <div class="inner">
+                                                                <div class="image-card">
+                                                                    <img src="/3.png" alt="Projeto 1">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img src="/3.png" alt="Projeto 2">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img src="/3.png" alt="Projeto 1">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img src="/3.png" alt="Projeto 2">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img src="/3.png" alt="Projeto 1">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img src="/3.png" alt="Projeto 2">
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <!-- Segunda linha - direção reversa -->
+                                                        <div class="loop-slider"
+                                                            style="--duration:15951ms; --direction:reverse;">
+                                                            <div class="inner">
+                                                                <div class="image-card">
+                                                                    <img src="/3.png" alt="Projeto 1">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img src="/3.png" alt="Projeto 2">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img src="/3.png" alt="Projeto 1">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img src="/3.png" alt="Projeto 2">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img src="/3.png" alt="Projeto 1">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img src="/3.png" alt="Projeto 2">
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <!-- Terceira linha - direção normal -->
+                                                        <div class="loop-slider"
+                                                            style="--duration:15951ms; --direction:normal;">
+                                                            <div class="inner">
+                                                                <div class="image-card">
+                                                                    <img src="/3.png" alt="Projeto 1">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img src="/3.png" alt="Projeto 2">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img src="/3.png" alt="Projeto 1">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img src="/3.png" alt="Projeto 2">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img src="/3.png" alt="Projeto 1">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img src="/3.png" alt="Projeto 2">
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <!-- Role Section -->
+                                                <div id="papel" class="project__block loading__item">
+                                                    <h3>Meu Papel</h3>
+                                                    <p class="type-basic-160lh">
+                                                        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+                                                        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+                                                        quae ab illo inventore veritatis et quasi architecto beatae
+                                                        vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
+                                                        voluptas sit aspernatur aut odit aut fugit, sed quia
+                                                        consequuntur magni dolores eos qui ratione voluptatem sequi
+                                                        nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
+                                                        sit amet, consectetur, adipisci velit, sed quia non numquam eius
+                                                        modi tempora incidunt ut labore et dolore magnam aliquam quaerat
+                                                        voluptatem. Ut enim ad minima veniam, quis nostrum
+                                                        exercitationem ullam corporis suscipit laboriosam, nisi ut
+                                                        aliquid ex ea commodi consequatur? Quis autem vel eum iure
+                                                        reprehenderit qui in ea voluptate velit esse quam nihil
+                                                        molestiae consequatur, vel illum qui dolorem eum fugiat quo
+                                                        voluptas nulla pariatur?"
+                                                    </p>
+                                                </div>
+
+                                                <!-- Solution Section -->
+                                                <div id="solucao" class="project__block loading__item">
+                                                    <h3>A Solução</h3>
+                                                    <p class="type-basic-160lh">
+                                                        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+                                                        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+                                                        quae ab illo inventore veritatis et quasi architecto beatae
+                                                        vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
+                                                        voluptas sit aspernatur aut odit aut fugit, sed quia
+                                                        consequuntur magni dolores eos qui ratione voluptatem sequi
+                                                        nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
+                                                        sit amet, consectetur, adipisci velit, sed quia non numquam eius
+                                                        modi tempora incidunt ut labore et dolore magnam aliquam quaerat
+                                                        voluptatem. Ut enim ad minima veniam, quis nostrum
+                                                        exercitationem ullam corporis suscipit laboriosam, nisi ut
+                                                        aliquid ex ea commodi consequatur? Quis autem vel eum iure
+                                                        reprehenderit qui in ea voluptate velit esse quam nihil
+                                                        molestiae consequatur, vel illum qui dolorem eum fugiat quo
+                                                        voluptas nulla pariatur?"
+                                                    </p>
+                                                </div>
+
+                                                <!-- Impact Section -->
+                                                <div id="impacto" class="project__block loading__item">
+                                                    <h3>O Impacto</h3>
+                                                    <p class="type-basic-160lh">
+                                                        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+                                                        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+                                                        quae ab illo inventore veritatis et quasi architecto beatae
+                                                        vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
+                                                        voluptas sit aspernatur aut odit aut fugit, sed quia
+                                                        consequuntur magni dolores eos qui ratione voluptatem sequi
+                                                        nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
+                                                        sit amet, consectetur, adipisci velit, sed quia non numquam eius
+                                                        modi tempora incidunt ut labore et dolore magnam aliquam quaerat
+                                                        voluptatem. Ut enim ad minima veniam, quis nostrum
+                                                        exercitationem ullam corporis suscipit laboriosam, nisi ut
+                                                        aliquid ex ea commodi consequatur? Quis autem vel eum iure
+                                                        reprehenderit qui in ea voluptate velit esse quam nihil
+                                                        molestiae consequatur, vel illum qui dolorem eum fugiat quo
+                                                        voluptas nulla pariatur?"
+                                                    </p>
+                                                </div>
+
+                                                <!-- Nova seção de imagem responsiva -->
+                                                <div class="full-width-image-container">
+                                                    <img src="/4.png" alt="Imagem de impacto do projeto"
+                                                        class="full-width-image">
+                                                </div>
+
+                                                <!-- Gallery Section -->
+                                                <div id="galeria" class="project__block loading__item">
+                                                    <h3>Galeria</h3>
+                                                    <p class="type-basic-160lh">
+                                                        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+                                                        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+                                                        quae ab illo inventore veritatis et quasi architecto beatae
+                                                        vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
+                                                        voluptas sit aspernatur aut odit aut fugit, sed quia
+                                                        consequuntur magni dolores eos qui ratione voluptatem sequi
+                                                        nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
+                                                        sit amet, consectetur, adipisci velit, sed quia non numquam eius
+                                                        modi tempora incidunt ut labore et dolore magnam aliquam quaerat
+                                                        voluptatem. Ut enim ad minima veniam, quis nostrum
+                                                        exercitationem ullam corporis suscipit laboriosam, nisi ut
+                                                        aliquid ex ea commodi consequatur? Quis autem vel eum iure
+                                                        reprehenderit qui in ea voluptate velit esse quam nihil
+                                                        molestiae consequatur, vel illum qui dolorem eum fugiat quo
+                                                        voluptas nulla pariatur?"
+                                                    </p>
+                                                </div>
+
+<!-- Content Block - Portfolio Gallery Masonry Grid Start -->
+<div class="content__block grid-block">
+    <div class="container-fluid px-0 inner__gallery">
+
+        <!-- Portfolio Gallery Start -->
+        <div class="row gx-0 my-gallery" itemscope
+            itemtype="http://schema.org/ImageGallery"
+            data-masonry='{"percentPosition": true }'>
+            
+            <!-- portfolio gallery single item -->
+            <figure class="col-12 col-md-6 gallery__item grid-item animate-card-2"
+                itemprop="associatedMedia" itemscope
+                itemtype="http://schema.org/ImageObject">
+                <a href="https://dummyimage.com/1400x1050/686868/737373"
+                    data-image="https://dummyimage.com/1400x1050/686868/737373"
+                    class="gallery__link" itemprop="contentUrl" data-size="1400x1050">
+                    <img src="https://dummyimage.com/1400x1050/686868/737373"
+                        class="gallery__image" itemprop="thumbnail"
+                        alt="Image description">
+                </a>
+            </figure>
+
+            <!-- portfolio gallery single item -->
+            <figure class="col-12 col-md-6 gallery__item grid-item animate-card-2"
+                itemprop="associatedMedia" itemscope
+                itemtype="http://schema.org/ImageObject">
+                <a href="https://dummyimage.com/1100x1400/414141/636363"
+                    data-image="https://dummyimage.com/1100x1400/414141/636363"
+                    class="gallery__link" itemprop="contentUrl" data-size="1100x1400">
+                    <img src="https://dummyimage.com/1100x1400/414141/636363"
+                        class="gallery__image" itemprop="thumbnail"
+                        alt="Image description">
+                </a>
+            </figure>
+
+            <!-- portfolio gallery single item -->
+            <figure class="col-12 col-md-6 gallery__item grid-item animate-card-2"
+                itemprop="associatedMedia" itemscope
+                itemtype="http://schema.org/ImageObject">
+                <a href="https://dummyimage.com/1400x1400/414141/636363"
+                    data-image="https://dummyimage.com/1400x1400/414141/636363"
+                    class="gallery__link" itemprop="contentUrl" data-size="1400x1400">
+                    <img src="https://dummyimage.com/1400x1400/414141/636363"
+                        class="gallery__image" itemprop="thumbnail"
+                        alt="Image description">
+                </a>
+            </figure>
+            <!-- portfolio gallery single item -->
+            <figure class="col-12 col-md-6 gallery__item grid-item animate-card-2"
+                itemprop="associatedMedia" itemscope
+                itemtype="http://schema.org/ImageObject">
+                <a href="https://dummyimage.com/1400x1050/686868/737373"
+                    data-image="https://dummyimage.com/1400x1050/686868/737373"
+                    class="gallery__link" itemprop="contentUrl" data-size="1400x1050">
+                    <img src="https://dummyimage.com/1400x1050/686868/737373"
+                        class="gallery__image" itemprop="thumbnail"
+                        alt="Image description">
+                </a>
+                
+            </figure>
+            <!-- portfolio gallery single item -->
+            <figure class="col-12 col-md-6 gallery__item grid-item animate-card-2"
+                itemprop="associatedMedia" itemscope
+                itemtype="http://schema.org/ImageObject">
+                <a href="https://dummyimage.com/1400x1050/686868/737373"
+                    data-image="https://dummyimage.com/1400x1050/686868/737373"
+                    class="gallery__link" itemprop="contentUrl" data-size="1400x1050">
+                    <img src="https://dummyimage.com/1400x1050/686868/737373"
+                        class="gallery__image" itemprop="thumbnail"
+                        alt="Image description">
+                </a>
+                
+            </figure>
+        </div>
+        <!-- Portfolio Gallery End -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- New Two-Column Layout End -->
+                                <!-- New Two-Column Layout End -->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        
+
     </main>
 
-                    <!-- Mobile Menu Bottom Placeholder Start -->
-                    <div class="header-offset"></div>
-                    <!-- Mobile Menu Bottom Placeholder End -->
+    <!-- Mobile Menu Bottom Placeholder Start -->
+    <div class="header-offset"></div>
+    <!-- Mobile Menu Bottom Placeholder End -->
 
-                    <!-- To Top Button Start -->
-                    <a href="#0" id="to-top" class="btn btn-to-top slide-up">
-                        <i class="ph ph-arrow-up"></i>
-                    </a>
-                    <!-- To Top Button End -->
+    <!-- To Top Button Start -->
+    <a href="#0" id="to-top" class="btn btn-to-top slide-up">
+        <i class="ph ph-arrow-up"></i>
+    </a>
+    <!-- To Top Button End -->
 
+    </div>
+        <!-- Root element of PhotoSwipe. Must have class pswp. -->
+        <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+            <!-- Background of PhotoSwipe.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        It's a separate element, as animating opacity is faster than rgba(). -->
+            <div class="pswp__bg"></div>
+    
+            <!-- Slides wrapper with overflow:hidden. -->
+            <div class="pswp__scroll-wrap">
+    
+                <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
+                <!-- don't modify these 3 pswp__item elements, data is added later on. -->
+                <div class="pswp__container">
+                    <div class="pswp__item"></div>
+                    <div class="pswp__item"></div>
+                    <div class="pswp__item"></div>
                 </div>
+    
+                <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+                <div class="pswp__ui pswp__ui--hidden">
+    
+                    <div class="pswp__top-bar">
+    
+                        <!--  Controls are self-explanatory. Order can be changed. -->
+    
+                        <div class="pswp__counter"></div>
+    
+                        <button class="pswp__button pswp__button--close link-s" title="Close (Esc)"></button>
+    
+                        <button class="pswp__button pswp__button--share link-s" title="Share"></button>
+    
+                        <button class="pswp__button pswp__button--fs link-s" title="Toggle fullscreen"></button>
+    
+                        <button class="pswp__button pswp__button--zoom link-s" title="Zoom in/out"></button>
+    
+                        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                        <!-- element will get class pswp__preloader-active when preloader is running -->
+                        <div class="pswp__preloader">
+                            <div class="pswp__preloader__icn">
+                                <div class="pswp__preloader__cut">
+                                    <div class="pswp__preloader__donut"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                        <div class="pswp__share-tooltip"></div>
+                    </div>
+    
+                    <button class="pswp__button pswp__button--arrow--left link-s" title="Previous (arrow left)"></button>
+    
+                    <button class="pswp__button pswp__button--arrow--right link-s" title="Next (arrow right)"></button>
+    
+                    <div class="pswp__caption">
+                        <div class="pswp__caption__center"></div>
+                    </div>
+    
+                </div>
+    
+            </div>
+    
+        </div>
 
-                <!-- Load Scripts Start -->
-                <script src="js/libs.min.js"></script>
-                <script src="js/gallery-init.js"></script>
-                <script src="js/app.js"></script>
-                <script src="js/carossel.js"></script>
+    <!-- Load Scripts Start -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="js/libs.min.js"></script>
+    <script src="js/gallery-init.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/carossel.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script>
+        document.querySelectorAll('.lightboxgallery-link').forEach(item => {
+            item.addEventListener('click', event => {
+                event.preventDefault();
+                const imgSrc = event.currentTarget.href;
+                const overlay = document.createElement('div');
+                overlay.classList.add('lightboxgallery-overlay');
+                overlay.innerHTML = `<img src="${imgSrc}">`;
+                document.body.appendChild(overlay);
 
-                <script>
-                    document.querySelectorAll('.lightboxgallery-link').forEach(item => {
-                        item.addEventListener('click', event => {
-                            event.preventDefault();
-                            const imgSrc = event.currentTarget.href;
-                            const overlay = document.createElement('div');
-                            overlay.classList.add('lightboxgallery-overlay');
-                            overlay.innerHTML = `<img src="${imgSrc}">`;
-                            document.body.appendChild(overlay);
+                overlay.addEventListener('click', () => {
+                    document.body.removeChild(overlay);
+                });
+            });
+        });
+    </script>
 
-                            overlay.addEventListener('click', () => {
-                                document.body.removeChild(overlay);
-                            });
-                        });
-                    });
-                </script>
-
-                <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        document.documentElement.setAttribute("data-theme", "dark");
-                    });
-                </script>
-                <!-- Load Scripts End -->
+    <!-- Load Scripts End -->
 </body>
 
 </html>
