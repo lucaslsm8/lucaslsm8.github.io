@@ -8718,13 +8718,6 @@ form textarea:required:valid {
     margin-top: 20px; /* Espaço adicional no topo do título */
   }
 
-  /* Ajuste do cabeçalho fixo */
-  .header {
-    background-color: rgba(20, 20, 20, 0.95); /* Fundo com leve transparência */
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    z-index: 1000;
-  }
 }
 
 /* Ajuste adicional para telas muito pequenas */
