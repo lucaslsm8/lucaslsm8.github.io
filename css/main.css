@@ -75,12 +75,12 @@
   --_animspeed-slow: 0.6s;
   --_animbezier: cubic-bezier(0.23, 0.65, 0.74, 1.09);
   /* light color scheme */
-  --base--light: #F7F5F2;
-  --base-rgb--light: 247, 245, 242;
-  --base-shade--light: #EDE7F6;
-  --base-tint--light: #EDE7F6;
+  --base--light: #e9e9e9;
+  --base-rgb--light: 186,190,200;
+  --base-shade--light: #989ba3;
+  --base-tint--light: #d8dde7;
   --stroke-controls--light: #2C2E34;
-  --stroke-elements--light: #636776;
+  --stroke-elements--light: #8F93A1;
   --font-weight-base--light: 400;
   --font-weight-medium--light: 600;
   --t-bright--light: #151617;
@@ -8911,7 +8911,6 @@ form textarea:required:valid {
 .swiper-slide {
   width: 800px;
   height: 400px;
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
   filter: blur(1px);
   border-radius: 10px;
   display: flex;
@@ -9129,13 +9128,12 @@ form textarea:required:valid {
 .swiper-slide {
   width: 800px;
   height: 400px;
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   justify-content: end;
   align-items: self-start;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .swiper-slide img {
@@ -9150,7 +9148,6 @@ form textarea:required:valid {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.5);
   border: none;
   color: white;
   width: 40px;
@@ -9190,6 +9187,7 @@ form textarea:required:valid {
 .swiper-3d .swiper-slide-shadow-right {
   background-image: none;
 }
+
 
 /* Swiper Mobile Styles */
 @media (max-width: 768px) {
@@ -9275,7 +9273,6 @@ form textarea:required:valid {
 .custom-swiper .swiper-slide {
   width: 228px !important;
   height: 489px !important;
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -9325,11 +9322,11 @@ form textarea:required:valid {
 
 /* Ajusta a posição das setas para ficarem mais próximas */
 .custom-swiper .swiper-button-prev {
-  left: 35%; /* Aumentado de 25% para 35% */
+  left: 35%; /* Aumentado para 35% */
 }
 
 .custom-swiper .swiper-button-next {
-  right: 35%; /* Aumentado de 25% para 35% */
+  right: 35%; /* Aumentado para 35% */
 }
 
 /* Estilo dos ícones dentro das setas */
@@ -9386,7 +9383,6 @@ form textarea:required:valid {
 .custom-swiper .swiper-slide {
   width: 229px !important;
   height: 489px !important;
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
