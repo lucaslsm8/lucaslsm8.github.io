@@ -8906,7 +8906,7 @@ form textarea:required:valid {
 .swiper {
   width: 100%;
   padding-top: 10px;
-  ovewrflow: visible;
+  overflow: visible;
 }
 
 .swiper-slide {
