@@ -7498,9 +7498,16 @@ form textarea:required:valid {
 /* ------------------------------------------------*/
 .testimonials-slider {
   position: relative;
-  overflow: hidden; /* Permite que o conteúdo ultrapasse o container */
   height: auto;
-  margin-bottom: 60px; /* Espaço extra para conteúdo que ultrapassa */
+  margin-bottom: 60px;
+  overflow: visible; /* Mantém overflow hidden por padrão (desktop) */
+}
+
+/* Remove overflow hidden em mobile */
+@media (max-width: 768px) {
+  .testimonials-slider {
+    overflow: hidden;
+  }
 }
 
 /* Ajustes no Swiper */
