@@ -7492,10 +7492,23 @@ form textarea:required:valid {
 /* Features Slider Start */
 /* ------------------------------------------------*/
 .testimonials-slider {
-  position: relative;
-  overflow: visible; /* Permite que o conteúdo ultrapasse o container */
-  height: auto;
-  margin-bottom: 60px; /* Espaço extra para conteúdo que ultrapassa */
+    position: relative;
+    height: auto;
+    margin-bottom: 60px;
+}
+
+/* Aplica overflow hidden apenas em mobile */
+@media only screen and (max-width: 768px) {
+    .testimonials-slider {
+        overflow: hidden;
+    }
+}
+
+/* Em desktop mantém o overflow visible */
+@media only screen and (min-width: 769px) {
+    .testimonials-slider {
+        overflow: visible;
+    }
 }
 
 /* Ajustes no Swiper */
