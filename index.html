@@ -1,56 +1,62 @@
 <!DOCTYPE html>
+<!-- 
+    Portfolio Website - Lucas Schoenherr
+    Author: Lucas Schoenherr
+    Last Updated: 2024
+-->
 <html lang="en" dir="ltr">
 
 <head>
+    <!-- Meta Tags and Character Set -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <!-- Page Title -->
+    <!-- Primary Meta Tags -->
     <title>Lucas Schoenherr - Online Portfolio</title>
+    <meta name="description" content="Portfolio online - Product Design Specialist with expertise in UI/UX and team leadership">
+    <meta name="keywords" content="resume, portfolio, personal page, cv, template, one page, responsive, html5, css3, creative, clean, UI/UX, product design">
+    <meta name="author" content="Lucas Schoenherr">
 
-    <!-- Meta Tags -->
-    <meta name="description" content="Porfolio online">
-    <meta name="keywords"
-        content=" resume, portfolio, personal page, cv, template, one page, responsive, html5, css3, creative, clean">
-    <meta name="author" content="Lucas">
-
-    <!-- Viewport Meta-->
+    <!-- Viewport Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <!-- Template Favicon & Icons Start -->
+    <!-- Favicon & App Icons -->
     <link rel="icon" href="img/favicon/Asuka.png" sizes="any">
     <link rel="icon" href="img/favicon/Asuka.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="img/favicon/apple-touch-icon.png">
     <link rel="manifest" href="img/favicon/manifest.webmanifest">
-    <!-- Template Favicon & Icons End -->
 
-    <!-- Facebook Metadata Start -->
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website">
     <meta property="og:image:height" content="1200">
     <meta property="og:image:width" content="1200">
     <meta property="og:title" content="Lucas Schoenherr - Online Portfolio">
-    <meta property="og:description" content="Lucas Schoenherr - Online Portfolio">
-    <!-- Facebook Metadata End -->
+    <meta property="og:description" content="Product Design Specialist with expertise in UI/UX and team leadership">
+    <meta property="og:image" content="img/og-image.jpg">
 
-    <!-- Template Styles Start -->
+    <!-- Stylesheets -->
     <link rel="stylesheet" type="text/css" href="css/loaders/loader.css">
     <link rel="stylesheet" type="text/css" href="css/plugins.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
 
-    <!-- Template Styles End -->
-
-    <!-- Custom Browser Color Start -->
+    <!-- Browser Theme Color -->
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#BABEC8">
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#141414">
     <meta name="msapplication-navbutton-color" content="#141414">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <!-- Custom Browser Color End -->
+
+    <!-- Cache Control -->
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000">
+
+    <!-- Add resource hints -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 </head>
 
 <body>
-
-    <!-- Loader Start -->
+    <!-- ====== LOADER SECTION ====== -->
     <div id="loader" class="loader">
         <div class="loader__wrapper">
             <div class="loader__content">
@@ -61,9 +67,8 @@
             </div>
         </div>
     </div>
-    <!-- Loader End -->
 
-    <!-- Header Start -->
+    <!-- ====== HEADER SECTION ====== -->
     <header id="header" class="header d-flex justify-content-center loading__fade">
         <!-- Navigation Menu Start -->
         <div class="header__navigation d-flex justify-content-start">
@@ -112,41 +117,41 @@
     </header>
     <!-- Header End -->
 
-    <!-- Fixed Logo Start -->
+    <!-- ====== LOGO SECTION ====== -->
     <div class="logo loading__fade">
         <a href="#home" class="logo__link">
-            <!-- logo icon -->
-            <img src="img/favicon/Asuka.svg" alt="Logo Icon" style="width: 35px; height: 35px;">
-            <!-- logo text -->
+            <img src="img/favicon/Asuka.svg" alt="Logo Icon" style="width: 35px; height: 35px;" loading="lazy">
             <span class="logo-text">Lucas Schoenherr</span>
         </a>
     </div>
-    <!-- Fixed Logo End -->
 
-    <!-- Fixed Color Switch Start -->
+    <!-- ====== THEME SWITCHER ====== -->
     <div class="color loading__fade">
-        <button id="color-switcher" class="color-switcher" type="button" role="switch" aria-label="light/dark mode"
-            aria-checked="true"></button>
+        <button id="color-switcher" class="color-switcher" type="button" role="switch" aria-label="light/dark mode" aria-checked="true"></button>
     </div>
-    <!-- Fixed Color Switch End -->
 
-    <!-- Page Content Start -->
+    <!-- ====== MAIN CONTENT ====== -->
     <main id="page-content" class="page-content">
-
         <!-- Main Section Start -->
         <section id="home" class="main home">
-
             <!-- Main Section Intro Start -->
             <div class="main__intro">
-
                 <!-- Intro Background Start -->
                 <div class="intro__background intro-bg-01">
                     <div class="intro-bg-01__01" data-speed="0.6">
-                        <img src="img/backgrounds/test4.png" alt="Background Objects">
+                        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" 
+                             data-src="img/backgrounds/test4.png" 
+                             alt="Background Objects" 
+                             loading="lazy"
+                             class="lazyload">
                         <div class="intro-bg__shadow"></div>
                     </div>
                     <div class="intro-bg-01__02" data-speed="0.8">
-                        <img src="img/backgrounds/test.png" alt="Background Objects">
+                        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" 
+                             data-src="img/backgrounds/test.png" 
+                             alt="Background Objects" 
+                             loading="lazy"
+                             class="lazyload">
                         <div class="intro-bg__shadow"></div>
                     </div>
                 </div>
@@ -154,14 +159,12 @@
 
                 <div class="container-fluid p-0 fullheight-desktop">
                     <div class="row g-0 fullheight-desktop align-items-xl-stretch">
-
                         <!-- Intro Data Line #1 (if needed) Start -->
                         <div class="col-12 col-xl-2"></div>
                         <!-- Intro Data Line #1 (if needed) End -->
 
                         <!-- Intro Content Start -->
                         <div class="col-12 col-xl-8 fullheight-desktop">
-
                             <!-- Headline Start -->
                             <div id="headline" class="headline d-flex align-items-start flex-column loading-wrap">
                                 <p class="headline__subtitle space-top animated-type loading__item">Ola! Eu sou o Lucas
@@ -183,14 +186,12 @@
                                 </div>
                             </div>
                             <!-- Headline End -->
-
                         </div>
                         <!-- Intro Content End -->
 
                         <!-- Intro Data Line #2 (if needed) Start -->
                         <div class="col-12 col-xl-2"></div>
                         <!-- Intro Data Line #2 (if needed) End -->
-
                     </div>
                 </div>
             </div>
@@ -200,15 +201,12 @@
             <div class="main__media media-grid-bottom">
                 <div class="container-fluid p-0">
                     <div class="row g-0">
-
                         <!-- Media Data Line #1 (if needed) Start -->
                         <div class="col-12 col-xl-2"></div>
                         <!-- Media Data Line #1 (if needed) End -->
 
                         <!-- Media Content Start -->
                         <div class="col-12 col-xl-8">
-
-                            <!-- Content Block - Image Divider Start -->
                             <!-- Content Block - Image Divider Start -->
                             <div class="content__block">
                                 <div class="container-fluid p-0">
@@ -217,19 +215,34 @@
                                             <div class="divider divider-image animate-in-up">
                                                 <div class="flex-container">
                                                     <div class="flex-item">
-                                                        <img class="fitter" src="img/backgrounds/Work1.png" />
+                                                        <img class="fitter lazyload" 
+                                                             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                                             data-src="img/backgrounds/Work1.png" 
+                                                             loading="lazy" />
                                                     </div>
                                                     <div class="flex-item">
-                                                        <img class="fitter" src="img/backgrounds/Work2.png" />
+                                                        <img class="fitter lazyload" 
+                                                             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                                             data-src="img/backgrounds/Work2.png" 
+                                                             loading="lazy" />
                                                     </div>
                                                     <div class="flex-item">
-                                                        <img class="fitter" src="img/backgrounds/Work3.png" />
+                                                        <img class="fitter lazyload" 
+                                                             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                                             data-src="img/backgrounds/Work3.png" 
+                                                             loading="lazy" />
                                                     </div>
                                                     <div class="flex-item">
-                                                        <img class="fitter" src="img/backgrounds/Work4.png" />
+                                                        <img class="fitter lazyload" 
+                                                             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                                             data-src="img/backgrounds/Work4.png" 
+                                                             loading="lazy" />
                                                     </div>
                                                     <div class="flex-item">
-                                                        <img class="fitter" src="img/backgrounds/Work5.png" />
+                                                        <img class="fitter lazyload" 
+                                                             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                                             data-src="img/backgrounds/Work5.png" 
+                                                             loading="lazy" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -238,13 +251,11 @@
                                 </div>
                             </div>
                             <!-- Content Block - Image Divider End -->
-
                         </div>
                     </div>
                 </div>
             </div>
             <!-- Main Section Media End -->
-
         </section>
         <!-- Main Section End -->
 
@@ -254,11 +265,9 @@
             <div class="inner__wrapper">
                 <div class="container-fluid p-0">
                     <div class="row g-0">
-
                         <!-- Inner Section Name Start -->
                         <div class="col-12 col-xl-2">
                             <div class="inner__name">
-
                                 <!-- Content Block - Section Name Start -->
                                 <div class="content__block name-block">
                                     <span class="section-name icon-right animate-in-up">
@@ -267,7 +276,6 @@
                                     </span>
                                 </div>
                                 <!-- Content Block - Section Name Start -->
-
                             </div>
                         </div>
                         <!-- Inner Section Name End -->
@@ -275,7 +283,6 @@
                         <!-- Inner Section Content Start -->
                         <div class="col-12 col-xl-8">
                             <div class="inner__content">
-
                                 <!-- Content Block - H2 Section Title Start -->
                                 <div class="content__block section-grid-text-title">
                                     <div class="block__descr">
@@ -289,976 +296,93 @@
                                             negócios.</p>
                                     </div>
                                 </div>
-                                <!-- Content Block - H2 Section Title End -->
-
-                                <!-- Testimonials Slider Start -->
-                                <div class="testimonials-slider">
-                                    <!-- slider main container -->
-                                    <div class="swiper-testimonials">
-                                        <!-- additional required wrapper -->
-                                        <div class="swiper-wrapper">
-                                            <!-- single slide -->
-                                            <div class="swiper-slide">
-                                                <div class="testimonials-card animate-in-up">
-                                                    <div class="container-fluid p-0 fullheight-l">
-                                                        <div class="row g-0 d-flex align-items-stretch fullheight-l">
-                                                            <div class="col-12 col-lg-6 testimonials-card__tdata">
-                                                                <div class="testimonials-card__tauthor d-flex">
-                                                                    <div class="tauthor__avatar animate-in-up">
-                                                                        <img src="img/icons/vale.png"
-                                                                            alt="Review Author">
-                                                                    </div>
-                                                                    <div
-                                                                        class="tauthor__info d-flex flex-column justify-content-center">
-                                                                        <h4 class="tauthor__name animate-in-up">
-                                                                            Production App</h4>
-                                                                        <p
-                                                                            class="tauthor__position small animate-in-up">
-                                                                            Cliente: Vale
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="testimonials-card__descr animate-in-up">
-                                                                    <p class="type-basic-160lh">Lighthouse - Produção é
-                                                                        um app mobile da Vale que oferece dados em tempo
-                                                                        real, gráficos dinâmicos e notificações
-                                                                        personalizáveis, permitindo decisões rápidas e
-                                                                        comunicação eficiente. Uma solução essencial
-                                                                        para a gestão de produção, desenvolvida como MVP
-                                                                    </p>
-                                                                </div>
-                                                                <div class="testimonials-card__btnholder animate-in-up">
-                                                                    <a class="btn btn-line icon-right slide-right"
-                                                                        href="#0">
-                                                                        <span data-mfp-src="#portfolio-popup-1"
-                                                                            class="btn-caption popup-trigger">Sobre o
-                                                                            Projeto</span>
-                                                                        <i class="ph ph-arrow-right"></i>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="col-12 col-lg-6 testimonials-card__timage fullheight-l">
-                                                                <div class="timage__inner fullheight-l animate-in-up">
-                                                                    <img src="img/works/Production App/Capa.png"
-                                                                        alt="Testimonials Image">
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
+                                <!-- Content Block - Newsletter Section Start -->
+                                <div class="content__block grid-block">
+                                    <div class="grid-container">
+                                        <!-- Newsletter 1 -->
+                                        <section id="newsletter">
+                                            <div class="container">
+                                                <article class="newsletter animate-in-up">
+                                                    <!-- Imagem -->
+                                                    <div class="image-wrapper">
+                                                        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                                             data-src="aaa.png" 
+                                                             alt="Descrição da imagem" 
+                                                             loading="lazy"
+                                                             class="lazyload" />
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <!-- single slide -->
-                                            <div class="swiper-slide">
-                                                <div class="testimonials-card animate-in-up">
-                                                    <div class="container-fluid p-0 fullheight-l">
-                                                        <div class="row g-0 d-flex align-items-stretch fullheight-l">
-                                                            <div class="col-12 col-lg-6 testimonials-card__tdata">
-                                                                <div class="testimonials-card__tauthor d-flex">
-                                                                    <div class="tauthor__avatar animate-in-up">
-                                                                        <img src="img/icons/vale.png"
-                                                                            alt="Review Author">
-                                                                    </div>
-                                                                    <div
-                                                                        class="tauthor__info d-flex flex-column justify-content-center">
-                                                                        <h4 class="tauthor__name animate-in-up">IT
-                                                                            Services
-                                                                            Transition Dashboard</h4>
-                                                                        <p
-                                                                            class="tauthor__position small animate-in-up">
-                                                                            Cliente: Vale
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="testimonials-card__descr animate-in-up">
-                                                                    <p class="type-basic-160lh">O ITST é um sistema da
-                                                                        Vale para gerenciar mudanças no ambiente de TI.
-                                                                        A reestruturação do dashboard modernizou a
-                                                                        ferramenta, utilizando o PowerBI para consolidar
-                                                                        dados críticos e criar uma interface mais
-                                                                        intuitiva e eficiente para decisões rápidas.
-                                                                    </p>
-                                                                </div>
-                                                                <div class="testimonials-card__btnholder animate-in-up">
-                                                                    <a class="btn btn-line icon-right slide-right"
-                                                                        href="#0">
-                                                                        <span data-mfp-src="#portfolio-popup-2"
-                                                                            class="btn-caption popup-trigger">Sobre o
-                                                                            Projeto</span>
-                                                                        <i class="ph ph-arrow-right"></i>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="col-12 col-lg-6 testimonials-card__timage fullheight-l">
-                                                                <div class="timage__inner fullheight-l animate-in-up">
-                                                                    <img src="img/works/ST Dashboard/Capa.png"
-                                                                        alt="Testimonials Image">
-                                                                </div>
-                                                            </div>
+
+                                                    <!-- Conteúdo -->
+                                                    <div class="content-wrapper">
+                                                        <!-- Title -->
+                                                        <div class="title-wrapper">
+                                                            <span class="title p">Services Transition</span>
                                                         </div>
+
+                                                        <!-- Tags -->
+                                                        <div class="tags">
+                                                            <span>Web & Mobile</span>
+                                                            <span>User Research</span>
+                                                            <span>Trivia</span>
+                                                            <span>B2C</span>
+                                                        </div>
+
+                                                        <!-- Description -->
+                                                        <div class="description">
+                                                            Lorem ipsum dolor sit amet, est laborum Lorem ipsum dolor sit
+                                                            amet, est laborumLorem ipsum dolor sit amet, est laborumLorem
+                                                            ipsum dolor sit amet, est laborum.
+                                                        </div>
+
+                                                        <!-- Button -->
+                                                        <a href="#" class="btn btn-line icon-right slide-right">
+                                                            <span class="btn-caption">Ver projeto</span>
+                                                            <i class="ph ph-arrow-right"></i>
+                                                        </a>
                                                     </div>
-                                                </div>
+                                                </article>
                                             </div>
-                                        </div>
-                                        <!-- pagination -->
-                                        <div class="swiper-pagination mxd-swiper-pagination-fraction"></div>
+                                        </section>
+
+                                        <!-- Newsletter 2 -->
+                                        <section id="newsletter">
+                                            <div class="container">
+                                                <article class="newsletter newsletter-reverse animate-in-up">
+                                                    <!-- Copiar estrutura do primeiro newsletter -->
+                                                    <div class="image-wrapper">
+                                                        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                                             data-src="aaa.png" 
+                                                             alt="Descrição da imagem" 
+                                                             loading="lazy"
+                                                             class="lazyload" />
+                                                    </div>
+                                                    <div class="content-wrapper">
+                                                        <div class="title-wrapper">
+                                                            <span class="title p">Outro Projeto</span>
+                                                        </div>
+                                                        <div class="tags">
+                                                            <span>Mobile</span>
+                                                            <span>Design System</span>
+                                                            <span>B2B</span>
+                                                        </div>
+                                                        <div class="description">
+                                                            Lorem ipsum dolor sit amet, est laborum Lorem ipsum dolor sit amet, est laborumLorem ipsum dolor sit amet.
+                                                        </div>
+                                                        <a href="#" class="btn btn-line icon-right slide-right">
+                                                            <span class="btn-caption">Ver projeto</span>
+                                                            <i class="ph ph-arrow-right"></i>
+                                                        </a>
+                                                    </div>
+                                                </article>
+                                            </div>
+                                        </section>
                                     </div>
                                 </div>
-
-                                <!-- Portfolio Single Item Popup №1 Start -->
-                                <div id="portfolio-popup-1" class="popup mfp-hide">
-
-                                    <!-- Popup Close Button Start -->
-                                    <button class="mfp-close permanent-light"></button>
-                                    <!-- Popup Close Button End -->
-
-                                    <!-- Popup Content Start -->
-                                    <div class="popup__container">
-                                        <div class="container-fluid p-0">
-                                            <div class="row g-0">
-                                                <div class="col-12">
-                                                    <div class="project">
-
-                                                        <!-- Project Block - Title with Image Start -->
-                                                        <div
-                                                            class="project__block no-padding no-margin project-image-bg">
-                                                            <img class="project-image-bg__portrait"
-                                                                src="img/works/Production App/Projeto_small.png"
-                                                                alt="Project Illustration">
-                                                            <img class="project-image-bg__landscape"
-                                                                src="img/works/Production App/Projeto Large.png"
-                                                                alt="Project Illustration">
-                                                        </div>
-                                                        <!-- Project Block - Title with Image End -->
-
-                                                        <!-- Project Block - Description Start -->
-                                                        <div class="project__block grid-block grid-items">
-                                                            <!-- Título acima das colunas, alinhado à esquerda e respeitando as margens -->
-                                                            <div class="container-fluid p-0">
-                                                                <div class="row g-0">
-                                                                    <div class="col-12 col-xl-8">
-                                                                        <h3 class="grid-item">Light House - Production
-                                                                            App</h3>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="project__data">
-                                                                <div class="container-fluid p-0">
-                                                                    <div class="row g-0">
-                                                                        <div class="col-12 col-xl-4">
-                                                                            <div class="container-fluid p-0">
-                                                                                <div class="row g-0">
-                                                                                    <!-- project data single item -->
-                                                                                    <div
-                                                                                        class="col-12 col-md-6 grid-item pdata__item">
-                                                                                        <p
-                                                                                            class="data__title tagline-chapter small type-basic-160lh">
-                                                                                            Tipo</p>
-                                                                                        <p
-                                                                                            class="data__descr small type-basic-160lh">
-                                                                                            Mobile</p>
-                                                                                    </div>
-                                                                                    <!-- project data single item -->
-                                                                                    <div
-                                                                                        class="col-12 col-md-6 grid-item pdata__item">
-                                                                                        <p
-                                                                                            class="data__title tagline-chapter small type-basic-160lh">
-                                                                                            Ano</p>
-                                                                                        <p
-                                                                                            class="data__descr small type-basic-160lh">
-                                                                                            2022</p>
-                                                                                    </div>
-                                                                                    <!-- project data single item -->
-                                                                                    <div
-                                                                                        class="col-12 col-md-6 grid-item pdata__item">
-                                                                                        <p
-                                                                                            class="data__title tagline-chapter small type-basic-160lh">
-                                                                                            Papel</p>
-                                                                                        <p
-                                                                                            class="data__descr small type-basic-160lh">
-                                                                                            Lead Product Designer</p>
-                                                                                    </div>
-                                                                                    <!-- project data single item -->
-                                                                                    <div
-                                                                                        class="col-12 col-md-6 grid-item pdata__item">
-                                                                                        <p
-                                                                                            class="data__title tagline-chapter small type-basic-160lh">
-                                                                                            Cliente</p>
-                                                                                        <p
-                                                                                            class="data__descr small type-basic-160lh">
-                                                                                            Vale</p>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-12 col-xl-8 grid-item">
-                                                                            <p class="type-basic-160lh">O Lighthouse -
-                                                                                Produção é um aplicativo mobile
-                                                                                desenvolvido para a Vale, com foco em
-                                                                                gerenciar e visualizar dados sobre os
-                                                                                corredores de produção (Norte, Sul,
-                                                                                Leste e Oeste). Ele permite o
-                                                                                monitoramento de movimentação total em
-                                                                                diferentes unidades de medida, como
-                                                                                quilotons (kt), toneladas, entre outras,
-                                                                                além de exibir orçamentos, programações
-                                                                                e projeções, tudo em gráficos dinâmicos
-                                                                                e de fácil interpretação. O aplicativo
-                                                                                também oferece funcionalidades de
-                                                                                compartilhamento de informações por
-                                                                                diferentes meios, como links, e-mail ou
-                                                                                imagens. Este projeto foi desenvolvido
-                                                                                como uma versão MVP (Minimum Viable
-                                                                                Product), com foco em validar as
-                                                                                funcionalidades essenciais e atender às
-                                                                                necessidades imediatas dos usuários.</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- Project Block - Description End -->
-
-                                                        <!-- Gallery Thumbnails -->
-
-                                                        <div class="container">
-                                                            <div class="row g-4 nova-galeria" itemscope
-                                                                itemtype="http://schema.org/ImageGallery">
-                                                                <!-- Primeira linha -->
-                                                                <figure class="col-md-4" itemprop="associatedMedia"
-                                                                    itemscope itemtype="http://schema.org/ImageObject">
-                                                                    <a href="img/works/Production App/4.png"
-                                                                        data-size="1200x800" itemprop="contentUrl">
-                                                                        <img src="img/works/Production App/4.png"
-                                                                            itemprop="thumbnail"
-                                                                            class="img-fluid rounded">
-                                                                    </a>
-                                                                </figure>
-
-                                                                <figure class="col-md-4" itemprop="associatedMedia"
-                                                                    itemscope itemtype="http://schema.org/ImageObject">
-                                                                    <a href="img/works/Production App/5.png"
-                                                                        data-size="1200x768" itemprop="contentUrl">
-                                                                        <img src="img/works/Production App/5.png"
-                                                                            itemprop="thumbnail"
-                                                                            class="img-fluid rounded">
-                                                                    </a>
-                                                                </figure>
-
-                                                                <figure class="col-md-4" itemprop="associatedMedia"
-                                                                    itemscope itemtype="http://schema.org/ImageObject">
-                                                                    <a href="img/works/Production App/6.png"
-                                                                        data-size="1200x768" itemprop="contentUrl">
-                                                                        <img src="img/works/Production App/6.png"
-                                                                            itemprop="thumbnail"
-                                                                            class="img-fluid rounded">
-                                                                    </a>
-                                                                </figure>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <!-- Project Block - The Challenge Start -->
-                                                        <div class="project__block pre-grid-items">
-                                                            <div class="project__descr">
-                                                                <div class="container-fluid p-0">
-                                                                    <div class="row g-0">
-                                                                        <div class="col-12 col-xl-4">
-                                                                            <p
-                                                                                class="project__subtitle tagline-chapter">
-                                                                                O Desafio</p>
-                                                                        </div>
-                                                                        <div class="col-12 col-xl-8">
-                                                                            <p class="type-basic-160lh">O grande desafio
-                                                                                foi criar uma plataforma integrada e
-                                                                                intuitiva que permitisse aos usuários,
-                                                                                desde gerentes até colaboradores,
-                                                                                acessar dados complexos de forma simples
-                                                                                e eficiente, em tempo real. Além disso,
-                                                                                havia a necessidade de fornecer
-                                                                                diferentes níveis de acesso e filtragem,
-                                                                                garantindo que as informações relevantes
-                                                                                fossem apresentadas conforme o perfil do
-                                                                                usuário. A capacidade de enviar
-                                                                                notificações personalizáveis com várias
-                                                                                tags (como "aprovado", "alto impacto",
-                                                                                "informativo" e outras) foi um desafio
-                                                                                adicional, garantindo a flexibilidade
-                                                                                necessária para diferentes tipos de
-                                                                                comunicação interna.
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- Project Block - The Challenge End -->
-
-                                                        <div class="container">
-                                                            <div class="row g-4 nova-galeria" itemscope
-                                                                itemtype="http://schema.org/ImageGallery">
-                                                                <!-- Primeira linha -->
-                                                                <figure class="col-md-4" itemprop="associatedMedia"
-                                                                    itemscope itemtype="http://schema.org/ImageObject">
-                                                                    <a href="img/works/ST Dashboard/old1.png"
-                                                                        data-size="1200x800" itemprop="contentUrl">
-                                                                        <img src="img/works/ST Dashboard/old1.png"
-                                                                            itemprop="thumbnail"
-                                                                            class="img-fluid rounded">
-                                                                    </a>
-                                                                </figure>
-
-                                                                <figure class="col-md-4" itemprop="associatedMedia"
-                                                                    itemscope itemtype="http://schema.org/ImageObject">
-                                                                    <a href="img/works/ST Dashboard/old2.png"
-                                                                        data-size="1200x768" itemprop="contentUrl">
-                                                                        <img src="img/works/ST Dashboard/old2.png"
-                                                                            itemprop="thumbnail"
-                                                                            class="img-fluid rounded">
-                                                                    </a>
-                                                                </figure>
-
-                                                                <figure class="col-md-4" itemprop="associatedMedia"
-                                                                    itemscope itemtype="http://schema.org/ImageObject">
-                                                                    <a href="img/works/ST Dashboard/old3.png"
-                                                                        data-size="1200x768" itemprop="contentUrl">
-                                                                        <img src="img/works/ST Dashboard/old3.png"
-                                                                            itemprop="thumbnail"
-                                                                            class="img-fluid rounded">
-                                                                    </a>
-                                                                </figure>
-                                                            </div>
-                                                        </div>
-
-                                                        <!-- Project Block - Illustrations Grid End -->
-
-                                                        <!-- Project Block - My Solution Start -->
-                                                        <div class="project__block">
-                                                            <div class="project__descr">
-                                                                <div class="container-fluid p-0">
-                                                                    <div class="row g-0">
-                                                                        <!-- Título 'Meu Papel' -->
-                                                                        <div class="col-12 col-xl-4 mb-4">
-                                                                            <p
-                                                                                class="project__subtitle tagline-chapter">
-                                                                                Meu Papel</p>
-                                                                        </div>
-                                                                        <!-- Descrição do papel -->
-                                                                        <div class="col-12 col-xl-8">
-                                                                            <p class="type-basic-160lh mb-5"
-                                                                                style="font-size: 1.8rem; line-height: 1.8; color: var(--t-bright);">
-                                                                                Como Designer de Produto, fui
-                                                                                responsável pelo design de interface
-                                                                                (UI) e pela experiência do usuário (UX)
-                                                                                do aplicativo. Minhas responsabilidades
-                                                                                incluíram:</p>
-
-                                                                            <ul class="type-basic-160lh"
-                                                                                style="font-size: 1.6rem; line-height: 2; padding-left: 20px; list-style-type: disc; color: var(--t-bright);">
-                                                                                <li><strong>Pesquisa com
-                                                                                        usuários:</strong> Entendimento
-                                                                                    das necessidades e comportamentos
-                                                                                    dos diferentes usuários, garantindo
-                                                                                    que o design fosse intuitivo para
-                                                                                    todos os níveis hierárquicos.</li>
-
-                                                                                <li><strong>Prototipação e
-                                                                                        Testes:</strong> Criação de
-                                                                                    protótipos interativos no Figma, com
-                                                                                    iteração contínua e validação junto
-                                                                                    aos stakeholders.</li>
-
-                                                                                <li><strong>Desenvolvimento de fluxo de
-                                                                                        informações:</strong>
-                                                                                    Garantir que a navegação e os
-                                                                                    filtros fossem claros e intuitivos,
-                                                                                    além de criar uma estrutura visual
-                                                                                    que facilitasse a compreensão de
-                                                                                    dados complexos.</li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- Project Block - My Solution End -->
-
-
-
-
-                                                        <!-- Project Block - My Solution Start -->
-                                                        <div class="project__block">
-                                                            <div class="project__descr">
-                                                                <div class="container-fluid p-0">
-                                                                    <div class="row g-0">
-                                                                        <div class="col-12 col-xl-4">
-                                                                            <p
-                                                                                class="project__subtitle tagline-chapter">
-                                                                                A Solução</p>
-                                                                        </div>
-                                                                        <div class="col-12 col-xl-8">
-                                                                            <p class="type-basic-160lh">
-                                                                                A solução foi um aplicativo mobile com
-                                                                                uma interface limpa e objetiva, que
-                                                                                exibe gráficos de movimentação total,
-                                                                                orçamentos, programações e projeções,
-                                                                                destacando automaticamente o que está
-                                                                                acima, aderente ou abaixo do programado.
-                                                                                A funcionalidade de notificações foi uma
-                                                                                das principais implementações,
-                                                                                permitindo aos usuários enviar alertas
-                                                                                com diversas tags, como "aprovado",
-                                                                                "alto impacto", "informativo", "ganhos"
-                                                                                e outras. O design responsivo também
-                                                                                permite uma experiência otimizada em
-                                                                                diferentes dispositivos móveis. Além
-                                                                                disso, o aplicativo facilita o
-                                                                                compartilhamento de informações de forma
-                                                                                rápida e prática, seja por link, e-mail
-                                                                                ou imagem.
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- Project Block - My Solution End -->
-
-                                                        <!-- Project Block - Impacto Start -->
-                                                        <div class="project__block">
-                                                            <div class="project__descr">
-                                                                <div class="container-fluid p-0">
-                                                                    <div class="row g-0">
-                                                                        <div class="col-12 col-xl-4">
-                                                                            <p
-                                                                                class="project__subtitle tagline-chapter">
-                                                                                O Impacto</p>
-                                                                        </div>
-                                                                        <div class="col-12 col-xl-8">
-                                                                            <p class="type-basic-160lh">
-                                                                                O Lighthouse - Produção proporcionou uma
-                                                                                melhoria significativa na forma como os
-                                                                                dados de produção são visualizados e
-                                                                                compartilhados. A interface intuitiva e
-                                                                                os gráficos dinâmicos ajudaram as
-                                                                                equipes a tomar decisões mais rápidas e
-                                                                                embasadas. As notificações
-                                                                                personalizáveis e a filtragem por níveis
-                                                                                de acesso também otimizaram a
-                                                                                comunicação interna, tornando o processo
-                                                                                de gestão mais eficiente. Como uma
-                                                                                versão MVP, o aplicativo foi fundamental
-                                                                                para validar as principais
-                                                                                funcionalidades e mostrou um enorme
-                                                                                potencial de crescimento para futuras
-                                                                                melhorias.
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- Project Block - Impacto End -->
-
-                                                       <!-- Gallery Thumbnails -->
-
-                                                       <div class="container">
-                                                        <div class="row g-4 nova-galeria2" itemscope
-                                                            itemtype="http://schema.org/ImageGallery">
-
-                                                            <!-- Primeira linha -->
-                                                            <figure class="col-md-4" itemprop="associatedMedia"
-                                                                itemscope itemtype="http://schema.org/ImageObject">
-                                                                <a href="img/works/Production App/1.png"
-                                                                    data-size="1200x800" itemprop="contentUrl">
-                                                                    <img src="img/works/Production App/1.png"
-                                                                        itemprop="thumbnail"
-                                                                        class="img-fluid rounded">
-                                                                </a>
-                                                            </figure>
-
-                                                            <figure class="col-md-4" itemprop="associatedMedia"
-                                                                itemscope itemtype="http://schema.org/ImageObject">
-                                                                <a href="img/works/Production App/2.png"
-                                                                    data-size="1200x768" itemprop="contentUrl">
-                                                                    <img src="img/works/Production App/2.png"
-                                                                        itemprop="thumbnail"
-                                                                        class="img-fluid rounded">
-                                                                </a>
-                                                            </figure>
-
-                                                            <figure class="col-md-4" itemprop="associatedMedia"
-                                                                itemscope itemtype="http://schema.org/ImageObject">
-                                                                <a href="img/works/Production App/3.png"
-                                                                    data-size="1200x768" itemprop="contentUrl">
-                                                                    <img src="img/works/Production App/3.png"
-                                                                        itemprop="thumbnail"
-                                                                        class="img-fluid rounded">
-                                                                </a>
-                                                            </figure>
-
-                                                            <figure class="col-md-4" itemprop="associatedMedia"
-                                                                itemscope itemtype="http://schema.org/ImageObject">
-                                                                <a href="img/works/Production App/4.png"
-                                                                    data-size="1200x800" itemprop="contentUrl">
-                                                                    <img src="img/works/Production App/4.png"
-                                                                        itemprop="thumbnail"
-                                                                        class="img-fluid rounded">
-                                                                </a>
-                                                            </figure>
-
-                                                            <figure class="col-md-4" itemprop="associatedMedia"
-                                                                itemscope itemtype="http://schema.org/ImageObject">
-                                                                <a href="img/works/Production App/5.png"
-                                                                    data-size="1200x768" itemprop="contentUrl">
-                                                                    <img src="img/works/Production App/5.png"
-                                                                        itemprop="thumbnail"
-                                                                        class="img-fluid rounded">
-                                                                </a>
-                                                            </figure>
-
-                                                            <figure class="col-md-4" itemprop="associatedMedia"
-                                                                itemscope itemtype="http://schema.org/ImageObject">
-                                                                <a href="img/works/Production App/6.png"
-                                                                    data-size="1200x768" itemprop="contentUrl">
-                                                                    <img src="img/works/Production App/6.png"
-                                                                        itemprop="thumbnail"
-                                                                        class="img-fluid rounded">
-                                                                </a>
-                                                            </figure>
-
-                                                            <figure class="col-md-4" itemprop="associatedMedia"
-                                                                itemscope itemtype="http://schema.org/ImageObject">
-                                                                <a href="img/works/Production App/7.png"
-                                                                    data-size="1200x800" itemprop="contentUrl">
-                                                                    <img src="img/works/Production App/7.png"
-                                                                        itemprop="thumbnail"
-                                                                        class="img-fluid rounded">
-                                                                </a>
-                                                            </figure>
-
-                                                            <figure class="col-md-4" itemprop="associatedMedia"
-                                                                itemscope itemtype="http://schema.org/ImageObject">
-                                                                <a href="img/works/Production App/8.png"
-                                                                    data-size="1200x768" itemprop="contentUrl">
-                                                                    <img src="img/works/Production App/8.png"
-                                                                        itemprop="thumbnail"
-                                                                        class="img-fluid rounded">
-                                                                </a>
-                                                            </figure>
-
-                                                            <figure class="col-md-4" itemprop="associatedMedia"
-                                                                itemscope itemtype="http://schema.org/ImageObject">
-                                                                <a href="img/works/Production App/9.png"
-                                                                    data-size="1200x768" itemprop="contentUrl">
-                                                                    <img src="img/works/Production App/9.png"
-                                                                        itemprop="thumbnail"
-                                                                        class="img-fluid rounded">
-                                                                </a>
-                                                            </figure>
-
-                                                            <figure class="col-md-4" itemprop="associatedMedia"
-                                                                itemscope itemtype="http://schema.org/ImageObject">
-                                                                <a href="img/works/Production App/10.png"
-                                                                    data-size="1200x800" itemprop="contentUrl">
-                                                                    <img src="img/works/Production App/10.png"
-                                                                        itemprop="thumbnail"
-                                                                        class="img-fluid rounded">
-                                                                </a>
-                                                            </figure>
-
-                                                            <figure class="col-md-4" itemprop="associatedMedia"
-                                                                itemscope itemtype="http://schema.org/ImageObject">
-                                                                <a href="img/works/Production App/11.png"
-                                                                    data-size="1200x768" itemprop="contentUrl">
-                                                                    <img src="img/works/Production App/11.png"
-                                                                        itemprop="thumbnail"
-                                                                        class="img-fluid rounded">
-                                                                </a>
-                                                            </figure>
-
-                                                        </div>
-                                                    </div>
-
-                                                        <!-- Project Block - Project Link Start -->
-                                                        <div class="project__block small-size">
-                                                            <div class="container-fluid p-0">
-                                                                <div class="project__divider"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- Project Block - Project Link End -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Portfilio Single Item Popup №1 End -->
-
-                                <!-- Portfolio Single Item Popup №2 Start -->
-                                <div id="portfolio-popup-2" class="popup mfp-hide">
-
-                                    <!-- Popup Close Button Start -->
-                                    <button class="mfp-close permanent-light"></button>
-                                    <!-- Popup Close Button End -->
-
-                                    <!-- Popup Content Start -->
-                                    <div class="popup__container">
-                                        <div class="container-fluid p-0">
-                                            <div class="row g-0">
-                                                <div class="col-12">
-                                                    <div class="project">
-
-                                                        <!-- Project Block - Title with Image Start -->
-                                                        <div
-                                                            class="project__block no-padding no-margin project-image-bg">
-                                                            <img class="project-image-bg__portrait"
-                                                                src="img/works/ST Dashboard/Capa_small.png"
-                                                                alt="Project Illustration">
-                                                            <img class="project-image-bg__landscape"
-                                                                src="img/works/ST Dashboard/Capa_large.png"
-                                                                alt="Project Illustration">
-                                                        </div>
-                                                        <!-- Project Block - Title with Image End -->
-
-                                                        <!-- Project Block - Description Start -->
-                                                        <div class="project__block grid-block grid-items">
-                                                            <!-- Título acima das colunas, alinhado à esquerda e respeitando as margens -->
-                                                            <div class="container-fluid p-0">
-                                                                <div class="row g-0">
-                                                                    <div class="col-12 col-xl-8">
-                                                                        <h3 class="grid-item">IT Services Transition
-                                                                            Dashboard</h3>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="project__data">
-                                                                <div class="container-fluid p-0">
-                                                                    <div class="row g-0">
-                                                                        <div class="col-12 col-xl-4">
-                                                                            <div class="container-fluid p-0">
-                                                                                <div class="row g-0">
-                                                                                    <!-- project data single item -->
-                                                                                    <div
-                                                                                        class="col-12 col-md-6 grid-item pdata__item">
-                                                                                        <p
-                                                                                            class="data__title tagline-chapter small type-basic-160lh">
-                                                                                            Tipo</p>
-                                                                                        <p
-                                                                                            class="data__descr small type-basic-160lh">
-                                                                                            PowerBI Dashboard</p>
-                                                                                    </div>
-                                                                                    <!-- project data single item -->
-                                                                                    <div
-                                                                                        class="col-12 col-md-6 grid-item pdata__item">
-                                                                                        <p
-                                                                                            class="data__title tagline-chapter small type-basic-160lh">
-                                                                                            Ano</p>
-                                                                                        <p
-                                                                                            class="data__descr small type-basic-160lh">
-                                                                                            2022</p>
-                                                                                    </div>
-                                                                                    <!-- project data single item -->
-                                                                                    <div
-                                                                                        class="col-12 col-md-6 grid-item pdata__item">
-                                                                                        <p
-                                                                                            class="data__title tagline-chapter small type-basic-160lh">
-                                                                                            Papel</p>
-                                                                                        <p
-                                                                                            class="data__descr small type-basic-160lh">
-                                                                                            Lead Product Designer</p>
-                                                                                    </div>
-                                                                                    <!-- project data single item -->
-                                                                                    <div
-                                                                                        class="col-12 col-md-6 grid-item pdata__item">
-                                                                                        <p
-                                                                                            class="data__title tagline-chapter small type-basic-160lh">
-                                                                                            Cliente</p>
-                                                                                        <p
-                                                                                            class="data__descr small type-basic-160lh">
-                                                                                            Vale</p>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-12 col-xl-8 grid-item">
-                                                                            <p class="type-basic-160lh">O ITST é um
-                                                                                sistema interno da Vale, fundamental
-                                                                                para a gestão e monitoramento de
-                                                                                mudanças no ambiente de TI. O projeto de
-                                                                                reestruturação do dashboard foi
-                                                                                impulsionado pela necessidade de
-                                                                                modernizar uma ferramenta essencial,
-                                                                                utilizando o PowerBI como plataforma
-                                                                                principal para consolidar e visualizar
-                                                                                dados críticos. Nosso objetivo era criar
-                                                                                uma interface intuitiva, moderna e
-                                                                                eficiente, capaz de suportar decisões
-                                                                                rápidas e estratégicas.</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- Project Block - Description End -->
-
-                                                        <!-- Gallery Thumbnails -->
-
-                                                        <div class="container">
-                                                            <div class="row g-4 nova-galeria" itemscope
-                                                                itemtype="http://schema.org/ImageGallery">
-                                                                <!-- Primeira linha -->
-                                                                <figure class="col-md-4" itemprop="associatedMedia"
-                                                                    itemscope itemtype="http://schema.org/ImageObject">
-                                                                    <a href="img/works/ST Dashboard/1.png"
-                                                                        data-size="1200x800" itemprop="contentUrl">
-                                                                        <img src="img/works/ST Dashboard/1.png"
-                                                                            itemprop="thumbnail"
-                                                                            class="img-fluid rounded">
-                                                                    </a>
-                                                                </figure>
-
-                                                                <figure class="col-md-4" itemprop="associatedMedia"
-                                                                    itemscope itemtype="http://schema.org/ImageObject">
-                                                                    <a href="img/works/ST Dashboard/2.png"
-                                                                        data-size="1200x768" itemprop="contentUrl">
-                                                                        <img src="img/works/ST Dashboard/2.png"
-                                                                            itemprop="thumbnail"
-                                                                            class="img-fluid rounded">
-                                                                    </a>
-                                                                </figure>
-
-                                                                <figure class="col-md-4" itemprop="associatedMedia"
-                                                                    itemscope itemtype="http://schema.org/ImageObject">
-                                                                    <a href="img/works/ST Dashboard/3.png"
-                                                                        data-size="1200x768" itemprop="contentUrl">
-                                                                        <img src="img/works/ST Dashboard/3.png"
-                                                                            itemprop="thumbnail"
-                                                                            class="img-fluid rounded">
-                                                                    </a>
-                                                                </figure>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <!-- Project Block - The Challenge Start -->
-                                                        <div class="project__block pre-grid-items">
-                                                            <div class="project__descr">
-                                                                <div class="container-fluid p-0">
-                                                                    <div class="row g-0">
-                                                                        <div class="col-12 col-xl-4">
-                                                                            <p
-                                                                                class="project__subtitle tagline-chapter">
-                                                                                O Desafio</p>
-                                                                        </div>
-                                                                        <div class="col-12 col-xl-8">
-                                                                            <p class="type-basic-160lh">O antigo
-                                                                                dashboard apresentava sérias limitações:
-                                                                                excesso de informações, baixa hierarquia
-                                                                                visual e falta de acessibilidade para
-                                                                                diferentes públicos. Esses problemas
-                                                                                dificultavam a análise de dados e
-                                                                                ampliavam o tempo necessário para
-                                                                                decisões. O desafio também incluía
-                                                                                integrar os novos gráficos e relatórios
-                                                                                ao PowerBI, mantendo consistência com os
-                                                                                padrões visuais e operacionais da Vale.
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- Project Block - The Challenge End -->
-
-                                                        <div class="container">
-                                                            <div class="row g-4 nova-galeria" itemscope
-                                                                itemtype="http://schema.org/ImageGallery">
-                                                                <!-- Primeira linha -->
-                                                                <figure class="col-md-4" itemprop="associatedMedia"
-                                                                    itemscope itemtype="http://schema.org/ImageObject">
-                                                                    <a href="img/works/ST Dashboard/old1.png"
-                                                                        data-size="1200x800" itemprop="contentUrl">
-                                                                        <img src="img/works/ST Dashboard/old1.png"
-                                                                            itemprop="thumbnail"
-                                                                            class="img-fluid rounded">
-                                                                    </a>
-                                                                </figure>
-
-                                                                <figure class="col-md-4" itemprop="associatedMedia"
-                                                                    itemscope itemtype="http://schema.org/ImageObject">
-                                                                    <a href="img/works/ST Dashboard/old2.png"
-                                                                        data-size="1200x768" itemprop="contentUrl">
-                                                                        <img src="img/works/ST Dashboard/old2.png"
-                                                                            itemprop="thumbnail"
-                                                                            class="img-fluid rounded">
-                                                                    </a>
-                                                                </figure>
-
-                                                                <figure class="col-md-4" itemprop="associatedMedia"
-                                                                    itemscope itemtype="http://schema.org/ImageObject">
-                                                                    <a href="img/works/ST Dashboard/old3.png"
-                                                                        data-size="1200x768" itemprop="contentUrl">
-                                                                        <img src="img/works/ST Dashboard/old3.png"
-                                                                            itemprop="thumbnail"
-                                                                            class="img-fluid rounded">
-                                                                    </a>
-                                                                </figure>
-                                                            </div>
-                                                        </div>
-
-                                                        <!-- Project Block - Illustrations Grid End -->
-
-                                                        <!-- Project Block - My Solution Start -->
-                                                        <div class="project__block">
-                                                            <div class="project__descr">
-                                                                <div class="container-fluid p-0">
-                                                                    <div class="row g-0">
-                                                                        <!-- Título 'Meu Papel' -->
-                                                                        <div class="col-12 col-xl-4 mb-4">
-                                                                            <p
-                                                                                class="project__subtitle tagline-chapter">
-                                                                                Meu Papel</p>
-                                                                        </div>
-                                                                        <!-- Descrição do papel -->
-                                                                        <div class="col-12 col-xl-8">
-                                                                            <p class="type-basic-160lh mb-5"
-                                                                                style="font-size: 1.8rem; line-height: 1.8; color: var(--t-bright);">
-                                                                                Atuei como Designer de Produto
-                                                                                Especialista, liderando o processo de
-                                                                                reestruturação. Minhas responsabilidades
-                                                                                incluíram:</p>
-
-                                                                            <ul class="type-basic-160lh"
-                                                                                style="font-size: 1.6rem; line-height: 2; padding-left: 20px; list-style-type: disc; color: var(--t-bright);">
-                                                                                <li><strong>Pesquisa com
-                                                                                        usuários:</strong> Identificação
-                                                                                    de dores e prioridades do sistema
-                                                                                    atual.</li>
-                                                                                <li><strong>Prototipação de layouts
-                                                                                        interativos:</strong> Uso do
-                                                                                    Figma para testar hipóteses junto
-                                                                                    aos stakeholders.</li>
-                                                                                <li><strong>Criação de gráficos e
-                                                                                        relatórios no PowerBI:</strong>
-                                                                                    Alinhamento de dados e objetivos
-                                                                                    estratégicos.</li>
-                                                                                <li><strong>Colaboração com
-                                                                                        desenvolvedores e times
-                                                                                        técnicos:</strong> Implementação
-                                                                                    de soluções viáveis e otimizadas.
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- Project Block - My Solution End -->
-
-
-
-
-
-                                                        <!-- Project Block - My Solution Start -->
-                                                        <div class="project__block">
-                                                            <div class="project__descr">
-                                                                <div class="container-fluid p-0">
-                                                                    <div class="row g-0">
-                                                                        <div class="col-12 col-xl-4">
-                                                                            <p
-                                                                                class="project__subtitle tagline-chapter">
-                                                                                A Solução</p>
-                                                                        </div>
-                                                                        <div class="col-12 col-xl-8">
-                                                                            <p class="type-basic-160lh">
-                                                                                O resultado foi um dashboard totalmente
-                                                                                renovado:
-                                                                            </p>
-                                                                            <ul class="type-basic-160lh">
-                                                                                <li><strong>Design moderno e
-                                                                                        funcional:</strong> Layout limpo
-                                                                                    e organizado, com foco em clareza e
-                                                                                    navegação intuitiva.</li>
-                                                                                <li><strong>Visualizações de dados
-                                                                                        poderosas:</strong> Gráficos
-                                                                                    dinâmicos e painéis interativos no
-                                                                                    PowerBI, destacando os KPIs mais
-                                                                                    importantes.</li>
-                                                                                <li><strong>Maior usabilidade:</strong>
-                                                                                    Navegação intuitiva e estrutura
-                                                                                    lógica que facilita o acesso às
-                                                                                    informações mais relevantes.</li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- Project Block - My Solution End -->
-
-                                                        <!-- Project Block - Impacto Start -->
-                                                        <div class="project__block">
-                                                            <div class="project__descr">
-                                                                <div class="container-fluid p-0">
-                                                                    <div class="row g-0">
-                                                                        <div class="col-12 col-xl-4">
-                                                                            <p
-                                                                                class="project__subtitle tagline-chapter">
-                                                                                O Impacto</p>
-                                                                        </div>
-                                                                        <div class="col-12 col-xl-8">
-                                                                            <p class="type-basic-160lh">
-                                                                                O protóripo do novo dashboard foi
-                                                                                amplamente elogiado pelos usuários e
-                                                                                teve um impacto extremamente positivo
-                                                                                nas equipes. A ferramenta se tornou um
-                                                                                dos projetos mais aguardados, prometendo
-                                                                                proporcionar uma análise mais clara e
-                                                                                eficiente, além de melhorar
-                                                                                significativamente a experiência de uso.
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- Project Block - Impacto End -->
-
-                                                        <!-- Project Block - Illustration Fullwidth Start -->
-                                                        <div class="project__block no-margin">
-                                                            <div class="project__illustration-xl">
-                                                                <img src="img/works/ST Dashboard/Final.png"
-                                                                    alt="Project Illustration">
-                                                            </div>
-                                                        </div>
-                                                        <!-- Project Block - Illustration Fullwidth End -->
-
-                                                        <!-- Project Block - Project Link Start -->
-                                                        <div class="project__block small-size">
-                                                            <div class="container-fluid p-0">
-                                                                <div class="project__divider"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- Project Block - Project Link End -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Portfilio Single Item Popup №2 End -->
-
-                                <!-- Popup Content End -->
-
-                                <!-- Testimonials Slider End -->
+                                <!-- Content Block - Newsletter Section End -->
 
                                 <!-- Content Block - Portfolio Gallery Masonry Grid Start -->
                                 <div class="content__block grid-block">
                                     <div class="container-fluid px-0 inner__gallery">
-
                                         <!-- Portfolio Gallery Start -->
                                         <div class="row gx-0 my-gallery" itemscope
                                             itemtype="http://schema.org/ImageGallery"
@@ -1377,11 +501,9 @@
                                             </figure>
                                         </div>
                                         <!-- Portfolio Gallery End -->
-
                                     </div>
                                 </div>
                                 <!-- Content Block - Portfolio Gallery Masonry Grid End -->
-
                             </div>
                         </div>
                         <!-- Inner Section Content End -->
@@ -1389,7 +511,6 @@
                         <!-- Inner Section Aside Start -->
                         <div class="col-12 col-xl-2"></div>
                         <!-- Inner Section Aside End -->
-
                     </div>
                 </div>
             </div>
@@ -1402,11 +523,9 @@
             <div class="inner__wrapper">
                 <div class="container-fluid p-0">
                     <div class="row g-0">
-
                         <!-- Inner Section Name Start -->
                         <div class="col-12 col-xl-2">
                             <div class="inner__name">
-
                                 <!-- Content Block - Section Name Start -->
                                 <div class="content__block name-block">
                                     <span class="section-name icon-right animate-in-up">
@@ -1415,7 +534,6 @@
                                     </span>
                                 </div>
                                 <!-- Content Block - Section Name Start -->
-
                             </div>
                         </div>
                         <!-- Inner Section Name End -->
@@ -1423,7 +541,6 @@
                         <!-- Inner Section Content Start -->
                         <div class="col-12 col-xl-8">
                             <div class="inner__content">
-
                                 <!-- Content Block - H2 Section Title Start -->
                                 <div class="content__block section-grid-title">
                                     <div class="block__descr">
@@ -1449,7 +566,6 @@
                                 <div class="content__block grid-block ">
                                     <div class="container-fluid p-0">
                                         <div class="row g-0 justify-content-between">
-
                                             <div
                                                 class="col-12 col-md-8 col-lg-7 col-xxl-9 grid-item about-descr pre-grid">
                                                 <p class="about-descr__text type-basic-160lh animate-in-up">Designer de
@@ -1509,12 +625,10 @@
                                                     </h6>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
                                 <!-- Content Block - About Me Data End -->
-
                             </div>
                         </div>
                         <!-- Inner Section Content End -->
@@ -1522,7 +636,6 @@
                         <!-- Inner Section Aside Start -->
                         <div class="col-12 col-xl-2"></div>
                         <!-- Inner Section Aside End -->
-
                     </div>
                 </div>
             </div>
@@ -1534,11 +647,9 @@
             <div class="inner__wrapper">
                 <div class="container-fluid p-0">
                     <div class="row g-0">
-
                         <!-- Inner Section Name Start -->
                         <div class="col-12 col-xl-2">
                             <div class="inner__name">
-
                                 <!-- Content Block - Section Name Start -->
                                 <div class="content__block name-block">
                                     <span class="section-name icon-right animate-in-up">
@@ -1547,7 +658,6 @@
                                     </span>
                                 </div>
                                 <!-- Content Block - Section Name Start -->
-
                             </div>
                         </div>
                         <!-- Inner Section Name End -->
@@ -1555,7 +665,6 @@
                         <!-- Inner Section Content Start -->
                         <div class="col-12 col-xl-8">
                             <div class="inner__content">
-
                                 <!-- Content Block - H2 Section Title Start -->
                                 <div class="content__block pre-stack-text-block">
                                     <div class="block__descr">
@@ -1656,7 +765,6 @@
                                     </div>
                                 </div>
                                 <!-- Content Block - Services/Features Stacking Cards Block End -->
-
                             </div>
                         </div>
                         <!-- Inner Section Content End -->
@@ -1664,7 +772,6 @@
                         <!-- Inner Section Aside Start -->
                         <div class="col-12 col-xl-2"></div>
                         <!-- Inner Section Aside End -->
-
                     </div>
                 </div>
             </div>
@@ -1676,11 +783,9 @@
             <div class="inner__wrapper">
                 <div class="container-fluid p-0">
                     <div class="row g-0">
-
                         <!-- Inner Section Name Start -->
                         <div class="col-12 col-xl-2">
                             <div class="inner__name">
-
                                 <!-- Content Block - Section Name Start -->
                                 <div class="content__block name-block">
                                     <span class="section-name icon-right animate-in-up">
@@ -1689,7 +794,6 @@
                                     </span>
                                 </div>
                                 <!-- Content Block - Section Name Start -->
-
                             </div>
                         </div>
                         <!-- Inner Section Name End -->
@@ -1697,19 +801,16 @@
                         <!-- Inner Section Content Start -->
                         <div class="col-12 col-xl-8">
                             <div class="inner__content">
-
                                 <!-- Content Block - H2 Section Title Start -->
                                 <div class="content__block section-tagline-title">
                                     <div class="block__descr">
                                         <h2 class="reveal-type animate-in-up">Minha jornada<br>digital</h2>
                                     </div>
                                 </div>
-
                                 <!-- Content Block - H2 Section Title End -->
 
                                 <!-- Content Block - Work Experience Start -->
                                 <div class="content__block pre-text-items">
-
                                     <!-- Section Subtitle Start -->
                                     <div class="block__subtitle">
                                         <p class="tagline-chapter animate-in-up">Experiência</p>
@@ -1778,13 +879,13 @@
                                                     <li>Aprimoramento da esteira de entrega para protótipos e POCs.</li>
                                                     <li>Condução de projetos variados relacionados à Vale, incluindo:
                                                     </li>
-                                                    <ol>
-                                                        <li>&nbsp; &nbsp; &nbsp; Interfaces para controle robótico;</li>
-                                                        <li>&nbsp; &nbsp; &nbsp; Segurança on-site;</li>
-                                                        <li>&nbsp; &nbsp; &nbsp; Prevenção de quarentena;</li>
-                                                        <li>&nbsp; &nbsp; &nbsp; Processos financeiros;</li>
-                                                        <li>&nbsp; &nbsp; &nbsp; Otimização de rotas.</li>
-                                                    </ol>
+                                                <ol>
+                                                    <li>&nbsp; &nbsp; &nbsp; Interfaces para controle robótico;</li>
+                                                    <li>&nbsp; &nbsp; &nbsp; Segurança on-site;</li>
+                                                    <li>&nbsp; &nbsp; &nbsp; Prevenção de quarentena;</li>
+                                                    <li>&nbsp; &nbsp; &nbsp; Processos financeiros;</li>
+                                                    <li>&nbsp; &nbsp; &nbsp; Otimização de rotas.</li>
+                                                </ol>
                                                 </p>
                                             </div>
                                         </div>
@@ -1849,15 +950,12 @@
                                         </div>
                                         <div class="resume-divider animate-in-up"></div>
                                     </div>
-
                                     <!-- Resume Lines V1 End -->
-
                                 </div>
                                 <!-- Content Block - Work Experience End -->
 
                                 <!-- Content Block - My Education Start -->
                                 <div class="content__block pre-text-items">
-
                                     <!-- Section Subtitle Start -->
                                     <div class="block__subtitle">
                                         <p class="tagline-chapter animate-in-up">Educação</p>
@@ -1940,7 +1038,6 @@
 
                                 <!-- Content Block - Language Start -->
                                 <div class="content__block pre-text-items">
-
                                     <!-- Section Subtitle Start -->
                                     <div class="block__subtitle">
                                         <p class="tagline-chapter animate-in-up">Linguas</p>
@@ -2003,7 +1100,6 @@
 
                             <!-- Content Block - Tools Cards Start -->
                             <div class="content__block grid-block pre-text-items">
-
                                 <!-- Section Subtitle Start -->
                                 <div class="block__subtitle grid-block-subtitle">
                                     <p class="tagline-chapter animate-in-up">Minhas ferramentas favoritas</p>
@@ -2015,32 +1111,44 @@
                                     <!-- tools single item -->
                                     <div class="tools-cards__item d-flex grid-item animate-card-4">
                                         <div class="tools-cards__card">
-                                            <img class="tools-cards__icon animate-in-up" src="img/icons/icon-figma.svg"
-                                                alt="Tools Icon">
+                                            <img class="tools-cards__icon animate-in-up lazyload" 
+                                                 src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                                 data-src="img/icons/icon-figma.svg"
+                                                 alt="Tools Icon"
+                                                 loading="lazy">
                                             <h6 class="tools-cards__caption tagline-tool animate-in-up">Figma</h6>
                                         </div>
                                     </div>
                                     <!-- tools single item -->
                                     <div class="tools-cards__item d-flex grid-item animate-card-4">
                                         <div class="tools-cards__card">
-                                            <img class="tools-cards__icon animate-in-up"
-                                                src="img/icons/icon-photoshop.svg" alt="Tools Icon">
+                                            <img class="tools-cards__icon animate-in-up lazyload" 
+                                                 src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                                 data-src="img/icons/icon-photoshop.svg"
+                                                 alt="Tools Icon"
+                                                 loading="lazy">
                                             <h6 class="tools-cards__caption tagline-tool animate-in-up">Photoshop</h6>
                                         </div>
                                     </div>
                                     <!-- tools single item -->
                                     <div class="tools-cards__item d-flex grid-item animate-card-4">
                                         <div class="tools-cards__card">
-                                            <img class="tools-cards__icon animate-in-up" src="img/icons/Figjam.png"
-                                                alt="Tools Icon">
+                                            <img class="tools-cards__icon animate-in-up lazyload" 
+                                                 src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                                 data-src="img/icons/Figjam.png"
+                                                 alt="Tools Icon"
+                                                 loading="lazy">
                                             <h6 class="tools-cards__caption tagline-tool animate-in-up">FigJam</h6>
                                         </div>
                                     </div>
                                     <!-- tools single item -->
                                     <div class="tools-cards__item d-flex grid-item animate-card-4">
                                         <div class="tools-cards__card">
-                                            <img class="tools-cards__icon animate-in-up" src="img/icons/Group 5.png"
-                                                alt="Tools Icon">
+                                            <img class="tools-cards__icon animate-in-up lazyload" 
+                                                 src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                                 data-src="img/icons/Group 5.png"
+                                                 alt="Tools Icon"
+                                                 loading="lazy">
                                             <h6 class="tools-cards__caption tagline-tool animate-in-up">Design Systems
                                             </h6>
                                         </div>
@@ -2048,24 +1156,33 @@
                                     <!-- tools single item -->
                                     <div class="tools-cards__item d-flex grid-item animate-card-4">
                                         <div class="tools-cards__card">
-                                            <img class="tools-cards__icon animate-in-up" src="img/icons/Maze.png"
-                                                alt="Tools Icon">
+                                            <img class="tools-cards__icon animate-in-up lazyload" 
+                                                 src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                                 data-src="img/icons/Maze.png"
+                                                 alt="Tools Icon"
+                                                 loading="lazy">
                                             <h6 class="tools-cards__caption tagline-tool animate-in-up">Maze</h6>
                                         </div>
                                     </div>
                                     <!-- tools single item -->
                                     <div class="tools-cards__item d-flex grid-item animate-card-4">
                                         <div class="tools-cards__card">
-                                            <img class="tools-cards__icon animate-in-up" src="img/icons/mural3.png"
-                                                alt="Tools Icon">
+                                            <img class="tools-cards__icon animate-in-up lazyload" 
+                                                 src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                                 data-src="img/icons/mural3.png"
+                                                 alt="Tools Icon"
+                                                 loading="lazy">
                                             <h6 class="tools-cards__caption tagline-tool animate-in-up">Mural</h6>
                                         </div>
                                     </div>
                                     <!-- tools single item -->
                                     <div class="tools-cards__item d-flex grid-item animate-card-4">
                                         <div class="tools-cards__card">
-                                            <img class="tools-cards__icon animate-in-up"
-                                                src="img/icons/Azure Devops.svg" alt="Tools Icon">
+                                            <img class="tools-cards__icon animate-in-up lazyload" 
+                                                 src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                                 data-src="img/icons/Azure Devops.svg"
+                                                 alt="Tools Icon"
+                                                 loading="lazy">
                                             <h6 class="tools-cards__caption tagline-tool animate-in-up">Azure Devops
                                             </h6>
                                         </div>
@@ -2073,17 +1190,18 @@
                                     <!-- tools single item -->
                                     <div class="tools-cards__item d-flex grid-item animate-card-4">
                                         <div class="tools-cards__card">
-                                            <img class="tools-cards__icon animate-in-up" src="img/icons/icon-notion.svg"
-                                                alt="Tools Icon">
+                                            <img class="tools-cards__icon animate-in-up lazyload" 
+                                                 src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                                 data-src="img/icons/icon-notion.svg"
+                                                 alt="Tools Icon"
+                                                 loading="lazy">
                                             <h6 class="tools-cards__caption tagline-tool animate-in-up">Notion</h6>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- Tools Cards End -->
-
                             </div>
                             <!-- Content Block - Tools Cards End -->
-
                         </div>
                     </div>
                     <!-- Inner Section Content End -->
@@ -2091,10 +1209,7 @@
                     <!-- Inner Section Aside Start -->
                     <div class="col-12 col-xl-2"></div>
                     <!-- Inner Section Aside End -->
-
                 </div>
-            </div>
-
             </div>
         </section>
         <!-- Inner Section - Resume - End -->
@@ -2104,11 +1219,9 @@
             <div class="inner__wrapper">
                 <div class="container-fluid p-0">
                     <div class="row g-0">
-
                         <!-- Inner Section Name Start -->
                         <div class="col-12 col-xl-2">
                             <div class="inner__name">
-
                                 <!-- Content Block - Section Name Start -->
                                 <div class="content__block name-block">
                                     <span class="section-name icon-right animate-in-up">
@@ -2117,7 +1230,6 @@
                                     </span>
                                 </div>
                                 <!-- Content Block - Section Name Start -->
-
                             </div>
                         </div>
                         <!-- Inner Section Name End -->
@@ -2125,7 +1237,6 @@
                         <!-- Inner Section Content Start -->
                         <div class="col-12 col-xl-8">
                             <div class="inner__content">
-
                                 <!-- Content Block - H2 Section Title Start -->
                                 <div class="content__block grid-block">
                                     <div class="block__descr">
@@ -2173,7 +1284,6 @@
                         <!-- Inner Section Aside Start -->
                         <div class="col-12 col-xl-2"></div>
                         <!-- Inner Section Aside End -->
-
                     </div>
                 </div>
 
@@ -2188,11 +1298,9 @@
                     </div>
                 </div>
                 <!-- Inner Section Off-canvas Content (Footer Marquee Block) Start -->
-
             </div>
         </section>
         <!-- Inner Section - Contact - End -->
-
     </main>
     <!-- Page Content End -->
 
@@ -2219,14 +1327,12 @@
 
     <!-- Root element of PhotoSwipe. Must have class pswp. -->
     <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
         <!-- Background of PhotoSwipe.
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     It's a separate element, as animating opacity is faster than rgba(). -->
         <div class="pswp__bg"></div>
 
         <!-- Slides wrapper with overflow:hidden. -->
         <div class="pswp__scroll-wrap">
-
             <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
             <!-- don't modify these 3 pswp__item elements, data is added later on. -->
             <div class="pswp__container">
@@ -2237,21 +1343,13 @@
 
             <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
             <div class="pswp__ui pswp__ui--hidden">
-
                 <div class="pswp__top-bar">
-
                     <!--  Controls are self-explanatory. Order can be changed. -->
-
                     <div class="pswp__counter"></div>
-
                     <button class="pswp__button pswp__button--close link-s" title="Close (Esc)"></button>
-
                     <button class="pswp__button pswp__button--share link-s" title="Share"></button>
-
                     <button class="pswp__button pswp__button--fs link-s" title="Toggle fullscreen"></button>
-
                     <button class="pswp__button pswp__button--zoom link-s" title="Zoom in/out"></button>
-
                     <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
                     <!-- element will get class pswp__preloader-active when preloader is running -->
                     <div class="pswp__preloader">
@@ -2268,49 +1366,91 @@
                 </div>
 
                 <button class="pswp__button pswp__button--arrow--left link-s" title="Previous (arrow left)"></button>
-
                 <button class="pswp__button pswp__button--arrow--right link-s" title="Next (arrow right)"></button>
 
                 <div class="pswp__caption">
                     <div class="pswp__caption__center"></div>
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
-    <!-- Load Scripts Start -->
-    <script src="js/libs.min.js"></script>
-    <script src="js/gallery-init.js"></script>
-    <script src="js/app.js"></script>
+    <!-- Load Scripts -->
+    <script defer src="js/libs.min.js"></script>
+    <script defer src="js/gallery-init.js"></script>
+    <script defer src="js/app.js"></script>
 
+    <!-- Performance Optimizations -->
     <script>
-        document.querySelectorAll('.lightboxgallery-link').forEach(item => {
-            item.addEventListener('click', event => {
-                event.preventDefault();
-                const imgSrc = event.currentTarget.href;
-                const overlay = document.createElement('div');
-                overlay.classList.add('lightboxgallery-overlay');
-                overlay.innerHTML = `<img src="${imgSrc}">`;
-                document.body.appendChild(overlay);
+        // Preload critical resources
+        const preloadLinks = [
+            { rel: 'preload', href: 'css/main.css', as: 'style' },
+            { rel: 'preload', href: 'js/libs.min.js', as: 'script' },
+            { rel: 'preconnect', href: 'https://cdnjs.cloudflare.com' }
+        ];
 
-                overlay.addEventListener('click', () => {
-                    document.body.removeChild(overlay);
+        preloadLinks.forEach(link => {
+            const linkEl = document.createElement('link');
+            Object.keys(link).forEach(attr => linkEl[attr] = link[attr]);
+            document.head.appendChild(linkEl);
+        });
+
+        // Initialize Components
+        document.addEventListener("DOMContentLoaded", function() {
+            // Theme initialization
+            document.documentElement.setAttribute("data-theme", "dark");
+            
+            // Lazy loading initialization
+            const lazyElements = document.querySelectorAll("[loading='lazy']");
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const element = entry.target;
+                        if (element.dataset.src) {
+                            element.src = element.dataset.src;
+                            element.removeAttribute("data-src");
+                        }
+                        element.classList.remove("lazy");
+                        observer.unobserve(element);
+                    }
+                });
+            }, {
+                rootMargin: "50px 0px",
+                threshold: 0.1
+            });
+
+            lazyElements.forEach(element => imageObserver.observe(element));
+
+            // Lightbox initialization
+            initializeLightbox();
+        });
+
+        // Lightbox Gallery
+        function initializeLightbox() {
+            document.querySelectorAll('.lightboxgallery-link').forEach(item => {
+                item.addEventListener('click', event => {
+                    event.preventDefault();
+                    const imgSrc = event.currentTarget.href;
+                    const overlay = document.createElement('div');
+                    overlay.classList.add('lightboxgallery-overlay');
+                    overlay.innerHTML = `<img src="${imgSrc}" loading="lazy">`;
+                    document.body.appendChild(overlay);
+
+                    overlay.addEventListener('click', () => {
+                        document.body.removeChild(overlay);
+                    });
                 });
             });
-        });
+        }
+
+        // Add Service Worker for offline capabilities
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => console.log('ServiceWorker registered'))
+                    .catch(err => console.log('ServiceWorker registration failed: ', err));
+            });
+        }
     </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.documentElement.setAttribute("data-theme", "dark");
-        });
-    </script>
-    <!-- Load Scripts End -->
-
-
 </body>
-
 </html>

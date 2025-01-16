@@ -1,5 +1,11 @@
-function initSwipers() {
-    // Remove a verificação de largura para o primeiro Swiper
+document.addEventListener('DOMContentLoaded', function() {
+    // Verifica se o Swiper existe
+    if (typeof Swiper === 'undefined') {
+        console.error('Swiper não está carregado');
+        return;
+    }
+
+    // Inicializa os Swipers
     const customSwiper = new Swiper(".custom-swiper", {
         effect: "coverflow",
         grabCursor: true,
@@ -26,7 +32,6 @@ function initSwipers() {
             nextEl: '.custom-swiper .swiper-button-next',
             prevEl: '.custom-swiper .swiper-button-prev',
         },
-        // Adiciona breakpoints para ajustar comportamento em diferentes telas
         breakpoints: {
             320: {
                 slidesPerView: "auto",
@@ -39,17 +44,17 @@ function initSwipers() {
         }
     });
 
-    // Segundo Swiper mantém a mesma configuração
-    const regularSwiper = new Swiper(".swiper:not(.custom-swiper)", {
+    // Inicializa o segundo Swiper
+    const regularSwiper = new Swiper(".regular-swiper", {
         slidesPerView: 1,
         spaceBetween: 30,
         loop: false,
         navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
+            nextEl: '.regular-swiper .swiper-button-next',
+            prevEl: '.regular-swiper .swiper-button-prev',
         },
         pagination: {
-            el: '.swiper-pagination',
+            el: '.regular-swiper .swiper-pagination',
             clickable: true,
         },
         breakpoints: {
@@ -58,11 +63,6 @@ function initSwipers() {
             }
         }
     });
-}
-
-// Inicializa os Swipers quando o DOM estiver completamente carregado
-document.addEventListener('DOMContentLoaded', function() {
-    initSwipers();
 });
 
 // Reinicializa em caso de redimensionamento com debounce
