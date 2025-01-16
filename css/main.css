@@ -37,11 +37,10 @@
  * 23. Features Services
  * 24. Features Resume
  * 25. Features Tools
- * 26. Features Testimonials
- * 27. Features Slider
- * 28. Features Accordion
- * 29. Features Socials
- * 30. Features Contact Data
+ * 26. Features Slider
+ * 27. Features Accordion
+ * 28. Features Socials
+ * 29. Features Contact Data
  * ------------------------------------------------
  * Table of Contents End
  * ------------------------------------------------ */
@@ -5865,7 +5864,7 @@ form textarea:required:valid {
   }
 }
 
-@media only screen and (min-width: 1400px) {
+@media only screen and (min-width: 1200px) {
   .item__image {
     width: 8rem;
     height: 8rem;
@@ -7300,366 +7299,178 @@ form textarea:required:valid {
 /* Features Tools End */
 /* ------------------------------------------------*/
 /* ------------------------------------------------*/
-/* Features Testimonials Start */
+/* Features Accordion Start */
 /* ------------------------------------------------*/
-.testimonials-card {
+.accordion-card {
+  position: relative;
+  width: 100%;
   padding: 3rem;
   background-color: var(--base);
-  border: 3px solid var(--stroke-elements);
-  -moz-border-radius: var(--_radius);
-  border-radius: var(--_radius);
-}
-
-@media only screen and (min-width: 992px) {
-  .testimonials-card {
-    height: 500px;
-  }
-}
-
-@media only screen and (min-width: 1400px) {
-  .testimonials-card {
-    padding: 5rem;
-    height: 600px;
-  }
-}
-
-@media only screen and (min-width: 1600px) {
-  .testimonials-card {
-    height: 700px;
-  }
-}
-
-.testimonials-card__tdata {
-  position: relative;
-  padding-right: 0;
-}
-
-@media only screen and (min-width: 992px) {
-  .testimonials-card__tdata {
-    height: 100%;
-    padding-right: 1.5rem;
-  }
-}
-
-@media only screen and (min-width: 1400px) {
-  .testimonials-card__tdata {
-    padding-right: 2.5rem;
-  }
-}
-
-
-.testimonials-card__timage {
-  position: relative;
-  padding-left: 0;
-}
-
-@media only screen and (min-width: 992px) {
-  .testimonials-card__timage {
-    height: 100%;
-    padding-left: 1.5rem;
-  }
-}
-
-@media only screen and (min-width: 1400px) {
-  .testimonials-card__timage {
-    padding-left: 2.5rem;
-  }
-}
-
-
-
-
-.timage__inner {
+  border: 1px solid var(--stroke-elements);
   -moz-border-radius: var(--_radius);
   border-radius: var(--_radius);
   overflow: hidden;
 }
 
-.timage__inner img {
-  min-width: 100%;
-  min-height: 100%;
-  -o-object-fit: cover;
-  object-fit: cover;
-}
-
-.testimonials-card__descr {
-  max-width: 1050px;
-  margin-top: 2.8rem;
-}
-
-@media only screen and (min-width: 768px) {
-  .testimonials-card__descr {
-    margin-top: 3.8rem;
+@media only screen and (min-width: 1600px) {
+  .accordion-card {
+    padding: 5rem 3rem;
   }
 }
 
-@media only screen and (min-width: 1200px) {
-  .testimonials-card__descr {
-    margin-top: 3.6rem;
+.accordion-card__title {
+  margin-bottom: 2.5rem;
+}
+
+@media only screen and (min-width: 768px) {
+  .accordion-card__title {
+    margin-bottom: 3.5rem;
   }
 }
 
 @media only screen and (min-width: 1400px) {
-  .testimonials-card__descr {
-    margin-top: 3.4rem;
+  .accordion-card__title {
+    margin-bottom: 3.4rem;
   }
 }
 
-.testimonials-card__btnholder {
-  margin-top: 2.2rem;
-  margin-bottom: 3.3rem;
-}
-
-@media only screen and (min-width: 768px) {
-  .testimonials-card__btnholder {
-    margin-top: 3.2rem;
+@media only screen and (min-width: 1600px) {
+  .accordion-card__title {
     margin-bottom: 4.2rem;
   }
 }
 
-@media only screen and (min-width: 992px) {
-  .testimonials-card__btnholder {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    margin: 0;
-  }
+.accordion-card__item {
+  position: relative;
+  width: 100%;
+  margin-bottom: 2rem;
 }
 
-.tauthor__avatar {
-  width: 60px;
-  min-width: 60px;
-  height: 60px;
-  margin-right: 2rem;
+.accordion-card__item:last-of-type {
+  margin-bottom: 0;
+}
+
+.accordion-card__item-title {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 2rem 0;
+  background-color: var(--base);
+  border: 1px solid var(--stroke-elements);
   -moz-border-radius: var(--_radius);
   border-radius: var(--_radius);
-  overflow: hidden;
+  color: var(--t-bright);
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.accordion-card__item-title::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 2rem;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 1.2rem;
+  height: 1.2rem;
+  background-color: var(--t-bright);
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.accordion-card__item-title::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 2rem;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 1.2rem;
+  height: 1.2rem;
+  background-color: var(--t-bright);
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.accordion-card__item-title h4 {
+  font-size: 1.8rem;
+  font-weight: 400;
+  line-height: 1;
 }
 
 @media only screen and (min-width: 768px) {
-  .tauthor__avatar {
-    width: 120px;
-    min-width: 120px;
-    height: 120px;
-    margin-right: 3rem;
-  }
-}
-
-.tauthor__name {
-  color: var(--t-bright);
-}
-
-.tauthor__position {
-  margin-top: 0.6rem;
-}
-
-@media only screen and (min-width: 1600px) {
-  .tauthor__position {
-    margin-top: 0.8rem;
-  }
-}
-
-.tauthor__rating {
-  margin-top: 1.3rem;
-}
-
-.tauthor__rating i {
-  display: block;
-  margin-right: 1rem;
-  font-size: 1.6rem;
-  color: var(--t-bright);
-}
-
-.tauthor__rating i:last-of-type {
-  margin-right: 0;
-}
-
-@media only screen and (min-width: 1400px) {
-  .tauthor__rating i {
-    font-size: 1.8rem;
-  }
-}
-
-@media only screen and (min-width: 1600px) {
-  .tauthor__rating {
-    margin-bottom: 0.4rem;
-  }
-
-  .tauthor__rating i {
-    font-size: 2rem;
-  }
-}
-
-/* ------------------------------------------------*/
-/* Features Testimonials End */
-/* ------------------------------------------------*/
-/* ------------------------------------------------*/
-/* Features Slider Start */
-/* ------------------------------------------------*/
-.testimonials-slider {
-  position: relative;
-  height: auto;
-  margin-bottom: 60px;
-  overflow: visible; /* Mantém overflow hidden por padrão (desktop) */
-}
-
-/* Remove overflow hidden em mobile */
-@media (max-width: 768px) {
-  .testimonials-slider {
-    overflow: hidden;
-  }
-}
-
-/* Ajustes no Swiper */
-.swiper-testimonials {
-  position: relative;
-  height: auto !important; /* Força altura automática */
-  padding-bottom: 60px; /* Espaço para navegação */
-}
-
-.swiper-slide {
-  height: auto !important; /* Força altura automática */
-}
-
-/* Ajustes no card de testimonial */
-.testimonials-card {
-  position: relative;
-  height: auto !important; /* Força altura automática */
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Ajustes no container fluid */
-.container-fluid.p-0.fullheight-l {
-  height: auto !important;
-  min-height: unset;
-}
-
-/* Ajustes na row */
-.row.g-0.d-flex.align-items-stretch.fullheight-l {
-  height: auto !important;
-  min-height: unset;
-}
-
-/* Ajustes nas colunas */
-.testimonials-card__tdata,
-.testimonials-card__timage {
-  height: auto !important;
-  min-height: unset;
-}
-
-/* Ajuste na imagem */
-.timage__inner {
-  height: auto !important;
-  min-height: 300px; /* Altura mínima para a imagem */
-}
-
-.timage__inner img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Ajustes responsivos */
-@media (max-width: 768px) {
-  .testimonials-card {
-    padding: 20px;
-  }
-  
-  .timage__inner {
-    min-height: 250px;
-  }
-}
-
-.mxd-swiper-pagination-fraction {
-  width: auto;
-  top: auto;
-  bottom: 0;
-  left: auto;
-  left: 50%;
-  right: auto;
-  -webkit-transform: translateX(-50%);
-  -moz-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  transform: translateX(-50%);
-  padding-top: 3rem;
-  font: normal 400 1.8rem/1 var(--_font-default);
-  color: var(--t-bright);
-}
-
-@media only screen and (min-width: 1200px) {
-  .mxd-swiper-pagination-fraction {
+  .accordion-card__item-title h4 {
     font-size: 2rem;
   }
 }
 
 @media only screen and (min-width: 1400px) {
-  .mxd-swiper-pagination-fraction {
-    padding-top: 5rem;
+  .accordion-card__item-title h4 {
     font-size: 2.2rem;
   }
 }
 
 @media only screen and (min-width: 1600px) {
-  .mxd-swiper-pagination-fraction {
+  .accordion-card__item-title h4 {
     font-size: 2.6rem;
   }
 }
 
-.mxd-slider-btn {
-  position: absolute;
-  top: auto;
-  right: auto;
-  bottom: 0;
-  left: auto;
-  width: auto;
-  height: auto;
-  margin: 0;
+.accordion-card__item-title.collapsed {
+  background-color: var(--t-bright);
+  color: var(--t-opp-bright);
 }
 
-.mxd-slider-btn::after {
-  display: none;
+.accordion-card__item-title.collapsed::before {
+  background-color: var(--t-opp-bright);
 }
 
-.mxd-slider-btn .btn .btn-caption {
-  display: none;
+.accordion-card__item-title.collapsed::after {
+  background-color: var(--t-opp-bright);
+  -webkit-transform: translateY(-50%) rotate(45deg);
+  -moz-transform: translateY(-50%) rotate(45deg);
+  -ms-transform: translateY(-50%) rotate(45deg);
+  transform: translateY(-50%) rotate(45deg);
 }
 
-@media only screen and (min-width: 768px) {
-  .mxd-slider-btn .btn .btn-caption {
-    display: -webkit-inline-box;
-    display: -moz-inline-box;
-    display: -ms-inline-flexbox;
-    display: inline-flex;
-    line-height: 1;
-  }
+.accordion-card__item-content {
+  position: relative;
+  width: 100%;
+  padding: 2rem 0;
+  background-color: var(--base);
+  border: 1px solid var(--stroke-elements);
+  -moz-border-radius: var(--_radius);
+  border-radius: var(--_radius);
+  color: var(--t-bright);
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
-.mxd-slider-btn-square-prev {
-  padding-left: 3rem;
-  left: 0;
+.accordion-card__item-content p {
+  margin-bottom: 0;
 }
 
-@media only screen and (min-width: 1400px) {
-  .mxd-slider-btn-square-prev {
-    padding-left: 5rem;
-  }
-}
-
-.mxd-slider-btn-square-next {
-  padding-right: 3rem;
-  right: 0;
-}
-
-@media only screen and (min-width: 1400px) {
-  .mxd-slider-btn-square-next {
-    padding-right: 5rem;
-  }
+.accordion-card__item-content.collapsing {
+  background-color: var(--t-bright);
+  color: var(--t-opp-bright);
 }
 
 /* ------------------------------------------------*/
-/* Features Slider End */
+/* Features Accordion End */
 /* ------------------------------------------------*/
 /* ------------------------------------------------*/
 /* Features Socials Start */
@@ -8082,57 +7893,6 @@ form textarea:required:valid {
   .header__navigation {
     margin-left: auto;
     /* Pushes the menu to the right */
-  }
-}
-
-/* Padding and margin adjustments for testimonials on smaller screens */
-@media (max-width: 768px) {
-  .testimonials-slider {
-    margin: 20px;
-    /* Add space around the slider */
-    padding: 10px;
-    /* Add internal space for better visualization */
-  }
-
-  .testimonials-card {
-    margin-bottom: 20px;
-    /* Space between testimonial cards */
-  }
-
-  .testimonials-card__descr {
-    padding: 10px;
-    /* Add padding for better readability */
-  }
-
-  .testimonials-card {
-    margin-left: auto;
-    margin-right: auto;
-    /* Center align testimonial cards */
-  }
-}
-
-@media (max-width: 1200px) {
-  .testimonials-slider {
-    margin: 1.5rem;
-    /* Add space around the slider */
-    padding: 1.5rem;
-    /* Add internal space for better visualization */
-  }
-
-  .testimonials-card {
-    margin-bottom: 20px;
-    /* Space between testimonial cards */
-  }
-
-  .testimonials-card__descr {
-    padding: 1.5rem;
-    /* Add padding for better readability */
-  }
-
-  .testimonials-card {
-    margin-left: auto;
-    margin-right: auto;
-    /* Center align testimonial cards */
   }
 }
 
@@ -8792,6 +8552,7 @@ form textarea:required:valid {
   flex-wrap: wrap;
   gap: 12px;
   margin-bottom: 32px;
+  padding: 0;
 }
 
 .tag {
@@ -9419,3 +9180,875 @@ form textarea:required:valid {
   }
 }
 
+.placeholder-image {
+  width: 100%;
+  height: auto;
+  margin: 40px 0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.placeholder-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Newsletter Section */
+section#newsletter .container {
+  width: 100%;
+  padding: 0 24px;
+  
+}
+
+section#newsletter .newsletter {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  background: var(--base);
+  background-image: url('/palette.png'); /* Ajuste o caminho conforme sua estrutura de pastas */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 1px solid var(--stroke-elements);
+  border-radius: 12px;
+  overflow: hidden;
+  height: auto;
+  width: 100%;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+/* Adicione uma camada de overlay se necessário */
+section#newsletter .newsletter::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3); /* Ajuste a opacidade conforme necessário */
+  z-index: 1;
+}
+
+/* Garanta que o conteúdo fique acima do overlay */
+section#newsletter .newsletter .content-wrapper,
+section#newsletter .newsletter .image-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+/* Remova ou comente temporariamente outros backgrounds que possam estar interferindo */
+section#newsletter .newsletter .content-wrapper {
+  position: relative; /* Adiciona posicionamento relativo */
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 3rem;
+  align-items: flex-start;
+  z-index: 2; /* Garante que o conteúdo fique acima do background */
+  background: transparent; /* Garante que não há background interferindo */
+}
+
+section#newsletter .newsletter:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+section#newsletter .newsletter .image-wrapper {
+  flex: 1;
+  min-width: 40%;
+  overflow: hidden;
+  border-radius: 1.5rem;
+}
+
+section#newsletter .newsletter .image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+section#newsletter .newsletter .image-wrapper img:hover {
+  transform: scale(1.05);
+}
+
+/* Title Wrapper */
+section#newsletter .newsletter .title-wrapper .title {
+  font-size: 4.8rem;
+  line-height: 1.1;
+  color: var(--t-bright);
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+/* Tags */
+section#newsletter .newsletter .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+section#newsletter .newsletter .tags span {
+  padding: 8px 16px;
+  background: var(--base);
+  border: 1px solid var(--stroke-elements);
+  border-radius: 100px;
+  font-size: 14px;
+  color: var(--t-bright);
+  transition: all 0.3s ease;
+}
+
+section#newsletter .newsletter .tags span:hover {
+  background: var(--t-bright);
+  color: var(--base);
+}
+
+/* Description */
+section#newsletter .newsletter .description {
+  color: var(--t-sub);
+  font-size: 1.8rem;
+  line-height: 1.6;
+  max-width: 100%;
+}
+
+
+/* Responsividade */
+@media (max-width: 1200px) {
+  section#newsletter .container {
+      max-width: 1000px;
+  }
+  
+  section#newsletter .newsletter .content-wrapper {
+      padding: 2.5rem;
+  }
+  
+  section#newsletter .newsletter .title-wrapper .title {
+      font-size: 4.2rem;
+  }
+}
+
+@media (max-width: 992px) {
+  section#newsletter .container {
+      max-width: 800px;
+  }
+  
+  section#newsletter .newsletter .image-wrapper {
+      min-width: 45%;
+  }
+  
+  section#newsletter .newsletter .content-wrapper {
+      padding: 2rem;
+  }
+  
+  section#newsletter .newsletter .title-wrapper .title {
+      font-size: 3.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  section#newsletter .newsletter {
+      flex-direction: column;
+  }
+
+  section#newsletter .newsletter .image-wrapper {
+      min-width: 100%;
+      height: 300px;
+  }
+
+  section#newsletter .newsletter .content-wrapper {
+      padding: 2rem;
+  }
+
+  section#newsletter .newsletter .title-wrapper .title {
+      font-size: 3.4rem;
+  }
+
+  section#newsletter .tags {
+      gap: 6px;
+  }
+
+  section#newsletter .tags span {
+      padding: 6px 12px;
+      font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  section#newsletter .container {
+      padding: 0 16px;
+  }
+  
+  section#newsletter .newsletter .image-wrapper {
+      height: 250px;
+  }
+  
+  section#newsletter .newsletter .content-wrapper {
+      padding: 1.5rem;
+  }
+
+  section#newsletter .newsletter .title-wrapper .title {
+      font-size: 3rem;
+  }
+  
+  section#newsletter .newsletter .description {
+      font-size: 1.6rem;
+  }
+}
+
+/* Telas maiores */
+@media (min-width: 1920px) {
+  section#newsletter .container {
+      max-width: 1400px;
+  }
+  
+  section#newsletter .newsletter .content-wrapper {
+      padding: 4rem;
+  }
+  
+  section#newsletter .newsletter .title-wrapper .title {
+      font-size: 4rem;
+  }
+  
+  section#newsletter .newsletter .description {
+      font-size: 2.3rem;
+  }
+}
+
+/* Ajustes específicos para telas maiores */
+@media (min-width: 1920px) {
+    section#newsletter .container {
+        max-width: 1400px;
+    }
+    
+    section#newsletter .newsletter {
+        max-height: 800px; /* Limita a altura máxima */
+    }
+    
+    section#newsletter .newsletter .image-wrapper {
+        min-width: 35%; /* Reduz a proporção da imagem */
+        max-width: 40%;
+    }
+    
+    section#newsletter .newsletter .content-wrapper {
+        padding: 4rem;
+        max-width: 65%; /* Limita a largura do conteúdo */
+    }
+}
+
+/* Ajuste para telas ainda maiores */
+@media (min-width: 2560px) {
+    section#newsletter .container {
+        max-width: 100%;
+    }
+    
+    section#newsletter .newsletter {
+        max-height: 900px;
+    }
+    
+    section#newsletter .newsletter .image-wrapper {
+        min-width: 30%;
+        max-width: 35%;
+    }
+}
+
+section#newsletter .newsletter::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 0 solid rgba(255, 255, 255, 0.8);
+  transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  pointer-events: none;
+  z-index: 1;
+  border-radius: 1.5rem;
+  opacity: 0;
+}
+
+section#newsletter .newsletter:hover::before {
+  border-width: 1px;
+  opacity: 0.8;
+}
+
+/* Newsletter Swiper Styles */
+.newsletter-swiper {
+    overflow: hidden;
+    padding: 0; /* Removed top padding */
+}
+
+.newsletter-swiper .swiper-slide {
+    transition: transform 0.3s ease;
+    opacity: 0.5;
+    transform: scale(0.9);
+    height: auto; /* Allow natural height */
+    width: 1000px !important; /* Increased card width */
+}
+
+/* Media queries for larger screens */
+@media (min-width: 1920px) {
+    .newsletter-swiper .swiper-slide {
+        width: 1200px !important; /* Even wider for larger screens */
+    }
+}
+
+.newsletter-swiper .swiper-slide-active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Ensure consistent card sizes */
+.newsletter-swiper .newsletter {
+    margin: 0;
+    min-height: 400px;
+    display: flex;
+    flex-direction: row;
+}
+
+.newsletter-swiper .newsletter .content-wrapper {
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    padding: 3rem;
+    flex: 2;
+}
+
+/* Content layout adjustments */
+.newsletter-swiper .newsletter .title-wrapper {
+    margin-bottom: 2rem;
+}
+
+.newsletter-swiper .newsletter .title {
+    font-size: 4.8rem;
+    line-height: 1.1;
+}
+
+.newsletter-swiper .newsletter .tags {
+    margin-bottom: 2rem;
+}
+
+.newsletter-swiper .newsletter .description {
+    font-size: 1.8rem;
+    line-height: 1.6;
+    margin-bottom: auto; /* Push the button to the bottom */
+}
+
+/* Project button styles */
+.newsletter-swiper .newsletter .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem; /* Space between text and arrow */
+    padding: 0.8rem 1.6rem; /* Smaller padding */
+    background: var(--t-bright);
+    color: var(--base);
+    border-radius: 100px;
+    font-weight: 500;
+    font-size: 1.4rem;
+    transition: all 0.3s ease;
+    margin-top: 2rem;
+    text-decoration: none;
+}
+
+.newsletter-swiper .newsletter .project-link i {
+    font-size: 1.6rem;
+    transform: rotate(-45deg) translateX(0px) translateY(0px); /* Initial diagonal position */
+    transition: transform 0.3s ease;
+}
+
+.newsletter-swiper .newsletter .project-link:hover {
+    background: var(--t-medium);
+    color: var(--t-bright);
+    transform: translateY(-2px);
+}
+
+.newsletter-swiper .newsletter .project-link:hover i {
+    transform: rotate(0deg) translateX(4px) translateY(0); /* Return to horizontal on hover */
+}
+
+/* Newsletter Swiper Styles */
+.newsletter-swiper .newsletter {
+    margin: 0;
+    min-height: 400px;
+    display: flex;
+    flex-direction: row;
+}
+
+.newsletter-swiper .newsletter .image-wrapper {
+    min-height: 400px;
+    flex: 1;
+    order: 1; /* Ensures image stays on the left */
+}
+
+.newsletter-swiper .newsletter .content-wrapper {
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    padding: 3rem;
+    flex: 2;
+    order: 2; /* Ensures content stays on the right */
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .newsletter-swiper .newsletter {
+        flex-direction: column;
+    }
+
+    .newsletter-swiper .newsletter .image-wrapper,
+    .newsletter-swiper .newsletter .content-wrapper {
+        order: 0; /* Reset order for mobile */
+    }
+}
+
+/* Rest of your existing styles... */
+
+.grid-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Newsletter alternating layout */
+.newsletter.image-right {
+  flex-direction: row-reverse; /* Inverte a ordem dos elementos flex */
+}
+
+/* Ajustes responsivos para o layout alternado */
+@media (max-width: 768px) {
+  .newsletter.image-right {
+    flex-direction: column; /* Em mobile, mantém a ordem vertical padrão */
+  }
+  
+  .newsletter.image-right .image-wrapper {
+    order: -1; /* Força a imagem a ficar no topo em mobile */
+  }
+}
+
+/* Ajustes específicos para o swiper */
+.newsletter-swiper .newsletter.image-right {
+  flex-direction: row-reverse;
+}
+
+@media (max-width: 768px) {
+  .newsletter-swiper .newsletter.image-right {
+    flex-direction: column;
+  }
+  
+  .newsletter-swiper .newsletter.image-right .image-wrapper {
+    order: -1;
+  }
+}
+
+/* Newsletter layout */
+section#newsletter .newsletter {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Classe para inverter a ordem dos elementos */
+section#newsletter .newsletter.newsletter-reverse {
+  flex-direction: row-reverse;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+  section#newsletter .newsletter,
+  section#newsletter .newsletter.newsletter-reverse {
+    flex-direction: column;
+  }
+  
+  section#newsletter .newsletter .image-wrapper {
+    width: 100%;
+    min-height: 300px;
+  }
+}
+
+/* Newsletter layout */
+section#newsletter .newsletter {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Classe para inverter a ordem apenas do segundo newsletter */
+section#newsletter .newsletter:nth-of-type(2) {
+  flex-direction: row-reverse;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+  section#newsletter .newsletter,
+  section#newsletter .newsletter:nth-of-type(2) {
+    flex-direction: column;
+  }
+  
+  section#newsletter .newsletter .image-wrapper {
+    width: 100%;
+    min-height: 100%;
+  }
+}
+
+/* Project Navigation Styles */
+.project-navigation {
+  padding: 6rem 0;
+  border-top: 1px solid var(--stroke-elements);
+  margin-top: 6rem;
+}
+
+.project-navigation .container {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+.project-navigation .newsletter {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  background-image: url('/palette.png'); /* Adicionado background-image */
+  background-size: cover;
+  background-position: center;
+  background-color: var(--base); /* Fallback color */
+  border: 1px solid var(--stroke-elements);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 200px; /* Altura fixa mais compacta */
+  width: 50%; /* Cada item ocupa metade do container */
+  transition: all 0.3s ease;
+  z-index: 1;
+  text-decoration: none;
+}
+
+/* Adicionar overlay para melhorar legibilidade */
+.project-navigation .newsletter::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Overlay escuro para melhor contraste */
+  z-index: 1;
+}
+
+/* Garantir que o conteúdo fique acima do overlay */
+.project-navigation .content-wrapper,
+.project-navigation .image-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+.project-navigation .newsletter:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.project-navigation .content-wrapper {
+  position: relative;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  z-index: 2;
+}
+
+.project-navigation .nav-label {
+  font-size: 1.4rem;
+  color: var(--t-sub);
+}
+
+.project-navigation .title {
+  font-size: 2.4rem; /* Título menor */
+  line-height: 1.2;
+  color: var(--t-bright);
+  margin-bottom: auto;
+}
+
+.project-navigation .nav-icon {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.project-navigation .nav-icon i {
+  font-size: 1.8rem; /* Ícone menor */
+  padding: 0.8rem;
+  background: var(--t-bright);
+  color: var(--base);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.project-navigation .newsletter:hover .nav-icon i {
+  background: var(--t-medium);
+  color: var(--t-bright);
+}
+
+.project-navigation .image-wrapper {
+  flex: 1;
+  min-width: 35%;
+  overflow: hidden;
+}
+
+.project-navigation .image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.project-navigation .newsletter:hover .image-wrapper img {
+  transform: scale(1.05);
+}
+
+/* Inverte a direção do segundo newsletter */
+.project-navigation .newsletter:nth-of-type(2) {
+  flex-direction: row-reverse;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .project-navigation {
+      padding: 4rem 0;
+  }
+
+  .project-navigation .container {
+      flex-direction: column;
+  }
+
+  .project-navigation .newsletter {
+      width: 100%;
+      height: 180px;
+  }
+
+  .project-navigation .newsletter,
+  .project-navigation .newsletter:nth-of-type(2) {
+      flex-direction: row; /* Mantém a direção em linha mesmo em mobile */
+  }
+
+  .project-navigation .content-wrapper {
+      padding: 1.5rem;
+  }
+
+  .project-navigation .title {
+      font-size: 2rem;
+  }
+
+  .project-navigation .image-wrapper {
+      min-width: 40%;
+  }
+}
+
+/* ... restante do CSS mantido igual ... */
+
+/* Primeiro newsletter com imagem à direita */
+.project-navigation .newsletter:nth-of-type(1) {
+    flex-direction: row-reverse;
+}
+
+/* Segundo newsletter com imagem à esquerda */
+.project-navigation .newsletter:nth-of-type(2) {
+    flex-direction: row;
+}
+
+/* Ajuste responsivo */
+@media (max-width: 768px) {
+    /* ... outros estilos responsivos ... */
+
+    .project-navigation .newsletter,
+    .project-navigation .newsletter:nth-of-type(1),
+    .project-navigation .newsletter:nth-of-type(2) {
+        flex-direction: row; /* Mantém a direção em linha mesmo em mobile */
+    }
+}
+
+.project-navigation .nav-icon {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1.6rem; /* Aumentado o padding para acomodar o texto */
+    background: var(--t-bright);
+    color: var(--base);
+    border-radius: 100px;
+    font-size: 1.4rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    width: fit-content;
+}
+
+.project-navigation .nav-icon i {
+    font-size: 1.6rem;
+    color: inherit; /* Herda a cor do pai */
+    transition: transform 0.3s ease;
+}
+
+.project-navigation .newsletter:hover .nav-icon {
+    background: var(--t-medium);
+    color: var(--t-bright);
+}
+
+/* Ajuste específico para o primeiro card (seta à esquerda) */
+.project-navigation .newsletter:nth-of-type(1) .nav-icon i {
+    order: -1; /* Coloca a seta antes do texto */
+}
+
+/* Ajuste específico para o segundo card (seta à direita) */
+.project-navigation .newsletter:nth-of-type(2) .nav-icon i {
+    order: 2; /* Coloca a seta depois do texto */
+}
+
+@media (max-width: 768px) {
+    .project-navigation .nav-icon {
+        padding: 0.6rem 1.2rem;
+        font-size: 1.2rem;
+    }
+
+    .project-navigation .nav-icon i {
+        font-size: 1.4rem;
+    }
+}
+
+/* ... restante do CSS mantido igual ... */
+
+.project-navigation .content-wrapper {
+    position: relative;
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem;
+    z-index: 2;
+}
+
+/* Alinhamento padrão para o primeiro card */
+.project-navigation .newsletter:nth-of-type(1) .content-wrapper {
+    align-items: flex-start; /* Alinha à esquerda */
+}
+
+/* Alinhamento específico para o segundo card */
+.project-navigation .newsletter:nth-of-type(2) .content-wrapper {
+    align-items: flex-end; /* Alinha à direita */
+    text-align: right; /* Alinha o texto à direita */
+}
+
+@media (max-width: 768px) {
+    .project-navigation .newsletter:nth-of-type(1) .content-wrapper,
+    .project-navigation .newsletter:nth-of-type(2) .content-wrapper {
+        align-items: flex-start; /* Em mobile, sempre alinha à esquerda */
+        text-align: left;
+    }
+}
+
+@media (max-width: 768px) {
+  .project-navigation .container {
+      flex-direction: column;
+  }
+
+  .project-navigation .newsletter {
+      width: 100%;
+      height: 180px;
+  }
+
+  /* Projeto anterior (em cima): imagem à esquerda */
+  .project-navigation .newsletter:nth-of-type(1) {
+      flex-direction: row; /* Força imagem à esquerda */
+  }
+
+  /* Projeto seguinte (embaixo): imagem à direita */
+  .project-navigation .newsletter:nth-of-type(2) {
+      flex-direction: row-reverse; /* Força imagem à direita */
+  }
+
+  .project-navigation .content-wrapper {
+      padding: 1.5rem;
+  }
+
+  .project-navigation .newsletter:nth-of-type(1) .content-wrapper,
+  .project-navigation .newsletter:nth-of-type(2) .content-wrapper {
+      align-items: flex-start;
+      text-align: left;
+  }
+
+  .project-navigation .title {
+      font-size: 2rem;
+  }
+
+  .project-navigation .image-wrapper {
+      min-width: 40%;
+  }
+}
+
+/* Desktop styles */
+.project-navigation .newsletter:nth-of-type(1) {
+    flex-direction: row-reverse;
+}
+
+.project-navigation .newsletter:nth-of-type(2) {
+    flex-direction: row;
+}
+
+/* Mobile styles - com maior especificidade e removendo conflitos */
+@media (max-width: 768px) {
+    .project-navigation .container {
+        flex-direction: column;
+    }
+
+    .project-navigation .newsletter {
+        width: 100%;
+        height: 180px;
+    }
+
+    /* Reset explícito das direções do desktop */
+    .project-navigation .newsletter:nth-of-type(1),
+    .project-navigation .newsletter:nth-of-type(2) {
+        flex-direction: initial;
+    }
+
+    /* Aplicar novas direções para mobile */
+    .project-navigation .newsletter:nth-of-type(1) {
+        flex-direction: row-reverse !important;
+    }
+
+    .project-navigation .newsletter:nth-of-type(2) {
+        flex-direction: row !important;
+    }
+
+    /* Ajustes de conteúdo */
+    .project-navigation .content-wrapper {
+        padding: 1.5rem;
+    }
+
+    .project-navigation .newsletter:nth-of-type(1) .content-wrapper,
+    .project-navigation .newsletter:nth-of-type(2) .content-wrapper {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .project-navigation .title {
+        font-size: 2rem;
+    }
+
+    .project-navigation .image-wrapper {
+        min-width: 40%;
+    }
+        /* Alinhamento do primeiro card (mantém à esquerda) */
+        .project-navigation .newsletter:nth-of-type(1) .content-wrapper {
+          align-items: flex-start;
+          text-align: left;
+      }
+  
+      /* Alinhamento do segundo card (alinha à direita) */
+      .project-navigation .newsletter:nth-of-type(2) .content-wrapper {
+          align-items: flex-end;
+          text-align: right;
+      }
+  
+      /* Ajuste específico para o botão do segundo card */
+      .project-navigation .newsletter:nth-of-type(2) .nav-icon {
+          margin-left: auto; /* Empurra o botão para a direita */
+      }
+}
