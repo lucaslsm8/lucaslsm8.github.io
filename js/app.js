@@ -737,39 +737,10 @@ $(function () {
 
 });
 
-// --------------------------------------------- //
-// Color Switch Start
-// --------------------------------------------- //
+// Force dark mode
+document.documentElement.setAttribute('color-scheme', 'dark');
 const themeBtn = document.querySelector('.color-switcher');
-
-function getCurrentTheme() {
-  let theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  localStorage.getItem('template.theme') ? theme = localStorage.getItem('template.theme') : null;
-  return theme;
-}
-
-function loadTheme(theme) {
-  const root = document.querySelector(':root');
-  root.setAttribute('color-scheme', `${theme}`);
-};
-
-themeBtn.addEventListener('click', () => {
-  let theme = getCurrentTheme();
-  if (theme === 'dark') {
-    theme = 'light';
-  } else {
-    theme = 'dark';
-  }
-  localStorage.setItem('template.theme', `${theme}`);
-  loadTheme(theme);
-});
-
-window.addEventListener('DOMContentLoaded', () => {
-  loadTheme(getCurrentTheme());
-});
-// --------------------------------------------- //
-// Color Switch End
-// --------------------------------------------- //
+if (themeBtn) themeBtn.style.display = 'none';
 
 $(document).on("click", '[data-toggle="lightbox"]', function (event) {
   event.preventDefault();
@@ -915,5 +886,27 @@ document.addEventListener('DOMContentLoaded', function() {
             percentPosition: true
         });
     }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Wait for images to load
+  const flexContainer = document.querySelector('.flex-container');
+  const images = flexContainer.querySelectorAll('img');
+  
+  Promise.all([
+    // Wait for CSS to be ready
+    document.fonts.ready,
+    // Wait for all images to load
+    Promise.all([...images].map(img => {
+      if (img.complete) return Promise.resolve();
+      return new Promise(resolve => {
+        img.onload = resolve;
+        img.onerror = resolve; // Handle errors gracefully
+      });
+    }))
+  ]).then(() => {
+    // Add loaded class once everything is ready
+    flexContainer.classList.add('loaded');
+  });
 });
 
