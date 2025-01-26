@@ -19,38 +19,26 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             item;
 
         for(var i = 0; i < numNodes; i++) {
+            figureEl = thumbElements[i];
 
-            figureEl = thumbElements[i]; // <figure> element
-
-            // include only element nodes
             if(figureEl.nodeType !== 1) {
                 continue;
             }
 
-            linkEl = figureEl.children[0]; // <a> element
-
+            linkEl = figureEl.children[0];
             size = linkEl.getAttribute('data-size').split('x');
 
-            // create slide object
             item = {
                 src: linkEl.getAttribute('href'),
                 w: parseInt(size[0], 10),
                 h: parseInt(size[1], 10)
             };
 
-
-
             if(figureEl.children.length > 1) {
-                // <figcaption> content
                 item.title = figureEl.children[1].innerHTML;
             }
 
-            if(linkEl.children.length > 0) {
-                // <img> thumbnail element, retrieving thumbnail url
-                item.msrc = linkEl.children[0].getAttribute('src');
-            }
-
-            item.el = figureEl; // save link to element for getThumbBoundsFn
+            item.el = figureEl;
             items.push(item);
         }
 
@@ -98,8 +86,6 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             nodeIndex++;
         }
 
-
-
         if(index >= 0) {
             // open PhotoSwipe if valid index found
             openPhotoSwipe( index, clickedGallery );
@@ -145,21 +131,31 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 
         // define options (if needed)
         options = {
-
-            showHideOpacity: true,
-
-            // define gallery index (for URL)
+            // Desabilita completamente o thumbnail
+            showHideOpacity: false,
+            showAnimationDuration: 0,
+            getThumbBoundsFn: null,
+            
+            // Remove a referência ao thumbnail
+            msrc: null,
+            
+            // Configurações da galeria
             galleryUID: galleryElement.getAttribute('data-pswp-uid'),
-
-            getThumbBoundsFn: function(index) {
-                // See Options -> getThumbBoundsFn section of documentation for more info
-                var thumbnail = items[index].el.getElementsByTagName('img')[0], // find thumbnail
-                    pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
-                    rect = thumbnail.getBoundingClientRect();
-
-                return {x:rect.left, y:rect.top + pageYScroll, w:rect.width};
-            }
-
+            hideAnimationDuration: 300,
+            
+            // Opções de visualização
+            bgOpacity: 0.9,
+            spacing: 0.12,
+            allowPanToNext: true,
+            closeOnScroll: false,
+            pinchToClose: false,
+            
+            // Carregamento imediato
+            preload: [2, 2],
+            preloaderEl: false,
+            showPreloader: false,
+            loadingIndicatorDelay: 0,
+            isProgressiveLoading: false
         };
 
         // PhotoSwipe opened from URL

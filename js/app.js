@@ -876,17 +876,98 @@ function updateCarouselSize() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Verifica se o jQuery e Masonry existem
-    if (typeof jQuery !== 'undefined' && typeof jQuery.fn.masonry !== 'undefined') {
-        // Inicializa o Masonry
-        $('.grid').masonry({
-            itemSelector: '.grid-item',
-            columnWidth: '.grid-sizer',
-            percentPosition: true
-        });
+// Função atualizada para inicializar o Masonry
+function initMasonry() {
+  const grid = $('.grid');
+  if (!grid.length) return; // Verifica se o elemento existe
+  
+  // Configuração inicial
+  grid.css({
+    'opacity': '0',
+    'visibility': 'hidden'
+  });
+  
+  // Inicializa o Masonry com configurações otimizadas
+  const msnry = grid.masonry({
+    itemSelector: '.grid-item',
+    columnWidth: '.grid-sizer',
+    percentPosition: true,
+    transitionDuration: '0.4s',
+    initLayout: false,
+    gutter: 20,
+    fitWidth: true
+  }).data('masonry');
+
+  // Função para revelar a grid
+  const revealGrid = () => {
+    grid.css({
+      'opacity': '1',
+      'visibility': 'visible'
+    });
+    msnry.layout();
+  };
+
+  // Carregamento de imagens com retry
+  const loadImages = () => {
+    return new Promise((resolve) => {
+      imagesLoaded(grid[0], { background: true }, function() {
+        resolve();
+      });
+    });
+  };
+
+  // Inicialização com retry
+  const init = async () => {
+    try {
+      await loadImages();
+      setTimeout(revealGrid, 100);
+    } catch (error) {
+      console.error('Erro ao carregar Masonry:', error);
+      // Tenta novamente após 1 segundo
+      setTimeout(init, 1000);
     }
+  };
+
+  // Inicia o processo
+  init();
+
+  // Gerenciamento de eventos de redimensionamento otimizado
+  const debouncedResize = debounce(() => {
+    if (msnry) {
+      msnry.layout();
+    }
+  }, 250);
+
+  window.addEventListener('resize', debouncedResize);
+  window.addEventListener('orientationchange', () => {
+    setTimeout(() => debouncedResize(), 200);
+  });
+}
+
+// Inicialização melhorada
+document.addEventListener('DOMContentLoaded', () => {
+  // Aguarda um curto período para garantir que outros recursos estejam carregados
+  setTimeout(() => {
+    if (typeof jQuery !== 'undefined' && typeof jQuery.fn.masonry !== 'undefined') {
+      initMasonry();
+    } else {
+      console.warn('Masonry ou jQuery não estão disponíveis');
+    }
+  }, 100);
 });
+
+// Função debounce para evitar múltiplas chamadas
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   // Wait for images to load

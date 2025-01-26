@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
         grabCursor: true,
         centeredSlides: true,
         slidesPerView: "auto",
-        initialSlide: 3,
+        initialSlide: 0,
         coverflowEffect: {
             rotate: 0,
             stretch: 0,
