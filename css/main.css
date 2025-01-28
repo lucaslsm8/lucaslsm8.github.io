@@ -8245,20 +8245,12 @@ form textarea:required:valid {
   color: var(--t-bright);
 }
 
-.tag-vale {
-  border: 2px solid #0d8e82 !important;
-}
-
 .tag.vale {
-  border: 2px solid #0d8e82;
-}
-
-.tag-accenture {
-  border: 2px solid #a81af8 !important;
-}
+  border: 2px solid #0d8e82 !important;
+  }
 
 .tag.accenture {
-  border: 2px solid #a81af8;
+  border: 2px solid #a81af8 !important;
 }
 
 
