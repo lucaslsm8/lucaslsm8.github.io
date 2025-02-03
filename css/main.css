@@ -8253,6 +8253,10 @@ form textarea:required:valid {
   border: 2px solid #a81af8 !important;
 }
 
+.tag.direcTV {
+  border: 2px solid #045b7e !important;
+}
+
 
 .view-project-btn {
   display: inline-flex;
@@ -10454,4 +10458,39 @@ html[data-theme="dark"] .project-navigation .newsletter {
     .disclaimer__text {
         font-size: 1.3rem;
     }
+}
+
+/* Estilos específicos para o swiper da página Sports Experience */
+.custom-swiper.sports-swiper .swiper-slide {
+  width: 375px !important;
+  height: 475px !important;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: self-start;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+/* Ajuste responsivo para telas menores */
+@media (max-width: 1400px) {
+  .custom-swiper.sports-swiper .swiper-slide {
+      width: 521px !important;  /* 75% do tamanho original */
+      height: 668px !important;
+  }
+}
+
+@media (max-width: 992px) {
+  .custom-swiper.sports-swiper .swiper-slide {
+      width: 348px !important;  /* 50% do tamanho original */
+      height: 445px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-swiper.sports-swiper .swiper-slide {
+      width: 174px !important;  /* 25% do tamanho original */
+      height: 223px !important;
+  }
 }
