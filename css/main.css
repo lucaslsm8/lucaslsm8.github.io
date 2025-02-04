@@ -209,6 +209,36 @@ html[data-theme="dark"] section#newsletter .newsletter {
   --neutral-bright: var(--neutral-bright--dark);
 }
 
+/* Adicione estas regras para garantir que a barra de rolagem seja sempre visível */
+html {
+    overflow-y: scroll;
+    scrollbar-width: thin; /* Para Firefox */
+    scrollbar-color: rgba(155, 155, 155, 0.5) transparent; /* Para Firefox */
+}
+
+/* Estilização da barra de rolagem para navegadores WebKit (Chrome, Safari, etc) */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(155, 155, 155, 0.5);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(155, 155, 155, 0.7);
+}
+
+/* Certifique-se que o body não está com overflow hidden */
+body {
+    overflow-y: auto;
+}
+
 /* ------------------------------------------------*/
 /* Variables End */
 /* ------------------------------------------------*/
