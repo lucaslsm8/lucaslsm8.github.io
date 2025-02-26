@@ -375,7 +375,9 @@
                                         <!-- Portfolio Gallery Start -->
                                         <div class="row gx-0 my-gallery" itemscope
                                             itemtype="http://schema.org/ImageGallery"
-                                            data-masonry='{"percentPosition": true }'>
+                                            data-masonry='{"percentPosition": true, "itemSelector": ".grid-item", "columnWidth": ".grid-sizer"}'>
+                                            <!-- grid sizer element for masonry calculations -->
+                                            <div class="grid-sizer col-md-6"></div>
                                             <!-- portfolio gallery single item -->
                                             <figure class="col-12 col-md-6 gallery__item grid-item animate-card-2"
                                                 itemprop="associatedMedia" itemscope
@@ -568,6 +570,14 @@
                                                         <em></em>
                                                         <span class="btn-caption">
                                                             Visualizar Currículo
+                                                        </span>
+                                                    </a>
+                                                    &nbsp;&nbsp;
+                                                    <a class="btn btn-default hover-default"
+                                                        href="Currículo-EN.pdf">
+                                                        <em></em>
+                                                        <span class="btn-caption">
+                                                            View Resume in English
                                                         </span>
                                                     </a>
                                                 </div>
@@ -1369,6 +1379,48 @@
                     document.body.removeChild(overlay);
                 });
             });
+        });
+    </script>
+
+    <script>
+        // Additional script to ensure masonry layout works on first load
+        document.addEventListener("DOMContentLoaded", function() {
+            // Wait for images to load
+            const gallery = document.querySelector('.my-gallery');
+            if (gallery) {
+                const imgs = gallery.querySelectorAll('img');
+                let imagesLoaded = 0;
+                
+                // Function to check if all images are loaded
+                const imageLoaded = () => {
+                    imagesLoaded++;
+                    if (imagesLoaded === imgs.length) {
+                        // All images loaded, force masonry layout
+                        setTimeout(() => {
+                            if (typeof jQuery !== 'undefined' && jQuery('.my-gallery').data('masonry')) {
+                                jQuery('.my-gallery').masonry('layout');
+                            }
+                        }, 300);
+                    }
+                };
+                
+                // Add load event to each image
+                imgs.forEach(img => {
+                    if (img.complete) {
+                        imageLoaded();
+                    } else {
+                        img.addEventListener('load', imageLoaded);
+                        img.addEventListener('error', imageLoaded); // Also count errors as "loaded"
+                    }
+                });
+                
+                // Force layout after a timeout regardless of image loading
+                setTimeout(() => {
+                    if (typeof jQuery !== 'undefined' && jQuery('.my-gallery').data('masonry')) {
+                        jQuery('.my-gallery').masonry('layout');
+                    }
+                }, 1000);
+            }
         });
     </script>
 
