@@ -878,64 +878,82 @@ function updateCarouselSize() {
 
 // Função atualizada para inicializar o Masonry
 function initMasonry() {
-  const grid = $('.grid');
-  if (!grid.length) return; // Verifica se o elemento existe
+  // Seleciona tanto elementos com classe .grid quanto .my-gallery
+  const grids = $('.grid, .my-gallery');
+  if (!grids.length) return; // Verifica se algum elemento existe
   
-  // Configuração inicial
-  grid.css({
-    'opacity': '0',
-    'visibility': 'hidden'
-  });
-  
-  // Inicializa o Masonry com configurações otimizadas
-  const msnry = grid.masonry({
-    itemSelector: '.grid-item',
-    columnWidth: '.grid-sizer',
-    percentPosition: true,
-    transitionDuration: '0.4s',
-    initLayout: false,
-    gutter: 20,
-    fitWidth: true
-  }).data('masonry');
-
-  // Função para revelar a grid
-  const revealGrid = () => {
+  grids.each(function() {
+    const grid = $(this);
+    let msnry;
+    
+    // Configuração inicial
     grid.css({
-      'opacity': '1',
-      'visibility': 'visible'
+      'opacity': '0',
+      'visibility': 'hidden'
     });
-    msnry.layout();
-  };
+    
+    // Verifica se já tem data-masonry (inicializado inline no HTML)
+    const hasDataMasonry = grid.attr('data-masonry') !== undefined;
+    
+    if (!hasDataMasonry) {
+      // Inicializa o Masonry com configurações otimizadas
+      msnry = grid.masonry({
+        itemSelector: '.grid-item',
+        columnWidth: '.grid-sizer',
+        percentPosition: true,
+        transitionDuration: '0.4s',
+        initLayout: false,
+        gutter: 20,
+        fitWidth: true
+      }).data('masonry');
+    } else {
+      // Para elementos que já têm data-masonry, apenas obtém a instância
+      msnry = grid.masonry().data('masonry');
+    }
 
-  // Carregamento de imagens com retry
-  const loadImages = () => {
-    return new Promise((resolve) => {
-      imagesLoaded(grid[0], { background: true }, function() {
-        resolve();
+    // Função para revelar a grid
+    const revealGrid = () => {
+      grid.css({
+        'opacity': '1',
+        'visibility': 'visible'
+      });
+      if (msnry) {
+        msnry.layout();
+      }
+    };
+
+    // Carregamento de imagens
+    imagesLoaded(grid[0], { background: true }, function() {
+      // Pequeno atraso para garantir que tudo esteja pronto
+      setTimeout(revealGrid, 100);
+      
+      // Força um relayout após um tempo maior para garantir
+      setTimeout(() => {
+        if (msnry) {
+          msnry.layout();
+        }
+      }, 500);
+    });
+    
+    // Adiciona evento para cada imagem carregada individualmente
+    grid.find('img').each(function() {
+      const img = $(this);
+      img.on('load', function() {
+        if (msnry) {
+          setTimeout(() => msnry.layout(), 100);
+        }
       });
     });
-  };
-
-  // Inicialização com retry
-  const init = async () => {
-    try {
-      await loadImages();
-      setTimeout(revealGrid, 100);
-    } catch (error) {
-      console.error('Erro ao carregar Masonry:', error);
-      // Tenta novamente após 1 segundo
-      setTimeout(init, 1000);
-    }
-  };
-
-  // Inicia o processo
-  init();
+  });
 
   // Gerenciamento de eventos de redimensionamento otimizado
   const debouncedResize = debounce(() => {
-    if (msnry) {
-      msnry.layout();
-    }
+    $('.grid, .my-gallery').each(function() {
+      const msnry = $(this).data('masonry');
+      if (msnry) {
+        msnry.layout();
+      }
+    });
   }, 250);
 
   window.addEventListener('resize', debouncedResize);
@@ -953,7 +971,20 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       console.warn('Masonry ou jQuery não estão disponíveis');
     }
-  }, 100);
+  }, 300);
+});
+
+// Adiciona um evento para quando a janela estiver totalmente carregada
+window.addEventListener('load', () => {
+  // Força um relayout do masonry após o carregamento completo da página
+  setTimeout(() => {
+    $('.grid, .my-gallery').each(function() {
+      const msnry = $(this).data('masonry');
+      if (msnry) {
+        msnry.layout();
+      }
+    });
+  }, 500);
 });
 
 // Função debounce para evitar múltiplas chamadas
