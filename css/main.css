@@ -10291,17 +10291,10 @@ html[data-theme="dark"] .project-navigation .newsletter {
 
 /* Remove margens da galeria */
 .my-gallery {
-    margin: 0;
-    padding: 0;
     width: 100%;
+    display: inline-block;
 }
 
-/* Adjust gallery spacing */
-.my-gallery {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-}
 
 .gallery__item {
   margin-bottom: 1rem; /* Reduced from default spacing */
