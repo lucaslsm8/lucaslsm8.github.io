@@ -51,7 +51,7 @@ gsap.utils.toArray('.loading__item').forEach(item => {
     duration: 1,
     scrollTrigger: {
       trigger: item,
-      start: "top bottom-=100",
+      start: "top bottom-=70",
       toggleActions: "play none none reverse"
     }
   });
@@ -1021,4 +1021,5 @@ document.addEventListener('DOMContentLoaded', () => {
     flexContainer.classList.add('loaded');
   });
 });
+
 
