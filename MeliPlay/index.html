@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meli Play UX Challenge | Lucas Schoenherr</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Solução UX para melhorar recomendações de conteúdo entre amigos e familiares no Meli Play. Challenge de UX Design por Lucas Schoenherr.">
+  <meta name="keywords" content="UX Design, Meli Play, Mercado Livre, Recomendações, Streaming, User Experience">
+  <meta name="author" content="Lucas Schoenherr">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Meli Play UX Challenge - Recomendações entre Amigos e Familiares">
+  <meta property="og:description" content="Solução inovadora para melhorar a experiência de recomendações de conteúdo no Meli Play">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:,"
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header id="header">
+    <div class="header-content">
+      <h1>
+        <img src="Imagens/Mercadolivre.png" alt="Mercado Livre" class="header-logo">
+        Meli Play UX Challenge
+      </h1>
+      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="mainNav">
+        <a href="#challenge">O Desafio</a>
+        <a href="#processo">Processo</a>
+        <a href="#arquivos">Entregáveis</a>
+        <a href="#solucao">A Solução</a>
+        <a href="#contato">Obrigado</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-particles" id="heroParticles"></div>
+
+      <div class="hero-content">
+        <div class="subtitle">UX Challenge • Mercado Livre</div>
+        <h2>Conectando Pessoas Através de Recomendações</h2>
+        <p>Uma solução focada em tornar as recomendações entre amigos e familiares mais naturais, simples e confiáveis no <span class="meli-brand">Meli Play</span>.</p>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-number">17</span>
+            <span class="stat-label">Telas High-Fi</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">13</span>
+            <span class="stat-label">Wireframes</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">50+</span>
+            <span class="stat-label">Componentes</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">4</span>
+            <span class="stat-label">Dores Solucionadas</span>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <a href="#challenge" class="btn-primary">
+            <span>📋</span> Ver o Desafio
+          </a>
+          <a href="#arquivos" class="btn-secondary">
+            <span>📁</span> Baixar Entregáveis
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Challenge Section -->
+    <section id="challenge" class="challenge-section">
+      <div class="content-container">
+        <div class="section-title">
+          <h2>O Desafio</h2>
+          <p>Redesenhar a experiência de descoberta de conteúdo, transformando recomendações pessoais em um recurso poderoso e organizado dentro do <span class="meli-brand">Meli Play</span></p>
+        </div>
+
+        <div class="challenge-context">
+          <div class="context-card">
+            <div class="context-icon">📊</div>
+            <div class="context-content">
+              <h3>Contexto do Problema</h3>
+              <p>
+                A plataforma <span class="meli-brand">Meli Play</span> apresentou uma <strong>queda de 4% na frequência de uso</strong>.
+                Através de pesquisa qualitativa, identificamos que <strong>usuários confiam mais em recomendações de pessoas próximas</strong> do que em algoritmos,
+                mas enfrentam dificuldades para organizar essas indicações.
+              </p>
+              <ul>
+                <li>Dificuldade em lembrar recomendações de amigos</li>
+                <li>Falta de ferramentas para organizar sugestões</li>
+                <li>Desconexão entre conversas e uso do app</li>
+                <li>Baixa confiança em recomendações algorítmicas</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="user-quotes">
+          <div class="quote-card">
+            <div class="quote-header">
+              <div class="quote-avatar carla">C</div>
+              <div class="quote-info">
+                <strong>Carla</strong>
+                <div class="quote-tag">
+                  <span class="badge badge-age">21 anos</span>
+                </div>
+              </div>
+            </div>
+            <div class="quote-text">
+              "Tenho uma conversa comigo mesma no WhatsApp para anotar todos os filmes que meus colegas de trabalho me recomendam. Assim, posso assisti-los depois no <span class="meli-brand">Meli Play</span>."
+            </div>
+          </div>
+
+          <div class="quote-card">
+            <div class="quote-header">
+              <div class="quote-avatar virginia">V</div>
+              <div class="quote-info">
+                <strong>Virginia</strong>
+                <div class="quote-tag">
+                  <span class="badge badge-age">40 anos</span>
+                </div>
+              </div>
+            </div>
+            <div class="quote-text">
+              "Eu nunca me guio pelas recomendações de críticos de cinema ou pelas opiniões de pessoas que eu não conheço."
+            </div>
+          </div>
+
+          <div class="quote-card">
+            <div class="quote-header">
+              <div class="quote-avatar roberto">R</div>
+              <div class="quote-info">
+                <strong>Roberto</strong>
+                <div class="quote-tag">
+                  <span class="badge badge-age">60 anos</span>
+                </div>
+              </div>
+            </div>
+            <div class="quote-text">
+              "Tecnologia não é o meu forte. Quando abro o <span class="meli-brand">Meli Play</span>, gostaria de ter um espaço com os conteúdos destacados pela minha família."
+            </div>
+          </div>
+
+          <div class="quote-card">
+            <div class="quote-header">
+              <div class="quote-avatar andres">A</div>
+              <div class="quote-info">
+                <strong>Andrés</strong>
+                <div class="quote-tag">
+                  <span class="badge badge-age">28 anos</span>
+                </div>
+              </div>
+            </div>
+            <div class="quote-text">
+              "Meu pai sempre esquece o nome das séries que quer me recomendar, e eu acabo tendo que procurar os títulos ou os atores no Google."
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="processo" class="process-section">
+      <div class="content-container">
+        <div class="section-title">
+          <h2>Meu Processo</h2>
+          <p>Uma jornada estruturada de pesquisa, ideação e validação, sempre colocando o usuário no centro de cada decisão</p>
+        </div>
+
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="process-step-icon">🔍</div>
+            <h3>Análise do Problema</h3>
+            <p>Fase de descoberta e compreensão profunda das necessidades dos usuários e dores atuais do produto.</p>
+            <ul>
+              <li>Análise dos dados fornecidos no briefing</li>
+              <li>Estudo das entrevistas qualitativas recebidas</li>
+              <li>Identificação de pain points críticos</li>
+              <li>Pesquisa de concorrentes e benchmarking</li>
+            </ul>
+          </div>
+
+          <div class="process-step">
+            <div class="process-step-icon">💡</div>
+            <h3>Ideação & Conceito</h3>
+            <p>Desenvolvimento de soluções criativas focadas em conexões humanas genuínas e simplicidade de uso.</p>
+            <ul>
+              <li>Brainstorming de soluções possíveis</li>
+              <li>Definição de princípios de design</li>
+              <li>Priorização de features</li>
+              <li>Criação de conceitos visuais</li>
+            </ul>
+          </div>
+
+          <div class="process-step">
+            <div class="process-step-icon">📐</div>
+            <h3>Wireframes & Fluxos</h3>
+            <p>Estruturação da arquitetura de informação e fluxos de interação principais.</p>
+            <ul>
+              <li>User flows documentados</li>
+              <li>Wireframes de baixa fidelidade</li>
+              <li>Definição de decisões funcionais</li>
+              <li>Mapeamento de jornadas do usuário</li>
+            </ul>
+          </div>
+
+          <div class="process-step">
+            <div class="process-step-icon">🎨</div>
+            <h3>UI Design</h3>
+            <p>Desenvolvimento visual das interfaces aplicando fundamentos de design e branding.</p>
+            <ul>
+              <li>Design system baseado no Andes UI</li>
+              <li>17 telas em alta fidelidade</li>
+              <li>Protótipo interativo funcional</li>
+              <li>Documentação de componentes</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Files Section -->
+    <section id="arquivos" class="files-section">
+      <div class="content-container">
+        <div class="section-title">
+          <h2>Entregáveis do Challenge</h2>
+          <p>Explore a documentação completa do projeto: apresentação final, protótipo interativo e processo detalhado de design</p>
+        </div>
+
+        <div class="files">
+          <div class="file-card shimmer-effect">
+            <div class="file-card-header">
+              <img src="Imagens/Mercadolivre.png" alt="Mercado Livre" class="file-card-logo">
+              <span class="status available">✅ Disponível</span>
+            </div>
+            <h3>Apresentação</h3>
+            <p>Apresentação completa com processo de design, pesquisa, wireframes e telas finais. Inclui justificativas para todas as decisões de UX.</p>
+            <a href="https://www.figma.com/deck/sjnT0dCxple6DzOfiTvM5j/Apresenta%C3%A7%C3%A3o-UX-Challange?node-id=1-1024&viewport=-14538%2C-146%2C0.75&t=4Do1O9h0sUCy9kjD-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1" target="_blank" rel="noopener" class="btn-primary">
+              <span>📄</span> Ver Apresentação
+            </a>
+          </div>
+
+          <div class="file-card shimmer-effect">
+            <div class="file-card-header">
+              <img src="Imagens/Figma-logo.svg.png" alt="Figma" class="file-card-logo">
+              <span class="status available">✅ Disponível</span>
+            </div>
+            <h3>Arquivo Figma Completo</h3>
+            <p><strong>8 páginas organizadas:</strong> Pesquisa, Flowchart, 13 Wireframes, Low-Fi, 17 Telas High-Fi, Protótipo Interativo, 50+ Componentes e Recursos da marca.</p>
+            <a href="https://www.figma.com/design/aDA5JnA2ka025SfEmhhNJF/MeliPlay?node-id=0-1&t=l1Qy2K4B6uscbV8x-1" target="_blank" rel="noopener" class="btn-primary">
+              <span>🔗</span> Abrir Figma
+            </a>
+          </div>
+
+          <div class="file-card shimmer-effect">
+            <div class="file-card-header">
+              <img src="Imagens/Figma-logo.svg.png" alt="Protótipo Interativo" class="file-card-logo">
+              <span class="status available">✅ Disponível</span>
+            </div>
+            <h3>Protótipo Interativo</h3>
+            <p><strong>Navegação completa:</strong> Teste todas as funcionalidades e interações do Meli Play redesenhado. Inclui animações, transições e feedbacks visuais.</p>
+            <a href="https://www.figma.com/proto/aDA5JnA2ka025SfEmhhNJF/MeliPlay?node-id=1-7&t=l1Qy2K4B6uscbV8x-1" target="_blank" rel="noopener" class="btn-primary">
+              <span>🎮</span> Testar Protótipo
+            </a>
+          </div>
+
+          <div class="file-card shimmer-effect">
+            <div class="file-card-header">
+              <img src="Imagens/2023_Obsidian_logo.svg.png" alt="Documentação" class="file-card-logo doc-icon">
+              <span class="status available">✅ Disponível</span>
+            </div>
+            <h3>Documentação Obsidian</h3>
+            <p><strong>Vault completo:</strong> Briefing, Pesquisa Competitiva, 4 Personas Detalhadas, Flowcharts, Histórico de Versões e Documentação Técnica da Landing Page.</p>
+            <a href="https://designbylucas.com/MeliPlay/obsidian.zip" class="btn-primary">
+              <span>📚</span> Baixar Documentação
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Solution Features Section -->
+    <section id="solucao" class="solution-section">
+      <div class="content-container">
+        <div class="section-title">
+          <h2>A Solução</h2>
+          <p>4 features principais que resolvem as dores identificadas</p>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">👨‍👩‍👧‍👦</div>
+            <h3>Feed Familiar</h3>
+            <p>Recomendações de amigos e familiares em destaque. Veja o que pessoas próximas estão assistindo e recomendando para você.</p>
+            <div class="feature-stats">
+              <span class="stat-badge">✓ Resolve dor de Virginia (40 anos)</span>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🤖</div>
+            <h3>Busca por IA</h3>
+            <p>Encontre conteúdo descrevendo cenas ou situações. "Filme onde um cara acorda sem memória em um trem"</p>
+            <div class="feature-stats">
+              <span class="stat-badge">✓ Resolve dor de Andrés (30 anos)</span>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">⚙️</div>
+            <h3>Rede Familiar Gerenciável</h3>
+            <p>Controle total sobre quem faz parte da sua rede familiar. Adicione ou remova pessoas facilmente.</p>
+            <div class="feature-stats">
+              <span class="stat-badge">✓ Resolve dor de Roberto (60 anos)</span>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">💾</div>
+            <h3>Recomendações Pessoais</h3>
+            <p>Salve recomendações dentro do app. Nunca mais perca indicações importantes de amigos.</p>
+            <div class="feature-stats">
+              <span class="stat-badge">✓ Resolve dor de Carla (21 anos)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contato" class="contact-section">
+      <div class="content-container">
+        <div class="contact-hero">
+          <div class="contact-visual">
+            <div class="contact-card">
+              <div class="contact-avatar">
+                <img src="Imagens/avatar-lucas.jpg" alt="Lucas Schoenherr">
+              </div>
+              <h3>Lucas Schoenherr</h3>
+              <p>UX/UI Designer</p>
+              <div class="contact-links">
+                <a href="mailto:lucas.schoenherr@gmail.com" title="Email" aria-label="Enviar email">📧</a>
+                <a href="https://www.linkedin.com/in/lucas-scho/" title="LinkedIn" target="_blank" rel="noopener" aria-label="LinkedIn">💼</a>
+                <a href="https://designbylucas.com/" title="Portfolio" target="_blank" rel="noopener" aria-label="Ver portfólio">🎨</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-content">
+            <h2>OBRIGADO!</h2>
+            <p>Agradeço a oportunidade de participar desta seleção. Espero que tenham gostado do meu trabalho! Estou disponível para esclarecer qualquer dúvida sobre o projeto ou meu processo de design.</p>
+
+            <div class="contact-stats">
+              <div class="contact-stat">
+                <span class="stat-number">17</span>
+                <span class="stat-label">Telas High-Fidelity</span>
+              </div>
+              <div class="contact-stat">
+                <span class="stat-number">13</span>
+                <span class="stat-label">Wireframes</span>
+              </div>
+              <div class="contact-stat">
+                <span class="stat-number">50+</span>
+                <span class="stat-label">Componentes</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <p><strong><span class="meli-brand">Meli Play</span> <span class="ux-challenge">UX Challenge</span></strong></p>
+      <p>Solução desenvolvida por Lucas Schoenherr para o Mercado Livre UX Team</p>
+      <p>© 2025 Lucas Schoenherr — Desenvolvido com dedicação e atenção aos detalhes</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
