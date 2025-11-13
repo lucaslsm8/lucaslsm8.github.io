@@ -862,6 +862,10 @@ main {
   font-size: 1rem;
 }
 
+.file-card .btn-primary {
+  justify-content: center;
+}
+
 /* ===== ABOUT SECTION ===== */
 .about-section {
   padding: 5rem 0;
