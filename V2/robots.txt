@@ -1,0 +1,13 @@
+# robots.txt — lucasschoenherr.com
+# Portfólio de Lucas Schoenherr, Senior Product Designer.
+
+User-agent: *
+Allow: /
+
+# Evitar indexação de arquivos internos do template e assets pesados
+Disallow: /css/
+Disallow: /js/
+Disallow: /img/favicon/
+
+# Sitemap
+Sitemap: https://lucasschoenherr.com/sitemap.xml

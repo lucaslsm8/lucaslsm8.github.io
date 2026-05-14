@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="pt-BR" dir="ltr">
+
+<!--
+=========================================================================
+  TEMPLATE.HTML — Base para novos cases do portfólio
+=========================================================================
+  Como usar:
+  1. Duplique este arquivo e renomeie para [nome-do-projeto].html
+     (ex.: "hermes-app.html", "banking-dashboard.html").
+  2. Busque por "PLACEHOLDER" no arquivo e substitua cada marcação
+     pelo conteúdo real do case.
+  3. Crie a pasta de assets em: img/works/[PROJECT_FOLDER]/
+     com subpastas: Overview/, Desafio/, Solucao/, Impacto/, Galeria/
+  4. Atualize os links de navegação entre cases (project-nav no final)
+     em TODAS as páginas da rede de cases (anterior ↔ atual ↔ próximo).
+  5. Adicione o card desse projeto em index.html (seção Portfólio).
+
+  Blocos opcionais (removíveis se o case não precisar):
+  - Swiper principal (custom-swiper) → útil quando há 8+ telas hero
+  - Swiper interno de Overview (regular-swiper) → mostra fluxos-chave
+  - Loop-slider da Solução → útil para mostrar variações/estados
+  - Galeria final → materiais complementares
+
+  Posicionamento: todos os textos foram escritos pensando em vagas de
+  Senior Product Designer. Ajuste tom conforme o case (Lead em projeto
+  específico, Specialist anterior, Senior atual).
+=========================================================================
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Page Title — PLACEHOLDER: [Nome do Projeto] — Case [Cliente] | Lucas Schoenherr -->
+    <title>[Nome do Projeto] — Case [Cliente] | Lucas Schoenherr</title>
+
+    <!-- Meta Tags — PLACEHOLDER: descrição curta (150–160 chars) com foco em Senior Product Designer -->
+    <meta name="description" content="Case de [tipo: UX/UI, Design System, Product AI] do [Nome do Projeto] para [Cliente]. [Frase de impacto em 1 linha]. Design por Lucas Schoenherr, Senior Product Designer.">
+    <meta name="keywords" content="Lucas Schoenherr, Senior Product Designer, UX UI, Design System, Case [Cliente], [Nome do Projeto], [Palavra-chave 1], [Palavra-chave 2]">
+    <meta name="author" content="Lucas Schoenherr">
+
+    <!-- Viewport Meta-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Canonical URL — PLACEHOLDER -->
+    <link rel="canonical" href="https://lucasschoenherr.com/[nome-do-projeto].html">
+
+    <!-- Template Favicon & Icons Start -->
+    <link rel="icon" href="img/favicon/Asuka.webp" sizes="any">
+    <link rel="icon" href="img/favicon/Asuka.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="img/favicon/apple-touch-icon.webp">
+    <link rel="manifest" href="img/favicon/manifest.webmanifest">
+    <!-- Template Favicon & Icons End -->
+
+    <!-- Open Graph / Social Metadata Start — PLACEHOLDER: atualizar título, descrição, imagem -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[Nome do Projeto] — Case [Cliente] | Lucas Schoenherr">
+    <meta property="og:description" content="[Descrição curta do case, 1 frase de impacto].">
+    <meta property="og:image" content="img/works/[PROJECT_FOLDER]/Capa.webp">
+    <meta property="og:image:height" content="1200">
+    <meta property="og:image:width" content="1200">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="[Nome do Projeto] — Case [Cliente]">
+    <meta name="twitter:description" content="[Descrição curta do case].">
+    <meta name="twitter:image" content="img/works/[PROJECT_FOLDER]/Capa.webp">
+    <!-- Open Graph / Social Metadata End -->
+
+    <!-- Structured Data (JSON-LD) Start — PLACEHOLDER: atualizar todos os campos -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "headline": "[Nome do Projeto] — Case [Cliente]",
+      "name": "[Nome do Projeto]",
+      "description": "[Descrição completa do case em 1–2 frases, destacando escopo e impacto].",
+      "image": "img/works/[PROJECT_FOLDER]/Capa.webp",
+      "inLanguage": "pt-BR",
+      "author": {
+        "@type": "Person",
+        "name": "Lucas Schoenherr",
+        "email": "lucas.schoenherr@gmail.com",
+        "jobTitle": "Senior Product Designer",
+        "url": "https://www.linkedin.com/in/lucas-scho/"
+      },
+      "creator": {
+        "@type": "Person",
+        "name": "Lucas Schoenherr"
+      },
+      "client": {
+        "@type": "Organization",
+        "name": "[Cliente]"
+      },
+      "about": [
+        "Product Design",
+        "[Tag 2]",
+        "[Tag 3]",
+        "[Tag 4]"
+      ],
+      "audience": {
+        "@type": "BusinessAudience",
+        "audienceType": "Recruiters, Hiring Managers, Product Leaders"
+      },
+      "datePublished": "[AAAA-MM-DD]",
+      "dateModified": "2026-04-20",
+      "keywords": "Lucas Schoenherr, Senior Product Designer, UX UI, Design System, Case [Cliente], [Nome do Projeto]"
+    }
+    </script>
+    <!-- Structured Data (JSON-LD) End -->
+
+    <!-- Template Styles Start -->
+    <link rel="stylesheet" type="text/css" href="css/loaders/loader.css">
+    <link rel="stylesheet" type="text/css" href="css/plugins.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <!-- Template Styles End -->
+
+    <!-- Custom Browser Color Start -->
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#BABEC8">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#141414">
+    <meta name="msapplication-navbutton-color" content="#141414">
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Custom Browser Color End -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
+</head>
+
+<body>
+
+    <!-- Loader Start -->
+    <div id="loader" class="loader">
+        <div class="loader__wrapper">
+            <div class="loader__content">
+                <div class="loader__count">
+                    <span class="count__text">0</span>
+                    <span class="count__percent">%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Loader End -->
+
+    <!-- Header Start -->
+    <header id="header" class="header d-flex justify-content-center loading__fade loading-wrap">
+        <!-- Navigation Menu Start -->
+        <div class="header__navigation d-flex justify-content-start">
+            <nav id="menu" class="menu">
+                <ul class="menu__list d-flex justify-content-start">
+                    <li class="menu__item">
+                        <a class="menu__link btn" href="index.html">
+                            <span class="menu__caption">Home</span>
+                            <i class="ph ph-house-simple"></i>
+                        </a>
+                    </li>
+                    <li class="menu__item">
+                        <a class="menu__link btn" href="index.html#portfolio">
+                            <span class="menu__caption">Portfólio</span>
+                            <i class="ph ph-squares-four"></i>
+                        </a>
+                    </li>
+                    <li class="menu__item">
+                        <a class="menu__link btn" href="index.html#about">
+                            <span class="menu__caption">Sobre</span>
+                            <i class="ph ph-user"></i>
+                        </a>
+                    </li>
+                    <li class="menu__item">
+                        <a class="menu__link btn" href="index.html#services">
+                            <span class="menu__caption">Especialidades</span>
+                            <i class="ph ph-sticker"></i>
+                        </a>
+                    </li>
+                    <li class="menu__item">
+                        <a class="menu__link btn" href="index.html#resume">
+                            <span class="menu__caption">Curriculum</span>
+                            <i class="ph ph-article"></i>
+                        </a>
+                    </li>
+                    <li class="menu__item">
+                        <a class="menu__link btn" href="index.html#contact">
+                            <span class="menu__caption">Contato</span>
+                            <i class="ph ph-envelope"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <!-- Navigation Menu End -->
+    </header>
+    <!-- Header End -->
+
+    <!-- Fixed Logo Start -->
+    <div class="logo loading__fade">
+        <a href="index.html" class="logo__link">
+            <!-- logo icon -->
+            <img src="img/favicon/Asuka.svg" alt="Logo Icon" style="width: 35px; height: 35px;">
+            <!-- logo text -->
+            <span class="logo-text">Lucas Schoenherr</span>
+        </a>
+    </div>
+    <!-- Fixed Logo End -->
+
+    <!-- Fixed Color Switch Start -->
+    <div class="color loading__fade">
+        <button id="color-switcher" class="color-switcher" type="button" role="switch" aria-label="light/dark mode" aria-checked="true"></button>
+    </div>
+    <!-- Fixed Color Switch End -->
+
+    <!-- Page Content Start -->
+    <main id="page-content" class="page-content">
+        <section id="project" class="inner">
+            <div class="inner__wrapper">
+                <div class="container-fluid p-0">
+                    <div class="row g-0">
+                        <!-- Project Content Start -->
+                        <div class="col-12 col-xl-8 offset-xl-2">
+                            <div class="inner__content">
+
+                                <!-- ====================================================== -->
+                                <!-- Project Header — PLACEHOLDER: título, subtítulo, tags  -->
+                                <!-- ====================================================== -->
+                                <div class="main-wrapper">
+                                    <div class="project-header">
+                                        <a href="index.html#portfolio" class="btn-back-portfolio" aria-label="Voltar para o portfólio">
+                                            <i class="ph ph-arrow-left"></i>
+                                            <span>Voltar ao portfólio</span>
+                                        </a>
+
+                                        <!-- PLACEHOLDER: nome do projeto -->
+                                        <h1 class="project-title">[Nome do Projeto]</h1>
+
+                                        <!-- PLACEHOLDER: subtítulo em 1 frase curta e direta (o "hook" do case) -->
+                                        <p class="project-subtitle">[Frase de 1 linha resumindo o valor entregue pelo projeto].</p>
+
+                                        <!-- PLACEHOLDER: tags do projeto. A primeira tag normalmente é o cliente. -->
+                                        <div class="project-tags">
+                                            <span class="tag">[Cliente]</span>
+                                            <span class="tag">[Categoria 1]</span>
+                                            <span class="tag">[Categoria 2]</span>
+                                            <span class="tag">Design System</span>
+                                            <span class="tag">Senior Product Design</span>
+                                            <span class="tag">[Metodologia]</span>
+                                        </div>
+
+                                        <!-- PLACEHOLDER: descrição longa (2–4 frases). Mencione papel sênior/lead e o impacto. -->
+                                        <div class="project-description">
+                                            Como <strong>Senior Product Designer</strong>, conduzi [escopo: discovery, design system, MVP…] do [Nome do Projeto], [descrição curta do que o produto faz]. [Frase de impacto, se possível com números ou alcance].
+                                        </div>
+
+                                        <!-- Disclaimer — mantenha se os dados/métricas exibidos forem fictícios ou projetados -->
+                                        <div class="content__block loading__item disclaimer">
+                                            <div class="disclaimer__content">
+                                                <i class="ph ph-info"></i>
+                                                <p class="disclaimer__text type-basic-160lh">
+                                                    Todos os dados e métricas nas interfaces são fictícios, gerados apenas para fins de demonstração. Valores de impacto e alcance são projeções definidas em conjunto com stakeholders.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ====================================================== -->
+                                <!-- Key Results / KPIs — PLACEHOLDER: 4 métricas/resultados  -->
+                                <!-- ====================================================== -->
+                                <div class="content__block loading__item key-results">
+                                    <p class="key-results__eyebrow tagline-chapter small">Resultados-chave</p>
+                                    <div class="container-fluid p-0">
+                                        <div class="row g-0 key-results__grid">
+                                            <div class="col-6 col-md-3 key-results__item">
+                                                <div class="key-results__value">[valor 1]</div>
+                                                <div class="key-results__label type-basic-160lh">[descrição curta do resultado 1]</div>
+                                            </div>
+                                            <div class="col-6 col-md-3 key-results__item">
+                                                <div class="key-results__value">[valor 2]</div>
+                                                <div class="key-results__label type-basic-160lh">[descrição curta do resultado 2]</div>
+                                            </div>
+                                            <div class="col-6 col-md-3 key-results__item">
+                                                <div class="key-results__value">[valor 3]</div>
+                                                <div class="key-results__label type-basic-160lh">[descrição curta do resultado 3]</div>
+                                            </div>
+                                            <div class="col-6 col-md-3 key-results__item">
+                                                <div class="key-results__value">[valor 4]</div>
+                                                <div class="key-results__label type-basic-160lh">[descrição curta do resultado 4]</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ====================================================== -->
+                                <!-- Hero Swiper — PLACEHOLDER: trocar src e alt das telas   -->
+                                <!-- (remova este bloco se o case não tiver galeria de telas) -->
+                                <!-- ====================================================== -->
+                                <figure class="swiper-figure">
+                                    <div class="custom-swiper swiper" role="region" aria-label="Destaques do [Nome do Projeto]">
+                                        <div class="swiper-button-prev">
+                                            <i class="ph ph-arrow-left"></i>
+                                        </div>
+                                        <div class="swiper-button-next">
+                                            <i class="ph ph-arrow-right"></i>
+                                        </div>
+                                        <div class="swiper-wrapper">
+                                            <div class="swiper-slide">
+                                                <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/1.webp" alt="[Descrição tela 1]">
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/2.webp" alt="[Descrição tela 2]">
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/3.webp" alt="[Descrição tela 3]">
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/4.webp" alt="[Descrição tela 4]">
+                                            </div>
+                                            <!-- PLACEHOLDER: adicione mais <div class="swiper-slide"> conforme necessário -->
+                                        </div>
+                                    </div>
+                                    <figcaption class="swiper-figure__caption">[Legenda curta: ex. "Highlights das principais telas — arraste para navegar."]</figcaption>
+                                </figure>
+
+                                <!-- ====================================================== -->
+                                <!-- Project Data — PLACEHOLDER: ficha técnica do projeto   -->
+                                <!-- ====================================================== -->
+                                <div class="content__block loading__item">
+                                    <div class="project__data">
+                                        <div class="container-fluid p-0">
+                                            <div class="row g-0">
+                                                <div class="col-6 col-md-3 grid-item pdata__item">
+                                                    <p class="data__title tagline-chapter small type-basic-160lh">Cliente</p>
+                                                    <p class="data__descr small type-basic-160lh">[Cliente]</p>
+                                                </div>
+                                                <div class="col-6 col-md-3 grid-item pdata__item">
+                                                    <p class="data__title tagline-chapter small type-basic-160lh">Ano</p>
+                                                    <p class="data__descr small type-basic-160lh">[AAAA]</p>
+                                                </div>
+                                                <div class="col-6 col-md-3 grid-item pdata__item">
+                                                    <p class="data__title tagline-chapter small type-basic-160lh">Duração</p>
+                                                    <p class="data__descr small type-basic-160lh">[~X meses]</p>
+                                                </div>
+                                                <div class="col-6 col-md-3 grid-item pdata__item">
+                                                    <p class="data__title tagline-chapter small type-basic-160lh">Meu papel</p>
+                                                    <p class="data__descr small type-basic-160lh">Senior Product Designer (end-to-end)</p>
+                                                </div>
+                                                <div class="col-6 col-md-3 grid-item pdata__item">
+                                                    <p class="data__title tagline-chapter small type-basic-160lh">Plataforma</p>
+                                                    <p class="data__descr small type-basic-160lh">[Mobile / Web / TV / Multi]</p>
+                                                </div>
+                                                <div class="col-6 col-md-3 grid-item pdata__item">
+                                                    <p class="data__title tagline-chapter small type-basic-160lh">Stakeholders</p>
+                                                    <p class="data__descr small type-basic-160lh">[Áreas envolvidas]</p>
+                                                </div>
+                                                <div class="col-6 col-md-3 grid-item pdata__item">
+                                                    <p class="data__title tagline-chapter small type-basic-160lh">Metodologia</p>
+                                                    <p class="data__descr small type-basic-160lh">[Design Thinking / Ágil / Lean / …]</p>
+                                                </div>
+                                                <div class="col-6 col-md-3 grid-item pdata__item">
+                                                    <p class="data__title tagline-chapter small type-basic-160lh">Entregáveis</p>
+                                                    <p class="data__descr small type-basic-160lh">[Pesquisa, Design System, protótipo, handoff…]</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ====================================================== -->
+                                <!-- Two-Column Layout (sidebar + conteúdo narrativo)       -->
+                                <!-- ====================================================== -->
+                                <div class="container-fluid p-0">
+                                    <div class="row g-0">
+                                        <!-- Sidebar -->
+                                        <div class="col-12 col-lg-3 sidebar-col">
+                                            <nav class="sidebar-nav" role="navigation" aria-label="Seções do case">
+                                                <ul class="nav flex-column list-unstyled">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="#overview">Overview</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="#desafio">Desafio</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="#papel">Meu papel</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="#solucao">Solução</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="#entrega">Entrega &amp; impacto</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="#aprendizados">Aprendizados</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="#galeria">Galeria</a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+
+                                        <!-- Main Content -->
+                                        <div class="col-12 col-lg-9">
+                                            <div class="main-content">
+
+                                                <!-- ============================================ -->
+                                                <!-- Overview — PLACEHOLDER: 2–3 parágrafos       -->
+                                                <!-- ============================================ -->
+                                                <div id="overview" class="project__block loading__item">
+                                                    <h3>Overview do projeto</h3>
+                                                    <p class="type-basic-160lh">
+                                                        [Parágrafo 1 — contexto: qual era a situação antes do projeto? Qual o problema de negócio ou de usuário que motivou a iniciativa?]
+                                                    </p>
+                                                    <p class="type-basic-160lh">
+                                                        Como <strong>Senior Product Designer</strong>, conduzi [escopo end-to-end do projeto: discovery, arquitetura, design system, protótipo, handoff…]. [Frase sobre como o projeto foi estruturado].
+                                                    </p>
+                                                    <p class="type-basic-160lh">
+                                                        [Parágrafo 3 — objetivos do projeto em 1–2 frases. Ex.: "O objetivo era duplo: X e Y."]
+                                                    </p>
+
+                                                    <!-- Overview Swiper (opcional) — remova se não tiver fluxos-chave para destacar -->
+                                                    <figure class="swiper-figure">
+                                                        <div class="regular-swiper swiper" role="region" aria-label="Fluxos-chave do [Nome do Projeto]">
+                                                            <div class="swiper-button-prev">
+                                                                <i class="ph ph-arrow-left"></i>
+                                                            </div>
+                                                            <div class="swiper-button-next">
+                                                                <i class="ph ph-arrow-right"></i>
+                                                            </div>
+                                                            <div class="swiper-wrapper">
+                                                                <div class="swiper-slide swiper-slide--one mobile-stack">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Overview/Overview1.webp" alt="[Fluxo 1 — descrição]">
+                                                                </div>
+                                                                <div class="swiper-slide swiper-slide--two mobile-stack">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Overview/Overview2.webp" alt="[Fluxo 2 — descrição]">
+                                                                </div>
+                                                                <div class="swiper-slide swiper-slide--three mobile-stack">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Overview/Overview3.webp" alt="[Fluxo 3 — descrição]">
+                                                                </div>
+                                                                <!-- PLACEHOLDER: mais slides se necessário -->
+                                                            </div>
+                                                            <div class="swiper-pagination"></div>
+                                                        </div>
+                                                        <figcaption class="swiper-figure__caption">[Legenda curta listando os fluxos].</figcaption>
+                                                    </figure>
+                                                </div>
+
+                                                <!-- ============================================ -->
+                                                <!-- Desafio — PLACEHOLDER: problema + descobertas -->
+                                                <!-- ============================================ -->
+                                                <div id="desafio" class="project__block loading__item">
+                                                    <h3>O Desafio</h3>
+                                                    <p class="type-basic-160lh">
+                                                        [Parágrafo 1 — fase de discovery. Quantas entrevistas? Workshops? O que você encontrou que não era óbvio no início?]
+                                                    </p>
+                                                    <p class="type-basic-160lh">
+                                                        [Parágrafo 2 — dores estruturais mapeadas. Formato: "<strong>(1) Problema A</strong> — consequência; <strong>(2) Problema B</strong> — consequência; <strong>(3) Problema C</strong> — consequência."]
+                                                    </p>
+                                                    <p class="type-basic-160lh">
+                                                        [Parágrafo 3 — tradução do problema de negócio em desafio de design. "Como criar uma experiência que…"]
+                                                    </p>
+
+                                                    <!-- Imagens full-width (opcional) — ex.: user flow as-is / to-be -->
+                                                    <div class="content__block grid-block">
+                                                        <div class="container-fluid px-0">
+                                                            <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                                                                <figure class="full-width-image-container" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                                                                    <a href="img/works/[PROJECT_FOLDER]/Desafio/Workflow.webp"
+                                                                       data-size="4885x2443"
+                                                                       itemprop="contentUrl"
+                                                                       class="gallery__link">
+                                                                        <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Desafio/Workflow_t.webp"
+                                                                             alt="[Descrição do fluxo atual (as-is)]"
+                                                                             class="full-width-image"
+                                                                             itemprop="thumbnail">
+                                                                    </a>
+                                                                </figure>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Segunda imagem full-width opcional (ex.: to-be) -->
+                                                        <div class="container-fluid px-0">
+                                                            <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                                                                <figure class="full-width-image-container" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                                                                    <a href="img/works/[PROJECT_FOLDER]/Desafio/Workflow2.webp"
+                                                                       data-size="4885x2443"
+                                                                       itemprop="contentUrl"
+                                                                       class="gallery__link">
+                                                                        <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Desafio/Workflow2_t.webp"
+                                                                             alt="[Descrição do fluxo proposto (to-be)]"
+                                                                             class="full-width-image"
+                                                                             itemprop="thumbnail">
+                                                                    </a>
+                                                                </figure>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- ============================================ -->
+                                                <!-- Meu Papel — PLACEHOLDER: escopo e liderança  -->
+                                                <!-- ============================================ -->
+                                                <div id="papel" class="project__block loading__item">
+                                                    <h3>Meu Papel</h3>
+                                                    <p class="type-basic-160lh">
+                                                        Atuei como <strong>Senior Product Designer end-to-end</strong> no projeto, [mencionar tamanho do time / reporte / autonomia]. Fui responsável por [lista curta: estratégia de design, discovery, design system, fluxos, handoff…].
+                                                    </p>
+                                                    <p class="type-basic-160lh">
+                                                        [Parágrafo 2 — articulação entre áreas. Rituais que você conduziu, negociações de escopo, como você traduzia requisitos técnicos em decisões de design e vice-versa.]
+                                                    </p>
+                                                    <p class="type-basic-160lh">
+                                                        [Parágrafo 3 — design leadership. Como você organizou o trabalho (frentes paralelas), documentação, mentoria, transferência de conhecimento para o time.]
+                                                    </p>
+                                                </div>
+
+                                                <!-- ============================================ -->
+                                                <!-- Solução — PLACEHOLDER: o que foi construído -->
+                                                <!-- ============================================ -->
+                                                <div id="solucao" class="project__block loading__item">
+                                                    <h3>A Solução</h3>
+                                                    <p class="type-basic-160lh">
+                                                        [Parágrafo 1 — descrição alta da solução. "A resposta foi um [tipo de produto] apoiado em [princípio central]."]
+                                                    </p>
+                                                    <p class="type-basic-160lh">
+                                                        [Parágrafo 2 — o coração da experiência. Quais são os componentes/padrões centrais? Quantas variações? Quais estados?]
+                                                    </p>
+                                                    <p class="type-basic-160lh">
+                                                        [Parágrafo 3 — arquitetura ao redor do core. Navegação, filtros, permissões, escalabilidade.]
+                                                    </p>
+                                                    <p class="type-basic-160lh">
+                                                        [Parágrafo 4 — por que essa foi a decisão certa. Foco em reuso, consistência, acessibilidade, redução de retrabalho.]
+                                                    </p>
+
+                                                    <!-- Loop-slider (opcional) — útil para mostrar variações de um componente em 2–3 linhas em movimento -->
+                                                    <div class="infinite-scroll-section"></div>
+                                                    <div class="tag-list">
+                                                        <div class="fade"></div>
+
+                                                        <!-- Linha 1 — normal -->
+                                                        <div class="loop-slider" style="--duration:15951ms; --direction:normal;">
+                                                            <div class="inner">
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row1-1.webp" alt="[Variação 1 — linha 1]">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row1-2.webp" alt="[Variação 2 — linha 1]">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row1-3.webp" alt="[Variação 3 — linha 1]">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row1-4.webp" alt="[Variação 4 — linha 1]">
+                                                                </div>
+                                                                <!-- duplicar os cards acima para loop infinito -->
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row1-1.webp" alt="[Variação 1 — linha 1]">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row1-2.webp" alt="[Variação 2 — linha 1]">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row1-3.webp" alt="[Variação 3 — linha 1]">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row1-4.webp" alt="[Variação 4 — linha 1]">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Linha 2 — reversa -->
+                                                        <div class="loop-slider" style="--duration:15951ms; --direction:reverse;">
+                                                            <div class="inner">
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row2-1.webp" alt="[Variação 1 — linha 2]">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row2-2.webp" alt="[Variação 2 — linha 2]">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row2-3.webp" alt="[Variação 3 — linha 2]">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row2-4.webp" alt="[Variação 4 — linha 2]">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row2-1.webp" alt="[Variação 1 — linha 2]">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row2-2.webp" alt="[Variação 2 — linha 2]">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row2-3.webp" alt="[Variação 3 — linha 2]">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row2-4.webp" alt="[Variação 4 — linha 2]">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Linha 3 (opcional) — normal -->
+                                                        <div class="loop-slider" style="--duration:15951ms; --direction:normal;">
+                                                            <div class="inner">
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row3-1.webp" alt="[Variação 1 — linha 3]">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row3-2.webp" alt="[Variação 2 — linha 3]">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row3-3.webp" alt="[Variação 3 — linha 3]">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row3-4.webp" alt="[Variação 4 — linha 3]">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row3-1.webp" alt="[Variação 1 — linha 3]">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row3-2.webp" alt="[Variação 2 — linha 3]">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row3-3.webp" alt="[Variação 3 — linha 3]">
+                                                                </div>
+                                                                <div class="image-card">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Solucao/row3-4.webp" alt="[Variação 4 — linha 3]">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <!-- ============================================ -->
+                                                <!-- Entrega & Impacto — PLACEHOLDER              -->
+                                                <!-- ============================================ -->
+                                                <div id="entrega" class="project__block loading__item">
+                                                    <h3>Entrega &amp; impacto</h3>
+                                                    <p class="type-basic-160lh">
+                                                        [Parágrafo 1 — o que foi entregue. Protótipo? Design system? Documentação? Como foi a recepção final (aprovação, rollout)?]
+                                                    </p>
+                                                    <p class="type-basic-160lh">
+                                                        [Parágrafo 2 — impacto projetado ou medido. Alcance, ganhos de tempo, consolidação de canais, métricas de negócio.]
+                                                    </p>
+                                                    <p class="type-basic-160lh">
+                                                        [Parágrafo 3 — impacto estrutural. O que ficou como ativo reutilizável para o time? Que % de reuso esperado para próximas features?]
+                                                    </p>
+
+                                                    <!-- Imagem full-width de impacto (opcional) -->
+                                                    <div class="container-fluid px-0">
+                                                        <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                                                            <figure class="full-width-image-container" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                                                                <a href="img/works/[PROJECT_FOLDER]/Impacto/hero.webp"
+                                                                   data-size="4885x2443"
+                                                                   itemprop="contentUrl"
+                                                                   class="gallery__link">
+                                                                    <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Impacto/hero_t.webp"
+                                                                         alt="[Descrição da tela de impacto]"
+                                                                         class="full-width-image"
+                                                                         itemprop="thumbnail">
+                                                                </a>
+                                                            </figure>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- ============================================ -->
+                                                <!-- Aprendizados — PLACEHOLDER: 3 lições         -->
+                                                <!-- ============================================ -->
+                                                <div id="aprendizados" class="project__block loading__item">
+                                                    <h3>Aprendizados</h3>
+                                                    <p class="type-basic-160lh">
+                                                        <strong>[Lição 1 — frase curta em negrito].</strong> [Contexto: o que você aprendeu no projeto sobre decisão / processo / negócio. Como isso passou a informar sua atuação sênior.]
+                                                    </p>
+                                                    <p class="type-basic-160lh">
+                                                        <strong>[Lição 2 — frase curta em negrito].</strong> [Contexto: como você lidou com ambiguidade, incerteza, falta de dados, ou conflitos de escopo.]
+                                                    </p>
+                                                    <p class="type-basic-160lh">
+                                                        <strong>[Lição 3 — frase curta em negrito].</strong> [Contexto: liderança, mobilização, rituais, o que se tornou núcleo da atuação sênior.]
+                                                    </p>
+                                                </div>
+
+                                                <!-- ============================================ -->
+                                                <!-- Galeria — PLACEHOLDER: materiais complementares -->
+                                                <!-- (remova se o case não tiver galeria final)   -->
+                                                <!-- ============================================ -->
+                                                <div id="galeria" class="project__block loading__item">
+                                                    <h3>Galeria</h3>
+                                                    <p class="type-basic-160lh">
+                                                        [Frase curta sobre o que há nesta seção: detalhamentos de componentes, telas adicionais, materiais de apresentação, etc.]
+                                                    </p>
+                                                    <div class="content__block grid-block">
+                                                        <div class="container-fluid px-0 inner__gallery">
+                                                            <div class="my-gallery gallery-grid" itemscope itemtype="http://schema.org/ImageGallery">
+                                                                <figure class="gallery-grid__item gallery-grid__item--portrait gallery__item" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                                                                    <a href="img/works/[PROJECT_FOLDER]/Galeria/img1.webp" data-image="img/works/[PROJECT_FOLDER]/Galeria/img1_t.webp" class="gallery__link" itemprop="contentUrl" data-size="1100x1400">
+                                                                        <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Galeria/img1_t.webp" class="gallery__image" itemprop="thumbnail" alt="[Descrição imagem 1]">
+                                                                    </a>
+                                                                </figure>
+
+                                                                <figure class="gallery-grid__item gallery-grid__item--portrait gallery__item" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                                                                    <a href="img/works/[PROJECT_FOLDER]/Galeria/img2.webp" data-image="img/works/[PROJECT_FOLDER]/Galeria/img2_t.webp" class="gallery__link" itemprop="contentUrl" data-size="1100x1400">
+                                                                        <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Galeria/img2_t.webp" class="gallery__image" itemprop="thumbnail" alt="[Descrição imagem 2]">
+                                                                    </a>
+                                                                </figure>
+
+                                                                <figure class="gallery-grid__item gallery-grid__item--wide gallery__item" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                                                                    <a href="img/works/[PROJECT_FOLDER]/Galeria/img3.webp" data-image="img/works/[PROJECT_FOLDER]/Galeria/img3_t.webp" class="gallery__link" itemprop="contentUrl" data-size="8000x3000">
+                                                                        <img loading="lazy" decoding="async" src="img/works/[PROJECT_FOLDER]/Galeria/img3_t.webp" class="gallery__image" itemprop="thumbnail" alt="[Descrição imagem wide]">
+                                                                    </a>
+                                                                </figure>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- ============================================ -->
+                                                <!-- Project Navigation — PLACEHOLDER: próx. case  -->
+                                                <!-- ============================================ -->
+                                                <nav class="project-nav loading__item" aria-label="Navegação entre projetos">
+                                                    <a href="index.html#portfolio" class="project-nav__link project-nav__link--all">
+                                                        <span class="project-nav__label">
+                                                            <i class="ph ph-squares-four" aria-hidden="true"></i>
+                                                            Todos os projetos
+                                                        </span>
+                                                    </a>
+                                                    <a href="[proximo-case].html" class="project-nav__link project-nav__link--next">
+                                                        <span class="project-nav__eyebrow">Próximo case</span>
+                                                        <span class="project-nav__title">
+                                                            [Nome do Próximo Case]
+                                                            <i class="ph ph-arrow-right" aria-hidden="true"></i>
+                                                        </span>
+                                                    </a>
+                                                </nav>
+
+                                                <!-- ============================================ -->
+                                                <!-- Footer / Contato — positioning Senior        -->
+                                                <!-- ============================================ -->
+                                                <div class="project__block loading__item footer-section">
+                                                    <div class="footer-content">
+                                                        <div class="footer-grid">
+                                                            <div class="footer-text">
+                                                                <h2>Vamos Conversar!</h2>
+                                                                <p class="type-basic-160lh">
+                                                                    Se você tem interesse em contar com minha atuação como Product Designer em sua equipe, por favor, envie uma mensagem. Responderei o mais breve possível.
+                                                                </p>
+                                                                <div class="footer-cta">
+                                                                    <a href="mailto:lucas.schoenherr@gmail.com?subject=Oportunidade%20%E2%80%94%20Senior%20Product%20Designer" class="btn-footer btn-footer--primary">
+                                                                        <span>Enviar e-mail</span>
+                                                                        <span class="btn-footer__arrow" aria-hidden="true">→</span>
+                                                                    </a>
+                                                                    <a href="https://www.linkedin.com/in/lucas-scho/" target="_blank" rel="noopener" class="btn-footer btn-footer--secondary">
+                                                                        <span>Conectar no LinkedIn</span>
+                                                                        <span class="btn-footer__arrow" aria-hidden="true">↗</span>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Two-Column Layout End -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Mobile Menu Bottom Placeholder Start -->
+    <div class="header-offset"></div>
+    <!-- Mobile Menu Bottom Placeholder End -->
+
+    <!-- To Top Button Start -->
+    <a href="#0" id="to-top" class="btn btn-to-top slide-up">
+        <i class="ph ph-arrow-up"></i>
+    </a>
+    <!-- To Top Button End -->
+
+    <!-- PhotoSwipe Root Element -->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close link-s" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share link-s" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs link-s" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom link-s" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+                <button class="pswp__button pswp__button--arrow--left link-s" title="Previous (arrow left)"></button>
+                <button class="pswp__button pswp__button--arrow--right link-s" title="Next (arrow right)"></button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Scripts Start -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="js/libs.min.js"></script>
+    <script src="js/gallery-init.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/carossel.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script>
+        document.querySelectorAll('.lightboxgallery-link').forEach(item => {
+            item.addEventListener('click', event => {
+                event.preventDefault();
+                const imgSrc = event.currentTarget.href;
+                const overlay = document.createElement('div');
+                overlay.classList.add('lightboxgallery-overlay');
+                overlay.innerHTML = `<img src="${imgSrc}">`;
+                document.body.appendChild(overlay);
+
+                overlay.addEventListener('click', () => {
+                    document.body.removeChild(overlay);
+                });
+            });
+        });
+    </script>
+    <!-- Load Scripts End -->
+</body>
+
+</html>

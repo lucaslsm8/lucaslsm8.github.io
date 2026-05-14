@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Experimental Cinematic Variations — Lucas Schoenherr</title>
+    <!-- Basic resets and fonts -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&display=swap');
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: #fff; overflow-x: hidden; }
+        
+        .exp-nav {
+            position: fixed; top: 0; left: 0; width: 100%; background: rgba(5,5,5,0.8);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 100; padding: 24px 48px;
+            display: flex; gap: 24px; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .exp-nav__title { font-weight: 800; color: #fff; letter-spacing: -0.02em; margin-right: auto; }
+        .exp-nav__link { color: #a29bfe; text-decoration: none; font-size: 14px; font-weight: 600; transition: color 0.3s; }
+        .exp-nav__link:hover { color: #fff; }
+
+        .exp-divider { padding: 160px 40px 80px; max-width: 1200px; margin: 0 auto; text-align: center; }
+        .exp-divider__label { font-size: 13px; text-transform: uppercase; letter-spacing: 0.2em; color: #a29bfe; margin-bottom: 16px; font-weight: 800; }
+        .exp-divider__title { font-size: 56px; font-weight: 900; letter-spacing: -0.04em; margin-bottom: 16px; background: linear-gradient(135deg, #fff, #a29bfe); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .exp-divider__desc { font-size: 18px; color: rgba(255,255,255,0.5); max-width: 700px; line-height: 1.6; margin: 0 auto; font-weight: 300; }
+
+        .text-gradient-primary {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe, #fd79a8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* =========================================
+           VERSÃO 1: FULL WIDTH STACKED GLASS
+           ========================================= */
+        .v1-portfolio {
+            display: flex;
+            flex-direction: column;
+            width: 100vw;
+        }
+
+        .v1-card {
+            width: 100%;
+            height: 80vh;
+            min-height: 600px;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .v1-card__image { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
+        .v1-card__image img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1), filter 1s ease;
+            transform: scale(1.02); filter: brightness(0.8);
+        }
+        .v1-card:hover .v1-card__image img { transform: scale(1.06); filter: brightness(1.1); }
+
+        .v1-card__glass {
+            position: absolute; top: 0; bottom: 0; width: 45%; z-index: 2;
+            background: rgba(10, 10, 12, 0.6); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+            display: flex; flex-direction: column; justify-content: center; padding: 80px 10%;
+            transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1), background 0.6s ease;
+        }
+        .v1-card:hover .v1-card__glass { background: rgba(10, 10, 12, 0.8); }
+
+        .v1-card--left .v1-card__glass { left: 0; border-right: 1px solid rgba(255, 255, 255, 0.08); background: linear-gradient(90deg, rgba(5,5,5,0.8) 0%, rgba(10,10,12,0.4) 100%); }
+        .v1-card--right .v1-card__glass { right: 0; border-left: 1px solid rgba(255, 255, 255, 0.08); background: linear-gradient(270deg, rgba(5,5,5,0.8) 0%, rgba(10,10,12,0.4) 100%); }
+        .v1-card--left:hover .v1-card__glass { width: 48%; }
+        .v1-card--right:hover .v1-card__glass { width: 48%; }
+
+        .v-content__client { font-size: 12px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 24px; color: #a29bfe; display: flex; align-items: center; gap: 12px; }
+        .v-content__client::before { content: ''; display: block; width: 24px; height: 2px; background: #a29bfe; }
+        .v-content__title { font-size: clamp(32px, 4vw, 56px); font-weight: 900; line-height: 1.05; margin-bottom: 24px; letter-spacing: -0.03em; color: #fff; }
+        .v-content__desc { font-size: 16px; color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 40px; }
+        .v-content__metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; margin-bottom: 48px; }
+        .v-metric { display: flex; flex-direction: column; gap: 4px; }
+        .v-metric__value { font-size: 32px; font-weight: 900; line-height: 1; }
+        .v-metric__label { font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+        .v-btn { display: inline-flex; align-items: center; gap: 12px; padding: 16px 32px; font-size: 14px; font-weight: 600; color: #050505; background: #fff; border-radius: 100px; text-decoration: none; width: fit-content; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .v-btn .icon { display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: #050505; color: #fff; border-radius: 50%; font-size: 12px; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .v-card-hover:hover .v-btn { background: #6c5ce7; color: #fff; }
+        .v-card-hover:hover .v-btn .icon { background: #fff; color: #a29bfe; transform: translateX(4px); }
+
+
+        /* =========================================
+           VERSÃO 2: SPLIT KINETIC VIEW (50/50)
+           ========================================= */
+        .v2-portfolio { display: flex; flex-direction: column; width: 100vw; }
+        
+        .v2-card {
+            width: 100%; height: 75vh; min-height: 600px;
+            display: flex; overflow: hidden;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .v2-card__text {
+            flex: 0 0 50%; height: 100%;
+            background: #0a0a0c;
+            display: flex; flex-direction: column; justify-content: center;
+            padding: 80px 8%;
+            transition: flex 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative; z-index: 2;
+        }
+        
+        .v2-card__image {
+            flex: 0 0 50%; height: 100%;
+            position: relative; overflow: hidden;
+            transition: flex 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .v2-card__image img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: scale(1.05);
+        }
+
+        /* Kinetic Hover Interaction */
+        .v2-card:hover .v2-card__text { flex: 0 0 40%; }
+        .v2-card:hover .v2-card__image { flex: 0 0 60%; }
+        .v2-card:hover .v2-card__image img { transform: scale(1); }
+
+        /* Reverse order for alternating */
+        .v2-card--right { flex-direction: row-reverse; }
+
+
+        /* =========================================
+           VERSÃO 3: GIANT EDITORIAL BLEED
+           ========================================= */
+        .v3-portfolio { display: flex; flex-direction: column; width: 100vw; }
+
+        .v3-card {
+            width: 100%; height: 85vh; min-height: 700px;
+            position: relative; overflow: hidden;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .v3-card__image { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
+        .v3-card__image img {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: grayscale(100%) brightness(0.4);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .v3-card:hover .v3-card__image img { filter: grayscale(0%) brightness(0.6); transform: scale(1.02); }
+
+        .v3-card__gradient {
+            position: absolute; inset: 0; z-index: 2; pointer-events: none;
+            background: linear-gradient(0deg, rgba(5,5,5,1) 0%, rgba(5,5,5,0.6) 40%, rgba(5,5,5,0) 80%);
+            transition: opacity 1s ease;
+        }
+        .v3-card:hover .v3-card__gradient { opacity: 0.8; }
+
+        .v3-card__content {
+            position: absolute; z-index: 3;
+            bottom: 60px; left: 5%; right: 5%;
+            display: flex; flex-direction: column;
+            transform: translateY(20px);
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .v3-card:hover .v3-card__content { transform: translateY(0); }
+
+        .v3-card__client { font-size: 14px; font-weight: 800; color: #a29bfe; margin-bottom: 16px; letter-spacing: 0.1em; text-transform: uppercase; }
+        .v3-card__title { font-size: clamp(48px, 7vw, 100px); font-weight: 900; line-height: 0.9; margin-bottom: 32px; letter-spacing: -0.05em; color: #fff; max-width: 80%; }
+        
+        .v3-card__bottom { display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 32px; }
+        .v3-card__desc { font-size: 18px; color: rgba(255,255,255,0.7); max-width: 500px; line-height: 1.6; }
+        .v3-card__metrics { display: flex; gap: 48px; }
+
+        @media (max-width: 1024px) {
+            .v1-card__glass { width: 55%; padding: 60px 5%; }
+            .v1-card--left:hover .v1-card__glass, .v1-card--right:hover .v1-card__glass { width: 60%; }
+            .v2-card { flex-direction: column; }
+            .v2-card__text { flex: auto; padding: 40px 5%; }
+            .v2-card__image { flex: auto; }
+            .v3-card__title { max-width: 100%; }
+            .v3-card__bottom { flex-direction: column; align-items: flex-start; gap: 32px; }
+        }
+    </style>
+</head>
+<body class="exp-page">
+
+    <nav class="exp-nav">
+        <span class="exp-nav__title">Lucas Schoenherr</span>
+        <a href="#v1" class="exp-nav__link">1. Full Stacked Glass</a>
+        <a href="#v2" class="exp-nav__link">2. Split Kinetic</a>
+        <a href="#v3" class="exp-nav__link">3. Giant Editorial</a>
+    </nav>
+
+
+    <!-- ==========================================
+         VERSÃO 1: FULL WIDTH STACKED GLASS
+         ========================================== -->
+    <section id="v1">
+        <div class="exp-divider">
+            <p class="exp-divider__label">Versão 01</p>
+            <h2 class="exp-divider__title">Full Width Stacked Glass</h2>
+            <p class="exp-divider__desc">Ajustada conforme seu feedback: 100% de largura, sem bordas arredondadas e cards colados verticalmente. O painel de vidro extremo continua, expandindo no hover para maior imersão.</p>
+        </div>
+
+        <div class="v1-portfolio">
+            <!-- Projeto 1 (Esquerda) -->
+            <article class="v1-card v1-card--left v-card-hover">
+                <div class="v1-card__image"><img src="img/works/Samarco/Capa-indicators.png" alt="Samarco Dashboard"></div>
+                <div class="v1-card__glass">
+                    <p class="v-content__client">Samarco · 2025</p>
+                    <h3 class="v-content__title">Dashboards PMO Estratégico</h3>
+                    <p class="v-content__desc">Cabine de comando executiva consolidando portfólio estratégico, riscos, CAPEX e OKRs em uma única fonte da verdade digital.</p>
+                    <div class="v-content__metrics">
+                        <div class="v-metric"><span class="v-metric__value text-gradient-primary">+60</span><span class="v-metric__label">Componentes</span></div>
+                        <div class="v-metric"><span class="v-metric__value text-gradient-primary">~70%</span><span class="v-metric__label">Redução tempo</span></div>
+                    </div>
+                    <a href="samarco-dashboard.html" class="v-btn"><span>Explorar Case</span><span class="icon">→</span></a>
+                </div>
+            </article>
+
+            <!-- Projeto 2 (Direita) -->
+            <article class="v1-card v1-card--right v-card-hover">
+                <div class="v1-card__image"><img src="img/works/ProductionApp/Capa.webp" alt="Lighthouse App"></div>
+                <div class="v1-card__glass">
+                    <p class="v-content__client">Vale · 2023</p>
+                    <h3 class="v-content__title">Lighthouse Mobile App</h3>
+                    <p class="v-content__desc">Aplicativo mobile-first de monitoramento operacional em tempo real, modernizando sistemas legados de dados das minas.</p>
+                    <div class="v-content__metrics">
+                        <div class="v-metric"><span class="v-metric__value text-gradient-primary">+40</span><span class="v-metric__label">Componentes UI</span></div>
+                        <div class="v-metric"><span class="v-metric__value text-gradient-primary">~200</span><span class="v-metric__label">Gestores Ativos</span></div>
+                    </div>
+                    <a href="lighthouse-app.html" class="v-btn"><span>Explorar Case</span><span class="icon">→</span></a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+
+    <!-- ==========================================
+         VERSÃO 2: SPLIT KINETIC VIEW (50/50)
+         ========================================== -->
+    <section id="v2">
+        <div class="exp-divider">
+            <p class="exp-divider__label">Versão 02</p>
+            <h2 class="exp-divider__title">Split Kinetic View</h2>
+            <p class="exp-divider__desc">Visão dividida (50/50). Sem vidro. Textos limpos sobre fundo escuro. O charme está na interação: ao passar o mouse, a imagem se expande tomando mais espaço e "empurrando" o bloco de texto para o lado.</p>
+        </div>
+
+        <div class="v2-portfolio">
+            <!-- Projeto 1 (Imagem Direita) -->
+            <article class="v2-card v-card-hover">
+                <div class="v2-card__text">
+                    <p class="v-content__client">DirecTV GO · 2022</p>
+                    <h3 class="v-content__title">Sports Experience Copa Qatar</h3>
+                    <p class="v-content__desc">Hub multiplataforma na web e mobile com transmissão ao vivo, estatísticas em tempo real e integração direta com dados oficiais da FIFA.</p>
+                    <div class="v-content__metrics">
+                        <div class="v-metric"><span class="v-metric__value text-gradient-primary">3</span><span class="v-metric__label">Plataformas</span></div>
+                        <div class="v-metric"><span class="v-metric__value text-gradient-primary">64</span><span class="v-metric__label">Partidas FIFA</span></div>
+                    </div>
+                    <a href="Sportsexp.html" class="v-btn"><span>Explorar Case</span><span class="icon">→</span></a>
+                </div>
+                <div class="v2-card__image"><img src="img/works/Sports/Capa.webp" alt="Sports Experience"></div>
+            </article>
+
+            <!-- Projeto 2 (Imagem Esquerda) -->
+            <article class="v2-card v2-card--right v-card-hover">
+                <div class="v2-card__text">
+                    <p class="v-content__client">Accenture · 2024</p>
+                    <h3 class="v-content__title">Gen.AI Ecossistema Interno</h3>
+                    <p class="v-content__desc">Liderança na concepção de 9 POCs em paralelo, todas unificadas por um design system focado em interações AI corporativas.</p>
+                    <div class="v-content__metrics">
+                        <div class="v-metric"><span class="v-metric__value text-gradient-primary">9</span><span class="v-metric__label">POCs Criadas</span></div>
+                        <div class="v-metric"><span class="v-metric__value text-gradient-primary">5</span><span class="v-metric__label">Em Produção</span></div>
+                    </div>
+                    <a href="GenAI.html" class="v-btn"><span>Explorar Case</span><span class="icon">→</span></a>
+                </div>
+                <div class="v2-card__image"><img src="img/works/GenAI/cover-editorial.png" alt="Gen.AI Accenture"></div>
+            </article>
+        </div>
+    </section>
+
+
+    <!-- ==========================================
+         VERSÃO 3: GIANT EDITORIAL BLEED
+         ========================================== -->
+    <section id="v3">
+        <div class="exp-divider">
+            <p class="exp-divider__label">Versão 03</p>
+            <h2 class="exp-divider__title">Giant Editorial Bleed</h2>
+            <p class="exp-divider__desc">Totalmente minimalista e focado em tipografia brutalista. A imagem em preto e branco preenche tudo. O título é gigantesco. No hover, a foto ganha cor e vida.</p>
+        </div>
+
+        <div class="v3-portfolio">
+            <!-- Projeto 1 -->
+            <article class="v3-card v-card-hover">
+                <div class="v3-card__image"><img src="img/works/Samarco/Capa-indicators.png" alt="Samarco Dashboard"></div>
+                <div class="v3-card__gradient"></div>
+                <div class="v3-card__content">
+                    <p class="v3-card__client">Samarco · 2025</p>
+                    <h3 class="v3-card__title">Dashboards PMO Estratégico.</h3>
+                    
+                    <div class="v3-card__bottom">
+                        <p class="v3-card__desc">Cabine de comando executiva consolidando portfólio estratégico, riscos, CAPEX e OKRs em uma única fonte da verdade digital.</p>
+                        <div class="v3-card__metrics">
+                            <div class="v-metric"><span class="v-metric__value text-gradient-primary">+60</span><span class="v-metric__label">Componentes</span></div>
+                            <div class="v-metric"><span class="v-metric__value text-gradient-primary">~70%</span><span class="v-metric__label">Redução tempo</span></div>
+                            <a href="samarco-dashboard.html" class="v-btn"><span>Explorar Case</span><span class="icon">→</span></a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Projeto 2 -->
+            <article class="v3-card v-card-hover">
+                <div class="v3-card__image"><img src="img/works/ProductionApp/Capa.webp" alt="Lighthouse App"></div>
+                <div class="v3-card__gradient"></div>
+                <div class="v3-card__content">
+                    <p class="v3-card__client">Vale · 2023</p>
+                    <h3 class="v3-card__title">Lighthouse Mobile App.</h3>
+                    
+                    <div class="v3-card__bottom">
+                        <p class="v3-card__desc">Aplicativo mobile-first de monitoramento operacional em tempo real, modernizando sistemas legados de dados das minas.</p>
+                        <div class="v3-card__metrics">
+                            <div class="v-metric"><span class="v-metric__value text-gradient-primary">+40</span><span class="v-metric__label">UI Components</span></div>
+                            <div class="v-metric"><span class="v-metric__value text-gradient-primary">~200</span><span class="v-metric__label">Active Users</span></div>
+                            <a href="lighthouse-app.html" class="v-btn"><span>Explorar Case</span><span class="icon">→</span></a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <div style="height: 100px;"></div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+---
+description: Connect portfolio AI work to the Obsidian Work vault
+alwaysApply: true
+---
+
+# Portfolio Vault Context
+
+This portfolio repo depends on the Obsidian vault at:
+
+`C:\Users\lucas\Documents\Vaults\Work`
+
+Before making project, content, UX, IA, copywriting, or case-study decisions,
+read `AGENTS.md` in this repo and then follow the vault reading order from:
+
+`C:\Users\lucas\Documents\Vaults\Work\00_INDEX.md`
+
+Treat the vault as the source of truth for Lucas Schoenherr's profile, projects,
+positioning, backlog, and AI rules.
+
