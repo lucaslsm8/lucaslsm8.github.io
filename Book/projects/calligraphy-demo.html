@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Demo · Caligrafia traçada — Lucas Schoenherr</title>
+<meta name="description" content="Demo isolado de animação de caligrafia para o frontispiece do portfólio. Variações de velocidade e timing para avaliação." />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<!-- Tokens compartilhados do projeto -->
+<link rel="stylesheet" href="../design-system/tokens.css" />
+
+<style>
+  /* ------------------------------------------------------------
+     Página demo — minimalista, voltada para avaliar o efeito.
+     Sem chrome do livro, sem grain. Foco no traçado.
+     ------------------------------------------------------------ */
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: var(--fs-body);
+    line-height: var(--lh-normal);
+  }
+  main {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: var(--sp-9) var(--sp-6) var(--sp-10);
+  }
+
+  /* Cabeçalho da página demo */
+  .demo-head {
+    text-align: center;
+    margin-bottom: var(--sp-9);
+    padding-bottom: var(--sp-6);
+    border-bottom: var(--border-hair);
+  }
+  .demo-head h1 {
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: var(--fs-h2);
+    margin: 0 0 var(--sp-3);
+    color: var(--ink);
+  }
+  .demo-head .deck {
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: var(--fs-lead);
+    max-width: 56ch;
+    margin: 0 auto;
+  }
+  .demo-head .meta {
+    margin-top: var(--sp-4);
+    font-family: var(--mono);
+    font-size: var(--fs-small);
+    letter-spacing: 0.16em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+
+  .back {
+    display: inline-block;
+    margin-bottom: var(--sp-6);
+    color: var(--ink-soft);
+    font-style: italic;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--ink-ghost);
+  }
+  .back:hover { color: var(--oxblood); border-color: var(--oxblood); }
+
+  /* ------------------------------------------------------------
+     Card de variação — moldura editorial em torno de cada amostra
+     ------------------------------------------------------------ */
+  .variation {
+    margin-bottom: var(--sp-9);
+    padding: var(--sp-7) var(--sp-6) var(--sp-6);
+    border: var(--border-hair-strong);
+    background: var(--paper-card);
+    position: relative;
+  }
+  .variation .v-tag {
+    position: absolute;
+    top: -10px;
+    left: var(--sp-5);
+    background: var(--paper);
+    padding: 0 var(--sp-3);
+    font-family: var(--mono);
+    font-size: var(--fs-small);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+  }
+  .variation .v-name {
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-size: var(--fs-h3);
+    margin: 0 0 var(--sp-2);
+  }
+  .variation .v-desc {
+    font-size: var(--fs-meta);
+    color: var(--ink-soft);
+    font-style: italic;
+    margin: 0 0 var(--sp-6);
+    max-width: 64ch;
+  }
+
+  /* ------------------------------------------------------------
+     SVG do título — comum a todas as variações
+     viewBox 1000 x 220 dá uma "linha" tipográfica generosa
+     ------------------------------------------------------------ */
+  .calligraphy-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 220px;
+    margin: 0 auto;
+  }
+  .calligraphy-svg text {
+    font-family: 'Instrument Serif', 'EB Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 96px;
+    /* Inicialmente: contorno só, sem preenchimento */
+    fill: transparent;
+    stroke: var(--ink);
+    stroke-width: 0.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    /* stroke-dasharray grande o suficiente para cobrir o caminho completo */
+    stroke-dasharray: 2400;
+    stroke-dashoffset: 2400;
+  }
+
+  /* ------------------------------------------------------------
+     Variação 1 — lenta e contínua (6s)
+     ------------------------------------------------------------ */
+  .v1 .calligraphy-svg text {
+    animation: draw-stroke 6s cubic-bezier(0.55, 0.06, 0.45, 0.94) forwards;
+  }
+
+  /* ------------------------------------------------------------
+     Variação 2 — média (3.4s) — o "padrão" sugerido
+     ------------------------------------------------------------ */
+  .v2 .calligraphy-svg text {
+    animation:
+      draw-stroke 3.4s cubic-bezier(0.7, 0, 0.3, 1) forwards,
+      ink-fill    1.4s ease-in 3.0s forwards;
+  }
+
+  /* ------------------------------------------------------------
+     Variação 3 — rápida (1.8s)
+     ------------------------------------------------------------ */
+  .v3 .calligraphy-svg text {
+    animation:
+      draw-stroke 1.8s cubic-bezier(0.7, 0, 0.3, 1) forwards,
+      ink-fill    0.8s ease-in 1.4s forwards;
+  }
+
+  /* ------------------------------------------------------------
+     Variação 4 — "ink fill" intenso — escreve o contorno e depois
+     "molha" a tinta preenchendo as letras
+     ------------------------------------------------------------ */
+  .v4 .calligraphy-svg text {
+    animation:
+      draw-stroke 3s ease-in-out forwards,
+      ink-fill    1.8s ease-out 2.6s forwards;
+  }
+
+  /* ------------------------------------------------------------
+     Variação 5 — dois passes: traço fino primeiro, depois um
+     segundo passe com stroke mais grosso (caneta-tinteiro
+     molhada)
+     ------------------------------------------------------------ */
+  .v5 .calligraphy-svg text {
+    animation:
+      draw-stroke 2.6s cubic-bezier(0.7, 0, 0.3, 1) forwards,
+      thicken     1.6s ease-in-out 2.2s forwards,
+      ink-fill    1s   ease-in 3.4s forwards;
+  }
+
+  /* ------------------------------------------------------------
+     Keyframes
+     ------------------------------------------------------------ */
+  @keyframes draw-stroke {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes ink-fill {
+    from { fill: transparent; stroke-opacity: 1;  }
+    to   { fill: var(--ink);  stroke-opacity: 0;  }
+  }
+  @keyframes thicken {
+    from { stroke-width: 0.9; }
+    to   { stroke-width: 2.2; }
+  }
+
+  /* ------------------------------------------------------------
+     Botão "replay" — força reinício da animação removendo e
+     recolocando a classe
+     ------------------------------------------------------------ */
+  .replay {
+    margin-top: var(--sp-4);
+    font-family: var(--mono);
+    font-size: var(--fs-small);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid var(--ink-soft);
+    color: var(--ink-soft);
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: all 0.2s var(--ease-out);
+  }
+  .replay:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  /* prefers-reduced-motion: mostra o título já pronto, sem animação */
+  @media (prefers-reduced-motion: reduce) {
+    .calligraphy-svg text {
+      animation: none !important;
+      stroke-dashoffset: 0;
+      fill: var(--ink);
+      stroke-opacity: 0;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    main { padding: var(--sp-7) var(--sp-4) var(--sp-8); }
+    .demo-head h1 { font-size: 40px; }
+    .calligraphy-svg text { font-size: 64px; }
+  }
+</style>
+</head>
+<body>
+
+<main>
+  <a class="back" href="../index.html">← Return to catalogue</a>
+
+  <header class="demo-head">
+    <h1>Calligraphy demo</h1>
+    <p class="deck">
+      Cinco variações da abertura traçada à pena.
+      Cada amostra escreve o título do volume — <em>A Catalogue Raisonné</em>
+      — uma única vez por carregamento.
+    </p>
+    <p class="meta">For evaluation · MMXXVI</p>
+  </header>
+
+  <!-- ============================================================
+       Variação 1 — Lenta e contínua
+       ============================================================ -->
+  <section class="variation v1">
+    <span class="v-tag">i · Lenta</span>
+    <h2 class="v-name">Pena devagar</h2>
+    <p class="v-desc">
+      Seis segundos, curva sem aceleração. Sente-se a pressão constante de
+      uma caligrafia formal. Não preenche — fica só o contorno, como um
+      esboço de pergaminho.
+    </p>
+    <svg class="calligraphy-svg" viewBox="0 0 1000 220" xmlns="http://www.w3.org/2000/svg">
+      <text x="500" y="140" text-anchor="middle">A Catalogue Raisonné</text>
+    </svg>
+    <button class="replay" type="button">Reproduzir</button>
+  </section>
+
+  <!-- ============================================================
+       Variação 2 — Média + preenchimento (sugerida)
+       ============================================================ -->
+  <section class="variation v2">
+    <span class="v-tag">ii · Média + tinta</span>
+    <h2 class="v-name">Pena e tinta — a sugerida</h2>
+    <p class="v-desc">
+      Três segundos e meio para o contorno, depois a tinta "molha" e
+      preenche as letras. Ritmo cerimonioso, mas não impaciente. É a
+      candidata mais provável para a abertura.
+    </p>
+    <svg class="calligraphy-svg" viewBox="0 0 1000 220" xmlns="http://www.w3.org/2000/svg">
+      <text x="500" y="140" text-anchor="middle">A Catalogue Raisonné</text>
+    </svg>
+    <button class="replay" type="button">Reproduzir</button>
+  </section>
+
+  <!-- ============================================================
+       Variação 3 — Rápida
+       ============================================================ -->
+  <section class="variation v3">
+    <span class="v-tag">iii · Rápida</span>
+    <h2 class="v-name">Mão apressada</h2>
+    <p class="v-desc">
+      Menos de dois segundos. Útil para usuário recorrente — não
+      atrapalha quem volta. Talvez rápida demais para a primeira
+      impressão.
+    </p>
+    <svg class="calligraphy-svg" viewBox="0 0 1000 220" xmlns="http://www.w3.org/2000/svg">
+      <text x="500" y="140" text-anchor="middle">A Catalogue Raisonné</text>
+    </svg>
+    <button class="replay" type="button">Reproduzir</button>
+  </section>
+
+  <!-- ============================================================
+       Variação 4 — Tinta lenta a encharcar
+       ============================================================ -->
+  <section class="variation v4">
+    <span class="v-tag">iv · Tinta lenta</span>
+    <h2 class="v-name">Tinta a encharcar</h2>
+    <p class="v-desc">
+      Contorno em três segundos; o preenchimento demora quase dois.
+      Reproduz a sensação de tinta absorvendo no papel — caligrafia
+      úmida, lenta a secar.
+    </p>
+    <svg class="calligraphy-svg" viewBox="0 0 1000 220" xmlns="http://www.w3.org/2000/svg">
+      <text x="500" y="140" text-anchor="middle">A Catalogue Raisonné</text>
+    </svg>
+    <button class="replay" type="button">Reproduzir</button>
+  </section>
+
+  <!-- ============================================================
+       Variação 5 — Dois passes (pena seca, depois pena molhada)
+       ============================================================ -->
+  <section class="variation v5">
+    <span class="v-tag">v · Dois passes</span>
+    <h2 class="v-name">Pena seca, depois pena molhada</h2>
+    <p class="v-desc">
+      Um primeiro passe fino, como rascunho de pena seca; depois um
+      segundo passe engrossa o traço, como se a pena tivesse sido
+      mergulhada de novo no tinteiro. Final: tinta preenche.
+    </p>
+    <svg class="calligraphy-svg" viewBox="0 0 1000 220" xmlns="http://www.w3.org/2000/svg">
+      <text x="500" y="140" text-anchor="middle">A Catalogue Raisonné</text>
+    </svg>
+    <button class="replay" type="button">Reproduzir</button>
+  </section>
+
+</main>
+
+<script>
+  // Botão "Reproduzir" — clona o <text> para reiniciar a animação CSS.
+  // (Trocar o nó é a maneira mais confiável de re-executar keyframes.)
+  document.querySelectorAll(".replay").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const variation = btn.closest(".variation");
+      if (!variation) return;
+      const svg = variation.querySelector(".calligraphy-svg");
+      if (!svg) return;
+      const txt = svg.querySelector("text");
+      if (!txt) return;
+      const clone = txt.cloneNode(true);
+      txt.replaceWith(clone);
+    });
+  });
+</script>
+
+</body>
+</html>

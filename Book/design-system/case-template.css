@@ -1,0 +1,642 @@
+/* ============================================================
+   CASE TEMPLATE — Estilos específicos da página de case (plate)
+   Carregar DEPOIS de tokens.css e catalogue.css.
+   Vocabulário editorial:
+     Argument / Dramatis Personæ / Acta / Plates / Errata / Colophon
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   Folha de rosto (case frontispiece) — header da página
+   ------------------------------------------------------------ */
+.case-frontispiece {
+  min-height: 92vh;
+  padding: 140px 0 80px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.case-frontispiece .sig {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.case-frontispiece .sig::before,
+.case-frontispiece .sig::after {
+  content: "";
+  width: 40px;
+  height: 1px;
+  background: var(--ink-faint);
+}
+
+.case-frontispiece .case-num {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 28px;
+  color: var(--oxblood);
+  margin-bottom: var(--sp-5);
+  letter-spacing: 0.04em;
+}
+
+.case-title {
+  font-family: var(--serif-display);
+  font-size: clamp(64px, 11vw, 160px);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+  margin-bottom: var(--sp-6);
+}
+.case-title .it { font-style: italic; }
+.case-title .reg { font-style: normal; }
+
+.case-rule {
+  width: 96px;
+  height: 1px;
+  background: var(--ink);
+  margin: 0 auto var(--sp-6);
+}
+
+.case-deck {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(18px, 1.5vw, 22px);
+  color: var(--ink-soft);
+  max-width: 620px;
+  margin: 0 auto var(--sp-7);
+  line-height: var(--lh-normal);
+}
+.case-deck .em { font-style: normal; color: var(--ink); }
+
+.case-byline {
+  font-family: var(--mono);
+  font-size: var(--fs-small);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  line-height: 1.9;
+}
+.case-byline .lab {
+  display: inline-block;
+  min-width: 5em;
+  color: var(--ink-ghost);
+  margin-right: var(--sp-3);
+}
+.case-byline .val {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: var(--fs-meta);
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink);
+}
+
+/* ------------------------------------------------------------
+   Seção editorial — heading com label + nome italic + label em mono
+   Cada bloco do case é uma "seção do livro": Argument, Dramatis…
+   ------------------------------------------------------------ */
+.case-section {
+  position: relative;
+  padding: var(--sp-11) 0;
+}
+.case-section + .case-section {
+  border-top: 1px solid var(--hairline);
+}
+
+.case-section .section-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-5);
+  margin-bottom: var(--sp-8);
+  padding-bottom: var(--sp-4);
+  border-bottom: 1px solid var(--hairline-strong);
+}
+.case-section .section-head .roman {
+  font-family: var(--mono);
+  font-size: var(--fs-small);
+  color: var(--ink-faint);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  min-width: 4em;
+}
+.case-section .section-head .name {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1;
+}
+.case-section .section-head .gloss {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ------------------------------------------------------------
+   Dramatis Personæ — cast de atores do projeto
+   "Cliente / Papel / Time / Período" como dramatis personæ
+   ------------------------------------------------------------ */
+.dramatis {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-8) var(--sp-7);
+}
+.dramatis dt {
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: var(--sp-2);
+}
+.dramatis dd {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: var(--fs-h4);
+  color: var(--ink);
+  line-height: var(--lh-snug);
+}
+.dramatis dd .role {
+  display: block;
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 6px;
+}
+
+/* ------------------------------------------------------------
+   Acta — registros / processo (lista de "atos")
+   Cada ato é um momento do processo, com data, título italic e gloss
+   ------------------------------------------------------------ */
+.acta {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.act {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: var(--sp-7);
+  padding: var(--sp-6) 0;
+  border-bottom: 1px solid var(--hairline);
+  align-items: baseline;
+}
+.act:first-child { border-top: 1px solid var(--ink); }
+.act .act-num {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: var(--fs-h4);
+  color: var(--oxblood);
+  letter-spacing: 0.04em;
+}
+.act .act-name {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: var(--fs-h3);
+  font-weight: 400;
+  line-height: var(--lh-snug);
+  margin-bottom: var(--sp-2);
+  letter-spacing: -0.01em;
+}
+.act .act-body {
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: var(--lh-loose);
+  color: var(--ink);
+  max-width: 56ch;
+}
+.act .act-body p + p { margin-top: 0.85em; }
+.act .act-body .it { font-style: italic; }
+.act .act-tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: var(--sp-4);
+}
+
+/* ------------------------------------------------------------
+   Lupa / lens — segue o cursor sobre .case-plate
+   O elemento .lens é um âncora de tamanho zero fixado em (0,0);
+   .inner é o círculo de zoom; .lens-tag fica à direita, fora da lupa.
+   ------------------------------------------------------------ */
+.lens {
+  position: fixed;
+  pointer-events: none;
+  z-index: var(--z-lens);
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  transition: opacity 0.2s var(--ease-out);
+}
+.lens.show { opacity: 1; }
+
+/* Círculo de zoom — centrado no cursor */
+.lens .inner {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  top: -90px;
+  left: -90px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-image: var(--lens-bg);
+  background-size: var(--lens-w) var(--lens-h);
+  background-position: var(--lens-bp);
+  background-repeat: no-repeat;
+  border: 1px solid var(--hairline-strong);
+  box-shadow: var(--shadow-lens);
+  transform: scale(0.82);
+  transition: transform 0.2s var(--ease-out);
+}
+.lens.show .inner { transform: scale(1); }
+
+/* Label "Ver a prancha" — à direita do círculo, fora da lupa */
+.lens-tag {
+  position: absolute;
+  left: 102px;   /* raio da lupa (90) + gap (12) */
+  top: -10px;    /* metade da linha → centrado verticalmente com o círculo */
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  background: var(--paper);
+  border: 1px solid var(--hairline-strong);
+  padding: 5px 12px;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.2s var(--ease-out) 0.08s,
+              transform 0.2s var(--ease-out) 0.08s;
+}
+.lens.show .lens-tag {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Lupa desativada em touch e em viewports ≤ 1024px */
+@media (hover: none), (max-width: 1024px) {
+  .lens { display: none !important; }
+}
+
+/* ------------------------------------------------------------
+   Plates — telas como pranchas (grid responsivo, com lupa)
+   ------------------------------------------------------------ */
+.case-plates {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--sp-5);
+}
+.case-plate {
+  position: relative;
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  overflow: hidden;
+  cursor: zoom-in;
+}
+.case-plate.full   { grid-column: span 12; aspect-ratio: 16 / 9; }
+.case-plate.wide   { grid-column: span 8;  aspect-ratio: 4 / 3; }
+.case-plate.half   { grid-column: span 6;  aspect-ratio: 4 / 5; }
+.case-plate.third  { grid-column: span 4;  aspect-ratio: 3 / 4; }
+
+.case-plate .plate-label {
+  position: absolute;
+  top: var(--sp-3);
+  left: var(--sp-3);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--paper);
+  z-index: 2;
+}
+.case-plate .plate-roman {
+  position: absolute;
+  top: var(--sp-3);
+  right: var(--sp-3);
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: var(--fs-meta);
+  color: var(--paper);
+  z-index: 2;
+  opacity: 0.85;
+}
+
+/* placeholder visual quando ainda não tem imagem */
+.case-plate.placeholder {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--paper-shade) 0%, var(--paper-deep) 100%);
+  color: var(--ink-faint);
+  border: 1px dashed var(--hairline-strong);
+  cursor: default;
+}
+.case-plate.placeholder::before {
+  content: "Plate placeholder";
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: var(--fs-meta);
+  color: var(--ink-faint);
+}
+.case-plate.placeholder .plate-label,
+.case-plate.placeholder .plate-roman {
+  color: var(--ink-faint);
+}
+
+/* Caption sob a prancha */
+.plate-caption {
+  margin-top: var(--sp-3);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: var(--fs-meta);
+  color: var(--ink-soft);
+  line-height: var(--lh-normal);
+}
+.plate-caption .num {
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 9px;
+  vertical-align: super;
+  color: var(--oxblood);
+  margin-right: 6px;
+  letter-spacing: 0.06em;
+}
+
+/* ------------------------------------------------------------
+   Marginalia statistica — métricas como nota de margem
+   (alternativa aos KPI cards genéricos)
+   ------------------------------------------------------------ */
+.marginalia-stat {
+  margin-top: var(--sp-8);
+  padding: var(--sp-6) var(--sp-7);
+  background: var(--paper-shade);
+  border: 1px solid var(--hairline-strong);
+  position: relative;
+}
+.marginalia-stat::before {
+  content: "Marginalia statistica";
+  position: absolute;
+  top: -10px;
+  left: var(--sp-5);
+  padding: 0 var(--sp-3);
+  background: var(--paper);
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.marginalia-stat dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--sp-6);
+}
+.marginalia-stat dt {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 56px;
+  line-height: 1;
+  color: var(--oxblood);
+  letter-spacing: -0.02em;
+}
+.marginalia-stat dt .unit {
+  font-size: 18px;
+  color: var(--ink-soft);
+  margin-left: 6px;
+  font-style: italic;
+}
+.marginalia-stat dd {
+  margin-top: var(--sp-2);
+  font-family: var(--serif);
+  font-size: var(--fs-meta);
+  font-style: italic;
+  color: var(--ink-soft);
+  line-height: var(--lh-normal);
+  max-width: 24ch;
+}
+
+/* ------------------------------------------------------------
+   Errata — lições aprendidas (estilo "lista de fé de erratas")
+   ------------------------------------------------------------ */
+.errata-list {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: var(--lh-loose);
+}
+.errata-item {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: var(--sp-5);
+  padding-bottom: var(--sp-4);
+  border-bottom: 1px dotted var(--ink-ghost);
+}
+.errata-item .errata-tag {
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--oxblood);
+  padding-top: 4px;
+}
+.errata-item p {
+  color: var(--ink);
+  font-style: italic;
+}
+.errata-item p .em { font-style: normal; }
+.errata-item p .strike {
+  text-decoration: line-through;
+  color: var(--ink-ghost);
+  font-style: normal;
+}
+
+/* ------------------------------------------------------------
+   Colophon do case — créditos de produção, ferramentas, agradecimentos
+   ------------------------------------------------------------ */
+.case-colophon {
+  padding: var(--sp-10) 0;
+  border-top: 1px solid var(--hairline-strong);
+  background: var(--paper-shade);
+  text-align: center;
+}
+.case-colophon .ornament {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 24px;
+  color: var(--oxblood);
+  margin-bottom: var(--sp-4);
+}
+.case-colophon-body {
+  font-family: var(--serif);
+  font-size: var(--fs-meta);
+  font-style: italic;
+  color: var(--ink-soft);
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: var(--lh-loose);
+}
+.case-colophon-meta {
+  margin-top: var(--sp-5);
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ------------------------------------------------------------
+   Verso / Recto — navegação fim do case
+   ------------------------------------------------------------ */
+.folio-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  margin-top: var(--sp-8);
+}
+.folio-nav a {
+  padding: var(--sp-7) var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  transition: background var(--dur-base);
+}
+.folio-nav a:hover { background: var(--paper-shade); }
+.folio-nav a:hover .folio-title { color: var(--oxblood); }
+.folio-nav .verso  { border-right: 1px solid var(--hairline-strong); }
+.folio-nav .recto  { text-align: right; align-items: flex-end; }
+.folio-nav .folio-marker {
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.folio-nav .folio-title {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: var(--fs-h4);
+  color: var(--ink);
+  transition: color var(--dur-base);
+}
+
+/* Atalho discreto para voltar ao catálogo (no chrome) */
+.chrome-top .to-catalogue {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: var(--fs-meta);
+  color: var(--ink-soft);
+  border-bottom: 1px solid transparent;
+  transition: color var(--dur-base), border-color var(--dur-base);
+  pointer-events: auto;
+}
+.chrome-top .to-catalogue:hover {
+  color: var(--oxblood);
+  border-color: var(--oxblood);
+}
+
+/* ------------------------------------------------------------
+   Responsivo — breakpoints 1024 / 768 / 640 / 380
+   ------------------------------------------------------------ */
+
+/* --- ≤1024 px : laptop / tablet paisagem --- */
+@media (max-width: 1024px) {
+  .dramatis { grid-template-columns: 1fr; gap: var(--sp-6); }
+  .act { grid-template-columns: 60px 1fr; gap: var(--sp-5); }
+  .case-plates { grid-template-columns: repeat(6, 1fr); gap: var(--sp-4); }
+  .case-plate.full   { grid-column: span 6; }
+  .case-plate.wide   { grid-column: span 6; }
+  .case-plate.half   { grid-column: span 6; }
+  .case-plate.third  { grid-column: span 3; }
+}
+
+/* --- ≤768 px : tablet retrato --- */
+@media (max-width: 768px) {
+  .case-frontispiece { padding: 120px 24px 64px; min-height: 80vh; }
+  .case-section { padding: var(--sp-10) 0; }
+  .case-section .section-head { gap: var(--sp-4); margin-bottom: var(--sp-7); }
+  .marginalia-stat dt { font-size: 48px; }
+  .marginalia-stat dl { gap: var(--sp-5); }
+
+  /* Footnote em mobile: alvo maior */
+  .case-section .fn {
+    display: inline-block;
+    min-width: 22px; min-height: 22px;
+    padding: 0 4px;
+    text-align: center;
+  }
+}
+
+/* --- ≤640 px : mobile grande --- */
+@media (max-width: 640px) {
+  .case-section { padding: var(--sp-9) 0; }
+  .case-section .section-head { flex-wrap: wrap; gap: var(--sp-3); }
+  .case-section .section-head .name { font-size: 40px; }
+  .case-section .section-head .gloss { margin-left: 0; width: 100%; }
+
+  .marginalia-stat { padding: var(--sp-5) var(--sp-4); }
+  .marginalia-stat dt { font-size: 40px; }
+  .marginalia-stat::before { left: var(--sp-3); }
+
+  /* Verso / Recto em pilha + touch target ≥44px */
+  .folio-nav { grid-template-columns: 1fr; }
+  .folio-nav a { padding: var(--sp-5) var(--sp-4); min-height: 64px; }
+  .folio-nav .verso  { border-right: none; border-bottom: 1px solid var(--hairline-strong); }
+  .folio-nav .recto  { text-align: left; align-items: flex-start; }
+
+  .case-plate.third  { grid-column: span 6; }
+
+  /* Chrome top: atalho ao catálogo precisa ser tocável */
+  .chrome-top .to-catalogue {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 8px 0;
+  }
+}
+
+/* --- ≤380 px : mobile pequeno --- */
+@media (max-width: 380px) {
+  .case-frontispiece { padding: 96px 16px 48px; min-height: 72vh; }
+  .case-frontispiece .case-num { font-size: 22px; }
+  .case-title { font-size: 44px; line-height: 0.95; }
+
+  .case-section { padding: var(--sp-8) 0; }
+  .case-section .section-head .name { font-size: 32px; }
+
+  .act { grid-template-columns: 1fr; gap: var(--sp-3); }
+  .act .act-num { font-size: 20px; }
+  .act .act-name { font-size: 24px; }
+
+  .marginalia-stat dt { font-size: 32px; }
+  .marginalia-stat dt .unit { font-size: 14px; }
+
+  .errata-item { grid-template-columns: 1fr; gap: var(--sp-2); }
+  .errata-item .errata-tag { padding-top: 0; }
+}

@@ -1,0 +1,3150 @@
+/* ============================================================
+   PORTFOLIO — A CATALOGUE RAISONNÉ
+   Editorial publication, interactive.
+   ----
+   Estilos de componentes da home (catálogo).
+   TOKENS centralizados em design-system/tokens.css — não
+   redeclarar :root aqui. Para mudanças de cor/tipo/escala,
+   editar design-system/tokens.css e atualizar DESIGN-SYSTEM.md.
+   ============================================================ */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+html, body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  font-feature-settings: "kern", "liga", "onum", "tnum" 0;
+}
+
+body {
+  /* paper texture */
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(26, 22, 18, 0.025), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(122, 38, 32, 0.02), transparent 35%);
+}
+
+/* Soft fiber/paper grain overlay
+   — SVG tilado em tamanho fixo para evitar pixelização ao esticar.
+     stitchTiles="stitch" garante tiling sem costura visível.
+     4 oitavas + frequências ligeiramente assimétrica (X≠Y) = textura
+     mais orgânica, lembrando fibra de papel de verdade. */
+.paper-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.45;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain' x='0%25' y='0%25' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68 0.72' numOctaves='4' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.09 0 0 0 0 0.07 0 0 0 0 0.055 0 0 0 0.28 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  background-repeat: repeat;
+}
+
+::selection { background: var(--highlighter); color: var(--ink); }
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+
+/* ============================================================
+   Page chrome (top + bottom bands)
+   ============================================================ */
+.chrome-top {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  padding: 18px 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  pointer-events: none;
+}
+.chrome-top > * { pointer-events: auto; }
+.chrome-top .running-head {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--ink-soft);
+}
+.chrome-top .running-head .sep {
+  display: inline-block;
+  margin: 0 14px;
+  color: var(--ink-ghost);
+}
+
+.chrome-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.lang-toggle {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+}
+.lang-toggle button {
+  padding: 4px 8px;
+  color: var(--ink-faint);
+  transition: color 0.3s;
+  position: relative;
+}
+.lang-toggle button.active { color: var(--ink); }
+.lang-toggle button.active::after {
+  content: "";
+  position: absolute;
+  left: 8px; right: 8px;
+  bottom: 1px;
+  border-bottom: 1px solid var(--ink);
+}
+.lang-toggle .pipe { color: var(--ink-ghost); }
+
+.chrome-bot {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 50;
+  padding: 14px 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  pointer-events: none;
+}
+.chrome-bot > * { pointer-events: auto; }
+
+.page-counter {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-variant-numeric: tabular-nums;
+}
+.page-counter .num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--ink-soft);
+  display: inline-block;
+  min-width: 1.4em;
+  text-align: center;
+}
+.page-counter .of {
+  font-family: var(--mono);
+  font-size: 10px;
+}
+
+.ink-progress {
+  flex: 1;
+  margin: 0 32px;
+  height: 1px;
+  position: relative;
+  background: var(--hairline);
+}
+.ink-progress::after {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: var(--prog, 0%);
+  background: var(--ink);
+  transition: width 0.1s linear;
+}
+
+/* ============================================================
+   Custom cursor — a small italic glyph that follows
+   ============================================================ */
+.cursor-glyph {
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 100;
+  pointer-events: none;
+  transform: translateX(-50%);   /* centra horizontalmente; top já é ajustado pelo JS */
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--oxblood);
+  background: var(--paper);
+  padding: 4px 10px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 999px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.25s, transform 0.05s linear;
+  box-shadow: 0 4px 12px rgba(26, 22, 18, 0.08);
+}
+.cursor-glyph.show { opacity: 1; }
+
+/* ─── Loupe — antique wooden magnifying glass ─────────────── */
+
+/* Cursor anchor — zero-size; all children use negative offsets */
+.loupe {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99;
+  top: 0; left: 0;
+  width: 0; height: 0;
+  opacity: 0;
+  transition: opacity 0.15s var(--ease-out);
+}
+.loupe.show { opacity: 1; }
+
+/* Circular glass — clips the magnified DOM clone */
+.loupe-glass {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #1a1612;
+  top: -100px;
+  left: -100px;
+  /* Pendulum: pivot no cabo (dx=+313px, dy=+108px do centro da lente) */
+  transform: rotate(35deg);
+  transform-origin: 413px 208px;
+  transition: transform 0.62s cubic-bezier(0.34, 1.28, 0.64, 1);
+}
+.loupe.show .loupe-glass { transform: rotate(0deg); }
+
+/* PNG overlay — antique magnifying glass photo */
+.loupe-frame {
+  position: absolute;
+  display: block;
+  width: 461px;   /* 1024px × 0.45 */
+  height: 461px;
+  top: -198px;    /* lens center y (439 × 0.45) aligns to cursor */
+  left: -122.5px;   /* lens center x — calibrated */
+  pointer-events: none;
+  /* Pendulum: mesmo pivot, em coordenadas do frame */
+  transform: rotate(35deg);
+  transform-origin: 435.5px 306px;
+  transition: transform 0.62s cubic-bezier(0.34, 1.28, 0.64, 1);
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.loupe.show .loupe-frame { transform: rotate(0deg); }
+
+/* Cloned plate inside the glass — strip decoration */
+.loupe-glass .plate-image {
+  position: absolute;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  pointer-events: none !important;
+  cursor: none !important;
+  transition: none !important;
+}
+
+/* Loupe desabilitado em touch e em viewports ≤ 1024px */
+@media (hover: none), (max-width: 1024px) {
+  .cursor-glyph, .loupe { display: none; }
+}
+
+/* Em viewports muito curtas (landscape mobile, split-screen)
+   a invitation ficaria colada ao título — melhor ocultá-la. */
+@media (max-height: 580px) {
+  .frontispiece .invitation { display: none; }
+  .frontispiece { padding-bottom: 80px; }
+}
+
+/* ============================================================
+   Page width & sections
+   ============================================================ */
+.book {
+  position: relative;
+  z-index: 2;
+}
+
+.page {
+  position: relative;
+  padding: 96px 0;
+}
+.page + .page { border-top: 1px solid var(--hairline); }
+
+.spread {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 64px;
+  display: grid;
+  grid-template-columns: 140px 1fr 140px;
+  gap: 48px;
+  position: relative;
+}
+.spread .margin-l, .spread .margin-r {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+.spread .margin-r { text-align: right; }
+.spread .content { min-width: 0; }
+
+.spread-narrow {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* Margin gloss — italic notes pinned to side of body */
+.gloss {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  text-transform: none;
+  letter-spacing: 0;
+}
+.gloss .gloss-num {
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 9px;
+  vertical-align: super;
+  color: var(--oxblood);
+  margin-right: 4px;
+  letter-spacing: 0.05em;
+}
+
+/* Section heading */
+.heading {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  margin-bottom: 56px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--hairline-strong);
+}
+.heading .num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.heading .title {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.heading .roman {
+  font-family: var(--serif);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ============================================================
+   Frontispiece (title page) — first viewport
+   ============================================================ */
+.frontispiece {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  position: relative;
+  /* padding-bottom generoso para que o conteúdo centrado nunca
+     colida com o .invitation (position:absolute; bottom:56px) */
+  padding: 100px 32px 160px;
+}
+.frontispiece .stamp {
+  position: absolute;
+  top: 88px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.frontispiece .stamp::before, .frontispiece .stamp::after {
+  content: "";
+  width: 32px;
+  height: 1px;
+  background: var(--ink-faint);
+}
+
+.ornament-1 {
+  font-family: var(--serif);
+  font-style: normal;
+  font-size: 28px;
+  color: var(--oxblood);
+  margin-bottom: 36px;
+}
+.title-author {
+  font-family: var(--serif-display);
+  font-size: clamp(72px, 13vw, 200px);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+  margin-bottom: 48px;
+  font-style: normal;
+}
+.title-author .name-l {
+  display: block;
+  overflow: hidden;
+}
+.title-author .name-inner {
+  display: inline-block;
+  transform: translateY(110%);
+  animation: rise 1.4s var(--ease-power) forwards;
+  font-style: italic;
+}
+.title-author .name-l:nth-child(2) .name-inner {
+  animation-delay: 0.1s;
+  font-style: normal;
+}
+@keyframes rise { to { transform: translateY(0); } }
+
+.title-rule {
+  width: 96px;
+  height: 1px;
+  background: var(--ink);
+  margin: 0 auto 36px;
+}
+
+.title-sub {
+  font-family: var(--serif);
+  font-size: clamp(18px, 1.5vw, 22px);
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  max-width: 580px;
+  margin: 0 auto 48px;
+  color: var(--ink-soft);
+}
+.title-sub .it { font-style: italic; color: var(--ink); }
+.title-sub .sc {
+  display: block;
+  margin-top: 24px;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-style: normal;
+}
+
+.title-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  line-height: 1.8;
+}
+.title-meta .em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink-soft);
+  display: block;
+  margin-top: 8px;
+}
+
+.frontispiece .invitation {
+  position: absolute;
+  bottom: 56px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink-faint);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.frontispiece .invitation .arrow {
+  width: 1px;
+  height: 32px;
+  background: var(--ink-faint);
+  position: relative;
+  animation: drop 2s var(--ease-in-out) infinite;
+}
+@keyframes drop {
+  0%, 100% { transform: translateY(-4px); opacity: 0.5; }
+  50% { transform: translateY(4px); opacity: 1; }
+}
+
+/* ============================================================
+   Half-title / Epigraph
+   ============================================================ */
+.half-title {
+  padding: 140px 0 120px;
+  text-align: center;
+}
+.half-title .epigraph {
+  max-width: 720px;
+  margin: 0 auto;
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.2vw, 30px);
+  line-height: 1.45;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+.half-title .epigraph .em {
+  font-style: normal;
+  color: var(--ink);
+}
+.half-title .attribution {
+  margin-top: 36px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.half-title .attribution .name {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink-soft);
+  margin-left: 12px;
+}
+
+/* ============================================================
+   Table of contents
+   ============================================================ */
+.toc {
+  padding-top: 120px;
+  padding-bottom: 120px;
+}
+.toc-list {
+  margin-top: 56px;
+  display: flex;
+  flex-direction: column;
+}
+.toc-row {
+  display: grid;
+  grid-template-columns: 80px 1fr auto 60px;
+  gap: 24px;
+  align-items: baseline;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--hairline);
+  position: relative;
+  transition: padding-left 0.4s var(--ease-out);
+}
+.toc-row:hover { padding-left: 16px; }
+.toc-row:hover .toc-title { color: var(--oxblood); }
+
+/* Scroll-spy — active state (visual mínimo, sem ativo de UI) */
+.toc-row.active .toc-num {
+  color: var(--oxblood);
+}
+.toc-row.active .toc-page {
+  color: var(--ink-soft);
+}
+.toc-row .toc-num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink-faint);
+  letter-spacing: 0.06em;
+}
+.toc-row .toc-title {
+  font-family: var(--serif-display);
+  font-size: clamp(24px, 2.6vw, 36px);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  transition: color 0.3s;
+}
+.toc-row .toc-title .reg { font-style: normal; }
+.toc-row .toc-leader {
+  border-bottom: 1px dotted var(--ink-ghost);
+  height: 1em;
+  align-self: flex-end;
+  margin-bottom: 4px;
+}
+.toc-row .toc-page {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+  text-align: right;
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   Preface — body text in two columns optionally, drop cap
+   ============================================================ */
+.preface .body {
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.6;
+  color: var(--ink);
+  max-width: 640px;
+}
+.preface .body p + p { margin-top: 1em; text-indent: 1.5em; }
+.preface .body .strong { font-weight: 600; }
+.preface .body .it { font-style: italic; }
+
+/* Drop cap — S.png como capitular iluminada (variant B · 158px) */
+.drop-cap {
+  float: left;
+  width: 158px;
+  height: 158px;
+  margin: 0.04em 22px 4px 0;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  /* zoom leve para cortar o vignette cinza da borda da imagem */
+  transform: scale(1.09);
+  transform-origin: top left;
+}
+
+.preface .body .fn {
+  font-family: var(--mono);
+  font-size: 9px;
+  vertical-align: super;
+  color: var(--oxblood);
+  margin-left: 1px;
+  letter-spacing: 0.05em;
+  cursor: help;
+  position: relative;
+  border-bottom: none;
+}
+.preface .body .fn:hover {
+  color: var(--ink);
+  background: var(--highlighter);
+}
+
+.portrait {
+  position: relative;
+  margin-bottom: 16px;
+  /* sem borda, sem fundo, sem overflow:hidden — a foto fica solta */
+}
+.portrait::before {
+  display: none; /* frame decorativo removido para foto solta */
+}
+.portrait-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  /* leve inclinação para reforçar o efeito de foto colada */
+  transform: rotate(-1.5deg);
+  transform-origin: center center;
+  /* sombra suave para destacar do fundo */
+  filter: drop-shadow(0 4px 16px rgba(30,20,10,0.22));
+}
+.portrait-placeholder {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--ink-faint);
+  font-size: 14px;
+  text-align: center;
+  padding: 0 20px;
+  line-height: 1.4;
+}
+.portrait-cap {
+  text-align: center;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.4;
+  max-width: 220px;
+  margin: 0 auto;
+}
+.portrait-cap .name {
+  font-style: normal;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: var(--ink);
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Footnotes block at bottom of preface */
+.footnotes {
+  margin-top: 64px;
+  padding-top: 24px;
+  border-top: 1px solid var(--hairline);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 640px;
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.footnotes .fn-item {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 8px;
+  transition: background 0.3s;
+  padding: 4px 0;
+}
+.footnotes .fn-item.active { background: var(--highlighter); }
+.footnotes .fn-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--oxblood);
+  letter-spacing: 0.05em;
+  padding-top: 2px;
+}
+.footnotes .fn-item .it { font-style: italic; }
+
+/* ============================================================
+   Index of Works — plates
+   ============================================================ */
+.plates {
+  padding: 120px 0;
+}
+.plate {
+  padding: 80px 0;
+  border-top: 1px solid var(--hairline);
+}
+.plate:first-of-type { border-top: none; }
+
+.plate-grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 64px;
+  display: grid;
+  grid-template-columns: 200px 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.plate-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.plate-meta .roman {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 24px;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+  text-transform: none;
+  border-bottom: 1px solid var(--hairline-strong);
+  padding-bottom: 12px;
+  margin-bottom: 8px;
+}
+.plate-meta dl {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.plate-meta dt {
+  font-size: 9px;
+  color: var(--ink-faint);
+  letter-spacing: 0.12em;
+}
+.plate-meta dd {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-style: italic;
+  text-transform: none;
+  color: var(--ink);
+  letter-spacing: 0;
+  line-height: 1.4;
+}
+
+.plate-image {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  background: var(--ink);
+  overflow: hidden;
+  border: 1px solid var(--ink);
+  cursor: zoom-in;
+}
+.plate-image::after {
+  content: "PL.";
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--paper);
+  text-transform: uppercase;
+  z-index: 2;
+}
+.plate-image-num {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--paper);
+  z-index: 2;
+}
+
+/* ============================================================
+   PLATE FLIP — wrapper 3D para revelar o verso (wireframe)
+   da prancha. O recto continua sendo um link clicável; o verso
+   é um placeholder de wireframe. Estado controlado por classe
+   .is-flipped no wrapper.
+   A lente segue funcionando no recto (face .plate-image-recto);
+   o verso fica fora do alcance da lente.
+   ============================================================ */
+.plate-image-flip {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  perspective: 1500px;
+  /* Sombra suave sob a prancha — sugere papel sobre mesa */
+  filter: drop-shadow(0 2px 8px rgba(26, 22, 18, 0.08));
+}
+.plate-image-flip .plate-image,
+.plate-image-flip .plate-image-verso {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transition: transform 0.85s var(--ease-out);
+  transform-style: preserve-3d;
+}
+.plate-image-flip .plate-image-recto {
+  /* Reseta cursor para o cursor-glyph italic vir a calhar */
+  aspect-ratio: auto;
+}
+.plate-image-flip .plate-image-verso {
+  transform: rotateY(180deg);
+  background:
+    /* Papel pautado: linhas finas como em caderno de wireframe */
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 23px,
+      rgba(74, 65, 54, 0.16) 23px 24px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 23px,
+      rgba(74, 65, 54, 0.16) 23px 24px
+    ),
+    var(--paper-shade);
+  border: 1px solid var(--ink-faint);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  align-items: center;
+  padding: 24px 22px;
+  gap: 12px;
+  overflow: hidden;
+  color: var(--ink-soft);
+}
+.plate-image-flip.is-flipped .plate-image-recto {
+  transform: rotateY(-180deg);
+  /* Desliga eventos no recto invisível para a lupa não disparar atrás */
+  pointer-events: none;
+}
+.plate-image-flip.is-flipped .plate-image-verso {
+  transform: rotateY(0deg);
+}
+/* Verso só recebe eventos quando está virado para a frente.
+   Assim a lupa nunca dispara atrás da arte final, e o clique no
+   verso (link para a ficha do case) só funciona quando ele está
+   efetivamente visível. */
+.plate-image-flip .plate-image-verso { pointer-events: none; }
+.plate-image-flip.is-flipped .plate-image-verso { pointer-events: auto; }
+
+/* Como o verso virou um <a>, neutralizamos o estilo padrão de link */
+.plate-image-verso {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color 0.25s var(--ease-out);
+}
+.plate-image-verso:hover .verso-caption {
+  color: var(--oxblood);
+  border-color: var(--oxblood);
+}
+.plate-image-verso:focus-visible {
+  outline: 2px solid var(--oxblood);
+  outline-offset: 4px;
+}
+
+/* Conteúdo do verso */
+.plate-image-verso .verso-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px dashed var(--ink-ghost);
+  padding-bottom: 8px;
+}
+.plate-image-verso .verso-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--oxblood);
+}
+.plate-image-verso .verso-roman {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--ink);
+}
+.plate-image-verso .verso-wireframe {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  display: block;
+}
+.plate-image-verso .verso-wireframe rect {
+  fill: transparent;
+  stroke: var(--ink-soft);
+  stroke-width: 1.2;
+  stroke-dasharray: 4 3;
+  opacity: 0.85;
+}
+.plate-image-verso .verso-wireframe .wf-guide {
+  stroke: var(--ink-faint);
+  stroke-width: 0.6;
+  opacity: 0.6;
+}
+.plate-image-verso .verso-caption {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-faint);
+  text-align: center;
+  padding-top: 6px;
+  border-top: 1px dashed var(--ink-ghost);
+  transition: color 0.25s var(--ease-out), border-color 0.25s var(--ease-out);
+}
+
+/* ============================================================
+   PLATE FLIP BUTTON — botão temático abaixo da lista de meta.
+   Glifo: pena + arco-de-retorno em SVG. Em hover, inverte
+   contraste. Quando flipped, glifo gira 180° no eixo Y.
+   ============================================================ */
+.plate-flip-btn {
+  /* Aparece logo sob o <dl> da meta, alinhado à coluna */
+  margin-top: var(--sp-3);
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px 9px 12px;
+  background: var(--paper-card);
+  border: 1px solid var(--ink-soft);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition:
+    background 0.25s var(--ease-out),
+    color      0.25s var(--ease-out),
+    border-color 0.25s var(--ease-out),
+    transform  0.2s var(--ease-out);
+}
+.plate-flip-btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.plate-flip-btn:active {
+  transform: translateY(1px);
+}
+.plate-flip-btn:focus-visible {
+  outline: 2px solid var(--oxblood);
+  outline-offset: 3px;
+}
+.plate-flip-btn .plate-flip-glyph {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  color: var(--oxblood);
+  transition: transform 0.5s var(--ease-out), color 0.25s var(--ease-out);
+}
+.plate-flip-btn:hover .plate-flip-glyph {
+  color: var(--paper);
+}
+.plate-flip-btn.is-flipped .plate-flip-glyph {
+  transform: rotateY(180deg);
+}
+.plate-flip-btn .plate-flip-glyph svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.plate-flip-btn .plate-flip-label {
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+}
+
+/* prefers-reduced-motion: troca instantânea, sem rotação 3D */
+@media (prefers-reduced-motion: reduce) {
+  .plate-image-flip .plate-image,
+  .plate-image-flip .plate-image-verso,
+  .plate-flip-btn,
+  .plate-flip-btn .plate-flip-glyph {
+    transition: none;
+  }
+  .plate-image-flip .plate-image-recto {
+    opacity: 1;
+  }
+  .plate-image-flip.is-flipped .plate-image-recto {
+    opacity: 0;
+    transform: none;
+  }
+  .plate-image-flip.is-flipped .plate-image-verso {
+    opacity: 1;
+    transform: none;
+  }
+  .plate-image-flip .plate-image-verso {
+    opacity: 0;
+    transform: none;
+  }
+}
+
+.plate-content {
+  padding-top: 8px;
+}
+.plate-title {
+  font-family: var(--serif-display);
+  font-size: clamp(36px, 4vw, 56px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1;
+  margin-bottom: 16px;
+  letter-spacing: -0.015em;
+}
+.plate-title .reg { font-style: normal; }
+.plate-sub {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 28px;
+}
+.plate-desc {
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.plate-desc p + p { margin-top: 1em; }
+.plate-desc .strong { font-weight: 600; }
+.plate-desc .it { font-style: italic; }
+
+.plate-stats {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--hairline);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.plate-stat .val {
+  font-family: var(--serif);
+  font-style: normal;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--oxblood);
+  letter-spacing: -0.01em;
+}
+.plate-stat .lab {
+  margin-top: 4px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--ink-faint);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.35;
+  white-space: pre-line;
+}
+
+.plate-link {
+  margin-top: 32px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 2px;
+  transition: color 0.3s, border-color 0.3s;
+}
+.plate-link:hover {
+  color: var(--oxblood);
+  border-color: var(--oxblood);
+}
+
+/* Plate image variations */
+.plate-img-1 {
+  background:
+    radial-gradient(ellipse at 30% 35%, #2a2520 0%, #1a1612 60%),
+    #1a1612;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+.plate-img-1::before {
+  content: "";
+  position: absolute;
+  inset: 30px;
+  border: 1px solid rgba(241, 236, 224, 0.2);
+}
+.plate-img-1::after {
+  content: "Gen.";
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: clamp(72px, 9vw, 130px);
+  color: var(--paper);
+  position: relative;
+  z-index: 2;
+}
+.plate-img-1 .ornament {
+  position: absolute;
+  bottom: 24%;
+  left: 0; right: 0;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  color: rgba(241, 236, 224, 0.5);
+  text-transform: uppercase;
+}
+
+.plate-img-2 {
+  background: #1a1612;
+  position: relative;
+  overflow: hidden;
+}
+.plate-img-2 svg {
+  position: absolute;
+  inset: 24px;
+  width: calc(100% - 48px);
+  height: calc(100% - 48px);
+}
+
+.plate-img-3 {
+  background:
+    radial-gradient(ellipse at 50% 30%, #2a2520 0%, #0e0a06 70%),
+    #0e0a06;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.plate-img-3 .phone {
+  width: 50%;
+  aspect-ratio: 9 / 19;
+  background: #1a1612;
+  border: 1px solid rgba(241, 236, 224, 0.18);
+  border-radius: 18px;
+  padding: 8px;
+  position: relative;
+  z-index: 2;
+}
+.plate-img-3 .phone-inner {
+  width: 100%;
+  height: 100%;
+  background: #0a0806;
+  border-radius: 12px;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 8px;
+  color: rgba(241, 236, 224, 0.7);
+  letter-spacing: 0.04em;
+}
+.plate-img-3 .phone-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: rgba(241, 236, 224, 0.04);
+  border-radius: 4px;
+  border: 1px solid rgba(241, 236, 224, 0.06);
+}
+.plate-img-3 .phone-row .v {
+  color: var(--paper);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 10px;
+}
+.plate-img-3 .phone-row.warn .v { color: #c89b5a; }
+
+/* ============================================================
+   On Method — manifesto + process
+   ============================================================ */
+.method {
+  padding: 120px 0;
+}
+.method-body {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 32px;
+  text-align: center;
+}
+.method-credo {
+  font-family: var(--serif-display);
+  font-size: clamp(34px, 4.5vw, 54px);
+  line-height: 1.2;
+  font-style: italic;
+  color: var(--ink);
+  margin: 64px 0;
+  letter-spacing: -0.015em;
+  font-weight: 400;
+}
+.method-credo .reg { font-style: normal; }
+.method-credo .ox { color: var(--oxblood); }
+
+.tenets {
+  margin-top: 80px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+.tenet {
+  padding: 32px 24px;
+  border-right: 1px solid var(--hairline-strong);
+  text-align: left;
+  position: relative;
+}
+.tenet:last-child { border-right: none; }
+.tenet .glyph {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 28px;
+  color: var(--oxblood);
+  margin-bottom: 16px;
+  line-height: 1;
+}
+.tenet .num {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--ink-faint);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  position: absolute;
+  top: 32px;
+  right: 24px;
+}
+.tenet h4 {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-style: italic;
+  font-weight: 400;
+  margin-bottom: 8px;
+  letter-spacing: -0.005em;
+}
+.tenet p {
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* Process plate — engraving-style diagram */
+.process-diagram {
+  margin-top: 80px;
+  padding: 56px 32px;
+  border: 1px solid var(--hairline-strong);
+  background: var(--paper-shade);
+  position: relative;
+}
+.process-diagram::before, .process-diagram::after {
+  content: "PLATE iv";
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-faint);
+  position: absolute;
+  top: 16px;
+}
+.process-diagram::before { left: 24px; }
+.process-diagram::after { content: "FIG. 1 — METHOD"; right: 24px; }
+
+.process-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) auto;
+  gap: 0;
+  align-items: center;
+  margin: 32px 0 12px;
+}
+.process-node {
+  text-align: center;
+  position: relative;
+  padding: 0 12px;
+}
+.process-node .ring {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid var(--ink);
+  display: grid;
+  place-items: center;
+  margin: 0 auto 12px;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 24px;
+  color: var(--ink);
+  background: var(--paper);
+}
+.process-node h5 {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 18px;
+  font-weight: 400;
+}
+.process-node p {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: 4px;
+}
+.process-arrow {
+  font-family: var(--serif);
+  font-size: 18px;
+  color: var(--ink-faint);
+}
+.process-loop {
+  text-align: center;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-top: 24px;
+}
+
+/* ============================================================
+   Apparatus — tools & languages & curriculum
+   ============================================================ */
+.apparatus {
+  padding-top: 120px;
+  padding-bottom: 120px;
+}
+.apparatus-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  margin-top: 56px;
+}
+.apparatus h4 {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--hairline-strong);
+}
+.apparatus h4 .sup {
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 10px;
+  color: var(--ink-faint);
+  letter-spacing: 0.1em;
+  vertical-align: super;
+  margin-left: 8px;
+}
+
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px 24px;
+}
+.tool-line {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px dotted var(--ink-ghost);
+}
+.tool-line .name {
+  font-family: var(--serif);
+  font-size: 17px;
+}
+.tool-line .meta {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.lang-line {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: baseline;
+  padding: 14px 0;
+  border-bottom: 1px dotted var(--ink-ghost);
+}
+.lang-line .name {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-style: italic;
+}
+.lang-line .level {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+}
+
+.curriculum {
+  margin-top: 80px;
+}
+.cv-row {
+  display: grid;
+  grid-template-columns: 140px 1fr 1fr;
+  gap: 24px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--hairline);
+  align-items: baseline;
+}
+.cv-row:first-of-type { border-top: 1px solid var(--ink); }
+.cv-row .period {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+  letter-spacing: 0.06em;
+}
+.cv-row .role {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 20px;
+}
+.cv-row .role .firm {
+  display: block;
+  font-style: normal;
+  font-size: 12px;
+  color: var(--ink-faint);
+  margin-top: 4px;
+  font-family: var(--mono);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.cv-row .role .firm.current::before {
+  content: "● ";
+  color: var(--oxblood);
+}
+.cv-row .note {
+  font-family: var(--serif);
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+/* ============================================================
+   CV slip — feuille volante encartada após a cronologia.
+   Folha avulsa com o currículo do Lucas, em papel mais quente
+   que o da página, levemente inclinada e com sombra dupla
+   (papel atrás + elevação) para sugerir "encartado pelo
+   editor". Hover levanta a folha sem perder o caráter
+   estático de impresso.
+   ============================================================ */
+.cv-slip-band {
+  margin: 96px auto 0;
+  padding: 0 var(--sp-5);
+}
+
+.cv-slip-page {
+  position: relative;
+  left: 50%;
+  width: min(1180px, calc(100vw - 64px));
+  transform: translateX(-50%);
+  min-height: 360px;
+  padding: 84px 260px 66px 56px;
+  background: var(--paper);
+  border: 1px solid rgba(74, 65, 54, 0.42);
+  box-shadow:
+    inset 0 0 0 8px rgba(239, 230, 206, 0.35),
+    0 18px 44px rgba(26, 22, 18, 0.08);
+  overflow: visible;
+  perspective: 1200px;
+}
+
+.cv-slip-page::before {
+  content: "";
+  position: absolute;
+  left: -28px;
+  top: -48px;
+  width: 250px;
+  height: 250px;
+  background: url("café.png") center / contain no-repeat;
+  opacity: 0.48;
+  mix-blend-mode: multiply;
+  filter: sepia(0.3) saturate(1) contrast(1.08) blur(0.12px);
+  transform: rotate(-10deg);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.cv-slip-page::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(74, 65, 54, 0.22);
+  z-index: 4;
+  pointer-events: none;
+}
+
+.cv-slip-page-label {
+  position: absolute;
+  top: 54px;
+  right: 286px;
+  z-index: 3;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-ghost);
+}
+
+.cv-slip-page-note {
+  position: absolute;
+  left: 58px;
+  bottom: 28px;
+  z-index: 3;
+  font-family: var(--serif);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ink-faint);
+}
+
+.cv-slip-page-note::before { content: "↘ "; }
+.cv-slip-page-note::after { content: " ↓"; }
+
+.cv-slip-copy {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(260px, 370px) minmax(260px, 370px);
+  gap: 70px;
+  max-width: 810px;
+  color: var(--ink);
+}
+
+.cv-slip-copy p {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+.cv-slip-copy p:first-child::first-letter {
+  float: left;
+  margin: 4px 10px 0 0;
+  font-family: var(--serif-display);
+  font-size: 4.2em;
+  line-height: 0.78;
+  color: var(--oxblood);
+}
+
+.cv-slip {
+  position: absolute;
+  top: 28px;
+  right: 56px;
+  z-index: 5;
+  display: block;
+  width: 286px;
+  min-height: 312px;
+  padding: 30px 28px 24px 34px;
+  background: #efe6ce;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(0, 0, 0, 0.018) 0, transparent 60%),
+    radial-gradient(circle at 80% 70%, rgba(0, 0, 0, 0.018) 0, transparent 60%);
+  border: 1px solid var(--hairline-strong);
+  color: var(--ink);
+  text-decoration: none;
+  transform: rotate(2.2deg) translate3d(0, 0, 0);
+  transform-origin: top left;
+  /* Elevação dupla: papel deslocado atrás (efeito "tipped-in") +
+     sombra ambiente. Mais limpa que a versão anterior. */
+  box-shadow:
+    0 22px 44px rgba(26, 22, 18, 0.2),
+    0 5px 12px rgba(26, 22, 18, 0.1);
+  transition:
+    transform 0.68s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.68s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  will-change: transform;
+}
+.cv-slip:hover,
+.cv-slip:focus-visible {
+  transform: rotate(-0.7deg) translate3d(-14px, -12px, 0);
+  box-shadow:
+    0 30px 58px rgba(26, 22, 18, 0.24),
+    0 8px 18px rgba(26, 22, 18, 0.12);
+}
+.cv-slip:focus-visible {
+  outline: 2px solid var(--oxblood);
+  outline-offset: 4px;
+}
+
+.cv-slip::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 14px;
+  bottom: 16px;
+  width: 5px;
+  background:
+    radial-gradient(circle, rgba(74, 65, 54, 0.32) 0 1px, transparent 1.35px)
+    0 0 / 5px 8px repeat-y;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* ──────────────────────────────────────────────────────────
+   Canto dobrado (dog-ear) no topo-direito
+   ──────────────────────────────────────────────────────────
+   Renderiza uma orelha de papel realista com:
+     · triângulo superior-direito = cor da página (canto "removido")
+     · triângulo inferior-esquerdo = VERSO do papel (mais escuro
+       que a frente do slip), com gradiente sutil que escurece
+       em direção à ponta dobrada
+     · vinco hairline na diagonal (separa os dois triângulos)
+     · drop-shadow leve caindo para baixo-esquerda — sugere
+       que o flap está levemente levantado sobre o corpo do slip
+   ────────────────────────────────────────────────────────── */
+.cv-slip-corner {
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 26px;
+  height: 26px;
+  pointer-events: none;
+  background:
+    /* Vinco diagonal (hairline) — faixa fina sobre o gradiente */
+    linear-gradient(225deg,
+      transparent 49.2%,
+      var(--hairline-strong) 49.2%,
+      var(--hairline-strong) 50.8%,
+      transparent 50.8%
+    ),
+    /* Topo-direito: cor da página (canto "removido").
+       Base-esquerda: verso do papel — paper-shade na linha
+       do vinco descendo para paper-deep na ponta dobrada,
+       sugerindo a sombra interna da dobra. */
+    linear-gradient(225deg,
+      var(--paper) 0%,
+      var(--paper) 50%,
+      var(--paper-shade) 50%,
+      var(--paper-deep) 100%
+    );
+  /* Sombra projetada do flap sobre o corpo do slip */
+  filter: drop-shadow(-1px 1.5px 1.5px rgba(26, 22, 18, 0.14));
+}
+
+.cv-slip-eyebrow {
+  margin: 0 0 12px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--oxblood);
+}
+
+/* Título: "Curriculum" em redondo, "vitæ" em itálico — distinção
+   tipográfica clássica entre nome do gênero e qualificador. */
+.cv-slip-title {
+  margin: 0 0 8px;
+  font-family: var(--serif-display);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 31px;
+  line-height: 1.0;
+  color: var(--ink);
+}
+.cv-slip-title em {
+  font-style: italic;
+}
+
+.cv-slip-gloss {
+  margin: 0 0 58px;
+  position: relative;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.cv-slip-gloss::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 24px);
+  height: 32px;
+  background:
+    linear-gradient(var(--hairline), var(--hairline)) 0 0 / 100% 1px no-repeat,
+    linear-gradient(var(--hairline), var(--hairline)) 0 13px / 100% 1px no-repeat,
+    linear-gradient(var(--hairline), var(--hairline)) 0 26px / 100% 1px no-repeat;
+  opacity: 0.76;
+  pointer-events: none;
+}
+
+/* Metadados — formato, páginas, peso, ano — separados por
+   ponto-mediano à maneira de ficha catalográfica. */
+.cv-slip-meta {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  border-top: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 0;
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.cv-slip-meta li {
+  display: inline-flex;
+  align-items: center;
+}
+.cv-slip-meta li:not(:last-child)::after {
+  content: "·";
+  margin: 0 8px;
+  color: var(--ink-ghost);
+}
+
+.cv-slip-print-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 3px;
+}
+
+.cv-slip-print-arrow {
+  display: inline-block;
+  font-size: 9px;
+  transform: translateY(-1px);
+}
+
+.cv-slip-cta {
+  position: absolute;
+  right: -9px;
+  top: 126px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--oxblood);
+  background: rgba(249, 242, 226, 0.92);
+  border: 1px solid rgba(122, 38, 32, 0.24);
+  border-radius: 999px;
+  box-shadow:
+    0 8px 18px rgba(26, 22, 18, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+  padding: 8px 13px 7px;
+  opacity: 0;
+  transform: translate3d(8px, 2px, 0) scale(0.96);
+  transition:
+    opacity 0.32s ease,
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.25s,
+    border-color 0.25s;
+  pointer-events: none;
+}
+.cv-slip:hover .cv-slip-cta,
+.cv-slip:focus-visible .cv-slip-cta {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  color: var(--oxblood-deep);
+  border-color: var(--oxblood-deep);
+}
+.cv-slip-arrow {
+  display: inline-block;
+  transition: transform 0.3s var(--ease-power);
+}
+.cv-slip:hover .cv-slip-arrow,
+.cv-slip:focus-visible .cv-slip-arrow {
+  transform: translateX(4px);
+}
+
+/* Tipped-in exact composition, adapted from tipped-in.css.
+   The original brown SVG stain is replaced by café.png. */
+.cv-slip-band .ti-stage {
+  position: relative;
+  left: 50%;
+  width: min(1180px, calc(100vw - 64px));
+  min-height: 360px;
+  margin: 96px 0 0;
+  padding: 48px 56px 64px;
+  transform: translateX(-50%);
+  background:
+    linear-gradient(180deg, rgba(26,22,18,.04), rgba(26,22,18,.015) 40%, rgba(26,22,18,.05));
+  border: 1px solid var(--hairline-strong);
+  border-radius: 2px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.4),
+    0 1px 0 var(--hairline);
+  overflow: visible;
+}
+
+.cv-slip-band .ti-stage::before {
+  content: "";
+  position: absolute;
+  top: -42px;
+  left: -36px;
+  width: 220px;
+  height: 204px;
+  background: url("café.png") center / contain no-repeat;
+  pointer-events: none;
+  z-index: 4;
+  mix-blend-mode: multiply;
+  opacity: 0.72;
+  transform: rotate(-8deg);
+}
+
+.cv-slip-band .ti-stage::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px solid var(--hairline);
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+.ti-stage .cv-slip-page-label {
+  position: absolute;
+  top: 48px;
+  right: 250px;
+  z-index: 1;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.ti-stage .cv-slip-page-note {
+  position: absolute;
+  left: 56px;
+  bottom: 22px;
+  z-index: 1;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 13px;
+  color: rgba(60, 50, 40, 0.55);
+  letter-spacing: 0.02em;
+  transform: rotate(-2.5deg);
+  transform-origin: left bottom;
+  pointer-events: none;
+}
+
+.ti-stage .cv-slip-page-note::before { content: "↘ "; }
+.ti-stage .cv-slip-page-note::after { content: " ↓"; }
+
+.ti-stage .cv-slip-copy {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  max-width: none;
+  width: min(940px, calc(100% - 96px));
+  color: var(--ink);
+}
+
+.ti-stage .cv-slip-copy p {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink);
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+.ti-stage .cv-slip-copy p:first-child::first-letter {
+  font-family: var(--serif-display);
+  font-weight: 400;
+  float: left;
+  font-size: 4.2em;
+  line-height: 0.82;
+  padding: 6px 10px 0 0;
+  margin: 0;
+  color: var(--oxblood);
+  font-style: normal;
+}
+
+.ti-stage .cv-slip {
+  position: absolute;
+  top: 32px;
+  right: 0;
+  width: 264px;
+  min-height: 280px;
+  padding: 28px 24px 22px;
+  background:
+    radial-gradient(ellipse at 70% 20%, rgba(122, 72, 42, .06), transparent 50%),
+    linear-gradient(172deg, #f6f0df 0%, #ede5cf 100%);
+  border: 1px solid rgba(70, 58, 44, .25);
+  border-radius: 1px;
+  color: inherit;
+  text-decoration: none;
+  transform: rotate(2.4deg);
+  transform-origin: 30% 80%;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.5) inset,
+    0 2px 4px rgba(40,30,20,.06),
+    0 14px 28px -10px rgba(40,30,20,.28),
+    0 28px 56px -20px rgba(40,30,20,.18);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  z-index: 5;
+  transition:
+    transform 0.55s var(--ease-power),
+    box-shadow 0.55s var(--ease-out);
+}
+
+.ti-stage .cv-slip::before {
+  content: "";
+  position: absolute;
+  inset: 88px 24px 70px 24px;
+  background-image: repeating-linear-gradient(
+    180deg,
+    transparent 0,
+    transparent 21px,
+    rgba(70, 58, 44, .08) 21px,
+    rgba(70, 58, 44, .08) 22px
+  );
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.ti-stage .cv-slip::after {
+  content: "";
+  position: absolute;
+  top: -22px;
+  left: 26px;
+  width: 17px;
+  height: 54px;
+  border: 2px solid #8a7d6b;
+  border-bottom-color: transparent;
+  border-radius: 10px 10px 0 0;
+  box-shadow:
+    inset 4px 0 0 -2px rgba(255,250,240,.55),
+    1px 1px 0 rgba(0,0,0,.18),
+    0 2px 2px rgba(40,30,20,.25);
+  transform: rotate(-4deg);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.ti-stage .cv-slip-corner {
+  bottom: 0;
+  right: 0;
+  top: auto;
+  width: 28px;
+  height: 28px;
+  background:
+    linear-gradient(135deg, rgba(40,30,20,.18) 0%, rgba(40,30,20,.04) 60%, transparent 70%),
+    linear-gradient(135deg, transparent 50%, #e3dabe 50%);
+  box-shadow: -1px -1px 0 rgba(70, 58, 44, .15);
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  filter: none;
+}
+
+.ti-stage .cv-slip-eyebrow {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--oxblood);
+  margin: 0 0 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.ti-stage .cv-slip-title {
+  margin: 0;
+  font-family: var(--serif-display);
+  font-size: 32px;
+  line-height: 1.04;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  position: relative;
+  z-index: 1;
+}
+
+.ti-stage .cv-slip-title em { font-style: italic; }
+
+.ti-stage .cv-slip-gloss {
+  margin: 10px 0 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  position: relative;
+  z-index: 1;
+}
+
+.ti-stage .cv-slip-gloss::after { display: none; }
+
+.ti-stage .cv-slip-meta {
+  margin: auto 0 0;
+  padding-top: 28px;
+  border-top: 1px solid rgba(70, 58, 44, .22);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  position: relative;
+  z-index: 1;
+}
+
+.ti-stage .cv-slip-meta li:not(:last-child)::after {
+  content: "·";
+  margin: 0 8px;
+}
+
+.ti-stage .cv-slip-print-cta {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  border: 0;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.ti-stage .cv-slip-print-cta::first-letter { border-bottom: 0; }
+.ti-stage .cv-slip-print-cta { text-decoration: underline; text-underline-offset: 4px; }
+
+.ti-stage .cv-slip-cta { display: none; }
+
+.ti-stage .cv-slip:hover {
+  transform: rotate(0.4deg) translate(-4px, -10px);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.5) inset,
+    0 4px 6px rgba(40,30,20,.08),
+    0 28px 48px -14px rgba(40,30,20,.34),
+    0 48px 80px -28px rgba(40,30,20,.22);
+}
+
+.ti-stage .cv-slip:hover .cv-slip-print-cta {
+  color: var(--oxblood);
+  text-decoration-color: var(--oxblood);
+}
+
+/* Responsivo */
+@media (max-width: 1024px) {
+  .cv-slip-band {
+    padding: 0 var(--sp-5);
+  }
+  .cv-slip-page {
+    padding-right: 300px;
+  }
+  .cv-slip {
+    right: 120px;
+  }
+}
+@media (max-width: 768px) {
+  .cv-slip-band { margin-top: 64px; padding: 0 var(--sp-4); }
+  .cv-slip-page {
+    min-height: 0;
+    left: auto;
+    width: 100%;
+    transform: none;
+    padding: 64px 24px 32px;
+    overflow: visible;
+  }
+  .cv-slip-page::before {
+    width: 150px;
+    height: 150px;
+    left: -22px;
+    top: -24px;
+  }
+  .cv-slip-page-label {
+    top: 34px;
+    left: 24px;
+    right: auto;
+  }
+  .cv-slip-page-note {
+    display: none;
+  }
+  .cv-slip-copy {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    margin-bottom: 30px;
+  }
+  .cv-slip {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 100%;
+    max-width: 310px;
+    margin-left: auto;
+    transform: rotate(1deg);
+  }
+  .cv-slip-cta {
+    right: 8px;
+    top: 118px;
+  }
+  .cv-slip-title { font-size: 26px; }
+}
+@media (max-width: 640px) {
+  .cv-slip-band { margin-top: 48px; }
+  .cv-slip-page {
+    padding: 56px 18px 24px;
+  }
+  .cv-slip-copy p {
+    font-size: 15px;
+  }
+  .cv-slip {
+    padding: 22px 22px 20px;
+    transform: none;
+  }
+  .cv-slip:hover,
+  .cv-slip:focus-visible { transform: translateY(-4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cv-slip,
+  .cv-slip:hover,
+  .cv-slip:focus-visible { transform: none !important; }
+  .cv-slip-arrow { transition: none !important; }
+}
+
+/* ============================================================
+   Correspondence — carta de contato
+   ============================================================ */
+.correspondence {
+  padding: 120px 32px 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* ── Carta card ── */
+.carta {
+  position: relative;
+  width: min(820px, 100%);
+  padding: 48px 56px 56px;
+  background: var(--paper-card);
+  box-shadow:
+    0 0 0 1px rgba(74, 65, 54, .55),
+    0 0 0 6px var(--paper-card),
+    0 0 0 7px rgba(74, 65, 54, .22),
+    6px 10px 30px rgba(0, 0, 0, .13),
+    0 1px 3px rgba(0, 0, 0, .05);
+  /* Entrada via JS (IntersectionObserver adiciona .carta-in) */
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .9s var(--ease-out), transform .9s var(--ease-out);
+}
+.carta.carta-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Grain / vinheta de papel */
+.carta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(74, 65, 54, .025) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(122, 38, 32, .018) 0%, transparent 50%),
+    url("data:image/svg+xml,%3Csvg width='80' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.29 0 0 0 0 0.26 0 0 0 0 0.21 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='80' height='80' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  opacity: .55;
+}
+
+/* ── Corner brackets ── */
+.carta .bracket       { position: absolute; width: 22px; height: 22px; z-index: 2; }
+.carta .bracket.tl    { top: 14px; left: 14px; }
+.carta .bracket.tr    { top: 14px; right: 14px;   transform: rotate(90deg); }
+.carta .bracket.bl    { bottom: 14px; left: 14px;  transform: rotate(-90deg); }
+.carta .bracket.br    { bottom: 14px; right: 14px; transform: rotate(180deg); }
+
+/* ── Postal "AR" mark ── */
+.carta .postal {
+  position: absolute;
+  top: -14px;
+  left: 36px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px;
+  background: var(--paper-card);
+  border: 1px solid rgba(122, 38, 32, .55);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--oxblood);
+  transform: rotate(-1.5deg);
+}
+.carta .postal::before {
+  content: "";
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--oxblood);
+}
+
+/* ── Header ── */
+.carta .head {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: 14px;
+  padding-bottom: 10px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(74, 65, 54, .22);
+  z-index: 1;
+}
+.carta .head span {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ── Dateline ── */
+.carta .dateline {
+  position: relative;
+  z-index: 1;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-faint);
+  margin-bottom: 22px;
+  letter-spacing: .01em;
+}
+.carta .dateline .pin { color: var(--oxblood); margin-right: 6px; }
+
+/* ── Identity ── */
+.carta .name {
+  position: relative;
+  z-index: 1;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 56px;
+  line-height: 1;
+  letter-spacing: -.015em;
+  margin-bottom: 12px;
+}
+.carta .addr {
+  position: relative;
+  z-index: 1;
+  font-family: var(--serif);
+  font-size: 15.5px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+.carta .addr .langs {
+  display: inline-flex;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-left: 4px;
+  vertical-align: 1px;
+}
+
+/* ── Fields ── */
+.carta .fields {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 28px;
+}
+.carta .field {
+  display: grid;
+  grid-template-columns: 88px 1fr auto;
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(74, 65, 54, .14);
+  align-items: baseline;
+}
+.carta .field:last-child { border-bottom: none; }
+.carta .f-lab {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.carta .f-val {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--ink);
+  transition: color var(--dur-fast) ease;
+  white-space: nowrap;
+}
+
+/* Rows interativos (botão/link) */
+.carta .f-copy {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+}
+/* Botões internos (email): hover em oxblood */
+.carta button.f-copy:hover .f-val { color: var(--oxblood); }
+/* Links externos (LinkedIn): hover em cobalt — distingue destinos */
+.carta a.f-copy:hover .f-val { color: var(--cobalt); }
+/* Fallback para browsers sem :is() */
+.carta .f-copy:hover .f-val { color: var(--oxblood); }
+.carta .f-copy .copy-hint {
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 8.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-ghost);
+  opacity: 0;
+  transition: opacity var(--dur-fast) ease, color var(--dur-fast) ease;
+}
+.carta .f-copy:hover .copy-hint,
+.carta .f-copy.copied .copy-hint { opacity: 1; }
+.carta .f-copy.copied .copy-hint { color: var(--oxblood); }
+
+/* Stamp "copiado" */
+.carta .copied-stamp {
+  position: absolute;
+  right: -2px;
+  top: -6px;
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--oxblood);
+  border: 1px solid var(--oxblood);
+  padding: 2px 6px;
+  transform: rotate(-6deg) scale(.4);
+  opacity: 0;
+  pointer-events: none;
+  background: var(--paper-card);
+}
+.carta .f-copy.copied .copied-stamp {
+  animation: copied-pop .9s var(--ease-out) forwards;
+}
+@keyframes copied-pop {
+  0%   { opacity: 0; transform: rotate(-14deg) scale(1.6); }
+  20%  { opacity: 1; transform: rotate(-7deg)  scale(1); }
+  75%  { opacity: 1; transform: rotate(-6deg)  scale(1); }
+  100% { opacity: 0; transform: rotate(-6deg)  scale(1); }
+}
+
+/* Status com pulse */
+.carta .status-val {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+.carta .pulse {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #4a8a3a;
+  position: relative;
+  flex: none;
+}
+.carta .pulse::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1px solid #4a8a3a;
+  animation: pulse-ring 2.4s ease-out infinite;
+}
+@keyframes pulse-ring {
+  0%   { transform: scale(.6); opacity: .9; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+/* ── Cancellation arc ── */
+.carta .cancel {
+  position: absolute;
+  bottom: 60px;
+  right: 18px;
+  width: 140px;
+  height: 50px;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 3;
+  transform: rotate(-6deg);
+}
+.carta .cancel.shown {
+  animation: cancel-in .6s var(--ease-out) 1.35s forwards;
+}
+@keyframes cancel-in {
+  0%   { opacity: 0; }
+  100% { opacity: .35; }
+}
+
+/* ── Seal (carimbo + marca) ──
+   O wrap é o palco estático; quem se move é a ferramenta (.stamp-tool).
+   No momento do impacto (~44% da animação) o selo SVG fica visível,
+   a tinta espalha e as gotinhas voam. Depois o carimbo sobe e some. */
+.carta .seal-wrap {
+  position: absolute;
+  bottom: 22px;
+  right: 36px;
+  width: 96px;
+  height: 96px;
+  z-index: 4;
+  /* sem transform/opacity inicial no wrap — só os filhos animam */
+}
+
+/* Ferramenta — PNG do cabo de madeira.
+   width 280%: o carimbo é deliberadamente maior que a marca que deixa
+   (como um carimbo real). translate Y −82% ancora a BASE da imagem
+   (ponto de contato da borracha) no centro do selo. */
+.carta .stamp-tool {
+  position: absolute;
+  width: 280%;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  z-index: 6;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  /* transform-origin na base — rotação acontece no ponto de contato */
+  transform-origin: 50% 100%;
+  opacity: 0;
+  /* estado de repouso: bem acima da página, fora do quadro */
+  transform: translate(-50%, -82%) translateY(-360px) rotate(-4deg) scale(1.04);
+  filter: drop-shadow(0 22px 24px rgba(0, 0, 0, 0.22));
+  mix-blend-mode: multiply;          /* funde branco do PNG no creme do papel */
+}
+/* Em modo escuro (Plum) o multiply some — usamos normal + leve clareada */
+body.candle .carta .stamp-tool {
+  mix-blend-mode: normal;
+  filter: drop-shadow(0 22px 24px rgba(0, 0, 0, 0.65)) brightness(1.08);
+}
+
+.carta .seal-wrap.stamped .stamp-tool {
+  animation: stamp-tool-drop 1600ms forwards;
+}
+
+/* Sequência fluida — APENAS 4 keyframes, easings da lupa.
+     0→8%   fade-in (parado no alto)
+     8→42%  QUEDA  — cubic-bezier(0.34, 1.28, 0.64, 1)  ← mesmo easing da lupa
+              o "overshoot" embutido (1.28 > 1) faz o carimbo "afundar"
+              um pouquinho no papel e voltar; serve de squash natural.
+     42→100% SUBIDA — cubic-bezier(0.16, 0.84, 0.32, 1)
+              ease-out suave, desacelera no topo enquanto desbota.            */
+@keyframes stamp-tool-drop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -82%) translateY(-380px) rotate(-3deg) scale(1.03);
+    animation-timing-function: cubic-bezier(0.4, 0, 0.7, 0.5);
+  }
+  8% {
+    opacity: 1;
+    transform: translate(-50%, -82%) translateY(-360px) rotate(-3deg) scale(1.03);
+    animation-timing-function: cubic-bezier(0.34, 1.28, 0.64, 1);
+  }
+  42% {
+    opacity: 1;
+    transform: translate(-50%, -82%) translateY(0px) rotate(0deg) scale(1);
+    animation-timing-function: cubic-bezier(0.16, 0.84, 0.32, 1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -82%) translateY(-380px) rotate(3deg) scale(1.03);
+  }
+}
+
+/* Tinta espalhando — agora sincronizada com o impacto (~0.66s do início) */
+.carta .ink-bleed {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(122,38,32,.18) 0%, rgba(122,38,32,.06) 45%, transparent 70%);
+  opacity: 0;
+  transform: scale(.4);
+  filter: blur(3px);
+}
+body.candle .carta .ink-bleed {
+  /* no modo Plum a tinta usa o tom de acento da paleta */
+  background: radial-gradient(circle, rgba(196,106,120,.22) 0%, rgba(196,106,120,.08) 45%, transparent 70%);
+}
+.carta .seal-wrap.stamped .ink-bleed {
+  animation: bleed-out 1.1s var(--ease-out) .48s forwards;
+}
+@keyframes bleed-out {
+  0%   { opacity: 0; transform: scale(.4); }
+  100% { opacity: 1; transform: scale(1.1); }
+}
+
+/* O SVG é a MARCA deixada pelo carimbo — entra no momento do impacto.
+   currentColor herda de `color` (definido aqui), permitindo que o selo
+   troque de tom junto com a paleta (oxblood claro / rosa-plum escuro). */
+.carta .seal {
+  width: 100%; height: 100%;
+  display: block;
+  opacity: 0;
+  transform: rotate(-8deg) scale(1.08);
+  transition: transform .35s var(--ease-out);
+  color: var(--oxblood);
+}
+.carta .seal-wrap.stamped .seal {
+  animation: seal-mark-set .65s cubic-bezier(0.34, 1.56, 0.64, 1) .46s forwards;
+}
+@keyframes seal-mark-set {
+  0%   { opacity: 0; transform: rotate(-8deg) scale(1.08); }
+  60%  { opacity: 1; transform: rotate(-7deg) scale(.97); }
+  100% { opacity: 1; transform: rotate(-8deg) scale(1); }
+}
+/* Hover discreto no selo depois de carimbado */
+.carta .seal-wrap.stamped:hover .seal {
+  transform: rotate(-6deg) scale(1.06);
+  transition: transform .35s var(--ease-out);
+}
+
+/* Gotinhas de tinta — explodem com o impacto (~0.66s) */
+.carta .speck {
+  position: absolute;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: var(--oxblood);
+  opacity: 0;
+  pointer-events: none;
+}
+.carta .speck.s1 { top: 12%; left: 18%; }
+.carta .speck.s2 { top: 78%; left:  8%; width: 2px;   height: 2px; }
+.carta .speck.s3 { top: 22%; left: 88%; width: 2.5px; height: 2.5px; }
+.carta .speck.s4 { top: 88%; left: 72%; width: 2px;   height: 2px; }
+.carta .speck.s5 { top:  6%; left: 60%; width: 1.5px; height: 1.5px; }
+.carta .seal-wrap.stamped .speck    { animation: speck-fly .75s var(--ease-out) .50s forwards; }
+.carta .seal-wrap.stamped .speck.s2 { animation-delay: .52s; }
+.carta .seal-wrap.stamped .speck.s3 { animation-delay: .49s; }
+.carta .seal-wrap.stamped .speck.s4 { animation-delay: .54s; }
+.carta .seal-wrap.stamped .speck.s5 { animation-delay: .51s; }
+@keyframes speck-fly {
+  0%   { opacity: 0; transform: scale(0); }
+  40%  { opacity: .8; }
+  100% { opacity: .55; transform: scale(1); }
+}
+
+/* prefers-reduced-motion: pula o gesto da ferramenta, só fade-in da marca */
+@media (prefers-reduced-motion: reduce) {
+  .carta .stamp-tool { display: none; }
+  .carta .seal-wrap.stamped .seal {
+    animation: none;
+    opacity: 1;
+    transform: rotate(-8deg) scale(1);
+  }
+  .carta .seal-wrap.stamped .ink-bleed { animation: none; opacity: 1; transform: scale(1.1); }
+  .carta .seal-wrap.stamped .speck     { animation: none; opacity: .55; transform: scale(1); }
+}
+
+/* ── Footer ── */
+.carta .foot {
+  position: relative;
+  z-index: 1;
+  margin-top: 36px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(74, 65, 54, .14);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--ink-ghost);
+}
+.carta .foot .sig {
+  font-family: var(--serif-display);
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 14px;
+  color: var(--ink-faint);
+}
+
+/* ============================================================
+   Colophon
+   ============================================================ */
+.colophon {
+  padding: 80px 32px;
+  text-align: center;
+  border-top: 1px solid var(--hairline-strong);
+  background: var(--paper-shade);
+}
+.colophon-ornament {
+  font-family: var(--serif-display);
+  font-style: normal;
+  color: var(--oxblood);
+  font-size: 24px;
+  margin-bottom: 24px;
+}
+.colophon-body {
+  font-family: var(--serif);
+  font-size: 14px;
+  font-style: italic;
+  color: var(--ink-soft);
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+.colophon-body .em { font-style: normal; color: var(--ink); }
+.colophon-meta {
+  margin-top: 24px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   Reveal — restrained
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 1s var(--ease-power), transform 1s var(--ease-power);
+}
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-d1 { transition-delay: 0.08s; }
+.reveal-d2 { transition-delay: 0.16s; }
+.reveal-d3 { transition-delay: 0.24s; }
+
+/* ============================================================
+   Errata — easter egg
+   ============================================================ */
+.errata {
+  position: fixed;
+  bottom: 48px;
+  right: 36px;
+  z-index: 49;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--ink-faint);
+  white-space: nowrap;         /* força linha única */
+  text-align: right;
+  opacity: 0;
+  transition: opacity 0.6s;
+  pointer-events: none;
+}
+.errata.show { opacity: 1; }
+.errata .strike { text-decoration: line-through; color: var(--ink-ghost); }
+.errata .sup {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--oxblood);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-style: normal;
+  display: inline;             /* inline para ficar na mesma linha */
+  margin-right: 6px;
+}
+
+/* ============================================================
+   Tweaks alignment
+   ============================================================ */
+.twk-panel {
+  background: rgba(241, 236, 224, 0.92) !important;
+  color: var(--ink) !important;
+  border: 1px solid var(--hairline-strong) !important;
+  font-family: var(--mono) !important;
+}
+
+/* ============================================================
+   Responsive — breakpoints 1024 / 768 / 640 / 380
+   Princípio: marginalia NUNCA desaparece; vira nota inline.
+   ============================================================ */
+
+/* --- ≤1024 px : laptop / tablet paisagem --- */
+@media (max-width: 1024px) {
+  .spread { grid-template-columns: 1fr; }
+
+  /* Marginalia continua presente: vira "nota lateral" no fluxo,
+     preservando o tema do livro em telas menores */
+  .spread .margin-l,
+  .spread .margin-r {
+    border-left: 2px solid var(--oxblood);
+    padding-left: var(--sp-4);
+    margin: var(--sp-5) 0;
+    text-align: left;
+    font-size: var(--fs-meta);
+  }
+  .spread .margin-l .gloss,
+  .spread .margin-r .gloss { font-size: 14px; }
+
+  .plate-grid { grid-template-columns: 1fr; gap: 32px; padding: 0 32px; }
+  .apparatus-grid { grid-template-columns: 1fr; gap: 48px; }
+  .tenets { grid-template-columns: repeat(2, 1fr); }
+  .tenet:nth-child(2n) { border-right: none; }
+  .tenet:nth-child(1), .tenet:nth-child(2) { border-bottom: 1px solid var(--hairline-strong); }
+  .process-row { grid-template-columns: repeat(2, 1fr); gap: 24px 0; }
+  .tool-grid { grid-template-columns: 1fr; }
+  .cv-row { grid-template-columns: 120px 1fr; }
+  .cv-row .note { grid-column: 1 / -1; }
+}
+
+/* --- ≤768 px : tablet retrato --- */
+@media (max-width: 768px) {
+  .page { padding: 80px 0; }
+  .spread { padding: 0 40px; gap: var(--sp-5); }
+  .plate-grid { padding: 0 40px; }
+
+  /* Toolbox / Apparatus em 1 col já vem de 1024 */
+  .process-row { grid-template-columns: repeat(2, 1fr); gap: var(--sp-6) var(--sp-3); }
+  .plate-stats { grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); }
+  .plate-stat .val { font-size: 28px; }
+
+  /* Apresentação do colofão fica mais respirável */
+  .colophon { padding: 64px 24px; }
+
+  /* Carta de contato */
+  .correspondence { padding: 80px 24px 120px; }
+  .carta { padding: 36px 28px 44px; }
+}
+
+/* --- ≤640 px : mobile grande --- */
+@media (max-width: 640px) {
+  body { font-size: 17px; }
+
+  /* Chrome com touch targets ≥44px */
+  .chrome-top { padding: 10px 16px; }
+  .chrome-top .running-head { display: none; }
+  .chrome-bot { padding: 10px 16px; }
+  .lang-toggle button {
+    min-width: 44px; min-height: 44px;
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 10px 12px;
+  }
+
+  .page { padding: 64px 0; }
+  .spread { padding: 0 20px; }
+  .spread-narrow { padding-left: 20px; padding-right: 20px; }
+  .plate-grid { padding: 0 20px; }
+
+  /* Drop cap proporcional */
+  .drop-cap { width: 134px; height: 134px; margin-right: 18px; }
+
+  /* Footnote em mobile: alvo maior para o sobrescrito */
+  .preface .body .fn {
+    display: inline-block;
+    min-width: 22px; min-height: 22px;
+    padding: 0 4px;
+    text-align: center;
+    vertical-align: baseline;
+  }
+
+  /* Sumário simplificado */
+  .toc-row { grid-template-columns: 40px 1fr 40px; padding: 18px 0; }
+  .toc-row .toc-leader { display: none; }
+  .toc-row .toc-title { font-size: 22px; }
+
+  .tenets { grid-template-columns: 1fr; }
+  .tenet { border-right: none !important; border-bottom: 1px solid var(--hairline-strong); }
+  .tenet:last-child { border-bottom: none; }
+
+  /* Processo em 1 col em mobile pequeno: melhor leitura */
+  .process-row { grid-template-columns: 1fr; gap: var(--sp-4); }
+  .process-arrow { transform: rotate(90deg); margin: var(--sp-2) auto; }
+
+  .plate-stats { grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
+
+  .correspondence { padding: 64px 16px 100px; }
+  .carta { padding: 32px 20px 40px; }
+  .carta .name { font-size: 40px; }
+  .carta .seal-wrap { right: 8px; bottom: -16px; }
+  .carta .cancel { right: 4px; bottom: 46px; width: 110px; }
+}
+
+/* ============================================================
+   CANDLELIGHT MODE — body.candle
+   Override dos tokens para leitura noturna em âmbar quente.
+   Nenhuma outra alteração estrutural — só variáveis CSS.
+   ============================================================ */
+body.candle {
+  /* Edição "Plum" — carvão profundo com camadas de ameixa envelhecida.
+     Acento rosa-tinto (oxblood); lavanda como cobalto/hyperlink. */
+  --paper:            #1c1418;
+  --paper-shade:      #160e12;
+  --paper-deep:       #100a0d;
+  --paper-card:       #241a1f;
+  --ink:              #ecd9c8;
+  --ink-soft:         #b9a290;
+  --ink-faint:        #7c6457;
+  --ink-ghost:        #4a3a39;
+  --hairline:         rgba(236, 217, 200, 0.10);
+  --hairline-strong:  rgba(236, 217, 200, 0.22);
+  --oxblood:          #c46a78;
+  --oxblood-deep:     #a04b59;
+  --cobalt:           #a08fc6;
+  --highlighter:      rgba(196, 106, 120, 0.22);
+  /* Aurora noturna em rosa-plum / lavanda */
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(196, 106, 120, 0.06), transparent 45%),
+    radial-gradient(circle at 80% 70%, rgba(160, 143, 198, 0.05), transparent 40%);
+  transition:
+    background-color 0.6s var(--ease-out),
+    color            0.6s var(--ease-out);
+}
+/* HTML também precisa do tom escuro — body cobre quase tudo, mas
+   barras de scroll e overscroll usam o html como fundo. */
+html:has(body.candle) { background: var(--paper); }
+/* Grain em modo vela: screen para aparecer sobre fundo escuro */
+body.candle .paper-grain {
+  mix-blend-mode: screen;
+  opacity: 0.12;
+}
+
+/* Botão de vela no chrome */
+.candle-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-faint);
+  padding: 4px 10px;
+  transition: color 0.3s;
+  border-radius: var(--radius-pill);
+}
+.candle-toggle:hover { color: var(--oxblood); }
+.candle-toggle.active { color: var(--oxblood); }
+
+/* ============================================================
+   HEDERA — ornamento tipográfico entre parágrafos do prefácio
+   ❧ floral hedera (U+2767) em oxblood, centrado, sem seleção
+   ============================================================ */
+.hedera {
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--oxblood);
+  text-align: center;
+  margin: 1.1em 0;
+  opacity: 0.55;
+  line-height: 1;
+  user-select: none;
+}
+
+/* ============================================================
+   SPLIT-FLAP — contador de página no chrome inferior
+   ============================================================ */
+@keyframes numflip-out {
+  0%   { transform: perspective(60px) rotateX(0deg);   opacity: 1; }
+  100% { transform: perspective(60px) rotateX(-80deg); opacity: 0; }
+}
+@keyframes numflip-in {
+  0%   { transform: perspective(60px) rotateX(80deg);  opacity: 0; }
+  100% { transform: perspective(60px) rotateX(0deg);   opacity: 1; }
+}
+.page-counter .num {
+  display: inline-block;
+  transform-style: preserve-3d;
+}
+.page-counter .num.flip-out {
+  animation: numflip-out 0.16s ease-in forwards;
+}
+.page-counter .num.flip-in {
+  animation: numflip-in  0.16s ease-out forwards;
+}
+
+/* ============================================================
+   CV VISUAL TIMELINE — régua horizontal no Apparatus
+   ============================================================ */
+.cv-timeline {
+  margin: 32px 0 40px;
+  position: relative;
+  user-select: none;
+}
+
+/* Track: linha horizontal cheia */
+.cv-track {
+  position: relative;
+  height: 8px;
+  background: var(--hairline);
+  border-radius: 0;
+  overflow: visible;
+}
+
+/* Segmentos coloridos — posicionados via inline style */
+.cv-seg {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background: var(--ink-soft);
+  transition: background 0.3s;
+}
+.cv-seg.current {
+  background: var(--oxblood);
+}
+/* Tick mark no início de cada segmento */
+.cv-seg::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -4px;
+  width: 1px;
+  height: 16px;
+  background: var(--ink);
+  opacity: 0.3;
+}
+/* Segmentos absolutamente posicionados — sem margin (desalinharia o grid) */
+
+/* Régua com anos */
+.cv-ruler {
+  position: relative;
+  height: 24px;
+  margin-top: 6px;
+}
+.cv-yr {
+  position: absolute;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--ink-faint);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+/* Primeiro e último alinhados às bordas, não centrados */
+.cv-yr:first-child { transform: translateX(0); }
+.cv-yr:last-child  { transform: translateX(-100%); }
+
+@media (max-width: 640px) {
+  .cv-yr { font-size: 8px; }
+}
+
+/* ============================================================
+   PRINT STYLESHEET — @media print
+   Um livro merece ser impresso como um livro.
+   Remove UI interativa; preserva a tipografia editorial.
+   Cabeçalho e rodapé de livro em cada página impressa.
+   ============================================================ */
+@media print {
+  /* Evita que Chrome / Safari quebre elementos longos no meio */
+  @page {
+    size: A4 portrait;
+    margin: 20mm 22mm 24mm;
+  }
+
+  /* Reset de animações e efeitos que não fazem sentido em papel */
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Limpa fundo e usa tinta pura (economiza tinta) */
+  html, body {
+    background: #fff !important;
+    color: #1a1612 !important;
+    font-size: 11pt !important;
+  }
+
+  /* Oculta tudo que é interativo ou decorativo-digital */
+  .paper-grain,
+  .chrome-top,
+  .chrome-bot,
+  .cursor-glyph,
+  .loupe,
+  .errata,
+  .plate-link,
+  .lang-toggle,
+  .invitation,
+  .reveal:not(.in) { display: none !important; }
+
+  /* Garante que conteúdo oculto (reveal) apareça na impressão */
+  .reveal { opacity: 1 !important; transform: none !important; }
+
+  /* Expansão da largura: sem sidebars em papel */
+  .spread, .spread-narrow, .plate-grid, .method-body {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Removes grids de marginalia na impressão */
+  .spread { display: block !important; }
+  .spread .margin-l, .spread .margin-r {
+    display: none !important;
+  }
+
+  /* Evita quebra de página dentro de elementos importantes */
+  .plate, .tenet, .cv-row, .fn-item, .process-node {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Heading de seção: força nova página editorial */
+  .page + .page {
+    break-before: page;
+    page-break-before: always;
+    border-top: none !important;
+    padding-top: 0 !important;
+  }
+
+  /* Frontispiece: página de rosto isolada */
+  .frontispiece {
+    min-height: auto !important;
+    height: auto !important;
+    display: block !important;
+    text-align: center !important;
+    padding: 40mm 0 20mm !important;
+    break-after: page;
+    page-break-after: always;
+  }
+
+  /* Título principal: redimensiona para papel */
+  .title-author {
+    font-size: 64pt !important;
+    line-height: 1 !important;
+    margin-bottom: 16mm !important;
+  }
+
+  /* Carta de contato: simplifica para papel */
+  .carta {
+    box-shadow: none !important;
+    border: 1px solid #c4b8a0 !important;
+    padding: 20mm !important;
+  }
+  .carta .postal { display: none !important; }
+
+  /* Colophon: cabeçalho de impressão */
+  .colophon {
+    border-top: 1pt solid #1a1612 !important;
+    text-align: center !important;
+    padding: 12mm 0 0 !important;
+  }
+
+  /* Links: mostra URL de links externos para ser útil em papel */
+  a[href^="http"]::after,
+  a[href^="mailto"]::after {
+    content: " (" attr(href) ")";
+    font-family: "JetBrains Mono", monospace;
+    font-size: 8pt;
+    color: #8b7f6e;
+  }
+
+  /* Cabeçalho corrente em cada página — via CSS counter */
+  body::before {
+    content: "Lucas Schoenherr  ·  A Catalogue of Works  ·  MMXXVI";
+    display: block;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 7pt;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #8b7f6e;
+    border-bottom: 0.5pt solid #c4b8a0;
+    padding-bottom: 4mm;
+    margin-bottom: 8mm;
+  }
+}
+
+/* --- ≤380 px : mobile pequeno (iPhone SE class) --- */
+@media (max-width: 380px) {
+  body { font-size: 16px; }
+
+  .chrome-top { padding: 8px 12px; }
+  .chrome-bot { padding: 8px 12px; }
+
+  .page { padding: 56px 0; }
+  .spread { padding: 0 16px; }
+  .spread-narrow { padding-left: 16px; padding-right: 16px; }
+  .plate-grid { padding: 0 16px; }
+
+  /* Type-scale floor mais baixa para não quebrar */
+  .frontispiece { padding: 80px 16px 130px; }
+  .drop-cap { width: 110px; height: 110px; margin-right: 14px; }
+  .toc-row .toc-title { font-size: 19px; }
+  .heading .title { font-size: 32px; line-height: 1.05; }
+
+  /* Stats em uma coluna garante leitura confortável */
+  .plate-stats { grid-template-columns: 1fr; gap: var(--sp-3); padding-top: var(--sp-4); }
+
+  .colophon { padding: 56px 16px; }
+}

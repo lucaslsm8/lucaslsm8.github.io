@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Demo · Vitæ — six variations — Lucas Schoenherr</title>
+<meta name="description" content="Demo isolado de seis variações para oferecer o CV ao leitor dentro do vocabulário editorial do volume." />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<!-- Tokens compartilhados do projeto -->
+<link rel="stylesheet" href="../design-system/tokens.css" />
+
+<style>
+  /* ============================================================
+     Página demo — Vitæ, seis variações
+     Cada variação vive num quadro editorial, com um stage
+     que ENCENA o lugar do livro onde o objeto apareceria
+     (Frontispiece, Colophon, Argument, Errata, etc.)
+     ============================================================ */
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: var(--fs-body);
+    line-height: var(--lh-normal);
+  }
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: var(--sp-9) var(--sp-6) var(--sp-11);
+  }
+
+  /* Cabeçalho ----------------------------------------------- */
+  .demo-head {
+    text-align: center;
+    margin-bottom: var(--sp-9);
+    padding-bottom: var(--sp-6);
+    border-bottom: var(--border-hair);
+  }
+  .demo-head h1 {
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: var(--fs-h2);
+    margin: 0 0 var(--sp-3);
+    color: var(--ink);
+  }
+  .demo-head .deck {
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: var(--fs-lead);
+    max-width: 60ch;
+    margin: 0 auto;
+  }
+  .demo-head .meta {
+    margin-top: var(--sp-4);
+    font-family: var(--mono);
+    font-size: var(--fs-small);
+    letter-spacing: 0.16em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+
+  .back {
+    display: inline-block;
+    margin-bottom: var(--sp-6);
+    color: var(--ink-soft);
+    font-style: italic;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--ink-ghost);
+  }
+  .back:hover { color: var(--oxblood); border-color: var(--oxblood); }
+
+  /* Quadro de variação -------------------------------------- */
+  .variation {
+    margin-bottom: var(--sp-10);
+    padding: var(--sp-8) var(--sp-7) var(--sp-7);
+    border: var(--border-hair-strong);
+    background: var(--paper-card);
+    position: relative;
+  }
+  .variation .v-tag {
+    position: absolute;
+    top: -10px;
+    left: var(--sp-5);
+    background: var(--paper);
+    padding: 0 var(--sp-3);
+    font-family: var(--mono);
+    font-size: var(--fs-small);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+  }
+  .variation .v-name {
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: var(--fs-h3);
+    margin: 0 0 var(--sp-2);
+    line-height: var(--lh-snug);
+  }
+  .variation .v-desc {
+    font-size: var(--fs-meta);
+    color: var(--ink-soft);
+    font-style: italic;
+    margin: 0 0 var(--sp-6);
+    max-width: 64ch;
+  }
+  .variation .v-notes {
+    margin-top: var(--sp-6);
+    padding-top: var(--sp-4);
+    border-top: 1px dotted var(--ink-ghost);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--sp-2) var(--sp-4);
+    font-size: var(--fs-meta);
+    color: var(--ink-soft);
+  }
+  .variation .v-notes dt {
+    font-family: var(--mono);
+    font-size: var(--fs-small);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    align-self: baseline;
+  }
+  .variation .v-notes dd { margin: 0; }
+
+  /* Stage — fundo de "página" onde o objeto vive ------------ */
+  .stage {
+    position: relative;
+    background: var(--paper);
+    border: var(--border-hair);
+    padding: var(--sp-7);
+    min-height: 340px;
+    overflow: hidden;
+  }
+  .stage::before {
+    /* sutil textura de papel — grain via gradient ruidoso */
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(0,0,0,0.012) 0, transparent 60%),
+      radial-gradient(circle at 80% 70%, rgba(0,0,0,0.012) 0, transparent 60%);
+    pointer-events: none;
+  }
+  .stage-label {
+    position: absolute;
+    top: var(--sp-3);
+    right: var(--sp-4);
+    font-family: var(--mono);
+    font-size: var(--fs-caption);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-ghost);
+  }
+  .lorem {
+    font-family: var(--serif);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    column-count: 2;
+    column-gap: var(--sp-7);
+    column-rule: 1px solid var(--hairline);
+  }
+  .lorem p { margin: 0 0 var(--sp-3); }
+  .lorem p:first-child::first-letter {
+    font-family: var(--serif-display);
+    font-size: 3.4em;
+    line-height: 0.9;
+    float: left;
+    margin: 4px 8px 0 0;
+    color: var(--oxblood);
+  }
+
+  /* ============================================================
+     i. CARTE DE VISITE  ----------------------------------------
+     Retrato + cartão pousado, com flip no hover/foco
+     ============================================================ */
+  .v-carte .stage {
+    display: flex; align-items: center; justify-content: center;
+    gap: var(--sp-8);
+    padding: var(--sp-9) var(--sp-7);
+  }
+  .portrait {
+    width: 200px; height: 260px;
+    background: linear-gradient(160deg, #d6cdb6 0%, #b8ad94 60%, #9b8f78 100%);
+    border: 1px solid var(--ink-soft);
+    box-shadow: 0 14px 28px rgba(26,22,18,0.18), inset 0 0 0 8px var(--paper);
+    position: relative;
+    flex-shrink: 0;
+  }
+  .portrait::after {
+    content: "L. SCHOENHERR";
+    position: absolute; bottom: -28px; left: 0; right: 0;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: var(--fs-caption);
+    letter-spacing: 0.22em;
+    color: var(--ink-faint);
+  }
+  .portrait-glyph {
+    position: absolute; inset: 30% 22% 30% 22%;
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.55);
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-size: 38px;
+  }
+
+  .carte {
+    width: 280px; height: 170px;
+    perspective: 1000px;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    padding: 0;
+  }
+  .carte-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.7s var(--ease-power);
+    transform-style: preserve-3d;
+  }
+  .carte:hover .carte-inner,
+  .carte:focus-visible .carte-inner,
+  .carte.is-flipped .carte-inner {
+    transform: rotateY(180deg);
+  }
+  .carte-face {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    background: var(--paper-card);
+    border: 1px solid var(--ink-soft);
+    box-shadow: 0 6px 18px rgba(26,22,18,0.16);
+    padding: var(--sp-4) var(--sp-5);
+    display: flex; flex-direction: column;
+  }
+  .carte-recto {
+    text-align: center;
+    justify-content: center;
+  }
+  .carte-recto .rule {
+    width: 50%; height: 0;
+    border-top: 1px solid var(--ink-soft);
+    margin: var(--sp-3) auto;
+    position: relative;
+  }
+  .carte-recto .rule::before {
+    content: "❧";
+    position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+    background: var(--paper-card);
+    padding: 0 6px;
+    color: var(--oxblood);
+    font-size: 12px;
+  }
+  .carte-recto .surname {
+    font-family: var(--serif-display);
+    font-size: 24px;
+    letter-spacing: 0.06em;
+    margin: 0;
+  }
+  .carte-recto .role {
+    font-family: var(--mono);
+    font-size: var(--fs-small);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0;
+  }
+  .carte-verso {
+    transform: rotateY(180deg);
+    background: var(--ink);
+    color: var(--paper);
+    align-items: center; justify-content: center;
+    text-align: center;
+    border-color: var(--ink);
+  }
+  .carte-verso .imperative {
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-size: 32px;
+    margin: 0 0 var(--sp-2);
+  }
+  .carte-verso .sub {
+    font-family: var(--mono);
+    font-size: var(--fs-small);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--paper-shade);
+    margin: 0;
+  }
+  .carte-verso .download-link {
+    margin-top: var(--sp-3);
+    color: var(--paper);
+    font-family: var(--mono);
+    font-size: var(--fs-small);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 1px solid var(--paper-shade);
+    padding-bottom: 2px;
+  }
+  .carte-verso .download-link:hover {
+    color: var(--highlighter);
+    border-color: var(--highlighter);
+  }
+
+  /* ============================================================
+     ii. LIBRARY POCKET  ----------------------------------------
+     Bolso costurado no Colophon; cartão de circulação saliente
+     ============================================================ */
+  .v-pocket .stage { min-height: 380px; }
+  .colophon-block {
+    max-width: 460px;
+    margin: 0 auto var(--sp-7);
+    text-align: center;
+    color: var(--ink-soft);
+  }
+  .colophon-block .heading {
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink);
+    margin: 0 0 var(--sp-3);
+  }
+  .colophon-block p {
+    font-size: 13px;
+    line-height: 1.7;
+    margin: 0;
+  }
+  .colophon-block .ornament {
+    color: var(--oxblood);
+    margin: var(--sp-3) 0;
+    letter-spacing: 0.4em;
+    font-size: 14px;
+  }
+
+  .pocket-wrap {
+    position: relative;
+    width: 260px;
+    margin: 0 auto;
+    height: 140px;
+  }
+  .pocket {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 92px;
+    background: var(--paper-shade);
+    border: 1px solid var(--ink-soft);
+    border-bottom-width: 1.5px;
+    /* costura visível */
+    background-image:
+      repeating-linear-gradient(90deg,
+        transparent 0 5px,
+        rgba(26,22,18,0.35) 5px 8px,
+        transparent 8px 13px);
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 8px;
+    box-shadow: inset 0 -8px 16px rgba(0,0,0,0.06);
+    clip-path: polygon(0 0, 14px 0, 24px 14px, calc(100% - 24px) 14px, calc(100% - 14px) 0, 100% 0, 100% 100%, 0 100%);
+  }
+  .pocket::before {
+    /* abertura curva do bolso (a "boca") */
+    content: "";
+    position: absolute;
+    top: 8px; left: 14px; right: 14px;
+    height: 16px;
+    border-top: 1px solid var(--ink-soft);
+    border-left: 1px solid var(--ink-soft);
+    border-right: 1px solid var(--ink-soft);
+    border-radius: 8px 8px 0 0 / 14px 14px 0 0;
+    background: var(--paper);
+  }
+  .circ-card {
+    position: absolute;
+    bottom: 60px; left: 22px; right: 22px;
+    height: 90px;
+    background: var(--paper-card);
+    border: 1px solid var(--ink-soft);
+    padding: 10px 14px 8px;
+    box-shadow: 0 6px 14px rgba(26,22,18,0.18);
+    transform: translateY(0);
+    transition: transform 0.55s var(--ease-power);
+    cursor: pointer;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .pocket-wrap:hover .circ-card,
+  .pocket-wrap:focus-within .circ-card,
+  .circ-card.is-pulled { transform: translateY(-32px); }
+  .circ-card .top {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: var(--mono);
+    font-size: var(--fs-caption);
+    letter-spacing: 0.18em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+  .circ-card .title {
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-size: 18px;
+    margin: 0;
+    color: var(--ink);
+  }
+  .circ-card .due-line {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-soft);
+  }
+  .circ-card .due-line .stamp {
+    color: var(--oxblood);
+    border: 1px solid var(--oxblood);
+    padding: 1px 6px;
+    letter-spacing: 0.16em;
+    transform: rotate(-4deg);
+    font-size: 9px;
+  }
+  .pocket-prompt {
+    position: absolute;
+    bottom: -36px; left: 0; right: 0;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: var(--fs-caption);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .pocket-prompt a {
+    color: var(--oxblood);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--oxblood);
+  }
+  .pocket-prompt a:hover { color: var(--oxblood-deep); }
+
+  /* ============================================================
+     iii. TIPPED-IN SLIP  ---------------------------------------
+     Folha solta projetando da margem direita do Argument
+     ============================================================ */
+  .v-slip .stage {
+    padding-right: 0; /* folha sai da margem */
+    overflow: visible;
+  }
+  .slip-page {
+    position: relative;
+    padding-right: var(--sp-7);
+  }
+  .slip {
+    position: absolute;
+    top: 24px;
+    right: -18px;
+    width: 220px;
+    background: #efe6ce;
+    border: 1px solid var(--ink-soft);
+    padding: var(--sp-5) var(--sp-4) var(--sp-4);
+    box-shadow:
+      -2px 4px 0 var(--paper-deep),
+      0 18px 30px rgba(26,22,18,0.18);
+    transform: rotate(-2.5deg);
+    transform-origin: top left;
+    transition: transform 0.45s var(--ease-power), box-shadow 0.45s var(--ease-power);
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .slip:hover, .slip:focus-visible {
+    transform: rotate(-1deg) translateY(-4px);
+    box-shadow:
+      -3px 6px 0 var(--paper-deep),
+      0 24px 40px rgba(26,22,18,0.22);
+  }
+  .slip .corner {
+    position: absolute;
+    top: -1px; right: -1px;
+    width: 28px; height: 28px;
+    background:
+      linear-gradient(225deg, var(--paper) 50%, transparent 50%);
+    border-left: 1px solid var(--ink-soft);
+    border-bottom: 1px solid var(--ink-soft);
+  }
+  .slip .label {
+    font-family: var(--mono);
+    font-size: var(--fs-caption);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin-bottom: 6px;
+  }
+  .slip .h {
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-size: 24px;
+    line-height: 1.1;
+    margin: 0 0 var(--sp-2);
+    color: var(--ink);
+  }
+  .slip .gloss {
+    font-family: var(--serif);
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    margin: 0 0 var(--sp-3);
+    font-style: italic;
+  }
+  .slip .cta {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 2px;
+  }
+
+  /* ============================================================
+     iv. PROSPECTUS  --------------------------------------------
+     Anúncio do editor em moldura tipográfica
+     ============================================================ */
+  .v-prospectus .stage { padding: var(--sp-7) var(--sp-6); }
+  .errata-block {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    max-width: 480px;
+    margin: 0 auto var(--sp-6);
+  }
+  .errata-block .errata-line {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--sp-3);
+    align-items: baseline;
+    padding: 4px 0;
+    border-bottom: 1px dotted var(--ink-ghost);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-faint);
+  }
+  .errata-block .errata-line:last-child { border: 0; }
+  .errata-block .errata-line .for { font-family: var(--serif); font-style: italic; color: var(--ink-soft); }
+
+  .prospectus {
+    max-width: 460px;
+    margin: 0 auto;
+    border: 3px double var(--ink);
+    padding: var(--sp-2);
+    background: var(--paper-card);
+  }
+  .prospectus-inner {
+    border: 1px solid var(--ink);
+    padding: var(--sp-6) var(--sp-5);
+    text-align: center;
+    position: relative;
+  }
+  .prospectus-inner::before,
+  .prospectus-inner::after {
+    content: "✥";
+    position: absolute;
+    color: var(--oxblood);
+    font-size: 14px;
+  }
+  .prospectus-inner::before { top: 8px; left: 50%; transform: translateX(-50%); }
+  .prospectus-inner::after  { bottom: 8px; left: 50%; transform: translateX(-50%); }
+  .prospectus .eyebrow {
+    font-family: var(--mono);
+    font-size: var(--fs-small);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin-bottom: var(--sp-3);
+  }
+  .prospectus h3 {
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 1.1;
+    margin: 0 0 var(--sp-3);
+    color: var(--ink);
+  }
+  .prospectus .ornament {
+    color: var(--oxblood);
+    letter-spacing: 0.5em;
+    margin: var(--sp-2) 0 var(--sp-3);
+  }
+  .prospectus p {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin: 0 0 var(--sp-4);
+    font-style: italic;
+  }
+  .prospectus .obtain {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: var(--fs-small);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    padding: 8px 18px;
+    border: 1px solid var(--ink);
+    transition: all 0.25s var(--ease-out);
+  }
+  .prospectus .obtain:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  /* ============================================================
+     v. RIBBON BOOKMARK  ----------------------------------------
+     Fita pendurada na borda direita do volume
+     ============================================================ */
+  .v-ribbon .stage {
+    min-height: 420px;
+    padding-right: var(--sp-9);
+    overflow: visible;
+    position: relative;
+  }
+  .ribbon-spine {
+    position: absolute;
+    top: 0; right: var(--sp-4);
+    width: 28px;
+    height: calc(100% + 70px);
+    background: linear-gradient(180deg,
+      var(--oxblood-deep) 0%,
+      var(--oxblood) 20%,
+      var(--oxblood) 80%,
+      var(--oxblood-deep) 100%);
+    box-shadow:
+      inset 2px 0 0 rgba(255,255,255,0.08),
+      inset -2px 0 0 rgba(0,0,0,0.2),
+      0 12px 22px rgba(26,22,18,0.22);
+    text-decoration: none;
+    color: var(--paper);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.45s var(--ease-power);
+    cursor: pointer;
+  }
+  .ribbon-spine:hover, .ribbon-spine:focus-visible { transform: translateY(8px); }
+  .ribbon-spine::after {
+    /* recorte em V na ponta inferior — fita pendurada de verdade */
+    content: "";
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 22px;
+    background:
+      linear-gradient(135deg, transparent 50%, var(--paper) 50%) left bottom / 50% 100% no-repeat,
+      linear-gradient(225deg, transparent 50%, var(--paper) 50%) right bottom / 50% 100% no-repeat;
+  }
+  .ribbon-spine .letters {
+    margin-top: var(--sp-7);
+    font-family: var(--serif-display);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.5em;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    color: var(--paper);
+    text-shadow: 0 1px 0 rgba(0,0,0,0.25);
+  }
+  .ribbon-spine .glyph {
+    margin-top: var(--sp-6);
+    font-family: var(--serif-display);
+    font-size: 18px;
+    font-style: italic;
+    color: var(--paper-shade);
+  }
+  .ribbon-tooltip {
+    position: absolute;
+    top: var(--sp-3);
+    right: calc(var(--sp-4) + 40px);
+    font-family: var(--mono);
+    font-size: var(--fs-caption);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    background: var(--paper-card);
+    border: 1px solid var(--hairline-strong);
+    padding: 4px 10px;
+    opacity: 0;
+    transform: translateX(8px);
+    transition: opacity 0.25s, transform 0.25s;
+    pointer-events: none;
+  }
+  .v-ribbon .stage:hover .ribbon-tooltip,
+  .ribbon-spine:focus-visible ~ .ribbon-tooltip { opacity: 1; transform: translateX(0); }
+
+  /* ============================================================
+     vi. PLATE ∅  ------------------------------------------------
+     Reaproveita o vocabulário das Plates do catálogo, com flip 3D
+     ============================================================ */
+  .v-plate .stage { padding: var(--sp-7); }
+  .plate-card {
+    max-width: 460px;
+    margin: 0 auto;
+    background: var(--paper-card);
+    border: 1px solid var(--ink-soft);
+    padding: var(--sp-5);
+    box-shadow: var(--shadow-soft);
+  }
+  .plate-meta-top {
+    display: flex; justify-content: space-between;
+    font-family: var(--mono);
+    font-size: var(--fs-caption);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: var(--sp-3);
+    padding-bottom: var(--sp-2);
+    border-bottom: 1px dotted var(--ink-ghost);
+  }
+  .plate-image-wrap {
+    perspective: 1600px;
+    margin-bottom: var(--sp-4);
+  }
+  .plate-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    transition: transform 0.9s var(--ease-power);
+    transform-style: preserve-3d;
+  }
+  .plate-card.is-flipped .plate-image { transform: rotateY(-180deg); }
+  .plate-face {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border: 1px solid var(--ink-soft);
+    background: var(--paper);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .plate-front {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--sp-5);
+    background:
+      radial-gradient(ellipse at 50% 60%, rgba(122,38,32,0.06) 0%, transparent 70%),
+      var(--paper);
+  }
+  .plate-front .zero {
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-size: 120px;
+    line-height: 1;
+    color: var(--oxblood);
+    margin: 0;
+  }
+  .plate-front .label {
+    font-family: var(--mono);
+    font-size: var(--fs-small);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: var(--sp-3);
+  }
+  .plate-front .title {
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink);
+    margin: var(--sp-2) 0 0;
+  }
+  .plate-back {
+    transform: rotateY(180deg);
+    padding: var(--sp-5);
+    background:
+      repeating-linear-gradient(180deg,
+        transparent 0 18px,
+        rgba(26,22,18,0.08) 18px 19px);
+  }
+  .plate-back .head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: var(--mono);
+    font-size: var(--fs-caption);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: var(--sp-3);
+  }
+  .plate-back .name {
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-size: 28px;
+    margin: 0 0 var(--sp-1);
+    color: var(--ink);
+  }
+  .plate-back .role {
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin: 0 0 var(--sp-3);
+  }
+  .plate-back .sections {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px var(--sp-4);
+    margin-top: var(--sp-2);
+  }
+  .plate-back .sections div {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    border-bottom: 1px dotted var(--ink-ghost);
+    padding: 4px 0;
+    display: flex; justify-content: space-between;
+  }
+  .plate-back .sections span:last-child { color: var(--ink-ghost); }
+  .plate-meta-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono);
+    font-size: var(--fs-caption);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding-top: var(--sp-2);
+    border-top: 1px dotted var(--ink-ghost);
+  }
+  .plate-flip {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: transparent;
+    border: 1px solid var(--ink-soft);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: var(--fs-small);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: all 0.2s var(--ease-out);
+  }
+  .plate-flip:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .plate-flip .quill {
+    display: inline-block;
+    transition: transform 0.4s var(--ease-power);
+  }
+  .plate-card.is-flipped .plate-flip .quill { transform: rotate(180deg); }
+  .plate-back .obtain {
+    margin-top: var(--sp-4);
+    display: inline-block;
+    color: var(--oxblood);
+    font-family: var(--mono);
+    font-size: var(--fs-small);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 1px solid var(--oxblood);
+  }
+  .plate-back .obtain:hover { color: var(--oxblood-deep); border-color: var(--oxblood-deep); }
+
+  /* ============================================================
+     Toast — confirmação visual quando o "download" é acionado
+     ============================================================ */
+  .vitae-toast {
+    position: fixed;
+    bottom: var(--sp-5);
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    padding: 10px 22px;
+    border: 1px solid var(--ink);
+    box-shadow: 0 14px 30px rgba(0,0,0,0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s var(--ease-power);
+    z-index: var(--z-chrome);
+  }
+  .vitae-toast.is-on {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .vitae-toast small {
+    display: inline-block;
+    margin-left: var(--sp-2);
+    font-family: var(--mono);
+    font-style: normal;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--paper-shade);
+  }
+
+  /* ============================================================
+     Responsivo
+     ============================================================ */
+  @media (max-width: 1024px) {
+    main { padding: var(--sp-7) var(--sp-5) var(--sp-9); }
+    .variation { padding: var(--sp-7) var(--sp-5) var(--sp-5); }
+    .lorem { column-count: 1; }
+  }
+  @media (max-width: 768px) {
+    .demo-head h1 { font-size: 40px; }
+    .v-carte .stage { flex-direction: column; gap: var(--sp-7); padding: var(--sp-7) var(--sp-4); }
+    .portrait { width: 160px; height: 210px; }
+    .stage { padding: var(--sp-5); min-height: auto; }
+    .ribbon-spine { width: 22px; }
+    .ribbon-spine .letters { font-size: 12px; letter-spacing: 0.4em; }
+    .ribbon-tooltip { display: none; }
+    .plate-front .zero { font-size: 88px; }
+    .slip { width: 180px; right: -8px; }
+  }
+  @media (max-width: 640px) {
+    .variation { padding: var(--sp-6) var(--sp-4) var(--sp-4); margin-bottom: var(--sp-8); }
+    .variation .v-name { font-size: 26px; }
+    .carte { width: 240px; height: 150px; }
+    .slip { position: static; transform: rotate(-1.5deg); width: auto; margin-top: var(--sp-4); }
+    .slip-page { padding-right: 0; }
+    .v-ribbon .stage { padding-right: var(--sp-8); }
+  }
+</style>
+</head>
+<body>
+
+<main>
+  <a class="back" href="../index.html">← Return to catalogue</a>
+
+  <header class="demo-head">
+    <h1>Vitæ — six variations</h1>
+    <p class="deck">
+      Seis maneiras de oferecer o currículo ao leitor sem romper o vocabulário
+      do volume. Cada amostra encena o lugar do livro onde o objeto vive:
+      Frontispício, Colofão, Argumento, Errata, lombada e Plates. Hover ou
+      clique para experimentar o gesto.
+    </p>
+    <p class="meta">For evaluation · MMXXVI</p>
+  </header>
+
+  <!-- ============================================================
+       i. CARTE DE VISITE
+       ============================================================ -->
+  <section class="variation v-carte">
+    <span class="v-tag">i · Carte de visite</span>
+    <h2 class="v-name">Cartão pousado ao lado do retrato</h2>
+    <p class="v-desc">
+      Refinamento da sua ideia original. Em vez de pregado com alfinete, o
+      cartão jaz ao lado do retrato como uma <em>carte de visite</em> do
+      século XIX. Hover gira o cartão e expõe o verso, onde está o convite
+      para levá-lo.
+    </p>
+
+    <div class="stage">
+      <span class="stage-label">Frontispiece · recto</span>
+
+      <div class="portrait" aria-label="Engraved portrait of the author">
+        <div class="portrait-glyph">L. S.</div>
+      </div>
+
+      <button type="button" class="carte" aria-label="Carte de visite — virar para revelar o convite ao CV">
+        <div class="carte-inner">
+          <div class="carte-face carte-recto">
+            <p class="surname">Lucas Schoenherr</p>
+            <div class="rule"></div>
+            <p class="role">Senior Product Designer</p>
+          </div>
+          <div class="carte-face carte-verso">
+            <p class="imperative">À emporter</p>
+            <p class="sub">Curriculum vitæ</p>
+            <a class="download-link" href="#" data-vitae="Carte de visite">Take this card →</a>
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <dl class="v-notes">
+      <dt>Lugar</dt><dd>Frontispício, junto ao retrato do autor.</dd>
+      <dt>Gesto</dt><dd>Hover ou foco → virada 3D revelando o verso.</dd>
+      <dt>Custo</dt><dd>Baixo. Encaixa sem alterar layout existente.</dd>
+      <dt>Risco</dt><dd>Compete por atenção com o retrato. Cuidar do balanço visual.</dd>
+    </dl>
+  </section>
+
+  <!-- ============================================================
+       ii. LIBRARY POCKET
+       ============================================================ -->
+  <section class="variation v-pocket">
+    <span class="v-tag">ii · Library pocket</span>
+    <h2 class="v-name">Cartão de circulação no Colofão</h2>
+    <p class="v-desc">
+      O bolso de empréstimo da biblioteca antiga, costurado à última página.
+      O cartão emerge parcialmente — basta puxá-lo. Encerra o volume com um
+      gesto memorável, sem competir com nada anterior.
+    </p>
+
+    <div class="stage">
+      <span class="stage-label">Colophon · verso</span>
+
+      <div class="colophon-block">
+        <p class="heading">Colophon</p>
+        <p>
+          Volume composto em EB Garamond e Instrument Serif sobre papel creme
+          digital. Impresso em São Paulo, anno Domini MMXXVI, por mão própria
+          do autor.
+        </p>
+        <p class="ornament">❦ · ✥ · ❦</p>
+      </div>
+
+      <div class="pocket-wrap">
+        <div class="pocket" aria-hidden="true"></div>
+        <a class="circ-card" href="#" data-vitae="Library pocket" aria-label="Cartão de circulação — Curriculum Vitæ de Lucas Schoenherr">
+          <div class="top">
+            <span>L · S</span>
+            <span>2026</span>
+          </div>
+          <p class="title">Curriculum vitæ</p>
+          <div class="due-line">
+            <span>Date due —</span>
+            <span class="stamp">À retirer</span>
+          </div>
+        </a>
+        <p class="pocket-prompt">
+          <a href="#" data-vitae="Library pocket (prompt)">Withdraw the card →</a>
+        </p>
+      </div>
+    </div>
+
+    <dl class="v-notes">
+      <dt>Lugar</dt><dd>Colofão, fechando o volume.</dd>
+      <dt>Gesto</dt><dd>Hover puxa o cartão para fora do bolso; clicar o retira.</dd>
+      <dt>Custo</dt><dd>Médio. Bolso + cartão são uma peça relativamente isolada.</dd>
+      <dt>Risco</dt><dd>Visitantes que não rolam até o fim podem nunca vê-lo.</dd>
+    </dl>
+  </section>
+
+  <!-- ============================================================
+       iii. TIPPED-IN SLIP
+       ============================================================ -->
+  <section class="variation v-slip">
+    <span class="v-tag">iii · Tipped-in slip</span>
+    <h2 class="v-name">Folha avulsa enfiada no Argumento</h2>
+    <p class="v-desc">
+      Folhas <em>tipped-in</em> são páginas extras coladas separadamente em
+      livros ilustrados. Aqui, uma se projeta da margem direita do Argumento,
+      como se tivesse sido inserida pelo editor antes do despacho.
+    </p>
+
+    <div class="stage">
+      <span class="stage-label">Argument · recto</span>
+
+      <div class="slip-page">
+        <div class="lorem">
+          <p>
+            Este volume reúne onze provas críticas do trabalho de Lucas
+            Schoenherr entre MMXVII e MMXXVI, organizadas como pranchas de
+            um catálogo de razão. Cada prancha traz o argumento, o elenco,
+            os atos e as erratas — vocabulário emprestado da tradição
+            editorial e ajustado ao ofício do design de produto.
+          </p>
+          <p>
+            O leitor encontrará, à direita desta página, uma <em>feuille
+            volante</em> com o currículo do autor, disponível para retirada
+            imediata. As demais pranchas seguem em ordem romana, de I a XI.
+          </p>
+        </div>
+
+        <a class="slip" href="#" data-vitae="Tipped-in slip" aria-label="Folha avulsa — Curriculum Vitæ">
+          <div class="corner" aria-hidden="true"></div>
+          <p class="label">À part</p>
+          <p class="h">Curriculum vitæ</p>
+          <p class="gloss">Feuille volante, encartada pelo editor.</p>
+          <span class="cta">Take leaf →</span>
+        </a>
+      </div>
+    </div>
+
+    <dl class="v-notes">
+      <dt>Lugar</dt><dd>Margem direita do Argumento — visível desde a primeira leitura.</dd>
+      <dt>Gesto</dt><dd>Hover levanta a folha; clique retira.</dd>
+      <dt>Custo</dt><dd>Baixo. Pode ser absoluto, sem mexer no fluxo da página.</dd>
+      <dt>Risco</dt><dd>Pode parecer um "pop-up" caso não respeite a linguagem de papel.</dd>
+    </dl>
+  </section>
+
+  <!-- ============================================================
+       iv. PROSPECTUS
+       ============================================================ -->
+  <section class="variation v-prospectus">
+    <span class="v-tag">iv · Prospectus</span>
+    <h2 class="v-name">Anúncio do editor na Errata</h2>
+    <p class="v-desc">
+      Livros antigos abrigavam, ao final, prospectos do editor — anúncios de
+      novos volumes ou de impressos disponíveis à parte. Tom de imprensa
+      antiga, sem disfarçar o caráter informativo.
+    </p>
+
+    <div class="stage">
+      <span class="stage-label">Errata · recto</span>
+
+      <div class="errata-block">
+        <div class="errata-line"><span>p. xii, l. 4</span><span class="for"><em>read</em> Lighthouse <em>for</em> Lightouse</span><span>—</span></div>
+        <div class="errata-line"><span>p. xxxiv, l. 18</span><span class="for"><em>delete</em> "obvious" passim</span><span>—</span></div>
+        <div class="errata-line"><span>p. lvi, l. 1</span><span class="for"><em>read</em> Gen.AI <em>for</em> Gen AI</span><span>—</span></div>
+      </div>
+
+      <div class="prospectus">
+        <div class="prospectus-inner">
+          <p class="eyebrow">From the editor</p>
+          <h3>Prospectus</h3>
+          <p class="ornament">— ❦ —</p>
+          <p>
+            The vitæ of L. Schoenherr — apartada deste volume e disponível
+            ao leitor curioso em formato avulso. Doze páginas, encadernação
+            digital, cópia única por requerente.
+          </p>
+          <a class="obtain" href="#" data-vitae="Prospectus">Obtain a copy</a>
+        </div>
+      </div>
+    </div>
+
+    <dl class="v-notes">
+      <dt>Lugar</dt><dd>Errata, próximo ao Colofão.</dd>
+      <dt>Gesto</dt><dd>Botão tipográfico convencional.</dd>
+      <dt>Custo</dt><dd>Mínimo. É só um bloco bem composto.</dd>
+      <dt>Risco</dt><dd>Mais "estático" que os outros — sem gesto físico próprio.</dd>
+    </dl>
+  </section>
+
+  <!-- ============================================================
+       v. RIBBON BOOKMARK
+       ============================================================ -->
+  <section class="variation v-ribbon">
+    <span class="v-tag">v · Ribbon bookmark</span>
+    <h2 class="v-name">Fita de marcador persistente</h2>
+    <p class="v-desc">
+      A fita de marcador permanece visível ao longo de todo o volume — chrome
+      editorial, não um elemento de seção. Bordada com <em>VITÆ</em> em
+      capitulares, pende da lombada e acompanha o leitor seção a seção.
+    </p>
+
+    <div class="stage">
+      <span class="stage-label">Spine · persistent</span>
+
+      <div class="lorem">
+        <p>
+          A fita aqui está fixa ao quadro de demonstração, mas no portfólio
+          real ela permaneceria ancorada ao lado direito da viewport — sempre
+          visível, independentemente da seção em que o leitor estiver. É um
+          elemento de chrome do volume inteiro.
+        </p>
+        <p>
+          Como vantagem, oferece o CV em qualquer ponto da leitura — não
+          obriga o leitor a chegar até o Colofão ou voltar ao Frontispício.
+          Como custo, exige rigor na consistência: a fita não pode brigar com
+          a lupa, com os cursores nem com o painel de tweaks em
+          desenvolvimento.
+        </p>
+      </div>
+
+      <a class="ribbon-spine" href="#" data-vitae="Ribbon bookmark" aria-label="Fita marcadora — Curriculum Vitæ">
+        <span class="letters">VITÆ</span>
+        <span class="glyph">❦</span>
+      </a>
+      <span class="ribbon-tooltip">Pull the ribbon →</span>
+    </div>
+
+    <dl class="v-notes">
+      <dt>Lugar</dt><dd>Persistente, em todas as seções (lado direito).</dd>
+      <dt>Gesto</dt><dd>Hover desce a fita ligeiramente; clique retira.</dd>
+      <dt>Custo</dt><dd>Alto. Exige integração no chrome global do site.</dd>
+      <dt>Risco</dt><dd>Choque com lupa e cursor. Em mobile, vira ícone discreto.</dd>
+    </dl>
+  </section>
+
+  <!-- ============================================================
+       vi. PLATE ZERO
+       ============================================================ -->
+  <section class="variation v-plate">
+    <span class="v-tag">vi · Plate ∅</span>
+    <h2 class="v-name">Plate não numerada — Curriculum vitæ</h2>
+    <p class="v-desc">
+      Aproveita o vocabulário das Plates do catálogo. Uma prancha
+      <em>hors série</em>, marcada com ∅, posicionada antes da Plate I. Usa
+      o mesmo flip 3D já implementado — máxima coerência sistêmica, custo
+      mínimo de novo código.
+    </p>
+
+    <div class="stage">
+      <span class="stage-label">Works · plate hors série</span>
+
+      <article class="plate-card" id="plate-zero">
+        <div class="plate-meta-top">
+          <span>Plate ∅</span>
+          <span>MMXXVI</span>
+        </div>
+
+        <div class="plate-image-wrap">
+          <div class="plate-image">
+            <div class="plate-face plate-front">
+              <p class="zero">∅</p>
+              <p class="label">Plate hors série</p>
+              <p class="title">Curriculum vitæ</p>
+            </div>
+            <div class="plate-face plate-back">
+              <div class="head">
+                <span>Verso</span>
+                <span>Twelve pages · 2026</span>
+              </div>
+              <p class="name">Lucas Schoenherr</p>
+              <p class="role">Senior Product Designer · São Paulo</p>
+              <div class="sections">
+                <div><span>Profile</span><span>p. i</span></div>
+                <div><span>Experience</span><span>p. ii–vi</span></div>
+                <div><span>Education</span><span>p. vii</span></div>
+                <div><span>Stack</span><span>p. viii</span></div>
+                <div><span>Selected works</span><span>p. ix–xi</span></div>
+                <div><span>Contact</span><span>p. xii</span></div>
+              </div>
+              <a class="obtain" href="#" data-vitae="Plate ∅">Retrieve plate →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="plate-meta-bottom">
+          <span>Dimensões — A4 · twelve folios</span>
+          <button type="button" class="plate-flip" aria-pressed="false" aria-controls="plate-zero">
+            <span class="quill" aria-hidden="true">✒︎</span>
+            <span>Inverter folha</span>
+          </button>
+        </div>
+      </article>
+    </div>
+
+    <dl class="v-notes">
+      <dt>Lugar</dt><dd>Seção Works, antes da Plate I (ou ao final).</dd>
+      <dt>Gesto</dt><dd>Mesmo flip 3D já implementado nos PlateCards.</dd>
+      <dt>Custo</dt><dd>Mínimo. Reaproveita componente existente.</dd>
+      <dt>Risco</dt><dd>Pode confundir com um "case real" — etiqueta ∅ e <em>hors série</em> precisam estar bem visíveis.</dd>
+    </dl>
+  </section>
+
+</main>
+
+<!-- Toast de confirmação -->
+<div class="vitae-toast" role="status" aria-live="polite"></div>
+
+<script>
+  // ----------------------------------------------------------
+  // Toast — confirma o gesto sem disparar download real
+  // (nesta página de avaliação o objetivo é avaliar o gesto)
+  // ----------------------------------------------------------
+  const toast = document.querySelector('.vitae-toast');
+  let toastTimer = null;
+  function signalVitae(source) {
+    if (!toast) return;
+    toast.innerHTML = 'Vitæ remetido <small>via ' + source + '</small>';
+    toast.classList.add('is-on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('is-on'), 2400);
+  }
+
+  document.querySelectorAll('[data-vitae]').forEach((el) => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      signalVitae(el.getAttribute('data-vitae'));
+    });
+  });
+
+  // ----------------------------------------------------------
+  // Carte de visite — fallback clique para tela touch
+  // ----------------------------------------------------------
+  document.querySelectorAll('.carte').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      // Se o usuário clicou no link interno (download-link), deixa
+      // o handler do data-vitae assumir.
+      if (e.target.closest('.download-link')) return;
+      btn.classList.toggle('is-flipped');
+    });
+  });
+
+  // ----------------------------------------------------------
+  // Library pocket — clique no cartão também o "puxa"
+  // (útil em touch, onde hover é instável)
+  // ----------------------------------------------------------
+  document.querySelectorAll('.circ-card').forEach((card) => {
+    card.addEventListener('click', () => {
+      card.classList.toggle('is-pulled');
+    });
+  });
+
+  // ----------------------------------------------------------
+  // Plate ∅ — flip 3D
+  // ----------------------------------------------------------
+  document.querySelectorAll('.plate-flip').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.plate-card');
+      if (!card) return;
+      const flipped = card.classList.toggle('is-flipped');
+      btn.setAttribute('aria-pressed', flipped ? 'true' : 'false');
+    });
+  });
+</script>
+
+</body>
+</html>
