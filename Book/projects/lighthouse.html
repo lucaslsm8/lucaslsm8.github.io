@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lighthouse App — Case Vale · Lucas Schoenherr</title>
+<meta name="description" content="Case de UX/UI e Design System do Lighthouse: MVP mobile que substitui a intranet legada de monitoramento de produção da Vale. Lead Product Designer end-to-end: Lucas Schoenherr." />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<!-- Design tokens (fonte única de verdade — ver ../design-system/DESIGN-SYSTEM.md) -->
+<link rel="stylesheet" href="../design-system/tokens.css" />
+<link rel="stylesheet" href="../catalogue.css" />
+<link rel="stylesheet" href="../design-system/case-template.css" />
+</head>
+<body data-lang="pt">
+<div class="paper-grain" aria-hidden="true"></div>
+
+<!-- Chrome superior -->
+<header class="chrome-top">
+  <div class="running-head">
+    <span>Lucas Schoenherr</span>
+    <span class="sep">·</span>
+    <em><span class="t" lang="pt">Catálogo de Obras</span><span class="t" lang="en">A Catalogue of Works</span></em>
+    <span class="sep">·</span>
+    <span><span class="t" lang="pt">Prancha I — Lighthouse App</span><span class="t" lang="en">Plate I — Lighthouse App</span></span>
+  </div>
+  <nav class="chrome-actions">
+    <a href="../index.html" class="to-catalogue">
+      <em><span class="t" lang="pt">Voltar ao catálogo</span><span class="t" lang="en">Return to catalogue</span></em>
+    </a>
+    <div class="lang-toggle" role="group" aria-label="Language / Idioma">
+      <button class="active" type="button" data-lang="pt" aria-pressed="true">PT</button>
+      <span class="pipe">|</span>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </nav>
+</header>
+
+<main class="book">
+
+  <!-- ============================================================
+       Folha de rosto
+       ============================================================ -->
+  <section class="case-frontispiece" data-folio>
+    <div class="sig">
+      <span class="t" lang="pt">Prancha · I · MMXXIII</span>
+      <span class="t" lang="en">Plate · I · MMXXIII</span>
+    </div>
+    <div class="case-num">№ 001</div>
+
+    <h1 class="case-title case-title--single">
+      <span class="it">Lighthouse</span> <span class="reg">App</span>
+    </h1>
+
+    <div class="case-rule" aria-hidden="true"></div>
+
+    <p class="case-deck">
+      <span class="t" lang="pt"><span class="em">Substituindo um sistema legado por um MVP mobile</span> que disponibiliza dados críticos de produção diretamente aos gestores da Vale.</span>
+      <span class="t" lang="en"><span class="em">Replacing a legacy system with a mobile MVP</span> that delivers critical production data straight to Vale's managers.</span>
+    </p>
+
+    <dl class="case-byline case-byline--inline">
+      <div>
+        <span class="lab"><span class="t" lang="pt">Cliente</span><span class="t" lang="en">Client</span></span>
+        <span class="val">Vale · Corredor Norte</span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Ano</span><span class="t" lang="en">Year</span></span>
+        <span class="val">2023</span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Papel</span><span class="t" lang="en">Role</span></span>
+        <span class="val">Lead Product Designer</span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Escopo</span><span class="t" lang="en">Scope</span></span>
+        <span class="val"><span class="t" lang="pt">Discovery, Design System, Protótipo, Handoff</span><span class="t" lang="en">Discovery, Design System, Prototype, Handoff</span></span>
+      </div>
+    </dl>
+  </section>
+
+  <!-- ============================================================
+       Epígrafe
+       ============================================================ -->
+  <section class="case-epigraph" data-folio aria-label="Epigraph">
+    <div class="epigraph-inner reveal">
+      <span class="epigraph-mark" aria-hidden="true">“</span>
+      <blockquote class="epigraph-quote">
+        <span class="t" lang="pt">Reduzir o tempo entre o evento e a decisão — e criar um canal único entre o campo e a gerência.</span>
+        <span class="t" lang="en">Cut the time between event and decision — and build a single channel between the field and management.</span>
+      </blockquote>
+      <figcaption class="epigraph-cite">
+        <span class="t" lang="pt">— O objetivo duplo do MVP</span>
+        <span class="t" lang="en">— The MVP's twofold objective</span>
+      </figcaption>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       I — Argument (o problema / desafio)
+       ============================================================ -->
+  <section class="page case-section argument" data-folio>
+    <div class="spread">
+      <aside class="margin-l">
+        <p class="gloss" data-anchor="arg-p1">
+          <span class="gloss-num">i</span>
+          <span class="t" lang="pt">Discovery de ~6 semanas: mais de 12 entrevistas com gerentes, analistas e líderes de TI, e 3 workshops de Design Thinking.</span>
+          <span class="t" lang="en">~6-week discovery: 12+ interviews with managers, analysts and IT leads, plus 3 Design Thinking workshops.</span>
+        </p>
+      </aside>
+
+      <div class="content">
+        <header class="section-head reveal">
+          <span class="roman">I.</span>
+          <span class="name"><span class="t" lang="pt">Argumento</span><span class="t" lang="en">Argument</span></span>
+          <span class="gloss"><span class="t" lang="pt">O desafio</span><span class="t" lang="en">The challenge</span></span>
+        </header>
+
+        <div class="preface">
+          <div class="body reveal">
+            <p id="arg-p1">
+              <span class="t" lang="pt">O sistema legado de monitoramento de produção da Vale, baseado em intranet, não atendia mais às necessidades operacionais. Gerentes dependiam de desktops antigos, com interfaces complexas e sem mobilidade, para tomar decisões em um dos maiores corredores logísticos do país.<span class="fn" data-fn="1">1</span></span><span class="t" lang="en">Vale's legacy intranet-based production-monitoring system no longer met operational needs. Managers relied on old desktops, with complex interfaces and no mobility, to make decisions in one of the country's largest logistics corridors.<span class="fn" data-fn="1">1</span></span>
+            </p>
+            <p>
+              <span class="t" lang="pt">O legado expunha três problemas estruturais: <span class="it">(1) falta de mobilidade</span> — gestores presos a um desktop, o que atrasava a resposta a eventos críticos em várias horas; <span class="it">(2) densidade informacional mal resolvida</span> — dezenas de indicadores concorrendo pela mesma tela, sem hierarquia entre o crítico e o informativo; e <span class="it">(3) fragmentação do canal de comunicação</span> — informações espalhadas entre e-mails, planilhas e telefonemas, gerando ruído e retrabalho.</span>
+              <span class="t" lang="en">The legacy system exposed three structural problems: <span class="it">(1) no mobility</span> — managers were tied to a desktop, delaying response to critical events by several hours; <span class="it">(2) poorly resolved information density</span> — dozens of indicators competing for the same screen, with no hierarchy between the critical and the informative; and <span class="it">(3) a fragmented communication channel</span> — information scattered across emails, spreadsheets and phone calls, breeding noise and rework.</span>
+            </p>
+            <p>
+              <span class="t" lang="pt">O desafio de design era criar uma experiência <em>mobile-first</em> capaz de apresentar grandes volumes de dados operacionais com clareza, respeitar diferentes níveis de permissão e servir de base para uma plataforma escalável a múltiplos corredores logísticos e centenas de usuários.</span>
+              <span class="t" lang="en">The design challenge was to create a <em>mobile-first</em> experience able to present large volumes of operational data with clarity, honour different permission levels, and serve as the foundation for a platform scalable to multiple logistics corridors and hundreds of users.</span>
+            </p>
+          </div>
+
+          <ol class="footnotes reveal">
+            <li class="fn-item" data-fn="1">
+              <span class="fn-num">1.</span>
+              <span class="t" lang="pt"><span class="it">Antes do design, conduzi ~6 semanas de discovery: 12+ entrevistas em profundidade, 3 workshops de Design Thinking e sessões de co-criação com o time de produto.</span></span>
+              <span class="t" lang="en"><span class="it">Before design, I ran ~6 weeks of discovery: 12+ in-depth interviews, 3 Design Thinking workshops and co-creation sessions with the product team.</span></span>
+            </li>
+          </ol>
+
+          <!-- Diagramas as-is / to-be (do material original) -->
+          <div class="case-figs stack reveal">
+            <figure class="case-fig">
+              <span class="frame"><img loading="lazy" decoding="async" src="../images/lighthouse/workflow-asis.webp" alt="Fluxo de trabalho atual (as-is) — sistema legado baseado em intranet"></span>
+              <figcaption><span class="t" lang="pt">Fluxo atual · as-is</span><span class="t" lang="en">Current flow · as-is</span></figcaption>
+            </figure>
+            <figure class="case-fig">
+              <span class="frame"><img loading="lazy" decoding="async" src="../images/lighthouse/workflow-tobe.webp" alt="Fluxo proposto (to-be) — nova arquitetura mobile-first"></span>
+              <figcaption><span class="t" lang="pt">Fluxo proposto · to-be</span><span class="t" lang="en">Proposed flow · to-be</span></figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+
+      <aside class="margin-r" aria-hidden="true"></aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       II — Acta (o processo)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">II.</span>
+        <span class="name">Acta</span>
+        <span class="gloss"><span class="t" lang="pt">O processo</span><span class="t" lang="en">The process</span></span>
+      </header>
+
+      <ol class="acta" data-stagger>
+        <li class="act">
+          <span class="act-num">I.</span>
+          <div>
+            <h3 class="act-name"><span class="t" lang="pt">Discovery — a escuta</span><span class="t" lang="en">Discovery — the listening pass</span></h3>
+            <div class="act-body">
+              <p><span class="t" lang="pt">~6 semanas mapeando o problema: 12+ entrevistas com gerentes, analistas e TI, 3 workshops de Design Thinking e co-criação com produto — para entender as limitações do legado e o fluxo real de decisão em campo.</span><span class="t" lang="en">~6 weeks mapping the problem: 12+ interviews with managers, analysts and IT, 3 Design Thinking workshops and co-creation with product — to understand the legacy's limits and the real decision flow in the field.</span></p>
+            </div>
+            <span class="act-tag"><span class="t" lang="pt">Método — Entrevistas · Workshops</span><span class="t" lang="en">Method — Interviews · Workshops</span></span>
+          </div>
+        </li>
+
+        <li class="act">
+          <span class="act-num">II.</span>
+          <div>
+            <h3 class="act-name"><span class="t" lang="pt">Design System — a base</span><span class="t" lang="en">Design System — the foundation</span></h3>
+            <div class="act-body">
+              <p><span class="t" lang="pt">Mais de 40 componentes organizados em tokens, primitivos e padrões, construídos em Figma com variantes, auto-layout e estados documentados — garantindo consistência e previsibilidade em diferentes densidades de tela.</span><span class="t" lang="en">40+ components organized into tokens, primitives and patterns, built in Figma with variants, auto-layout and documented states — ensuring consistency and predictability across screen densities.</span></p>
+            </div>
+            <span class="act-tag"><span class="t" lang="pt">Saída — Sistema · Figma</span><span class="t" lang="en">Output — System · Figma</span></span>
+          </div>
+        </li>
+
+        <li class="act">
+          <span class="act-num">III.</span>
+          <div>
+            <h3 class="act-name"><span class="t" lang="pt">Telas do MVP — os cards</span><span class="t" lang="en">MVP screens — the cards</span></h3>
+            <div class="act-body">
+              <p><span class="t" lang="pt">O núcleo são os <span class="it">cards de status operacional</span>: 8 variações de dado, 4 níveis de prioridade (verde, azul, amarelo, vermelho) e 3 densidades — completa, compacta e ultracompacta — do feed principal às notificações.<span class="fn" data-fn="2">2</span></span><span class="t" lang="en">The core is the <span class="it">operational status cards</span>: 8 data variations, 4 priority levels (green, blue, yellow, red) and 3 densities — full, compact and ultra-compact — from the main feed to notifications.<span class="fn" data-fn="2">2</span></span></p>
+            </div>
+            <div class="act-figs">
+              <img loading="lazy" decoding="async" src="../images/lighthouse/card-g.webp" alt="Card de prioridade verde">
+              <img loading="lazy" decoding="async" src="../images/lighthouse/card-b.webp" alt="Card de prioridade azul">
+              <img loading="lazy" decoding="async" src="../images/lighthouse/card-y.webp" alt="Card de prioridade amarela">
+              <img loading="lazy" decoding="async" src="../images/lighthouse/card-r.webp" alt="Card de prioridade vermelha">
+            </div>
+            <span class="act-tag"><span class="t" lang="pt">Saída — Protótipo · Fluxos</span><span class="t" lang="en">Output — Prototype · Flows</span></span>
+          </div>
+        </li>
+
+        <li class="act">
+          <span class="act-num">IV.</span>
+          <div>
+            <h3 class="act-name"><span class="t" lang="pt">Entrega — o handoff</span><span class="t" lang="en">Delivery — the handoff</span></h3>
+            <div class="act-body">
+              <p><span class="t" lang="pt">Protótipo navegável em alta fidelidade, Design System documentado com guidelines de uso e acessibilidade, fluxos mapeados e um dossiê de handoff com specs, tokens e casos de borda para o time de desenvolvimento avançado da Vale.</span><span class="t" lang="en">High-fidelity navigable prototype, a documented Design System with usage and accessibility guidelines, mapped flows and a handoff dossier with specs, tokens and edge cases for Vale's advanced development team.</span></p>
+            </div>
+            <span class="act-tag"><span class="t" lang="pt">Método — Handoff · Specs</span><span class="t" lang="en">Method — Handoff · Specs</span></span>
+          </div>
+        </li>
+      </ol>
+
+      <ol class="footnotes reveal" style="margin-top: 48px;">
+        <li class="fn-item" data-fn="2">
+          <span class="fn-num">2.</span>
+          <span class="t" lang="pt"><span class="it">A arquitetura modular foi projetada para incorporar, sem reescrita, funcionalidades já no backlog: comentários, upload de imagens e mapas interativos.</span></span>
+          <span class="t" lang="en"><span class="it">The modular architecture was designed to absorb, without a rewrite, features already in the backlog: comments, image upload and interactive maps.</span></span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Intermezzo
+       ============================================================ -->
+  <section class="case-intermezzo" data-folio aria-label="Intermezzo">
+    <span class="intermezzo-bg l1" data-speed="0.12" aria-hidden="true">⁂</span>
+    <span class="intermezzo-bg l2" data-speed="-0.10" aria-hidden="true">❧</span>
+    <div class="intermezzo-inner reveal">
+      <span class="intermezzo-label">Intermezzo</span>
+      <p class="intermezzo-quote">
+        <span class="t" lang="pt">Design System é uma decisão de negócio, não apenas de estética.</span>
+        <span class="t" lang="en">A Design System is a business decision, not just an aesthetic one.</span>
+      </p>
+      <span class="intermezzo-asterism" aria-hidden="true">⁂</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       III — Plates (telas reais)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread">
+      <aside class="margin-l" aria-hidden="true"></aside>
+      <div class="content">
+        <header class="section-head reveal">
+          <span class="roman">III.</span>
+          <span class="name"><span class="t" lang="pt">Pranchas</span><span class="t" lang="en">Plates</span></span>
+          <span class="gloss"><span class="t" lang="pt">As telas</span><span class="t" lang="en">The screens</span></span>
+        </header>
+
+        <div class="case-plates reveal">
+          <figure class="case-plate full shot">
+            <span class="plate-label">Pl.</span>
+            <span class="plate-roman">i</span>
+            <img loading="lazy" decoding="async" src="../images/lighthouse/components.webp" alt="Vista geral do Design System — 40+ componentes e as 8 variações de card">
+          </figure>
+          <figure class="case-plate half shot">
+            <span class="plate-label">Pl.</span>
+            <span class="plate-roman">ii</span>
+            <img loading="lazy" decoding="async" src="../images/lighthouse/overview2.webp" alt="Feed principal com cards de status operacional por corredor">
+          </figure>
+          <figure class="case-plate half shot">
+            <span class="plate-label">Pl.</span>
+            <span class="plate-roman">iii</span>
+            <img loading="lazy" decoding="async" src="../images/lighthouse/overview3.webp" alt="Detalhamento de indicadores em tempo real com gráfico de produção">
+          </figure>
+          <figure class="case-plate half shot">
+            <span class="plate-label">Pl.</span>
+            <span class="plate-roman">iv</span>
+            <img loading="lazy" decoding="async" src="../images/lighthouse/overview1.webp" alt="Tela de login com identidade visual da Vale">
+          </figure>
+          <figure class="case-plate half shot">
+            <span class="plate-label">Pl.</span>
+            <span class="plate-roman">v</span>
+            <img loading="lazy" decoding="async" src="../images/lighthouse/overview4.webp" alt="Central de notificações personalizáveis por área operacional">
+          </figure>
+          <figure class="case-plate full shot">
+            <span class="plate-label">Pl.</span>
+            <span class="plate-roman">vi</span>
+            <img loading="lazy" decoding="async" src="../images/lighthouse/overview5.webp" alt="Perfil do usuário com permissões hierárquicas e preferências">
+          </figure>
+        </div>
+
+        <p class="plate-caption reveal">
+          <span class="num">i–vi</span>
+          <span class="t" lang="pt">Design System, feed, detalhamento, login, notificações e perfil. Passe a lupa para examinar.</span>
+          <span class="t" lang="en">Design System, feed, detail, login, notifications and profile. Use the loupe to examine.</span>
+        </p>
+
+        <!-- KPIs reais com count-up (dados de projeção, alinhados com stakeholders) -->
+        <aside class="marginalia-stat reveal">
+          <dl>
+            <div>
+              <dt><span class="unit unit-pre">+</span><span class="stat-val" data-count="40">40</span></dt>
+              <dd><span class="t" lang="pt">componentes no Design System</span><span class="t" lang="en">components in the Design System</span></dd>
+            </div>
+            <div>
+              <dt><span class="stat-val" data-count="8">8</span></dt>
+              <dd><span class="t" lang="pt">variações de card para dados em tempo real</span><span class="t" lang="en">card variations for real-time data</span></dd>
+            </div>
+            <div>
+              <dt><span class="unit unit-pre">~</span><span class="stat-val" data-count="200">200</span></dt>
+              <dd><span class="t" lang="pt">gestores e líderes impactados (projeção do rollout)</span><span class="t" lang="en">managers and leaders reached (rollout projection)</span></dd>
+            </div>
+            <div>
+              <dt><span class="stat-val" data-count="100">100</span><span class="unit">%</span></dt>
+              <dd><span class="t" lang="pt">aprovação do MVP pelos stakeholders</span><span class="t" lang="en">MVP approval by stakeholders</span></dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+      <aside class="margin-r" aria-hidden="true"></aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       IV — Reception (entrega & impacto)
+       ============================================================ -->
+  <section class="page case-section reception" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">IV.</span>
+        <span class="name"><span class="t" lang="pt">Recepção</span><span class="t" lang="en">Reception</span></span>
+        <span class="gloss"><span class="t" lang="pt">Entrega &amp; impacto</span><span class="t" lang="en">Delivery &amp; impact</span></span>
+      </header>
+
+      <figure class="reception-clipping reveal">
+        <span class="clip-tape clip-tape-l" aria-hidden="true"></span>
+        <span class="clip-tape clip-tape-r" aria-hidden="true"></span>
+        <blockquote>
+          <span class="t" lang="pt">Aprovação unânime dos stakeholders de Operações, de TI e da gerência — o MVP foi encaminhado diretamente ao time de desenvolvimento avançado da Vale.</span>
+          <span class="t" lang="en">Unanimous approval from Operations, IT and management stakeholders — the MVP was sent straight to Vale's advanced development team.</span>
+        </blockquote>
+        <figcaption>
+          <span class="cite-name"><span class="t" lang="pt">Steering committee · Vale</span><span class="t" lang="en">Steering committee · Vale</span></span>
+          <span class="cite-role"><span class="t" lang="pt">Apresentação do MVP · 2023</span><span class="t" lang="en">MVP presentation · 2023</span></span>
+        </figcaption>
+      </figure>
+
+      <p class="reception-note reveal">
+        <span class="t" lang="pt">Impacto projetado, alinhado com stakeholders: alcançar ~200 gestores no rollout do Corredor Norte, redução estimada de 30–40% no tempo entre evento crítico e decisão, e ~70% de reuso de componentes nas próximas funcionalidades.</span>
+        <span class="t" lang="en">Projected impact, aligned with stakeholders: reaching ~200 managers in the North Corridor rollout, an estimated 30–40% cut in time between critical event and decision, and ~70% component reuse on upcoming features.</span>
+      </p>
+
+      <figure class="case-figure reveal">
+        <img loading="lazy" decoding="async" src="../images/lighthouse/porto.webp" alt="Visão consolidada do corredor — porto">
+        <figcaption><span class="t" lang="pt">Visão consolidada por corredor logístico — porto.</span><span class="t" lang="en">Consolidated view by logistics corridor — port.</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       V — Errata (aprendizados)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">V.</span>
+        <span class="name">Errata</span>
+        <span class="gloss"><span class="t" lang="pt">Aprendizados</span><span class="t" lang="en">Learnings</span></span>
+      </header>
+
+      <ol class="errata-list" data-stagger>
+        <li class="errata-item">
+          <span class="errata-tag"><span class="t" lang="pt">Aprendizado I</span><span class="t" lang="en">Learning I</span></span>
+          <p>
+            <span class="t" lang="pt"><span class="em">Design System é uma decisão de negócio, não apenas de estética.</span> O ganho central foi a base reutilizável; defendê-la exigiu alinhar linguagem com engenharia e liderança, mostrando que um investimento inicial maior reduz o custo marginal de cada funcionalidade futura.</span>
+            <span class="t" lang="en"><span class="em">A Design System is a business decision, not just aesthetics.</span> The central gain was the reusable base; defending it meant aligning language with engineering and leadership, showing that a larger upfront investment lowers the marginal cost of every future feature.</span>
+          </p>
+        </li>
+        <li class="errata-item">
+          <span class="errata-tag"><span class="t" lang="pt">Aprendizado II</span><span class="t" lang="en">Learning II</span></span>
+          <p>
+            <span class="t" lang="pt"><span class="em">Ambiguidade faz parte do trabalho sênior.</span> Sem métricas prévias do legado e com o MVP como POC, construí hipóteses com stakeholders, defini critérios qualitativos de sucesso e documentei premissas para revisão no rollout.</span>
+            <span class="t" lang="en"><span class="em">Ambiguity is part of senior work.</span> With no prior metrics from the legacy system and the MVP as a POC, I built hypotheses with stakeholders, set qualitative success criteria and documented assumptions for review at rollout.</span>
+          </p>
+        </li>
+        <li class="errata-item">
+          <span class="errata-tag"><span class="t" lang="pt">Aprendizado III</span><span class="t" lang="en">Learning III</span></span>
+          <p>
+            <span class="t" lang="pt"><span class="em">Mobilizar pessoas é tão importante quanto mobilizar pixels.</span> Facilitar workshops, traduzir o negócio para o time técnico, antecipar riscos com TI e Operações e proteger o escopo foram tão decisivos quanto as telas.</span>
+            <span class="t" lang="en"><span class="em">Mobilizing people matters as much as mobilizing pixels.</span> Facilitating workshops, translating the business for the technical team, anticipating risks with IT and Operations and protecting scope were as decisive as the screens themselves.</span>
+          </p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VI — Instrumentarium
+       ============================================================ -->
+  <section class="page case-section instrumentarium" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">VI.</span>
+        <span class="name">Instrumentarium</span>
+        <span class="gloss"><span class="t" lang="pt">As ferramentas</span><span class="t" lang="en">The instruments</span></span>
+      </header>
+
+      <ul class="instruments" data-stagger>
+        <li class="instrument">
+          <span class="inst-glyph" aria-hidden="true">✶</span>
+          <span class="inst-name">Figma</span>
+          <span class="inst-desc"><span class="t" lang="pt">Design System, variantes, auto-layout e protótipo navegável</span><span class="t" lang="en">Design System, variants, auto-layout and navigable prototype</span></span>
+        </li>
+        <li class="instrument">
+          <span class="inst-glyph" aria-hidden="true">✧</span>
+          <span class="inst-name">Design Thinking</span>
+          <span class="inst-desc"><span class="t" lang="pt">Discovery, entrevistas e workshops de co-criação</span><span class="t" lang="en">Discovery, interviews and co-creation workshops</span></span>
+        </li>
+        <li class="instrument">
+          <span class="inst-glyph" aria-hidden="true">❖</span>
+          <span class="inst-name"><span class="t" lang="pt">Ágil + Mobile-first</span><span class="t" lang="en">Agile + Mobile-first</span></span>
+          <span class="inst-desc"><span class="t" lang="pt">Cadência de entrega e prioridade ao contexto móvel</span><span class="t" lang="en">Delivery cadence and priority to the mobile context</span></span>
+        </li>
+        <li class="instrument">
+          <span class="inst-glyph" aria-hidden="true">✦</span>
+          <span class="inst-name">Handoff</span>
+          <span class="inst-desc"><span class="t" lang="pt">Specs, tokens, casos de borda e dossiê para engenharia</span><span class="t" lang="en">Specs, tokens, edge cases and a dossier for engineering</span></span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Colophon + Folio nav
+       ============================================================ -->
+  <section class="case-colophon" data-folio>
+    <div class="ornament">✦</div>
+    <p class="case-colophon-body">
+      <span class="t" lang="pt">Esta prancha foi composta em <em>2023</em>, para o Corredor Norte da <em>Vale</em>, em colaboração com Operações, TI e gerência. Ferramenta do ofício — <em>Figma</em>. Todos os dados e métricas são fictícios, para demonstração; os valores de impacto e alcance são projeções definidas em conjunto com stakeholders durante a concepção do MVP.</span>
+      <span class="t" lang="en">This plate was set in <em>2023</em>, for <em>Vale</em>'s North Corridor, in collaboration with Operations, IT and management. Tool of the trade — <em>Figma</em>. All data and metrics are fictitious, for demonstration; impact and reach figures are projections defined together with stakeholders during the MVP's conception.</span>
+    </p>
+    <div class="case-colophon-meta">Plate I · Vol. I · MMXXIII</div>
+  </section>
+
+  <nav class="folio-nav" aria-label="Navegação entre cases">
+    <a class="verso" href="../index.html#works" rel="prev">
+      <span class="folio-marker"><span class="t" lang="pt">← Catálogo</span><span class="t" lang="en">← Catalogue</span></span>
+      <span class="folio-title"><em><span class="t" lang="pt">Catálogo de Obras</span><span class="t" lang="en">A Catalogue of Works</span></em></span>
+    </a>
+    <a class="recto" href="#" rel="next">
+      <span class="folio-marker"><span class="t" lang="pt">Próximo case →</span><span class="t" lang="en">Next plate →</span></span>
+      <span class="folio-title"><em><span class="t" lang="pt">Sports Experience — DirecTV · em breve</span><span class="t" lang="en">Sports Experience — DirecTV · soon</span></em></span>
+    </a>
+  </nav>
+
+</main>
+
+<!-- Chrome inferior -->
+<footer class="chrome-bot">
+  <div class="page-counter" aria-hidden="true">
+    <span class="num" data-counter-current>—</span>
+    <span class="of">/ <span data-counter-total>—</span></span>
+  </div>
+  <div class="ink-progress" aria-hidden="true"></div>
+  <div class="page-counter">
+    <span class="of"><span class="t" lang="pt">Prancha</span><span class="t" lang="en">Plate</span></span>
+    <span class="num">I</span>
+  </div>
+</footer>
+
+<script src="./case-template.js"></script>
+</body>
+</html>

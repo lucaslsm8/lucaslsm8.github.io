@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>[Case Title] — Lucas Schoenherr</title>
+<meta name="description" content="Base template — substituir título, byline e conteúdo antes de publicar." />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<!-- Design tokens (fonte única de verdade — ver ../design-system/DESIGN-SYSTEM.md) -->
+<link rel="stylesheet" href="../design-system/tokens.css" />
+<link rel="stylesheet" href="../catalogue.css" />
+<link rel="stylesheet" href="../design-system/case-template.css" />
+</head>
+<!-- data-lang controla o idioma ativo (ver i18n em case-template.js). Default: pt -->
+<body data-lang="pt">
+<!-- Textura de papel — mesma da home -->
+<div class="paper-grain" aria-hidden="true"></div>
+
+<!-- Chrome superior: running head, atalho ao catálogo, idioma -->
+<header class="chrome-top">
+  <div class="running-head">
+    <span>Lucas Schoenherr</span>
+    <span class="sep">·</span>
+    <em><span class="t" lang="pt">Catálogo de Obras</span><span class="t" lang="en">A Catalogue of Works</span></em>
+    <span class="sep">·</span>
+    <span><span class="t" lang="pt">Prancha [ROMAN] — [Título do case]</span><span class="t" lang="en">Plate [ROMAN] — [Case Title]</span></span>
+  </div>
+  <nav class="chrome-actions">
+    <a href="../index.html" class="to-catalogue">
+      <em><span class="t" lang="pt">Voltar ao catálogo</span><span class="t" lang="en">Return to catalogue</span></em>
+    </a>
+    <div class="lang-toggle" role="group" aria-label="Language / Idioma">
+      <button class="active" type="button" data-lang="pt" aria-pressed="true">PT</button>
+      <span class="pipe">|</span>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </nav>
+</header>
+
+<main class="book">
+
+  <!-- ============================================================
+       Folha de rosto do case
+       ============================================================ -->
+  <section class="case-frontispiece" data-folio>
+    <div class="sig">
+      <span class="t" lang="pt">Prancha · [Romano] · MMXXVI</span>
+      <span class="t" lang="en">Plate · [Roman] · MMXXVI</span>
+    </div>
+    <div class="case-num">№ [001]</div>
+
+    <!-- Título: para título curto numa linha só, use class="case-title case-title--single"
+         com o conteúdo numa linha (sem <br>). Ex.: <span class="it">Nome</span> <span class="reg">App</span> -->
+    <h1 class="case-title">
+      <span class="it">[Case title in italic],</span><br>
+      <span class="reg">[subtitle in roman]</span>
+    </h1>
+
+    <div class="case-rule" aria-hidden="true"></div>
+
+    <p class="case-deck">
+      <span class="t" lang="pt"><span class="em">[Promessa do case em uma frase.]</span> [Oração de apoio que explica o problema e o que estava em jogo — curta, em voz itálica.]</span>
+      <span class="t" lang="en"><span class="em">[One-sentence promise of the case.]</span> [Supporting clause that explains the problem and the stakes — kept short, in italic voice.]</span>
+    </p>
+
+    <!-- Byline em linha única (cliente · ano · papel · escopo). Cobre o papel
+         que antes era da seção Dramatis Personæ (removida). -->
+    <dl class="case-byline case-byline--inline">
+      <div>
+        <span class="lab"><span class="t" lang="pt">Cliente</span><span class="t" lang="en">Client</span></span>
+        <span class="val">[Client name or "Confidential"]</span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Ano</span><span class="t" lang="en">Year</span></span>
+        <span class="val">[20XX]</span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Papel</span><span class="t" lang="en">Role</span></span>
+        <span class="val">[Senior Product Designer]</span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Escopo</span><span class="t" lang="en">Scope</span></span>
+        <span class="val">[Discovery, UI, Design System, Handoff]</span>
+      </div>
+    </dl>
+  </section>
+
+  <!-- ============================================================
+       Epígrafe — interlúdio de abertura (citação / tese)
+       Lê-se antes da prancha. Não numerada (não é um capítulo).
+       ============================================================ -->
+  <section class="case-epigraph" data-folio aria-label="Epigraph">
+    <div class="epigraph-inner reveal">
+      <span class="epigraph-mark" aria-hidden="true">“</span>
+      <blockquote class="epigraph-quote">
+        <span class="t" lang="pt">[Uma frase de abertura — uma tese, uma provocação ou uma citação que prepara o leitor para a prancha. Mantenha curta o bastante para caber na memória.]</span>
+        <span class="t" lang="en">[An opening line — a thesis, a provocation, or a quote that prepares the reader for the plate. Keep it short enough to lodge in memory.]</span>
+      </blockquote>
+      <figcaption class="epigraph-cite">
+        <span class="t" lang="pt">— [Autor da citação ou nota], <span class="src">[fonte]</span></span>
+        <span class="t" lang="en">— [Quote author or note], <span class="src">[source]</span></span>
+      </figcaption>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       I — Argument (sinopse + problema, com drop cap)
+       ============================================================ -->
+  <section class="page case-section argument" data-folio>
+    <div class="spread">
+      <aside class="margin-l">
+        <!-- Marginalia que aparece em scroll. data-anchor liga ao id do parágrafo. -->
+        <p class="gloss" data-anchor="arg-p1">
+          <span class="gloss-num">i</span>
+          <span class="t" lang="pt">[Uma nota de margem que adiciona nuance ou uma contradição ao parágrafo i.]</span>
+          <span class="t" lang="en">[A marginal note that adds nuance or a contradiction to paragraph i.]</span>
+        </p>
+      </aside>
+
+      <div class="content">
+        <header class="section-head reveal">
+          <span class="roman">I.</span>
+          <span class="name"><span class="t" lang="pt">Argumento</span><span class="t" lang="en">Argument</span></span>
+          <span class="gloss"><span class="t" lang="pt">O problema</span><span class="t" lang="en">The problem</span></span>
+        </header>
+
+        <div class="preface">
+          <div class="body reveal">
+            <p id="arg-p1">
+              <span class="t" lang="pt">[Abra com uma única frase que enquadra a situação. A capitular faz deste parágrafo o ponto de entrada do case — deixe a primeira linha carregar peso.] [Continue com o contexto ao redor: quem eram os usuários, o que estava em jogo, por que a solução existente não funcionava.<span class="fn" data-fn="1">1</span>]</span><span class="t" lang="en">[Open with a single sentence that frames the situation. The drop cap makes this paragraph the entry point of the case — let the first line carry weight.] [Continue with the surrounding context: who the users were, what was at stake, why the existing solution wasn't working.<span class="fn" data-fn="1">1</span>]</span>
+            </p>
+            <p>
+              <span class="t" lang="pt">[Segundo parágrafo: a <span class="it">tensão</span> — a contradição ou restrição específica que tornou isto difícil. Evite listar funcionalidades; descreva o obstáculo.]</span><span class="t" lang="en">[Second paragraph: the <span class="it">tension</span> — the specific contradiction or constraint that made this hard. Avoid listing features; describe the obstacle.]</span>
+            </p>
+            <p>
+              <span class="t" lang="pt">[Terceiro parágrafo: insinue a resolução sem entregá-la. Prepare o leitor para os <em>Acta</em> que vêm a seguir.]</span><span class="t" lang="en">[Third paragraph: hint at the resolution without spoiling it. Set up the reader for the <em>Acta</em> that follow.]</span>
+            </p>
+          </div>
+
+          <!-- Notas de rodapé do Argument. Ligam aos .fn pelo data-fn. -->
+          <ol class="footnotes reveal">
+            <li class="fn-item" data-fn="1">
+              <span class="fn-num">1.</span>
+              <span class="t" lang="pt"><span class="it">[Texto da nota — uma citação, um dado ou um aparte que você prefere não empurrar para a coluna principal.]</span></span>
+              <span class="t" lang="en"><span class="it">[Footnote text — a citation, a data point, or an aside that you'd rather not push into the main column.]</span></span>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <aside class="margin-r" aria-hidden="true"></aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       II — Acta (the acts: the process as a sequence of moves)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">II.</span>
+        <span class="name">Acta</span>
+        <span class="gloss"><span class="t" lang="pt">Os atos</span><span class="t" lang="en">The acts</span></span>
+      </header>
+
+      <ol class="acta" data-stagger>
+        <li class="act">
+          <span class="act-num">I.</span>
+          <div>
+            <h3 class="act-name"><span class="t" lang="pt">[Discovery — a escuta]</span><span class="t" lang="en">[Discovery — the listening pass]</span></h3>
+            <div class="act-body">
+              <p class="t" lang="pt">[O que você fez. Com quem falou. O que emergiu.]</p>
+              <p class="t" lang="en">[What you did. Who you spoke to. What surfaced.]</p>
+            </div>
+            <span class="act-tag"><span class="t" lang="pt">[Método — Entrevistas · Campo]</span><span class="t" lang="en">[Method — Interviews · Field study]</span></span>
+          </div>
+        </li>
+
+        <li class="act">
+          <span class="act-num">II.</span>
+          <div>
+            <h3 class="act-name"><span class="t" lang="pt">[Enquadramento — o que escolhemos resolver]</span><span class="t" lang="en">[Framing — what we chose to solve]</span></h3>
+            <div class="act-body">
+              <p class="t" lang="pt">[A decisão que estreitou o problema. O que ficou para depois.]</p>
+              <p class="t" lang="en">[The decision that narrowed the problem. What was deferred.]</p>
+            </div>
+            <span class="act-tag"><span class="t" lang="pt">[Artefato — Journey · Hipóteses]</span><span class="t" lang="en">[Artefact — Journey · Hypotheses]</span></span>
+          </div>
+        </li>
+
+        <li class="act">
+          <span class="act-num">III.</span>
+          <div>
+            <h3 class="act-name"><span class="t" lang="pt">[Design — as iterações]</span><span class="t" lang="en">[Design — the iterations]</span></h3>
+            <div class="act-body">
+              <p class="t" lang="pt">[Sketch → wires → UI. O momento de virada.<span class="fn" data-fn="2">2</span>]</p>
+              <p class="t" lang="en">[Sketch → wires → UI. The breakthrough moment.<span class="fn" data-fn="2">2</span>]</p>
+            </div>
+            <span class="act-tag"><span class="t" lang="pt">[Saída — Sistema · Protótipo]</span><span class="t" lang="en">[Output — System · Prototype]</span></span>
+          </div>
+        </li>
+
+        <li class="act">
+          <span class="act-num">IV.</span>
+          <div>
+            <h3 class="act-name"><span class="t" lang="pt">[Entrega — o handoff e além]</span><span class="t" lang="en">[Delivery — the handoff and beyond]</span></h3>
+            <div class="act-body">
+              <p class="t" lang="pt">[Como foi lançado. O que o QA pegou. Ajustes pós-lançamento.]</p>
+              <p class="t" lang="en">[How it shipped. What QA caught. Post-launch adjustments.]</p>
+            </div>
+            <span class="act-tag"><span class="t" lang="pt">[Método — Specs · QA · Medição]</span><span class="t" lang="en">[Method — Specs · QA · Measurement]</span></span>
+          </div>
+        </li>
+      </ol>
+
+      <ol class="footnotes reveal" style="margin-top: 48px;">
+        <li class="fn-item" data-fn="2">
+          <span class="fn-num">2.</span>
+          <span class="t" lang="pt"><span class="it">[O insight ou restrição pivotal — descrito em uma frase.]</span></span>
+          <span class="t" lang="en"><span class="it">[The pivotal insight or constraint — described in one sentence.]</span></span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Intermezzo — interlúdio de tela cheia (pull-quote / tese)
+       Banda escura, tipografia grande. Não numerada.
+       ============================================================ -->
+  <section class="case-intermezzo" data-folio aria-label="Intermezzo">
+    <span class="intermezzo-bg l1" data-speed="0.12" aria-hidden="true">⁂</span>
+    <span class="intermezzo-bg l2" data-speed="-0.10" aria-hidden="true">❧</span>
+    <div class="intermezzo-inner reveal">
+      <span class="intermezzo-label">Intermezzo</span>
+      <p class="intermezzo-quote">
+        <span class="t" lang="pt">[A tese do projeto em uma frase grande e memorável — o que esta prancha defende, dita em voz alta.]</span>
+        <span class="t" lang="en">[The project's thesis in one large, memorable line — what this plate argues, said out loud.]</span>
+      </p>
+      <span class="intermezzo-asterism" aria-hidden="true">⁂</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       III — Plates (screens as engravings)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread">
+      <aside class="margin-l" aria-hidden="true"></aside>
+      <div class="content">
+        <header class="section-head reveal">
+          <span class="roman">III.</span>
+          <span class="name"><span class="t" lang="pt">Pranchas</span><span class="t" lang="en">Plates</span></span>
+          <span class="gloss"><span class="t" lang="pt">As telas</span><span class="t" lang="en">The screens</span></span>
+        </header>
+
+        <div class="case-plates reveal">
+          <!-- Para usar a lupa, defina data-zoom com URL da imagem (mesma da img),
+               ou troque .placeholder por <img src="..."> dentro de .case-plate. -->
+          <figure class="case-plate full placeholder">
+            <span class="plate-label">Pl.</span>
+            <span class="plate-roman">i</span>
+          </figure>
+          <figure class="case-plate half placeholder">
+            <span class="plate-label">Pl.</span>
+            <span class="plate-roman">ii</span>
+          </figure>
+          <figure class="case-plate half placeholder">
+            <span class="plate-label">Pl.</span>
+            <span class="plate-roman">iii</span>
+          </figure>
+          <figure class="case-plate third placeholder">
+            <span class="plate-label">Pl.</span>
+            <span class="plate-roman">iv</span>
+          </figure>
+          <figure class="case-plate third placeholder">
+            <span class="plate-label">Pl.</span>
+            <span class="plate-roman">v</span>
+          </figure>
+          <figure class="case-plate third placeholder">
+            <span class="plate-label">Pl.</span>
+            <span class="plate-roman">vi</span>
+          </figure>
+        </div>
+
+        <p class="plate-caption reveal">
+          <span class="num">i–vi</span>
+          <span class="t" lang="pt">[Legenda — o que as pranchas mostram. Mantenha seco, como uma etiqueta de museu.]</span>
+          <span class="t" lang="en">[Caption — what the plates are showing. Keep it dry, like a museum label.]</span>
+        </p>
+
+        <!-- Métricas-chave como marginalia statistica, não KPI cards genéricos -->
+        <!-- Métricas com count-up: troque data-count pelo número real (data-dec = casas decimais). -->
+        <aside class="marginalia-stat reveal">
+          <dl>
+            <div>
+              <dt><span class="stat-val" data-count="42">42</span><span class="unit">%</span></dt>
+              <dd><span class="t" lang="pt">[redução no tempo até a decisão após o rollout]</span><span class="t" lang="en">[reduction in time-to-decision after rollout]</span></dd>
+            </div>
+            <div>
+              <dt><span class="stat-val" data-count="3.1" data-dec="1">3.1</span><span class="unit">×</span></dt>
+              <dd><span class="t" lang="pt">[aumento em ações qualificadas por sessão]</span><span class="t" lang="en">[increase in qualified actions per session]</span></dd>
+            </div>
+            <div>
+              <dt><span class="unit unit-pre">+</span><span class="stat-val" data-count="28">28</span></dt>
+              <dd><span class="t" lang="pt">[NPS — delta na satisfação do usuário em um trimestre]</span><span class="t" lang="en">[NPS — delta in user satisfaction over one quarter]</span></dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+      <aside class="margin-r" aria-hidden="true"></aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       IV — Reception (o que se disse: depoimento + adoção)
+       ============================================================ -->
+  <section class="page case-section reception" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">IV.</span>
+        <span class="name"><span class="t" lang="pt">Recepção</span><span class="t" lang="en">Reception</span></span>
+        <span class="gloss"><span class="t" lang="pt">O que se disse</span><span class="t" lang="en">What was said</span></span>
+      </header>
+
+      <figure class="reception-clipping reveal">
+        <span class="clip-tape clip-tape-l" aria-hidden="true"></span>
+        <span class="clip-tape clip-tape-r" aria-hidden="true"></span>
+        <blockquote>
+          <span class="t" lang="pt">[Um depoimento curto de um stakeholder ou usuário — autêntico, específico, sem superlativos vazios. Uma ou duas frases bastam.]</span>
+          <span class="t" lang="en">[A short testimonial from a stakeholder or user — authentic, specific, no empty superlatives. One or two sentences is plenty.]</span>
+        </blockquote>
+        <figcaption>
+          <span class="cite-name">[Name]</span>
+          <span class="cite-role"><span class="t" lang="pt">[Cargo · Empresa]</span><span class="t" lang="en">[Role · Company]</span></span>
+        </figcaption>
+      </figure>
+
+      <p class="reception-note reveal">
+        <span class="t" lang="pt">[Uma frase sobre adoção, continuidade ou o destino do trabalho depois do lançamento — o que provou que ficou de pé.]</span>
+        <span class="t" lang="en">[A line about adoption, continuity, or where the work went after launch — what proved it had legs.]</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       V — Errata (what didn't work; what was learned)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">V.</span>
+        <span class="name">Errata</span>
+        <span class="gloss"><span class="t" lang="pt">O que eu revisaria</span><span class="t" lang="en">What I'd revise</span></span>
+      </header>
+
+      <ol class="errata-list" data-stagger>
+        <li class="errata-item">
+          <span class="errata-tag"><span class="t" lang="pt">Para a p. 14</span><span class="t" lang="en">For p. 14</span></span>
+          <p class="t" lang="pt">
+            <span class="strike">[A hipótese inicial que se provou errada.]</span>
+            — <span class="em">[a correção, em uma frase.]</span>
+          </p>
+          <p class="t" lang="en">
+            <span class="strike">[The early hypothesis that proved wrong.]</span>
+            — <span class="em">[the correction, in one sentence.]</span>
+          </p>
+        </li>
+        <li class="errata-item">
+          <span class="errata-tag"><span class="t" lang="pt">Para a p. 22</span><span class="t" lang="en">For p. 22</span></span>
+          <p class="t" lang="pt">
+            <span class="strike">[Um padrão que lançamos e depois substituímos.]</span>
+            — <span class="em">[o que aprendemos com a substituição.]</span>
+          </p>
+          <p class="t" lang="en">
+            <span class="strike">[A pattern we shipped and later replaced.]</span>
+            — <span class="em">[what we learned from the replacement.]</span>
+          </p>
+        </li>
+        <li class="errata-item">
+          <span class="errata-tag"><span class="t" lang="pt">Para a p. 31</span><span class="t" lang="en">For p. 31</span></span>
+          <p class="t" lang="pt">
+            <span class="strike">[Uma medição que deveríamos ter montado antes.]</span>
+            — <span class="em">[como instrumentaríamos da próxima vez.]</span>
+          </p>
+          <p class="t" lang="en">
+            <span class="strike">[A measurement we should have set up earlier.]</span>
+            — <span class="em">[how we'd instrument it next time.]</span>
+          </p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VI — Instrumentarium (as ferramentas do ofício)
+       ============================================================ -->
+  <section class="page case-section instrumentarium" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">VI.</span>
+        <span class="name">Instrumentarium</span>
+        <span class="gloss"><span class="t" lang="pt">As ferramentas</span><span class="t" lang="en">The instruments</span></span>
+      </header>
+
+      <ul class="instruments" data-stagger>
+        <li class="instrument">
+          <span class="inst-glyph" aria-hidden="true">✶</span>
+          <span class="inst-name">Figma</span>
+          <span class="inst-desc"><span class="t" lang="pt">[UI, protótipo e design system]</span><span class="t" lang="en">[UI, prototype and design system]</span></span>
+        </li>
+        <li class="instrument">
+          <span class="inst-glyph" aria-hidden="true">✧</span>
+          <span class="inst-name">Framer</span>
+          <span class="inst-desc"><span class="t" lang="pt">[Protótipos de alta fidelidade e motion]</span><span class="t" lang="en">[High-fidelity prototypes and motion]</span></span>
+        </li>
+        <li class="instrument">
+          <span class="inst-glyph" aria-hidden="true">❖</span>
+          <span class="inst-name">Claude</span>
+          <span class="inst-desc"><span class="t" lang="pt">[Síntese de pesquisa e exploração de copy]</span><span class="t" lang="en">[Research synthesis and copy exploration]</span></span>
+        </li>
+        <li class="instrument">
+          <span class="inst-glyph" aria-hidden="true">✦</span>
+          <span class="inst-name">Cursor</span>
+          <span class="inst-desc"><span class="t" lang="pt">[Protótipos em código, handoff vivo]</span><span class="t" lang="en">[Code prototypes, living handoff]</span></span>
+        </li>
+        <li class="instrument">
+          <span class="inst-glyph" aria-hidden="true">✸</span>
+          <span class="inst-name">[Tool]</span>
+          <span class="inst-desc"><span class="t" lang="pt">[Para que serviu neste case.]</span><span class="t" lang="en">[What it was used for in this case.]</span></span>
+        </li>
+        <li class="instrument">
+          <span class="inst-glyph" aria-hidden="true">✺</span>
+          <span class="inst-name">[Tool]</span>
+          <span class="inst-desc"><span class="t" lang="pt">[Para que serviu neste case.]</span><span class="t" lang="en">[What it was used for in this case.]</span></span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Colofão do case + Verso/Recto
+       ============================================================ -->
+  <section class="case-colophon" data-folio>
+    <div class="ornament">✦</div>
+    <p class="case-colophon-body">
+      <span class="t" lang="pt">[Esta prancha foi composta durante <em>[período]</em>, em colaboração com <em>[time / parceiros]</em>. Ferramentas do ofício — <em>[Figma · Framer · Cursor · Claude]</em>. Alguns detalhes foram obscurecidos para honrar a confidencialidade.]</span>
+      <span class="t" lang="en">[This plate was set during <em>[period]</em>, in collaboration with <em>[team / partners]</em>. Tools of the trade — <em>[Figma · Framer · Cursor · Claude]</em>. Some details have been obscured to honour confidentiality.]</span>
+    </p>
+    <div class="case-colophon-meta">Plate [Roman] · Vol. I · MMXXVI</div>
+  </section>
+
+  <nav class="folio-nav" aria-label="Navegação entre cases">
+    <a class="verso" href="./[previous-case].html" rel="prev">
+      <span class="folio-marker"><span class="t" lang="pt">← Verso</span><span class="t" lang="en">← Verso</span></span>
+      <span class="folio-title"><em>[Previous case title]</em></span>
+    </a>
+    <a class="recto" href="./[next-case].html" rel="next">
+      <span class="folio-marker"><span class="t" lang="pt">Recto →</span><span class="t" lang="en">Recto →</span></span>
+      <span class="folio-title"><em>[Next case title]</em></span>
+    </a>
+  </nav>
+
+</main>
+
+<!-- Chrome inferior: page counter (ligado ao scroll) + progress bar -->
+<footer class="chrome-bot">
+  <div class="page-counter" aria-hidden="true">
+    <span class="num" data-counter-current>—</span>
+    <span class="of">/ <span data-counter-total>—</span></span>
+  </div>
+  <div class="ink-progress" aria-hidden="true"></div>
+  <div class="page-counter">
+    <span class="of"><span class="t" lang="pt">Prancha</span><span class="t" lang="en">Plate</span></span>
+    <span class="num">[Roman]</span>
+  </div>
+</footer>
+
+<!-- JS puro, sem build. -->
+<script src="./case-template.js"></script>
+</body>
+</html>
