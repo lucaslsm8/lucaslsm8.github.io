@@ -43,6 +43,11 @@ My Portifolio/
 ├── catalogue.css                ← estilos da home (usa tokens)
 ├── catalogue.js                 ← React UMD compilado, JS puro
 ├── favicon.svg                  ← ícone editorial (fica na raiz, por convenção)
+├── 404.html                     ← página de erro (Errata · CDIV) com física Matter.js — torre de livros 3D interativa
+├── errata-scene.css             ← CSS do cuboide de livros 3D (usado pela 404)
+├── errata-scene.js              ← JS CSS-3D da 404 (não usado na v. física, mas mantido p/ referência)
+├── errata-physics.js            ← motor físico da 404 (Matter.js + canvas próprio)
+├── tweaks-panel.jsx             ← painel de ajustes React (dev only, não carregado na 404 de produção)
 ├── deploy-to-github.ps1         ← script de deploy p/ GitHub Pages
 ├── images/                      ← TODOS os assets raster (ver regra abaixo)
 │   ├── S.png                    ← capitular iluminada "S" (drop-cap do Prefácio · PT → "Sou")

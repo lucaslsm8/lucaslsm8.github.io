@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-palette="leather" data-spines="numerals" data-click="restack">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Errata · CDIV — Página fora do catálogo · Lucas Schoenherr</title>
+<meta name="description" content="A página solicitada não consta no presente volume. Errata CDIV — catalogue of works by Lucas Schoenherr." />
+<meta name="robots" content="noindex,follow" />
+<meta name="theme-color" content="#f1ece0" />
+<meta name="color-scheme" content="light" />
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="design-system/tokens.css" />
+<link rel="stylesheet" href="errata-scene.css" />
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; overflow-x: hidden; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: var(--fs-body);
+    line-height: var(--lh-normal);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-image:
+      radial-gradient(ellipse at 12% 18%, rgba(122, 38, 32, 0.025), transparent 55%),
+      radial-gradient(ellipse at 85% 82%, rgba(29, 58, 120, 0.02), transparent 55%);
+  }
+  html[data-palette="leather"] body {
+    background: #ece5d4;
+    background-image:
+      radial-gradient(ellipse at 50% 38%, rgba(26,22,18,0.05), transparent 60%);
+  }
+  ::selection { background: var(--highlighter); color: var(--ink); }
+  a { color: inherit; text-decoration: none; }
+
+  /* ----- Chrome ----- */
+  .chrome {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: var(--sp-5) var(--sp-7);
+    font-family: var(--mono);
+    font-size: var(--fs-small);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+  }
+  .chrome--top { border-bottom: var(--border-hair); }
+  .chrome--bot { border-top: var(--border-hair); margin-top: auto; }
+  .chrome .running-head .ital {
+    font-family: var(--serif); font-style: italic;
+    text-transform: none; letter-spacing: 0;
+    color: var(--ink-soft); margin-left: var(--sp-2);
+  }
+  .chrome .running-head .acc { color: var(--oxblood); }
+  .chrome .folio { font-variant-numeric: tabular-nums; }
+
+  /* ----- Stage / layout ----- */
+  main {
+    flex: 1;
+    display: grid;
+    place-items: center;
+    padding: var(--sp-8) var(--sp-7);
+  }
+  .errata-page { width: 100%; max-width: var(--w-narrow); text-align: center; }
+
+  /* ----- Eyebrow ----- */
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: var(--fs-small);
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--oxblood);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-4);
+  }
+  .eyebrow::before, .eyebrow::after {
+    content: ""; display: inline-block;
+    width: 36px; height: 1px; background: currentColor; opacity: 0.6;
+  }
+
+  /* ----- Título ----- */
+  .errata-title {
+    font-family: var(--serif-display);
+    font-weight: 400;
+    font-size: clamp(48px, 7.5vw, 96px);
+    line-height: var(--lh-tight);
+    margin: var(--sp-4) 0 var(--sp-3);
+    letter-spacing: -0.01em;
+  }
+  .errata-title .roman { font-style: italic; color: var(--oxblood); }
+  .errata-subtitle {
+    font-family: var(--serif); font-style: italic;
+    font-size: var(--fs-h4); color: var(--ink-soft);
+    margin: 0 0 var(--sp-6);
+  }
+  .errata-subtitle .sep {
+    display: inline-block; margin: 0 var(--sp-3);
+    color: var(--ink-ghost); font-style: normal;
+  }
+
+  /* ----- 404 display ----- */
+  .errata-404-display {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.02em;
+    line-height: 1;
+    margin: var(--sp-5) 0 var(--sp-3);
+    user-select: none;
+  }
+  .errata-404-display .n4 {
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(96px, 16vw, 200px);
+    color: var(--oxblood);
+    letter-spacing: -0.03em;
+  }
+  .errata-404-display .n0 {
+    font-family: var(--serif-display);
+    font-style: normal;
+    font-weight: 400;
+    font-size: clamp(80px, 13vw, 168px);
+    color: transparent;
+    -webkit-text-stroke: 2px var(--ink-soft);
+    letter-spacing: -0.01em;
+    position: relative;
+    top: -0.04em;
+  }
+  .errata-404-display .n4-left { letter-spacing: -0.04em; }
+  .errata-404-display .n4-right { letter-spacing: 0; }
+
+  @media (max-width: 640px) {
+    .errata-404-display .n4  { font-size: clamp(72px, 20vw, 96px); }
+    .errata-404-display .n0  { font-size: clamp(60px, 17vw, 80px); }
+  }
+
+  /* ----- A prancha (cena física) — full-bleed horizontal ----- */
+  .plate {
+    margin: var(--sp-3) 0 var(--sp-7);
+    /* escapa do container estreito e ocupa toda a largura da viewport */
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    overflow: visible; /* livros voam além da borda da figure */
+    position: relative;
+    z-index: 10; /* fica por cima do restante do conteúdo da página */
+  }
+  .plate .stage {
+    perspective: none;
+    height: clamp(320px, 44vh, 460px);
+    cursor: none;
+    max-width: none;
+    width: 100%;
+    position: relative;
+    overflow: visible; /* livros podem voar acima do stage */
+  }
+  .plate .stage::after { display: none; }
+  #physics-canvas {
+    display: block;
+    touch-action: none;
+    /* posicionamento absoluto e tamanho controlados pelo JS (sizeCanvas) */
+  }
+  .plate figcaption {
+    margin-top: var(--sp-5);
+    font-family: var(--mono);
+    font-size: var(--fs-caption);
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--ink-faint);
+    display: flex; align-items: center; justify-content: center; gap: var(--sp-3);
+  }
+  .plate figcaption .sep { color: var(--ink-ghost); }
+  .plate figcaption em {
+    font-family: var(--serif); font-style: italic;
+    text-transform: none; letter-spacing: 0;
+    font-size: var(--fs-meta); color: var(--ink-soft);
+  }
+
+  /* ----- Corpo ----- */
+  .errata-body { max-width: var(--w-prose); margin: 0 auto var(--sp-7); }
+  .errata-body .pt {
+    font-size: var(--fs-lead); line-height: var(--lh-loose);
+    color: var(--ink); text-wrap: pretty;
+  }
+  .errata-body .pt::first-letter {
+    font-family: var(--serif-display); font-size: 3.2em; line-height: 0.85;
+    color: var(--oxblood); float: left; padding: 0.06em var(--sp-3) 0 0; font-style: italic;
+  }
+  .errata-body .en {
+    font-style: italic; font-size: var(--fs-meta); color: var(--ink-faint);
+    line-height: var(--lh-loose); margin-top: var(--sp-4); padding-top: var(--sp-4);
+    border-top: var(--border-dotted); text-wrap: pretty;
+  }
+  .errata-body .en::before {
+    content: "EN — "; font-family: var(--mono); font-style: normal;
+    font-size: var(--fs-caption); letter-spacing: 0.18em; color: var(--ink-ghost);
+    text-transform: uppercase; margin-right: var(--sp-2); vertical-align: 0.1em;
+  }
+
+  /* ----- Registry ----- */
+  .registry { margin: 0 auto var(--sp-7); max-width: var(--w-prose); text-align: left; }
+  .registry-label {
+    font-family: var(--mono); font-size: var(--fs-caption);
+    text-transform: uppercase; letter-spacing: 0.2em;
+    color: var(--ink-faint); margin-bottom: var(--sp-3);
+  }
+  .registry-row {
+    display: flex; flex-wrap: nowrap; gap: var(--sp-3);
+    align-items: baseline; padding: var(--sp-3) 0;
+    border-top: var(--border-hair); border-bottom: var(--border-hair);
+    font-family: var(--serif);
+  }
+  .registry-row .num {
+    flex: 0 0 auto; min-width: 56px;
+    font-family: var(--serif-display); font-style: italic;
+    color: var(--oxblood); font-size: var(--fs-h4);
+  }
+  .registry-row .title-wrap { flex: 1 1 auto; display: flex; align-items: baseline; gap: var(--sp-3); min-width: 0; }
+  .registry-row .title {
+    flex: 0 1 auto; font-style: italic; color: var(--ink);
+    font-size: var(--fs-meta); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .registry-row .leader {
+    flex: 1 1 auto; border-bottom: 1px dotted var(--ink-ghost);
+    transform: translateY(-4px); min-width: 24px;
+  }
+  .registry-row .folio-no {
+    flex: 0 0 auto; font-family: var(--mono); color: var(--ink-ghost);
+    font-size: var(--fs-meta); text-align: right; font-variant-numeric: tabular-nums;
+  }
+
+  /* ----- Folio nav ----- */
+  .folio-nav {
+    display: grid; grid-template-columns: 1fr 1px 1fr; gap: 0;
+    max-width: var(--w-narrow); margin: 0 auto;
+    border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink);
+  }
+  .folio-nav .divider { background: var(--ink); width: 1px; }
+  .folio-nav a {
+    display: block; padding: var(--sp-5) var(--sp-5); text-align: left;
+    transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+    min-height: 44px;
+  }
+  .folio-nav a.recto { text-align: right; }
+  .folio-nav a:hover, .folio-nav a:focus-visible { background: var(--ink); color: var(--paper); outline: none; }
+  .folio-nav a:hover .label, .folio-nav a:focus-visible .label { color: var(--paper); opacity: 0.7; }
+  .folio-nav a:hover .arrow, .folio-nav a:focus-visible .arrow { color: var(--paper); }
+  .folio-nav .label {
+    display: block; font-family: var(--mono); font-size: var(--fs-caption);
+    text-transform: uppercase; letter-spacing: 0.22em; color: var(--ink-faint); margin-bottom: var(--sp-2);
+  }
+  .folio-nav .dest {
+    display: flex; align-items: baseline; gap: var(--sp-3);
+    font-family: var(--serif-display); font-style: italic; font-size: var(--fs-h4);
+  }
+  .folio-nav a.recto .dest { justify-content: flex-end; }
+  .folio-nav .arrow { color: var(--oxblood); font-style: normal; transition: transform var(--dur-base) var(--ease-out); display: inline-block; }
+  .folio-nav a.verso:hover .arrow { transform: translateX(-4px); }
+  .folio-nav a.recto:hover .arrow { transform: translateX(4px); }
+
+  /* ----- Footnote ----- */
+  .errata-footnote {
+    max-width: var(--w-prose); margin: var(--sp-7) auto 0;
+    font-family: var(--serif); font-style: italic; font-size: var(--fs-meta);
+    color: var(--ink-faint); text-align: center; line-height: var(--lh-loose);
+  }
+  .errata-footnote sup {
+    color: var(--oxblood); font-style: normal; font-family: var(--mono);
+    font-size: 0.7em; margin-right: 4px;
+  }
+
+  /* ----- Responsivo ----- */
+  @media (max-width: 1024px) {
+    main { padding: var(--sp-7) var(--sp-5); }
+    .chrome { padding: var(--sp-4) var(--sp-5); }
+  }
+  @media (max-width: 768px) {
+    .errata-subtitle { font-size: var(--fs-body); }
+    .errata-body .pt { font-size: var(--fs-body); }
+    .chrome .running-head .ital { display: none; }
+    .registry-row .title { white-space: normal; }
+    .registry-row .num { min-width: 40px; }
+    .plate .stage { height: clamp(260px, 38vh, 360px); }
+  }
+  @media (max-width: 640px) {
+    .folio-nav { grid-template-columns: 1fr; }
+    .folio-nav .divider { width: 100%; height: 1px; }
+    .folio-nav a, .folio-nav a.recto { text-align: left; }
+    .folio-nav a.recto .dest { justify-content: flex-start; }
+    .eyebrow::before, .eyebrow::after { width: 20px; }
+    main { padding: var(--sp-6) var(--sp-4); }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .chrome, .folio-nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="chrome chrome--top" role="banner">
+    <div class="running-head">
+      Lucas Schoenherr
+      <span class="ital">— A catalogue of works <span class="acc">·</span> Volume I, MMXXVI</span>
+    </div>
+    <div class="folio">Errata · CDIV</div>
+  </header>
+
+  <main role="main">
+    <article class="errata-page">
+
+      <div class="eyebrow">Errata · CDIV</div>
+
+      <h1 class="errata-title">Hors <span class="roman">catalogue</span></h1>
+
+      <p class="errata-subtitle">
+        Página fora do volume <span class="sep">·</span> <em>page not of this volume</em>
+      </p>
+
+      <div class="errata-404-display" aria-label="404">
+        <span class="n4 n4-left">4</span><span class="n0">0</span><span class="n4 n4-right">4</span>
+      </div>
+
+      <figure class="plate">
+        <div class="stage" aria-hidden="true">
+          <canvas id="physics-canvas"></canvas>
+        </div>
+        <figcaption>
+          Plate <span class="sep">·</span> <em>empurre as pilhas de volumes</em>
+        </figcaption>
+      </figure>
+
+      <div class="errata-body">
+        <p class="pt">
+          A folha que o leitor procura não consta no presente catálogo. Pode ter sido
+          retirada em revisão, remetida a outro fólio, ou nunca chegou a ser gravada.
+          O bibliotecário pede desculpas pelo descaminho e sugere o retorno ao frontispício.
+        </p>
+        <p class="en">
+          The leaf the reader seeks is not bound in the present volume. It may have been
+          struck in revision, removed to another folio, or never plated at all.
+        </p>
+      </div>
+
+      <section class="registry" aria-label="Registry entry">
+        <div class="registry-label">Registry · entrada ausente</div>
+        <div class="registry-row">
+          <span class="num">—</span>
+          <span class="title-wrap">
+            <span class="title" id="missing-path" title="">/</span>
+            <span class="leader" aria-hidden="true"></span>
+          </span>
+          <span class="folio-no">f. —</span>
+        </div>
+      </section>
+
+      <nav class="folio-nav" aria-label="Folio navigation">
+        <a class="verso" href="index.html">
+          <span class="label">Verso</span>
+          <span class="dest"><span class="arrow">←</span> Frontispício</span>
+        </a>
+        <span class="divider" aria-hidden="true"></span>
+        <a class="recto" href="index.html#works">
+          <span class="label">Recto</span>
+          <span class="dest">Pranchas <span class="arrow">→</span></span>
+        </a>
+      </nav>
+
+      <p class="errata-footnote">
+        <sup>†</sup>
+        Numeração CDIV segue a convenção do HTTP em algarismos romanos.
+        <em>CDIV follows the Roman-numeral convention for HTTP 404.</em>
+      </p>
+
+    </article>
+  </main>
+
+  <footer class="chrome chrome--bot" role="contentinfo">
+    <div>Errata</div>
+    <div class="folio">f. — / —</div>
+  </footer>
+
+  <script>
+    (function () {
+      try {
+        var path = window.location.pathname || "/";
+        var display = path.length > 60 ? "…" + path.slice(-58) : path;
+        var el = document.getElementById("missing-path");
+        if (el) { el.textContent = display; el.setAttribute("title", path); }
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Motor físico (Matter.js via CDN + render próprio em canvas) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.20.0/matter.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="errata-physics.js"></script>
+
+</body>
+</html>
