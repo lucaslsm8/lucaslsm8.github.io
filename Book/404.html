@@ -20,7 +20,8 @@
 
 <style>
   *, *::before, *::after { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; overflow-x: hidden; }
+  html { margin: 0; padding: 0; overflow-x: hidden; }
+  body { margin: 0; padding: 0; }
   body {
     background: var(--paper);
     color: var(--ink);
@@ -149,13 +150,13 @@
   /* ----- A prancha (cena física) — full-bleed horizontal ----- */
   .plate {
     margin: var(--sp-3) 0 var(--sp-7);
-    /* escapa do container estreito e ocupa toda a largura da viewport */
+    /* full-bleed: centraliza e empurra para o viewport inteiro */
     width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    overflow: visible; /* livros voam além da borda da figure */
     position: relative;
-    z-index: 10; /* fica por cima do restante do conteúdo da página */
+    left: 50%;
+    transform: translateX(-50%);
+    overflow: visible; /* livros voam além da borda da figure */
+    z-index: 10;
   }
   .plate .stage {
     perspective: none;
@@ -169,7 +170,7 @@
   .plate .stage::after { display: none; }
   #physics-canvas {
     display: block;
-    touch-action: none;
+    touch-action: pan-y; /* vertical scroll livre; horizontal capturado pela física */
     /* posicionamento absoluto e tamanho controlados pelo JS (sizeCanvas) */
   }
   .plate figcaption {

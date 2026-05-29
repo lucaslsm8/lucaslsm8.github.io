@@ -354,7 +354,9 @@
   }
 
   function wirePointer() {
+    // --- Mouse: comportamento original ---
     canvas.addEventListener("pointerenter", function (e) {
+      if (e.pointerType === "touch") return; // touch tem lógica própria abaixo
       var p = toLocal(e);
       mouse = p; lastMouse = { x: p.x, y: p.y };
       mouseVel = { x: 0, y: 0 };
@@ -363,21 +365,82 @@
       Body.setPosition(cursor, mouse);
     });
     canvas.addEventListener("pointermove", function (e) {
+      if (e.pointerType === "touch") return;
       mouse = toLocal(e);
     });
-    canvas.addEventListener("pointerleave", function () {
+    canvas.addEventListener("pointerleave", function (e) {
+      if (e.pointerType === "touch") return;
       cursorActive = false;
       dropCursor();
       mouseVel = { x: 0, y: 0 };
     });
     canvas.addEventListener("click", onCanvasClick);
-    // toque: derruba na direção do arrasto
+
+    // --- Touch: threshold de intenção ---
+    // Aguarda o primeiro movimento para decidir se é scroll (vertical)
+    // ou interação com a física (horizontal/diagonal).
+    var touchState = "idle"; // "idle" | "deciding" | "physics" | "scroll"
+    var touchOrigin = { x: 0, y: 0 };
+    var THRESHOLD = 8; // px antes de decidir a intenção
+
     canvas.addEventListener("pointerdown", function (e) {
-      if (e.pointerType === "touch") {
-        var p = toLocal(e);
-        mouse = p; lastMouse = { x: p.x, y: p.y };
-        cursorActive = true; ensureCursor(); Body.setPosition(cursor, mouse);
+      if (e.pointerType !== "touch") return;
+      touchState = "deciding";
+      var p = toLocal(e);
+      touchOrigin = { x: e.clientX, y: e.clientY };
+      mouse = p; lastMouse = { x: p.x, y: p.y };
+      mouseVel = { x: 0, y: 0 };
+    });
+
+    canvas.addEventListener("pointermove", function (e) {
+      if (e.pointerType !== "touch") return;
+
+      if (touchState === "deciding") {
+        var dx = Math.abs(e.clientX - touchOrigin.x);
+        var dy = Math.abs(e.clientY - touchOrigin.y);
+        var dist = Math.hypot(dx, dy);
+        if (dist < THRESHOLD) return; // ainda não se moveu o suficiente
+
+        if (dy > dx * 1.2) {
+          // predominantemente vertical → scroll
+          touchState = "scroll";
+          cursorActive = false;
+          dropCursor();
+          return;
+        } else {
+          // horizontal ou diagonal → física
+          touchState = "physics";
+          cursorActive = true;
+          ensureCursor();
+          Body.setPosition(cursor, mouse);
+          canvas.style.touchAction = "none"; // captura o toque
+        }
       }
+
+      if (touchState === "physics") {
+        mouse = toLocal(e);
+        e.preventDefault(); // evita scroll enquanto interage
+      }
+    }, { passive: false });
+
+    canvas.addEventListener("pointerup", function (e) {
+      if (e.pointerType !== "touch") return;
+      if (touchState === "physics") {
+        cursorActive = false;
+        dropCursor();
+        mouseVel = { x: 0, y: 0 };
+      }
+      touchState = "idle";
+      canvas.style.touchAction = "pan-y"; // restaura scroll vertical
+    });
+
+    canvas.addEventListener("pointercancel", function (e) {
+      if (e.pointerType !== "touch") return;
+      cursorActive = false;
+      dropCursor();
+      mouseVel = { x: 0, y: 0 };
+      touchState = "idle";
+      canvas.style.touchAction = "pan-y";
     });
   }
 
@@ -436,7 +499,7 @@
       ctx.beginPath();
       ctx.rect(0, topY, W, tileH);
       ctx.clip();
-      for (var xi = 0; xi <= W; xi += tileW) {
+      for (var xi = 0; xi < W + tileW; xi += tileW) {
         ctx.drawImage(tableImg, xi, topY, tileW, tileH);
       }
       ctx.restore();
@@ -658,8 +721,14 @@
      ========================================================= */
   function sizeCanvas() {
     var r = stage.getBoundingClientRect();
-    W = Math.max(360, Math.round(r.width));
-    H = Math.max(280, Math.round(r.height));
+    // O .plate é full-bleed via `width:100vw`, então o canvas deve cobrir a
+    // largura TOTAL da janela (incl. a barra de rolagem) — = innerWidth, que é
+    // o que 100vw resolve. Usar clientWidth (sem scrollbar) deixava um vão à
+    // direita; usar r.width deixava vão dos dois lados quando o stage não
+    // estava em full-bleed pleno. innerWidth + alinhamento por -r.left cobre
+    // exatamente o plate em qualquer config de scrollbar.
+    W = Math.max(240, Math.round(window.innerWidth || r.width));
+    H = Math.max(240, Math.round(r.height));
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width  = W * dpr;
     canvas.height = (H + OVERHEAD) * dpr;
@@ -667,7 +736,9 @@
     canvas.style.height  = (H + OVERHEAD) + "px";
     canvas.style.position = "absolute";
     canvas.style.top      = -OVERHEAD + "px";
-    canvas.style.left     = "0";
+    // alinha a borda esquerda do canvas à borda esquerda do viewport (= borda
+    // esquerda do plate full-bleed), compensando o deslocamento do stage
+    canvas.style.left     = -Math.round(r.left) + "px";
     ctx.setTransform(dpr, 0, 0, dpr, 0, OVERHEAD * dpr);
     // ajusta pilhas e volumes conforme largura
     var resp = responsivePiles(W);
