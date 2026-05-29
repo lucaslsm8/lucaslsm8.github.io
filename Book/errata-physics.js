@@ -342,9 +342,14 @@
      ========================================================= */
   function toLocal(e) {
     var r = canvas.getBoundingClientRect();
+    // O canvas tem H + OVERHEAD de altura e fica posicionado com top: -OVERHEAD.
+    // e.clientY - r.top inclui a zona invisível acima; subtraímos OVERHEAD para
+    // converter para o sistema de coordenadas da física (y=0 = topo do stage).
+    var scaleX = W / r.width;
+    var scaleY = (H + OVERHEAD) / r.height;
     return {
-      x: (e.clientX - r.left) * (W / r.width),
-      y: (e.clientY - r.top) * (H / r.height)
+      x: (e.clientX - r.left) * scaleX,
+      y: (e.clientY - r.top) * scaleY - OVERHEAD
     };
   }
 
