@@ -249,12 +249,20 @@
   }
 
   function rebuild() {
+    var wasActive = cursorActive;
     clearWorld();
     applyGravity();
     buildWalls();
     buildPiles();
-    cursorActive = false;
     hasInteracted = false;
+    // se o mouse ainda estava sobre o canvas, restaura o cursor imediatamente
+    if (wasActive) {
+      cursorActive = true;
+      ensureCursor();
+      Body.setPosition(cursor, mouse);
+    } else {
+      cursorActive = false;
+    }
   }
 
   function applyGravity() {
