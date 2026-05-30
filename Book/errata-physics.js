@@ -721,13 +721,13 @@
      ========================================================= */
   function sizeCanvas() {
     var r = stage.getBoundingClientRect();
-    // O .plate é full-bleed via `width:100vw`, então o canvas deve cobrir a
-    // largura TOTAL da janela (incl. a barra de rolagem) — = innerWidth, que é
-    // o que 100vw resolve. Usar clientWidth (sem scrollbar) deixava um vão à
-    // direita; usar r.width deixava vão dos dois lados quando o stage não
-    // estava em full-bleed pleno. innerWidth + alinhamento por -r.left cobre
-    // exatamente o plate em qualquer config de scrollbar.
-    W = Math.max(240, Math.round(window.innerWidth || r.width));
+    // Largura = largura TOTAL da janela (innerWidth = o que 100vw do .plate
+    // resolve), para a mesa alcançar a borda direita real sem deixar vão.
+    // O overflow horizontal é travado (overflow-x:hidden em html E body),
+    // então a parte que passa da área visível nunca pode ser revelada por
+    // arraste. As paredes do mundo usam esse mesmo W → livros contidos.
+    var visW = window.innerWidth || document.documentElement.clientWidth || r.width;
+    W = Math.max(240, Math.round(visW));
     H = Math.max(240, Math.round(r.height));
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width  = W * dpr;
@@ -736,8 +736,8 @@
     canvas.style.height  = (H + OVERHEAD) + "px";
     canvas.style.position = "absolute";
     canvas.style.top      = -OVERHEAD + "px";
-    // alinha a borda esquerda do canvas à borda esquerda do viewport (= borda
-    // esquerda do plate full-bleed), compensando o deslocamento do stage
+    // alinha a borda esquerda do canvas à borda esquerda do viewport,
+    // compensando o deslocamento do stage (full-bleed)
     canvas.style.left     = -Math.round(r.left) + "px";
     ctx.setTransform(dpr, 0, 0, dpr, 0, OVERHEAD * dpr);
     // ajusta pilhas e volumes conforme largura
