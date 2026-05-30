@@ -409,5 +409,129 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.20.0/matter.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="errata-physics.js"></script>
 
+  <!-- Painel de Tweaks (React + Babel, apenas para os controles) -->
+  <div id="tweaks-root"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel">
+    const { useEffect } = React;
+
+    const TWEAK_DEFAULTS = {
+      style: "Enriquecido",
+      palette: "Couro",
+      titles: true,
+      bindingVariety: true,
+      edgeVariety: true,
+      ribbons: true,
+      wear: true,
+      bands: true,
+      headbands: true,
+      giltEdge: true,
+      grain: true,
+      light: true,
+      heavy: true,
+      idleLife: true,
+      dust: true,
+      spines: "Numerais",
+      click: "Reempilhar"
+    };
+
+    const STYLE_MAP   = { "Enriquecido": "enriched", "Clássico": "classic" };
+    const PALETTE_MAP = { "Couro": "leather", "Oxblood": "oxblood", "Editorial": "editorial" };
+    const SPINE_MAP   = { "Numerais": "numerals", "Em branco": "blank" };
+    const CLICK_MAP   = { "Reempilhar": "restack", "Explodir": "explode", "Início": "home" };
+
+    function apply(t) {
+      const E = window.ErrataPhysics;
+      if (!E) return;
+      E.setStyle(STYLE_MAP[t.style] || "enriched");
+      E.setTitles(t.titles);
+      E.setBindingVariety(t.bindingVariety);
+      E.setEdgeVariety(t.edgeVariety);
+      E.setRibbons(t.ribbons);
+      E.setWear(t.wear);
+      E.setBands(t.bands);
+      E.setHeadbands(t.headbands);
+      E.setGiltEdge(t.giltEdge);
+      E.setGrain(t.grain);
+      E.setLight(t.light);
+      E.setIdleLife(t.idleLife);
+      E.setDust(t.dust);
+      E.setSpines(SPINE_MAP[t.spines] || "numerals");
+      E.setClick(CLICK_MAP[t.click] || "restack");
+      E.setHeavy(t.heavy);          // rebuild — por último (recolore/reempilha)
+      E.setPalette(PALETTE_MAP[t.palette] || "leather");
+    }
+
+    function App() {
+      const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+      // sincroniza com o motor sempre que um tweak muda (com retry até ErrataPhysics existir)
+      useEffect(() => {
+        if (window.ErrataPhysics) { apply(t); return; }
+        const id = setInterval(() => {
+          if (window.ErrataPhysics) { apply(t); clearInterval(id); }
+        }, 80);
+        return () => clearInterval(id);
+      }, [t]);
+
+      return (
+        <TweaksPanel title="Tweaks">
+          <TweakSection label="Renderização" />
+          <TweakRadio label="Estilo" value={t.style} options={["Enriquecido", "Clássico"]}
+                      onChange={(v) => setTweak("style", v)} />
+          <TweakSelect label="Encadernação" value={t.palette}
+                       options={["Couro", "Oxblood", "Editorial"]}
+                       onChange={(v) => setTweak("palette", v)} />
+
+          <TweakSection label="Matéria do volume" />
+          <TweakToggle label="Títulos & etiquetas de couro" value={t.titles}
+                       onChange={(v) => setTweak("titles", v)} />
+          <TweakToggle label="Variedade (couro + pano)" value={t.bindingVariety}
+                       onChange={(v) => setTweak("bindingVariety", v)} />
+          <TweakToggle label="Cortes salpicados/marmorizados" value={t.edgeVariety}
+                       onChange={(v) => setTweak("edgeVariety", v)} />
+          <TweakToggle label="Marca-páginas de fita" value={t.ribbons}
+                       onChange={(v) => setTweak("ribbons", v)} />
+          <TweakToggle label="Desgaste honesto" value={t.wear}
+                       onChange={(v) => setTweak("wear", v)} />
+
+          <TweakSection label="Acabamento do volume" />
+          <TweakToggle label="Nervuras em relevo" value={t.bands}
+                       onChange={(v) => setTweak("bands", v)} />
+          <TweakToggle label="Cabeçados" value={t.headbands}
+                       onChange={(v) => setTweak("headbands", v)} />
+          <TweakToggle label="Corte dourado (acentos)" value={t.giltEdge}
+                       onChange={(v) => setTweak("giltEdge", v)} />
+          <TweakToggle label="Grão de couro" value={t.grain}
+                       onChange={(v) => setTweak("grain", v)} />
+          <TweakToggle label="Iluminação + oclusão" value={t.light}
+                       onChange={(v) => setTweak("light", v)} />
+
+          <TweakSection label="Física & movimento" />
+          <TweakToggle label="Peso + squash no impacto" value={t.heavy}
+                       onChange={(v) => setTweak("heavy", v)} />
+          <TweakToggle label="Vida ociosa (micro-assentamento)" value={t.idleLife}
+                       onChange={(v) => setTweak("idleLife", v)} />
+          <TweakToggle label="Poeira ao desmoronar" value={t.dust}
+                       onChange={(v) => setTweak("dust", v)} />
+
+          <TweakSection label="Lombadas & interação" />
+          <TweakRadio label="Lombadas" value={t.spines} options={["Numerais", "Em branco"]}
+                      onChange={(v) => setTweak("spines", v)} />
+          <TweakRadio label="Ao clicar" value={t.click}
+                      options={["Reempilhar", "Explodir", "Início"]}
+                      onChange={(v) => setTweak("click", v)} />
+          <TweakButton label="Reempilhar agora"
+                       onClick={() => window.ErrataPhysics && window.ErrataPhysics.restack()} />
+        </TweaksPanel>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("tweaks-root")).render(<App />);
+  </script>
+
 </body>
 </html>
