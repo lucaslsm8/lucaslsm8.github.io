@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gen.AI — Ecossistema de 9 POCs de IA generativa · Lucas Schoenherr</title>
+<meta name="description" content="Estudo de caso do Gen.AI: ecossistema interno da Accenture One Studio com 9 POCs de IA generativa unificadas por um Design System. Lead Product Designer end-to-end: Lucas Schoenherr." />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<!-- Design tokens e estilos da home + específicos do case -->
+<link rel="stylesheet" href="../design-system/tokens.css" />
+<link rel="stylesheet" href="../catalogue.css" />
+<link rel="stylesheet" href="../design-system/case-template.css" />
+
+<!-- ============================================================
+     Estilos exclusivos da prancha Gen.AI — escritos sobre os tokens
+     editoriais (paper / ink / oxblood / cobalt). Tema: catálogo
+     raisonné, sem violeta/ciano do projeto antigo.
+     ============================================================ -->
+<style>
+  /* ---------- Grade dos 9 produtos (o ecossistema) ---------- */
+  .poc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-4);
+    margin-top: var(--sp-6);
+  }
+  .poc-entry {
+    position: relative;
+    display: flex; flex-direction: column; gap: var(--sp-3);
+    padding: var(--sp-5) var(--sp-5) var(--sp-4);
+    background: var(--paper-card);
+    border: var(--border-hair);
+    border-top: 2px solid var(--hairline-strong);
+    border-radius: var(--radius-sm);
+    transition: transform var(--dur-base) var(--ease-out),
+                box-shadow var(--dur-base) var(--ease-out),
+                border-color var(--dur-base) var(--ease-out);
+  }
+  .poc-entry:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-soft);
+    border-top-color: var(--oxblood);
+  }
+  .poc-entry__head { display: flex; align-items: baseline; gap: var(--sp-3); }
+  .poc-entry__roman {
+    font-family: var(--serif-display);
+    font-size: var(--fs-h4); color: var(--oxblood); line-height: 1;
+    flex: 0 0 auto; font-style: italic;
+  }
+  .poc-entry__titles { display: flex; flex-direction: column; gap: 2px; }
+  .poc-entry__name { font-family: var(--serif); font-weight: 600; font-size: 21px; line-height: 1.15; color: var(--ink); }
+  .poc-entry__domain { font-family: var(--mono); font-size: var(--fs-small); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); }
+  .poc-entry__body { font-family: var(--serif); font-size: 16px; line-height: var(--lh-loose); color: var(--ink-soft); flex: 1; }
+  .poc-entry__status {
+    align-self: flex-start;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+    padding: 5px 11px; border-radius: var(--radius-pill);
+    border: 1px solid var(--hairline-strong); color: var(--ink-soft);
+    display: inline-flex; align-items: center; gap: 7px;
+  }
+  .poc-entry__status::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--ink-ghost); }
+  .st--dev::before      { background: #3e7d4f; }
+  .st--proto::before    { background: var(--oxblood); }
+  .st--parcial::before  { background: var(--cobalt); }
+  .st--pesquisa::before { background: var(--ink-ghost); }
+  .poc-entry--featured { border-top-color: var(--oxblood); background: var(--paper-shade); }
+
+  /* legenda de status */
+  .status-legend { display: flex; flex-wrap: wrap; gap: var(--sp-3) var(--sp-6); margin-top: var(--sp-5);
+    font-family: var(--mono); font-size: var(--fs-small); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+  .status-legend__item { display: inline-flex; align-items: center; gap: 8px; }
+  .status-legend__dot { width: 10px; height: 10px; border-radius: 50%; }
+  .sl-dot--dev { background: #3e7d4f; } .sl-dot--proto { background: var(--oxblood); }
+  .sl-dot--parcial { background: var(--cobalt); } .sl-dot--pesquisa { background: var(--ink-ghost); }
+
+  /* ---------- 5 princípios (numerados, editoriais) ---------- */
+  .principles { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-5); margin-top: var(--sp-6); }
+  .principle {
+    position: relative; padding: var(--sp-5) var(--sp-5) var(--sp-5) var(--sp-6);
+    border-left: 2px solid var(--hairline-strong);
+  }
+  .principle:hover { border-left-color: var(--oxblood); }
+  .principle__num { font-family: var(--mono); font-size: var(--fs-small); letter-spacing: .2em; color: var(--oxblood); }
+  .principle__title { font-family: var(--serif); font-weight: 600; font-size: 22px; line-height: 1.2; margin: 8px 0 4px; color: var(--ink); }
+  .principle__tag { font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--ink-faint); margin-bottom: var(--sp-3); display: block; }
+  .principle__body { font-family: var(--serif); font-size: 16px; line-height: var(--lh-loose); color: var(--ink-soft); }
+  .principle__num-big {
+    position: absolute; right: var(--sp-4); top: var(--sp-3);
+    font-family: var(--serif-display); font-style: italic; font-size: 56px;
+    color: var(--paper-deep); line-height: 1; z-index: 0; pointer-events: none;
+  }
+  .principle > * { position: relative; z-index: 1; }
+
+  /* ---------- Spotlight ---------- */
+  .spotlight { margin-top: var(--sp-8); padding-top: var(--sp-6); border-top: var(--border-hair); }
+  .spotlight:first-of-type { border-top: none; }
+  .spotlight__eyebrow { font-family: var(--mono); font-size: var(--fs-small); letter-spacing: .18em; text-transform: uppercase; color: var(--oxblood); }
+  .spotlight__title { font-family: var(--serif-display); font-style: italic; font-size: var(--fs-h3); line-height: 1.1; margin: 8px 0 var(--sp-3); color: var(--ink); }
+  .spotlight__lead { font-family: var(--serif); font-size: 17px; line-height: var(--lh-loose); color: var(--ink-soft); }
+  .spotlight__lead p { margin-bottom: var(--sp-3); }
+  .spotlight__lead .em { color: var(--ink); font-weight: 600; font-style: normal; }
+
+  /* galeria: hero + mosaico, com moldura creme (tipped-in plate) */
+  .sl-gallery { margin-top: var(--sp-5); display: flex; flex-direction: column; gap: var(--sp-3); }
+  .sl-hero, .sl-thumb {
+    position: relative; display: block; overflow: hidden; cursor: zoom-in;
+    background: var(--paper-shade); border: 1px solid var(--hairline-strong);
+    border-radius: var(--radius-sm); box-shadow: var(--shadow-soft);
+    transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+  }
+  .sl-hero { aspect-ratio: 16 / 10; }
+  .sl-hero img, .sl-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block;
+    transition: transform var(--dur-slow) var(--ease-out); }
+  .sl-hero:hover, .sl-thumb:hover { transform: translateY(-3px); border-color: var(--oxblood); box-shadow: var(--shadow-lens); }
+  .sl-hero:hover img, .sl-thumb:hover img { transform: scale(1.03); }
+  .sl-hero__cap {
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+    padding: var(--sp-4) var(--sp-4) var(--sp-3);
+    background: linear-gradient(0deg, rgba(26,22,18,.82) 8%, rgba(26,22,18,.35) 55%, transparent 100%);
+    color: var(--paper); font-family: var(--mono); font-size: 12px; letter-spacing: .04em; line-height: 1.4;
+    display: flex; align-items: center; gap: 9px;
+  }
+  .sl-hero__cap::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--highlighter); flex: 0 0 auto; }
+  .sl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: var(--sp-3); }
+  .sl-thumb { aspect-ratio: 4 / 3; }
+
+  /* ---------- Lightbox (recolorido p/ tema livro) ---------- */
+  .lbg-overlay {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(20,16,12,.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    display: flex; flex-direction: row; align-items: stretch; gap: var(--sp-4);
+    padding: var(--sp-7); cursor: zoom-out; animation: lbg-fade .25s ease;
+  }
+  .lbg__stage { flex: 1 1 auto; position: relative; display: flex; align-items: center; justify-content: center; min-width: 0; cursor: default; max-width: calc(100% - 180px); }
+  .lbg__viewer { display: flex; flex-direction: column; align-items: center; justify-content: center; max-width: 100%; max-height: 100%; gap: var(--sp-3); }
+  .lbg__viewer img { max-width: 100%; max-height: calc(100vh - 9rem); width: auto; height: auto; object-fit: contain;
+    border-radius: var(--radius-sm); box-shadow: 0 30px 80px -20px rgba(0,0,0,.7), 0 0 0 1px var(--highlighter); animation: lbg-zoom .3s var(--ease-out); cursor: default; }
+  .lbg__caption { display: flex; align-items: center; justify-content: center; gap: var(--sp-3); color: var(--paper);
+    font-family: var(--mono); font-size: 13px; text-align: center; max-width: 80%; cursor: default; }
+  .lbg__caption__text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+  .lbg__counter { font-family: var(--mono); font-size: 11px; letter-spacing: .04em; padding: 3px 10px; border-radius: var(--radius-pill);
+    background: rgba(245,227,168,.18); border: 1px solid var(--highlighter); color: var(--paper); white-space: nowrap; }
+  .lbg__nav { position: absolute; top: 50%; transform: translateY(-50%); width: 50px; height: 50px; display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 50%; background: rgba(241,236,224,.12); border: 1px solid rgba(241,236,224,.3); backdrop-filter: blur(6px);
+    color: var(--paper); font-size: 1.6rem; line-height: 1; cursor: pointer; z-index: 2; user-select: none;
+    transition: background var(--dur-fast), transform var(--dur-fast); }
+  .lbg__nav:hover { background: var(--oxblood); border-color: var(--oxblood); transform: translateY(-50%) scale(1.06); }
+  .lbg__nav--prev { left: -.25rem; } .lbg__nav--next { right: -.25rem; }
+  .lbg__sidebar { flex: 0 0 150px; order: -1; display: flex; flex-direction: column; gap: var(--sp-3); overflow-y: auto; overflow-x: hidden;
+    padding: 4px; scrollbar-width: thin; scrollbar-color: rgba(245,227,168,.4) transparent; cursor: default; }
+  .lbg__sidebar::-webkit-scrollbar { width: 6px; } .lbg__sidebar::-webkit-scrollbar-thumb { background: rgba(245,227,168,.35); border-radius: 3px; }
+  .lbg__thumb { position: relative; display: block; width: 100%; aspect-ratio: 4/3; border-radius: var(--radius-sm); overflow: hidden;
+    border: 2px solid rgba(241,236,224,.1); background: rgba(241,236,224,.05); padding: 0; cursor: pointer; opacity: .6;
+    transition: opacity var(--dur-fast), border-color var(--dur-fast), transform var(--dur-fast); }
+  .lbg__thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+  .lbg__thumb:hover { opacity: 1; border-color: rgba(245,227,168,.5); }
+  .lbg__thumb.is-active { opacity: 1; border-color: var(--highlighter); box-shadow: 0 0 0 1px var(--highlighter); }
+  .lbg__close { position: absolute; top: var(--sp-4); right: var(--sp-5); width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 50%; background: rgba(241,236,224,.12); border: 1px solid rgba(241,236,224,.3); color: var(--paper); font-size: 1.5rem; line-height: 1; cursor: pointer; z-index: 3; user-select: none;
+    transition: background var(--dur-fast), transform var(--dur-fast); }
+  .lbg__close:hover { background: var(--oxblood); transform: rotate(90deg); }
+  .lbg__viewer.is-swapping img { animation: lbg-swap .25s ease; }
+  @keyframes lbg-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes lbg-zoom { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: scale(1); } }
+  @keyframes lbg-swap { 0% { opacity: .35; transform: scale(.985); } 100% { opacity: 1; transform: scale(1); } }
+
+  /* ---------- Lições / aprendizados ---------- */
+  .learnings { margin-top: var(--sp-5); }
+  .learning { position: relative; padding: var(--sp-5) 0 var(--sp-5) var(--sp-6); border-top: var(--border-hair); }
+  .learning:first-child { border-top: none; }
+  .learning::before { content: ''; position: absolute; left: 0; top: calc(var(--sp-5) + 8px); width: 8px; height: 8px; border-radius: 50%; background: var(--oxblood); }
+  .learning:first-child::before { top: 8px; }
+  .learning__num { font-family: var(--mono); font-size: var(--fs-small); letter-spacing: .16em; text-transform: uppercase; color: var(--oxblood); }
+  .learning__title { font-family: var(--serif); font-style: italic; font-weight: 600; font-size: 20px; line-height: 1.3; margin: 8px 0 var(--sp-3); color: var(--ink); }
+  .learning__body { font-family: var(--serif); font-size: 16px; line-height: var(--lh-loose); color: var(--ink-soft); }
+
+  /* nota de dados fictícios */
+  .fiction-note {
+    margin-top: var(--sp-5); padding: var(--sp-4) var(--sp-5);
+    border: var(--border-dotted); border-radius: var(--radius-sm);
+    background: var(--paper-shade);
+    font-family: var(--mono); font-size: 12px; line-height: 1.6; letter-spacing: .02em; color: var(--ink-faint);
+    display: flex; gap: var(--sp-3); align-items: flex-start;
+  }
+  .fiction-note::before { content: '⚜'; color: var(--oxblood); font-size: 18px; flex: 0 0 auto; line-height: 1.2; }
+
+  /* ---------- Responsividade ---------- */
+  @media (max-width: 1024px) { .poc-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 768px)  {
+    .principles { grid-template-columns: 1fr; }
+    .sl-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px)  {
+    .poc-grid { grid-template-columns: 1fr; }
+    .lbg-overlay { flex-direction: column; padding: var(--sp-4) var(--sp-3); }
+    .lbg__stage { max-width: 100%; }
+    .lbg__sidebar { flex: 0 0 auto; order: 0; flex-direction: row; width: 100%; max-height: 86px; overflow-x: auto; overflow-y: hidden; }
+    .lbg__thumb { flex: 0 0 100px; width: 100px; }
+    .lbg__viewer img { max-height: calc(100vh - 14rem); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sl-hero img, .sl-thumb img, .poc-entry, .sl-hero, .sl-thumb { transition: none !important; }
+  }
+</style>
+</head>
+<body data-lang="pt">
+<!-- Granulação tátil de papel envelhecido -->
+<div class="paper-grain" aria-hidden="true"></div>
+
+<!-- ============================================================
+     CHROME SUPERIOR (CABEÇALHO FIXO)
+     ============================================================ -->
+<header class="chrome-top">
+  <div class="running-head">
+    <div class="scroll-compass-wrapper" aria-hidden="true" title="Bússola de Progresso">
+      <svg class="scroll-compass" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="45" stroke="var(--ink-ghost)" stroke-width="1.5" fill="none" stroke-dasharray="4 4" />
+        <circle cx="50" cy="50" r="30" stroke="var(--hairline-strong)" stroke-width="1" fill="none" />
+        <line x1="50" y1="10" x2="50" y2="90" stroke="var(--ink-soft)" stroke-width="1" />
+        <line x1="10" y1="50" x2="90" y2="50" stroke="var(--ink-soft)" stroke-width="1" />
+        <polygon points="50,20 54,50 50,55 46,50" fill="var(--oxblood)" />
+        <polygon points="50,80 54,50 50,45 46,50" fill="var(--ink-soft)" />
+        <circle cx="50" cy="50" r="4" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5" />
+      </svg>
+    </div>
+    <span>Lucas Schoenherr</span>
+    <span class="sep">·</span>
+    <em><span class="t" lang="pt">Catálogo de Obras</span><span class="t" lang="en">A Catalogue of Works</span></em>
+    <span class="sep">·</span>
+    <span><span class="t" lang="pt">Prancha I — Gen.AI</span><span class="t" lang="en">Plate I — Gen.AI</span></span>
+  </div>
+  <nav class="chrome-actions">
+    <a href="../index.html" class="to-catalogue">
+      <em><span class="t" lang="pt">Voltar ao catálogo</span><span class="t" lang="en">Return to catalogue</span></em>
+    </a>
+    <div class="lang-toggle" role="group" aria-label="Language / Idioma">
+      <button class="active" type="button" data-lang="pt" aria-pressed="true">PT</button>
+      <span class="pipe">|</span>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </nav>
+</header>
+
+<main class="book">
+
+  <!-- ============================================================
+       0. FOLHA DE ROSTO (FRONTISPÍCIO)
+       ============================================================ -->
+  <section class="case-frontispiece case-frontispiece--cinematic" data-folio>
+    <div class="frontispiece-halo" aria-hidden="true"></div>
+    <div class="sig">
+      <span class="t" lang="pt">Volume I · Prancha I · MMXXIII–MMXXIV</span>
+      <span class="t" lang="en">Volume I · Plate I · MMXXIII–MMXXIV</span>
+    </div>
+
+    <div class="case-num">№ 001</div>
+
+    <h1 class="case-title">
+      <span class="it">Gen</span><span class="reg">.AI</span>
+    </h1>
+
+    <div class="case-rule" aria-hidden="true"></div>
+
+    <p class="case-deck">
+      <span class="t" lang="pt"><span class="em">Um ecossistema de 9 POCs de IA generativa</span> para a Accenture One Studio, unificadas por um único Design System — concebido e prototipado de ponta a ponta por um só designer em ~3 meses.</span>
+      <span class="t" lang="en"><span class="em">An ecosystem of 9 generative-AI POCs</span> for Accenture One Studio, unified by a single Design System — conceived and prototyped end-to-end by a single designer in ~3 months.</span>
+    </p>
+
+    <dl class="case-byline case-byline--inline">
+      <div>
+        <span class="lab"><span class="t" lang="pt">Comissão</span><span class="t" lang="en">Commission</span></span>
+        <span class="val">Accenture · One Studio</span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Papel</span><span class="t" lang="en">Role</span></span>
+        <span class="val">Lead Product Designer (end-to-end)</span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Período</span><span class="t" lang="en">Period</span></span>
+        <span class="val">MMXXIII–MMXXIV (~3 meses)</span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Escopo</span><span class="t" lang="en">Scope</span></span>
+        <span class="val">Generative AI · Design System · 9 POCs</span>
+      </div>
+    </dl>
+
+    <div class="frontispiece-indicator">
+      <span class="t" lang="pt">Gire a folha para iniciar a leitura</span>
+      <span class="t" lang="en">Scroll down to turn the leaf</span>
+      <span class="arrow">↓</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       EPÍGRAFE
+       ============================================================ -->
+  <section class="case-epigraph" data-folio aria-label="Epigraph">
+    <div class="epigraph-inner reveal">
+      <span class="epigraph-mark" aria-hidden="true">“</span>
+      <blockquote class="epigraph-quote">
+        <span class="t" lang="pt">Projetar para IA generativa é tornar visível o invisível: a confiança, a fonte e a reversibilidade de cada resposta.</span>
+        <span class="t" lang="en">Designing for generative AI is making the invisible visible: the confidence, the source, and the reversibility of every answer.</span>
+      </blockquote>
+      <figcaption class="epigraph-cite">
+        <span class="t" lang="pt">— Princípio fundador do Gen.AI Design System</span>
+        <span class="t" lang="en">— Founding principle of the Gen.AI Design System</span>
+      </figcaption>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       I. ARGUMENTO & CONTEXTO (OVERVIEW)
+       ============================================================ -->
+  <section class="page case-section argument" data-folio>
+    <div class="spread">
+      <aside class="margin-l">
+        <p class="gloss" data-anchor="arg-p1">
+          <span class="gloss-num">i</span>
+          <span class="t" lang="pt">9 squads, 9 domínios: DevOps, engenharia, jurídico, marketing, customer success, supply chain, QA e conhecimento interno.</span>
+          <span class="t" lang="en">9 squads, 9 domains: DevOps, engineering, legal, marketing, customer success, supply chain, QA and internal knowledge.</span>
+        </p>
+        <p class="gloss" data-anchor="arg-p2">
+          <span class="gloss-num">ii</span>
+          <span class="t" lang="pt">O requisito central de design: que o usuário enxergasse o que a IA produziu, onde errou e o que não conseguiu fazer.</span>
+          <span class="t" lang="en">The core design requirement: that the user could see what the AI produced, where it erred, and what it could not do.</span>
+        </p>
+      </aside>
+
+      <div class="content">
+        <header class="section-head reveal">
+          <span class="roman">I.</span>
+          <span class="name"><span class="t" lang="pt">Argumento &amp; Contexto</span><span class="t" lang="en">Argument &amp; Context</span></span>
+          <span class="gloss"><span class="t" lang="pt">O cenário</span><span class="t" lang="en">The setting</span></span>
+        </header>
+
+        <div class="preface">
+          <div class="body reveal">
+            <p id="arg-p1">
+              <span class="t" lang="pt">Em 2023, com a IA generativa crescendo rapidamente, a Accenture quis entender, no <span class="it">One Studio</span>, onde essa tecnologia poderia ser útil tanto nas operações internas quanto nos produtos para clientes. Em vez de focar em um só produto, a empresa optou por criar 9 POCs ao mesmo tempo para testar, na prática, onde a IA realmente fazia diferença.<span class="fn" data-fn="1">1</span></span>
+              <span class="t" lang="en">In 2023, as generative AI grew rapidly, Accenture wanted to understand, within <span class="it">One Studio</span>, where this technology could be useful both in internal operations and in client-facing products. Rather than focusing on a single product, the company chose to build 9 POCs at once to test, in practice, where AI truly made a difference.<span class="fn" data-fn="1">1</span></span>
+            </p>
+            <p id="arg-p2">
+              <span class="t" lang="pt">Cada POC testava uma habilidade diferente do modelo — gerar textos, criar imagens, analisar documentos, resumir chamadas, classificar riscos e atuar como copilot interno. Os temas iam de DevOps e jurídico a marketing para clientes, customer success, supply chain, QA e gestão de conhecimento. O principal requisito de design era garantir que o usuário enxergasse claramente o que a IA produziu, onde errou e o que não conseguiu fazer.</span>
+              <span class="t" lang="en">Each POC tested a different model capability — generating text, creating images, analysing documents, summarising calls, classifying risk and acting as an internal copilot. Themes ranged from DevOps and legal to client marketing, customer success, supply chain, QA and knowledge management. The core design requirement was to ensure the user could clearly see what the AI produced, where it erred and what it failed to do.</span>
+            </p>
+          </div>
+
+          <ol class="footnotes reveal">
+            <li class="fn-item" data-fn="1">
+              <span class="fn-num">1.</span>
+              <span class="t" lang="pt"><span class="it">O programa envolveu 9 squads e teve um ciclo de ~3 meses, do briefing à entrega de protótipos navegáveis.</span></span>
+              <span class="t" lang="en"><span class="it">The programme involved 9 squads and ran a ~3-month cycle, from briefing to delivery of navigable prototypes.</span></span>
+            </li>
+          </ol>
+        </div>
+      </div>
+      <aside class="margin-r" aria-hidden="true"></aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       II. MINHA PARTICIPAÇÃO (DRAMATIS)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">II.</span>
+        <span class="name"><span class="t" lang="pt">Minha Participação</span><span class="t" lang="en">My Role</span></span>
+        <span class="gloss"><span class="t" lang="pt">Dramatis personæ</span><span class="t" lang="en">Cast &amp; duties</span></span>
+      </header>
+
+      <dl class="dramatis reveal" data-stagger>
+        <div class="dramatis-block">
+          <dt><span class="t" lang="pt">Responsabilidade</span><span class="t" lang="en">Responsibility</span></dt>
+          <dd>
+            Lead Product Designer
+            <span class="role"><span class="t" lang="pt">Único designer do programa: discovery, arquitetura de informação, Design System, protótipos de alta fidelidade e handoff das 9 aplicações</span><span class="t" lang="en">Sole designer of the programme: discovery, information architecture, Design System, high-fidelity prototypes and handoff of all 9 applications</span></span>
+          </dd>
+        </div>
+        <div class="dramatis-block">
+          <dt><span class="t" lang="pt">Colaboradores</span><span class="t" lang="en">Collaborators</span></dt>
+          <dd>
+            POs · Engenharia · Liderança
+            <span class="role"><span class="t" lang="pt">POs e engenharia de 9 squads, reportando diretamente à liderança do One Studio</span><span class="t" lang="en">POs and engineering across 9 squads, reporting directly to One Studio leadership</span></span>
+          </dd>
+        </div>
+        <div class="dramatis-block">
+          <dt><span class="t" lang="pt">Duas frentes</span><span class="t" lang="en">Two fronts</span></dt>
+          <dd>
+            <span class="t" lang="pt">Campo &amp; Sistema</span><span class="t" lang="en">Field &amp; System</span>
+            <span class="role"><span class="t" lang="pt">Acompanhei cada squad para entender o comportamento real da IA em cada domínio — e converti esses aprendizados em padrões reutilizáveis do Design System</span><span class="t" lang="en">I shadowed each squad to understand the real behaviour of the AI in each domain — and turned those learnings into reusable Design System patterns</span></span>
+          </dd>
+        </div>
+        <div class="dramatis-block">
+          <dt><span class="t" lang="pt">Objetivo Estratégico</span><span class="t" lang="en">Strategic Goal</span></dt>
+          <dd>
+            <span class="t" lang="pt">Coerência em escala</span><span class="t" lang="en">Coherence at scale</span>
+            <span class="role"><span class="t" lang="pt">Evitar que 9 squads criassem 9 soluções distintas para o mesmo problema de transparência da IA</span><span class="t" lang="en">Prevent 9 squads from creating 9 distinct solutions to the same AI-transparency problem</span></span>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       III. O DESAFIO (3 PROBLEMAS ESTRUTURAIS)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread">
+      <aside class="margin-l">
+        <div class="parchment-stamp" aria-hidden="true">
+          <span class="st-num">DESAFIO</span>
+        </div>
+      </aside>
+      <div class="content">
+        <header class="section-head reveal">
+          <span class="roman">III.</span>
+          <span class="name"><span class="t" lang="pt">O Desafio</span><span class="t" lang="en">The Challenge</span></span>
+          <span class="gloss"><span class="t" lang="pt">Nove ao mesmo tempo</span><span class="t" lang="en">Nine at once</span></span>
+        </header>
+
+        <div class="preface">
+          <div class="body reveal">
+            <p>
+              <span class="t" lang="pt">O desafio não era criar uma aplicação de IA, mas desenvolver <span class="em">9 ao mesmo tempo</span>, em áreas totalmente diferentes — de DevOps a marketing para clientes externos. Cada uma tinha seu próprio PO e regras de segurança. Sem uma base comum, o risco era claro: 9 produtos com 9 identidades e 9 jeitos distintos de lidar com incerteza do modelo, citação de fontes e controle humano.</span>
+              <span class="t" lang="en">The challenge was not to build one AI application, but to develop <span class="em">9 at once</span>, across entirely different areas — from DevOps to external client marketing. Each had its own PO and security rules. Without a shared foundation, the risk was clear: 9 products with 9 identities and 9 different ways of handling model uncertainty, source citation and human control.</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="insights-grid reveal" data-stagger>
+          <div class="insight-card">
+            <span class="card-num">01.</span>
+            <h4 class="card-title"><span class="t" lang="pt">Vocabulário fragmentado</span><span class="t" lang="en">Fragmented vocabulary</span></h4>
+            <p><span class="t" lang="pt">Cada squad usava nomes diferentes para "resposta da IA", "resultado" e "sugestão", prejudicando a experiência e a consistência dos textos.</span><span class="t" lang="en">Each squad used different names for "AI answer", "result" and "suggestion", hurting both the experience and the consistency of the copy.</span></p>
+          </div>
+          <div class="insight-card">
+            <span class="card-num">02.</span>
+            <h4 class="card-title"><span class="t" lang="pt">Incerteza invisível</span><span class="t" lang="en">Invisible uncertainty</span></h4>
+            <p><span class="t" lang="pt">Os primeiros protótipos tratavam a saída do modelo como sempre correta — sem mostrar confiança, fontes ou a possibilidade de desfazer.</span><span class="t" lang="en">Early prototypes treated model output as always correct — with no confidence signals, sources or undo path shown.</span></p>
+          </div>
+          <div class="insight-card">
+            <span class="card-num">03.</span>
+            <h4 class="card-title"><span class="t" lang="pt">Retrabalho de interface</span><span class="t" lang="en">Interface rework</span></h4>
+            <p><span class="t" lang="pt">Padrões básicos — input de prompt, card de resposta, histórico, feedback, edição assistida — eram recriados do zero em cada POC.</span><span class="t" lang="en">Basic patterns — prompt input, response card, history, feedback, assisted editing — were rebuilt from scratch in every POC.</span></p>
+          </div>
+        </div>
+      </div>
+      <aside class="margin-r" aria-hidden="true"></aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       IV. O ECOSSISTEMA — OS 9 PRODUTOS
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">IV.</span>
+        <span class="name"><span class="t" lang="pt">O Ecossistema</span><span class="t" lang="en">The Ecosystem</span></span>
+        <span class="gloss"><span class="t" lang="pt">Os 9 produtos Gen.AI</span><span class="t" lang="en">The 9 Gen.AI products</span></span>
+      </header>
+
+      <p class="results-intro reveal">
+        <span class="t" lang="pt">Cada POC era um produto diferente, num domínio diferente da consultoria. O que era igual em todos: a forma de mostrar a IA na tela — com fonte, confiança e reversibilidade visíveis em cada resposta.</span>
+        <span class="t" lang="en">Each POC was a different product, in a different consulting domain. What stayed the same across all: the way the AI was shown on screen — with source, confidence and reversibility visible in every answer.</span>
+      </p>
+
+      <div class="poc-grid reveal" data-stagger>
+        <div class="poc-entry">
+          <div class="poc-entry__head"><span class="poc-entry__roman">I</span><span class="poc-entry__titles"><span class="poc-entry__name">Incident Alchemist</span><span class="poc-entry__domain">DevOps &amp; Reliability</span></span></div>
+          <p class="poc-entry__body"><span class="t" lang="pt">Catalogação e identificação automáticas de incidentes: o histórico da área passa a ser usado para evitar novos problemas, não só resolver os já ocorridos.</span><span class="t" lang="en">Automatic incident cataloguing and identification: the team's history is used to prevent new problems, not only to fix those already happening.</span></p>
+          <span class="poc-entry__status st--pesquisa"><span class="t" lang="pt">Pesquisa</span><span class="t" lang="en">Research</span></span>
+        </div>
+        <div class="poc-entry">
+          <div class="poc-entry__head"><span class="poc-entry__roman">II</span><span class="poc-entry__titles"><span class="poc-entry__name">Code Assistant</span><span class="poc-entry__domain">Engineering</span></span></div>
+          <p class="poc-entry__body"><span class="t" lang="pt">Pair programmer interno que roda totalmente on-premises: o time conta com um copilot sem enviar nenhum código sensível para fora.</span><span class="t" lang="en">Internal pair programmer running fully on-premises: engineers get a copilot without sending any sensitive code outside.</span></p>
+          <span class="poc-entry__status st--pesquisa"><span class="t" lang="pt">Pesquisa</span><span class="t" lang="en">Research</span></span>
+        </div>
+        <div class="poc-entry poc-entry--featured">
+          <div class="poc-entry__head"><span class="poc-entry__roman">III</span><span class="poc-entry__titles"><span class="poc-entry__name">Contract Explorer</span><span class="poc-entry__domain">Jurídico · Knowledge Base</span></span></div>
+          <p class="poc-entry__body"><span class="t" lang="pt">Chat em linguagem natural sobre a base de contratos, com citações rastreáveis até o trecho exato e edição conforme o nível de acesso de cada usuário.</span><span class="t" lang="en">Natural-language chat over the contract base, with citations traceable to the exact clause and editing scoped to each user's access level.</span></p>
+          <span class="poc-entry__status st--dev"><span class="t" lang="pt">Desenvolvido</span><span class="t" lang="en">Developed</span></span>
+        </div>
+        <div class="poc-entry poc-entry--featured">
+          <div class="poc-entry__head"><span class="poc-entry__roman">IV</span><span class="poc-entry__titles"><span class="poc-entry__name">Campaign Genius</span><span class="poc-entry__domain"><span class="t" lang="pt">Marketing — clientes externos</span><span class="t" lang="en">Marketing — external clients</span></span></span></div>
+          <p class="poc-entry__body"><span class="t" lang="pt">Único produto Gen.AI para clientes externos. Cria campanhas completas a partir de prompts positivos, negativos e parâmetros — do texto à imagem e edição final, num só fluxo.</span><span class="t" lang="en">The only Gen.AI product for external clients. Builds full campaigns from positive/negative prompts and parameters — from copy to image and final edit, in a single flow.</span></p>
+          <span class="poc-entry__status st--parcial"><span class="t" lang="pt">Dev. parcial</span><span class="t" lang="en">Partial dev.</span></span>
+        </div>
+        <div class="poc-entry">
+          <div class="poc-entry__head"><span class="poc-entry__roman">V</span><span class="poc-entry__titles"><span class="poc-entry__name">Call Analysis</span><span class="poc-entry__domain">Customer Success</span></span></div>
+          <p class="poc-entry__body"><span class="t" lang="pt">Resume chamadas com clientes em poucos minutos: identifica obstáculos, próximos passos e pontos de dor sem revisar transcrições manualmente.</span><span class="t" lang="en">Summarises client calls in minutes: surfaces blockers, next steps and pain points without manually reviewing transcripts.</span></p>
+          <span class="poc-entry__status st--pesquisa"><span class="t" lang="pt">Pesquisa</span><span class="t" lang="en">Research</span></span>
+        </div>
+        <div class="poc-entry poc-entry--featured">
+          <div class="poc-entry__head"><span class="poc-entry__roman">VI</span><span class="poc-entry__titles"><span class="poc-entry__name">Deploy Check</span><span class="poc-entry__domain"><span class="t" lang="pt">DevOps · Camada de segurança</span><span class="t" lang="en">DevOps · Safety layer</span></span></span></div>
+          <p class="poc-entry__body"><span class="t" lang="pt">Roda antes do deploy e exibe o risco estimado com justificativas a um clique. O engenheiro aceita, contesta ou anota — e cada decisão fica no audit trail.</span><span class="t" lang="en">Runs before deploy and shows estimated risk with one-click justifications. Engineers accept, contest or annotate — and every decision is logged in the audit trail.</span></p>
+          <span class="poc-entry__status st--proto"><span class="t" lang="pt">Protótipo</span><span class="t" lang="en">Prototype</span></span>
+        </div>
+        <div class="poc-entry poc-entry--featured">
+          <div class="poc-entry__head"><span class="poc-entry__roman">VII</span><span class="poc-entry__titles"><span class="poc-entry__name">Test Insights</span><span class="poc-entry__domain">Quality Assurance</span></span></div>
+          <p class="poc-entry__body"><span class="t" lang="pt">Prevê o resultado da próxima rodada, sugere onde reforçar a cobertura e compara com a rodada anterior — separando fato medido, predição e sugestão.</span><span class="t" lang="en">Predicts the next run's outcome, suggests where to add coverage and compares with the previous run — separating measured fact, prediction and suggestion.</span></p>
+          <span class="poc-entry__status st--proto"><span class="t" lang="pt">Protótipo</span><span class="t" lang="en">Prototype</span></span>
+        </div>
+        <div class="poc-entry">
+          <div class="poc-entry__head"><span class="poc-entry__roman">VIII</span><span class="poc-entry__titles"><span class="poc-entry__name">Impact Analysis</span><span class="poc-entry__domain">Engineering</span></span></div>
+          <p class="poc-entry__body"><span class="t" lang="pt">Quantifica o impacto de qualquer ação — deploy, alteração de dados ou de fluxo — em todos os pontos afetados a jusante. Pensada para múltiplas áreas.</span><span class="t" lang="en">Quantifies the impact of any action — deploy, data or flow change — across every downstream point affected. Designed to adapt to multiple areas.</span></p>
+          <span class="poc-entry__status st--pesquisa"><span class="t" lang="pt">Pesquisa</span><span class="t" lang="en">Research</span></span>
+        </div>
+        <div class="poc-entry poc-entry--featured">
+          <div class="poc-entry__head"><span class="poc-entry__roman">IX</span><span class="poc-entry__titles"><span class="poc-entry__name">SC Copilot</span><span class="poc-entry__domain">Internal Knowledge · Security-first</span></span></div>
+          <p class="poc-entry__body"><span class="t" lang="pt">Copilot interno construído do zero — modelos prontos não atendiam à segurança. Responde sobre processos e políticas, sempre informando a fonte.</span><span class="t" lang="en">Internal copilot built from scratch — off-the-shelf models didn't meet security requirements. Answers about processes and policies, always citing the source.</span></p>
+          <span class="poc-entry__status st--proto"><span class="t" lang="pt">Protótipo</span><span class="t" lang="en">Prototype</span></span>
+        </div>
+      </div>
+
+      <div class="status-legend reveal">
+        <span class="status-legend__item"><span class="status-legend__dot sl-dot--pesquisa"></span><span class="t" lang="pt">Pesquisa</span><span class="t" lang="en">Research</span></span>
+        <span class="status-legend__item"><span class="status-legend__dot sl-dot--proto"></span><span class="t" lang="pt">Protótipo</span><span class="t" lang="en">Prototype</span></span>
+        <span class="status-legend__item"><span class="status-legend__dot sl-dot--parcial"></span><span class="t" lang="pt">Dev. parcial</span><span class="t" lang="en">Partial dev.</span></span>
+        <span class="status-legend__item"><span class="status-legend__dot sl-dot--dev"></span><span class="t" lang="pt">Desenvolvido</span><span class="t" lang="en">Developed</span></span>
+      </div>
+
+      <div class="fiction-note reveal">
+        <span><span class="t" lang="pt">Todos os dados, respostas de IA e métricas exibidos nas interfaces são fictícios, gerados apenas para fins de demonstração. O conteúdo não representa dados reais da Accenture ou de seus clientes.</span><span class="t" lang="en">All data, AI responses and metrics shown in the interfaces are fictional, generated for demonstration purposes only. The content does not represent real Accenture or client data.</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       V. ESTRATÉGIA & PRINCÍPIOS (5 PRINCÍPIOS)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">V.</span>
+        <span class="name"><span class="t" lang="pt">Estratégia &amp; Princípios</span><span class="t" lang="en">Strategy &amp; Principles</span></span>
+        <span class="gloss"><span class="t" lang="pt">A gramática comum</span><span class="t" lang="en">The shared grammar</span></span>
+      </header>
+
+      <p class="results-intro reveal">
+        <span class="t" lang="pt">O foco não foram as 9 POCs isoladamente, mas a presença da IA em cada uma — de forma <span class="em">legível, controlável e auditável</span>. A IA gerava, interpretava, comparava e previa; o Design System mantinha a mesma gramática visual e os mesmos padrões de incerteza entre os 9 contextos. A integração girou em torno de 5 princípios, discutidos com cada squad antes de virarem componentes.</span>
+        <span class="t" lang="en">The focus was not the 9 POCs in isolation, but the presence of AI in each — <span class="em">legible, controllable and auditable</span>. The AI generated, interpreted, compared and predicted; the Design System kept the same visual grammar and the same uncertainty patterns across the 9 contexts. The integration was built around 5 principles, discussed with each squad before becoming components.</span>
+      </p>
+
+      <div class="principles reveal" data-stagger>
+        <div class="principle">
+          <span class="principle__num-big" aria-hidden="true">1</span>
+          <span class="principle__num">01</span>
+          <h3 class="principle__title"><span class="t" lang="pt">IA como medium</span><span class="t" lang="en">AI as medium</span></h3>
+          <span class="principle__tag"><span class="t" lang="pt">Projetar com a IA, não apenas para a IA.</span><span class="t" lang="en">Design with the AI, not just for it.</span></span>
+          <p class="principle__body"><span class="t" lang="pt">A capacidade do modelo — respostas, limitações e erros — foi considerada desde o início. Em vez de tratar a IA como caixa-preta, cada POC partiu da análise do comportamento real e dos limites do modelo.</span><span class="t" lang="en">The model's capability — answers, limits and errors — was considered from the start. Rather than treating AI as a black box, each POC began from analysing the model's real behaviour and boundaries.</span></p>
+        </div>
+        <div class="principle">
+          <span class="principle__num-big" aria-hidden="true">2</span>
+          <span class="principle__num">02</span>
+          <h3 class="principle__title"><span class="t" lang="pt">Design System como linguagem</span><span class="t" lang="en">Design System as language</span></h3>
+          <span class="principle__tag"><span class="t" lang="pt">A conversa é o elemento fundamental.</span><span class="t" lang="en">The conversation is the fundamental unit.</span></span>
+          <p class="principle__body"><span class="t" lang="pt">Em todas as 9 POCs, a unidade mínima é a troca — pergunta, resposta da IA e ações possíveis. Isso substituiu layouts dashboard-first por layouts progressivos, pensados para dialogar com o modelo.</span><span class="t" lang="en">Across all 9 POCs, the minimal unit is the exchange — question, AI answer and possible actions. This replaced dashboard-first layouts with progressive ones, built to converse with the model.</span></p>
+        </div>
+        <div class="principle">
+          <span class="principle__num-big" aria-hidden="true">3</span>
+          <span class="principle__num">03</span>
+          <h3 class="principle__title"><span class="t" lang="pt">Honestidade do modelo</span><span class="t" lang="en">Model honesty</span></h3>
+          <span class="principle__tag"><span class="t" lang="pt">Transparência quanto à incerteza.</span><span class="t" lang="en">Transparency about uncertainty.</span></span>
+          <p class="principle__body"><span class="t" lang="pt">Cada resposta apresenta indicadores de confiança, fontes citáveis e opções de reversão. O usuário não precisa confiar cegamente: a interface informa a origem da resposta, os dados usados e o que pode ser editado.</span><span class="t" lang="en">Every answer shows confidence indicators, citable sources and undo options. The user need not trust blindly: the interface states the answer's origin, the data used and what can be edited.</span></p>
+        </div>
+        <div class="principle">
+          <span class="principle__num-big" aria-hidden="true">4</span>
+          <span class="principle__num">04</span>
+          <h3 class="principle__title"><span class="t" lang="pt">Contexto vivo</span><span class="t" lang="en">Living context</span></h3>
+          <span class="principle__tag"><span class="t" lang="pt">Contexto reutilizável.</span><span class="t" lang="en">Reusable context.</span></span>
+          <p class="principle__body"><span class="t" lang="pt">Padrões de anexo, histórico, templates de prompt e níveis de acesso permitem que o contexto criado pelo usuário — arquivos, filtros, sessões, permissões — seja recuperado e reutilizado entre tarefas.</span><span class="t" lang="en">Patterns for attachments, history, prompt templates and access levels let the context a user builds — files, filters, sessions, permissions — be recovered and reused across tasks.</span></p>
+        </div>
+        <div class="principle">
+          <span class="principle__num-big" aria-hidden="true">5</span>
+          <span class="principle__num">05</span>
+          <h3 class="principle__title"><span class="t" lang="pt">Loop fechado</span><span class="t" lang="en">Closed loop</span></h3>
+          <span class="principle__tag"><span class="t" lang="pt">Feedback como elemento central.</span><span class="t" lang="en">Feedback as a core element.</span></span>
+          <p class="principle__body"><span class="t" lang="pt">A avaliação das respostas — positiva, negativa, correções, exemplos, refutações — não é opcional: é componente presente em toda resposta, alimentando a evolução de modelos, prompts e mecanismos de segurança.</span><span class="t" lang="en">Rating answers — positive, negative, corrections, examples, rebuttals — is not optional: it is a component present in every response, feeding the evolution of models, prompts and safety mechanisms.</span></p>
+        </div>
+        <div class="principle">
+          <span class="principle__num-big" aria-hidden="true">✦</span>
+          <span class="principle__num"><span class="t" lang="pt">RESULTADO</span><span class="t" lang="en">OUTCOME</span></span>
+          <h3 class="principle__title"><span class="t" lang="pt">Uma biblioteca de IA</span><span class="t" lang="en">A library for AI</span></h3>
+          <span class="principle__tag"><span class="t" lang="pt">Padrões reutilizáveis por domínio.</span><span class="t" lang="en">Reusable, domain-aware patterns.</span></span>
+          <p class="principle__body"><span class="t" lang="pt">Entradas de prompt, cartões de resposta com streaming e citações, histórico, feedback, edição assistida com permissões — e blocos por domínio: visualizador de contratos, editor de imagens, ranking de testes, indicador de risco e resumo de chamadas.</span><span class="t" lang="en">Prompt inputs, response cards with streaming and citations, history, feedback, permission-aware assisted editing — plus domain blocks: contract viewer, generated-image editor, test ranking, risk gauge and call summaries.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VI. SPOTLIGHTS — AS 5 POCs QUE AVANÇARAM
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">VI.</span>
+        <span class="name">Spotlights</span>
+        <span class="gloss"><span class="t" lang="pt">Cinco pranchas em foco</span><span class="t" lang="en">Five plates in focus</span></span>
+      </header>
+
+      <p class="results-intro reveal">
+        <span class="t" lang="pt">Das 9 POCs, 5 avançaram para protótipo e desenvolvimento — justamente as que mais amadureceram o Design System. As outras 4 (Incident Alchemist, Code Assistant, Call Analysis e Impact Analysis) permaneceram em pesquisa, com hipóteses validadas.</span>
+        <span class="t" lang="en">Of the 9 POCs, 5 advanced to prototype and development — precisely the ones that matured the Design System most. The other 4 (Incident Alchemist, Code Assistant, Call Analysis and Impact Analysis) stayed in research, with validated hypotheses.</span>
+      </p>
+
+      <!-- Spotlight 01 — Campaign Genius -->
+      <article class="spotlight reveal">
+        <span class="spotlight__eyebrow"><span class="t" lang="pt">Spotlight 01 — Marketing · Produto para clientes externos</span><span class="t" lang="en">Spotlight 01 — Marketing · External-client product</span></span>
+        <h3 class="spotlight__title">Campaign Genius</h3>
+        <div class="spotlight__lead">
+          <p><span class="t" lang="pt">A única POC criada como <span class="em">produto para clientes externos</span>; as outras 8 eram ferramentas internas. O objetivo: gerar campanhas completas a partir de prompts positivos, negativos e parâmetros, cobrindo todo o ciclo — copy, direção visual e formato — numa só plataforma.</span><span class="t" lang="en">The only POC built as an <span class="em">external-client product</span>; the other 8 were internal tools. The goal: generate complete campaigns from positive/negative prompts and parameters, covering the whole cycle — copy, art direction and format — on a single platform.</span></p>
+          <p><span class="t" lang="pt">O maior desafio de UX foi integrar geração de imagens e editor visual num único fluxo. O usuário gera variações, seleciona uma e edita com precisão sem trocar de ferramenta. Isso exigiu ir além do "card de resposta": canvas, máscara, ajustes paramétricos e versionamento. O padrão <span class="em">generate → curate → fine-edit</span> nasceu aqui — o maior avanço do Design System.</span><span class="t" lang="en">The biggest UX challenge was integrating image generation and a full visual editor into one flow. The user generates variations, picks one and edits it precisely without switching tools. This pushed the Design System beyond the "response card": canvas, mask, parametric adjustments and versioning. The <span class="em">generate → curate → fine-edit</span> pattern was born here — the system's biggest leap.</span></p>
+        </div>
+        <div class="sl-gallery">
+          <a class="sl-hero lightboxgallery-link" href="../images/genai/campaign-genius/1.webp" aria-label="Campaign Genius — Main view — campaign generator with prompts and parameters">
+            <img src="../images/genai/campaign-genius/1.webp" alt="Campaign Genius — Main view — campaign generator with prompts and parameters" loading="lazy" />
+            <div class="sl-hero__cap"><span class="t" lang="pt">Vista principal — gerador de campanhas com prompts e parâmetros</span><span class="t" lang="en">Main view — campaign generator with prompts and parameters</span></div>
+          </a>
+          <div class="sl-grid">
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/2.webp"><img src="../images/genai/campaign-genius/2.webp" alt="Campaign Genius — view 2" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/3.webp"><img src="../images/genai/campaign-genius/3.webp" alt="Campaign Genius — view 3" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/4.webp"><img src="../images/genai/campaign-genius/4.webp" alt="Campaign Genius — view 4" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/5.webp"><img src="../images/genai/campaign-genius/5.webp" alt="Campaign Genius — view 5" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/6.webp"><img src="../images/genai/campaign-genius/6.webp" alt="Campaign Genius — view 6" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/7.webp"><img src="../images/genai/campaign-genius/7.webp" alt="Campaign Genius — view 7" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/8.webp"><img src="../images/genai/campaign-genius/8.webp" alt="Campaign Genius — view 8" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/9.webp"><img src="../images/genai/campaign-genius/9.webp" alt="Campaign Genius — view 9" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/10.webp"><img src="../images/genai/campaign-genius/10.webp" alt="Campaign Genius — view 10" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/11.webp"><img src="../images/genai/campaign-genius/11.webp" alt="Campaign Genius — view 11" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/12.webp"><img src="../images/genai/campaign-genius/12.webp" alt="Campaign Genius — view 12" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/13.webp"><img src="../images/genai/campaign-genius/13.webp" alt="Campaign Genius — view 13" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/14.webp"><img src="../images/genai/campaign-genius/14.webp" alt="Campaign Genius — view 14" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/15.webp"><img src="../images/genai/campaign-genius/15.webp" alt="Campaign Genius — view 15" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/16.webp"><img src="../images/genai/campaign-genius/16.webp" alt="Campaign Genius — view 16" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/17.webp"><img src="../images/genai/campaign-genius/17.webp" alt="Campaign Genius — view 17" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/18.webp"><img src="../images/genai/campaign-genius/18.webp" alt="Campaign Genius — view 18" loading="lazy" /></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Spotlight 02 — Contract Explorer -->
+      <article class="spotlight reveal">
+        <span class="spotlight__eyebrow"><span class="t" lang="pt">Spotlight 02 — Jurídico · Knowledge Base</span><span class="t" lang="en">Spotlight 02 — Legal · Knowledge Base</span></span>
+        <h3 class="spotlight__title">Contract Explorer</h3>
+        <div class="spotlight__lead">
+          <p><span class="t" lang="pt">Um chat integrado à base interna de contratos. O usuário pergunta em linguagem natural — <span class="it">"quais contratos têm cláusula de exclusividade vigente?"</span>, <span class="it">"compare prazos de rescisão entre estes 3 fornecedores"</span> — e a IA pesquisa em múltiplos arquivos, sempre retornando a citação exata do trecho.</span><span class="t" lang="en">A chat wired to the internal contract base. The user asks in natural language — <span class="it">"which contracts have an active exclusivity clause?"</span>, <span class="it">"compare termination terms across these 3 suppliers"</span> — and the AI searches across files, always returning the exact citing passage.</span></p>
+          <p><span class="t" lang="pt">O desafio central: alinhar as <span class="em">permissões de ação</span> ao papel do usuário. Além de responder, o chatbot edita — mas respeitando limites: leitores consultam, autores editam rascunhos, aprovadores publicam. Virou o padrão de <span class="em">action-bar contextual</span>, depois adotado no SC Copilot e no Code Assistant como a referência de "edição autorizada".</span><span class="t" lang="en">The core challenge: aligning <span class="em">action permissions</span> to the user's role. Beyond answering, the chatbot edits — but within limits: readers consult, authors edit drafts, approvers publish. This became the <span class="em">contextual action-bar</span> pattern, later adopted in SC Copilot and Code Assistant as the reference for "authorised editing".</span></p>
+        </div>
+        <div class="sl-gallery">
+          <a class="sl-hero lightboxgallery-link" href="../images/genai/contract-explorer/1.webp" aria-label="Contract Explorer — Main view — chat over the contract base with traceable citations">
+            <img src="../images/genai/contract-explorer/1.webp" alt="Contract Explorer — Main view — chat over the contract base with traceable citations" loading="lazy" />
+            <div class="sl-hero__cap"><span class="t" lang="pt">Vista principal — chat sobre a base de contratos com citação rastreável</span><span class="t" lang="en">Main view — chat over the contract base with traceable citations</span></div>
+          </a>
+          <div class="sl-grid">
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/2.webp"><img src="../images/genai/contract-explorer/2.webp" alt="Contract Explorer — view 2" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/3.webp"><img src="../images/genai/contract-explorer/3.webp" alt="Contract Explorer — view 3" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/4.webp"><img src="../images/genai/contract-explorer/4.webp" alt="Contract Explorer — view 4" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/5.webp"><img src="../images/genai/contract-explorer/5.webp" alt="Contract Explorer — view 5" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/6.webp"><img src="../images/genai/contract-explorer/6.webp" alt="Contract Explorer — view 6" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/7.webp"><img src="../images/genai/contract-explorer/7.webp" alt="Contract Explorer — view 7" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/8.webp"><img src="../images/genai/contract-explorer/8.webp" alt="Contract Explorer — view 8" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/9.webp"><img src="../images/genai/contract-explorer/9.webp" alt="Contract Explorer — view 9" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/10.webp"><img src="../images/genai/contract-explorer/10.webp" alt="Contract Explorer — view 10" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/11.webp"><img src="../images/genai/contract-explorer/11.webp" alt="Contract Explorer — view 11" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/12.webp"><img src="../images/genai/contract-explorer/12.webp" alt="Contract Explorer — view 12" loading="lazy" /></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Spotlight 03 — Test Insights -->
+      <article class="spotlight reveal">
+        <span class="spotlight__eyebrow"><span class="t" lang="pt">Spotlight 03 — Quality Assurance</span><span class="t" lang="en">Spotlight 03 — Quality Assurance</span></span>
+        <h3 class="spotlight__title">Test Insights</h3>
+        <div class="spotlight__lead">
+          <p><span class="t" lang="pt">Opera sobre dados de teste já processados e faz 4 tarefas integradas: analisa o conjunto rodado, prevê o resultado da próxima rodada, sugere onde a cobertura está frágil e compara com a rodada anterior — tudo numa só tela, longe do "PDF de 400 páginas" que a QA costuma receber.</span><span class="t" lang="en">It works over already-processed test data and performs 4 integrated tasks: analyses the run, predicts the next run's outcome, suggests where coverage is fragile and compares with the previous run — all on one screen, far from the "400-page PDF report" QA usually gets.</span></p>
+          <p><span class="t" lang="pt">O problema de design era <span class="em">separar visualmente</span> os 4 tipos de saída na mesma vista: fato medido, predição (com intervalo de confiança), sugestão (ignorável) e comparativo (delta). Cada tipo ganhou um padrão próprio — <span class="em">fact-card, prediction-card, suggestion-card e delta-card</span>. Em QA, confundir "o que aconteceu" com "o que pode acontecer" custa caro.</span><span class="t" lang="en">The design problem was to <span class="em">visually separate</span> the 4 output types on the same view: measured fact, prediction (with confidence interval), suggestion (skippable) and comparison (delta). Each got its own pattern — <span class="em">fact-card, prediction-card, suggestion-card and delta-card</span>. In QA, confusing "what happened" with "what might" is costly.</span></p>
+        </div>
+        <div class="sl-gallery">
+          <a class="sl-hero lightboxgallery-link" href="../images/genai/test-insights/1.webp" aria-label="Test Insights — Main view — 4 AI output types on a single screen">
+            <img src="../images/genai/test-insights/1.webp" alt="Test Insights — Main view — 4 AI output types on a single screen" loading="lazy" />
+            <div class="sl-hero__cap"><span class="t" lang="pt">Vista principal — 4 tipos de saída da IA na mesma tela</span><span class="t" lang="en">Main view — 4 AI output types on a single screen</span></div>
+          </a>
+          <div class="sl-grid">
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/test-insights/2.webp"><img src="../images/genai/test-insights/2.webp" alt="Test Insights — view 2" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/test-insights/3.webp"><img src="../images/genai/test-insights/3.webp" alt="Test Insights — view 3" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/test-insights/4.webp"><img src="../images/genai/test-insights/4.webp" alt="Test Insights — view 4" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/test-insights/5.webp"><img src="../images/genai/test-insights/5.webp" alt="Test Insights — view 5" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/test-insights/6.webp"><img src="../images/genai/test-insights/6.webp" alt="Test Insights — view 6" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/test-insights/7.webp"><img src="../images/genai/test-insights/7.webp" alt="Test Insights — view 7" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/test-insights/8.webp"><img src="../images/genai/test-insights/8.webp" alt="Test Insights — view 8" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/test-insights/9.webp"><img src="../images/genai/test-insights/9.webp" alt="Test Insights — view 9" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/test-insights/10.webp"><img src="../images/genai/test-insights/10.webp" alt="Test Insights — view 10" loading="lazy" /></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Spotlight 04 — Deploy Check -->
+      <article class="spotlight reveal">
+        <span class="spotlight__eyebrow"><span class="t" lang="pt">Spotlight 04 — DevOps · Camada de segurança</span><span class="t" lang="en">Spotlight 04 — DevOps · Safety layer</span></span>
+        <h3 class="spotlight__title">Deploy Check</h3>
+        <div class="spotlight__lead">
+          <p><span class="t" lang="pt">Uma camada de segurança automatizada entre a aprovação do PR e o deploy. Analisa o conteúdo do PR, a cobertura dos testes afetados, o histórico de incidentes nos arquivos e o tamanho da alteração — e apresenta uma estimativa de risco com uma lista justificada do que ainda precisa de revisão.</span><span class="t" lang="en">An automated safety layer between PR approval and deploy. It analyses the PR content, the affected tests' coverage, the incident history of the files and the change size — then shows a risk estimate with a justified list of what still needs review.</span></p>
+          <p><span class="t" lang="pt">A interação principal é um <span class="em">gauge</span> (baixo, médio, alto) com justificativas clicáveis. Para cada item, o engenheiro pode aceitar, refutar ou anotar — e tudo fica como audit trail. Esse ato de justificar concordância ou discordância com a IA virou o padrão de <span class="em">audit trail</span> do Design System: a camada automatizada complementa o julgamento humano, não o substitui.</span><span class="t" lang="en">The main interaction is a <span class="em">gauge</span> (low, medium, high) with clickable justifications. For each item, the engineer can accept, contest or annotate — all logged as an audit trail. That act of justifying agreement or disagreement with the AI became the Design System's <span class="em">audit trail</span> pattern: the automated layer complements human judgement, it doesn't replace it.</span></p>
+        </div>
+        <div class="sl-gallery">
+          <a class="sl-hero lightboxgallery-link" href="../images/genai/deploy-check/1.webp" aria-label="Deploy Check — Main view — pre-deploy risk gauge with clickable justifications">
+            <img src="../images/genai/deploy-check/1.webp" alt="Deploy Check — Main view — pre-deploy risk gauge with clickable justifications" loading="lazy" />
+            <div class="sl-hero__cap"><span class="t" lang="pt">Vista principal — gauge de risco pré-deploy com justificativas clicáveis</span><span class="t" lang="en">Main view — pre-deploy risk gauge with clickable justifications</span></div>
+          </a>
+          <div class="sl-grid">
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/deploy-check/2.webp"><img src="../images/genai/deploy-check/2.webp" alt="Deploy Check — view 2" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/deploy-check/3.webp"><img src="../images/genai/deploy-check/3.webp" alt="Deploy Check — view 3" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/deploy-check/4.webp"><img src="../images/genai/deploy-check/4.webp" alt="Deploy Check — view 4" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/deploy-check/5.webp"><img src="../images/genai/deploy-check/5.webp" alt="Deploy Check — view 5" loading="lazy" /></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Spotlight 05 — SC Copilot -->
+      <article class="spotlight reveal">
+        <span class="spotlight__eyebrow"><span class="t" lang="pt">Spotlight 05 — Internal Knowledge · Security-first</span><span class="t" lang="en">Spotlight 05 — Internal Knowledge · Security-first</span></span>
+        <h3 class="spotlight__title">SC Copilot</h3>
+        <div class="spotlight__lead">
+          <p><span class="t" lang="pt">Ferramenta interna para os colaboradores. Responde sobre processos, políticas e funcionamento interno, eliminando a busca por wikis, intranet, RH e múltiplos sistemas. A segurança foi essencial: soluções prontas não atendiam. A IA precisava operar só com dados internos sensíveis, sem risco de vazamento, com controle fino do que cada perfil consulta.</span><span class="t" lang="en">An internal tool for employees. It answers about processes, policies and internal workings, removing the hunt across wikis, intranet, HR and multiple systems. Security was essential: off-the-shelf solutions didn't fit. The AI had to operate solely on sensitive internal data, with no leak risk and fine-grained control of what each profile can query.</span></p>
+          <p><span class="t" lang="pt">Foi um desafio de design <span class="em">e</span> de engenharia. O Design System criou componentes que indicam o <span class="em">escopo de conhecimento</span> da IA em cada resposta: fontes consultadas, restrições de acesso por segurança e casos que exigem intervenção humana. Nasceu o padrão de <span class="em">indicador de escopo e encaminhamento para humanos</span>, diretriz para qualquer copilot interno. A IA nunca simula conhecimento além do permitido.</span><span class="t" lang="en">It was a design <span class="em">and</span> engineering challenge. The Design System built components that signal the AI's <span class="em">knowledge scope</span> in each answer: sources consulted, access restrictions for security and cases needing human intervention. The <span class="em">scope indicator and human hand-off</span> pattern was born, a guideline for any internal copilot. The AI never feigns knowledge beyond what is allowed.</span></p>
+        </div>
+        <div class="sl-gallery">
+          <a class="sl-hero lightboxgallery-link" href="../images/genai/sc-copilot/1.webp" aria-label="SC Copilot — Main view — internal copilot operating fully on sensitive knowledge">
+            <img src="../images/genai/sc-copilot/1.webp" alt="SC Copilot — Main view — internal copilot operating fully on sensitive knowledge" loading="lazy" />
+            <div class="sl-hero__cap"><span class="t" lang="pt">Vista principal — copilot interno operando 100% sobre conhecimento sensível</span><span class="t" lang="en">Main view — internal copilot operating fully on sensitive knowledge</span></div>
+          </a>
+          <div class="sl-grid">
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/sc-copilot/2.webp"><img src="../images/genai/sc-copilot/2.webp" alt="SC Copilot — view 2" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/sc-copilot/3.webp"><img src="../images/genai/sc-copilot/3.webp" alt="SC Copilot — view 3" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/sc-copilot/4.webp"><img src="../images/genai/sc-copilot/4.webp" alt="SC Copilot — view 4" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/sc-copilot/5.webp"><img src="../images/genai/sc-copilot/5.webp" alt="SC Copilot — view 5" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/sc-copilot/6.webp"><img src="../images/genai/sc-copilot/6.webp" alt="SC Copilot — view 6" loading="lazy" /></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       INTERMEZZO
+       ============================================================ -->
+  <section class="case-intermezzo" data-folio aria-label="Intermezzo">
+    <span class="intermezzo-bg l1" data-speed="0.15" aria-hidden="true">⁂</span>
+    <span class="intermezzo-bg l2" data-speed="-0.08" aria-hidden="true">❧</span>
+    <div class="intermezzo-inner reveal">
+      <span class="intermezzo-label">Intermezzo</span>
+      <p class="intermezzo-quote">
+        <span class="t" lang="pt">O maior legado não foi um produto isolado, mas um vocabulário comum de UX para IA generativa — reaproveitado pela Accenture nos ciclos seguintes.</span>
+        <span class="t" lang="en">The greatest legacy wasn't a single product, but a shared UX vocabulary for generative AI — reused by Accenture in the cycles that followed.</span>
+      </p>
+      <span class="intermezzo-asterism" aria-hidden="true">⁂</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VII. ENTREGA & IMPACTO
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread">
+      <aside class="margin-l" aria-hidden="true"></aside>
+      <div class="content">
+        <header class="section-head reveal">
+          <span class="roman">VII.</span>
+          <span class="name"><span class="t" lang="pt">Entrega &amp; Impacto</span><span class="t" lang="en">Delivery &amp; Impact</span></span>
+          <span class="gloss"><span class="t" lang="pt">O ativo reutilizável</span><span class="t" lang="en">The reusable asset</span></span>
+        </header>
+
+        <p class="results-intro reveal">
+          <span class="t" lang="pt">Em ~3 meses entreguei o <span class="em">Gen.AI Design System</span> — tokens, componentes base, padrões de interação com IA e blocos por domínio — além de 9 protótipos navegáveis de alta fidelidade, prontos para demonstração executiva e handoff técnico.</span>
+          <span class="t" lang="en">In ~3 months I delivered the <span class="em">Gen.AI Design System</span> — tokens, base components, AI-interaction patterns and domain blocks — plus 9 high-fidelity navigable prototypes, ready for executive demo and technical handoff.</span>
+        </p>
+
+        <aside class="marginalia-stat reveal">
+          <dl>
+            <div>
+              <dt><span class="stat-val" data-count="9">0</span></dt>
+              <dd><span class="t" lang="pt">POCs de Gen.AI concebidas de ponta a ponta</span><span class="t" lang="en">Gen.AI POCs conceived end-to-end</span></dd>
+            </div>
+            <div>
+              <dt><span class="stat-val" data-count="1">0</span></dt>
+              <dd><span class="t" lang="pt">designer end-to-end para as 9 POCs</span><span class="t" lang="en">designer end-to-end for all 9 POCs</span></dd>
+            </div>
+            <div>
+              <dt><span class="unit unit-pre">~</span><span class="stat-val" data-count="3">0</span></dt>
+              <dd><span class="t" lang="pt">meses de liderança end-to-end</span><span class="t" lang="en">months of end-to-end leadership</span></dd>
+            </div>
+            <div>
+              <dt><span class="stat-val" data-count="5">0</span></dt>
+              <dd><span class="t" lang="pt">POCs evoluídas para protótipo e desenvolvimento</span><span class="t" lang="en">POCs advanced to prototype and development</span></dd>
+            </div>
+          </dl>
+        </aside>
+
+        <div class="body reveal" style="margin-top: var(--sp-6);">
+          <p>
+            <span class="t" lang="pt">Das 9 iniciativas, 5 avançaram para prototipação e desenvolvimento: Campaign Genius, Contract Explorer, Deploy Check, Test Insights e SC Copilot. As outras 4 permaneceram em pesquisa, com hipóteses validadas para ciclos futuros. O principal impacto estrutural, porém, não foi um produto: foi o <span class="em">vocabulário de UX para IA generativa</span> — padrões de prompt, citação, transparência de incerteza, edição autorizada, escopo de conhecimento e audit trail — materializado no Design System e reaproveitado em outras iniciativas da Accenture. Esse ativo reutilizável agregou mais valor do que qualquer POC individual.</span>
+            <span class="t" lang="en">Of the 9 initiatives, 5 advanced to prototyping and development: Campaign Genius, Contract Explorer, Deploy Check, Test Insights and SC Copilot. The other 4 stayed in research, with validated hypotheses for future cycles. The main structural impact, though, was not a product: it was the <span class="em">UX vocabulary for generative AI</span> — patterns for prompt, citation, uncertainty transparency, authorised editing, knowledge scope and audit trail — materialised in the Design System and reused across other Accenture initiatives. That reusable asset delivered more value than any single POC.</span>
+          </p>
+        </div>
+      </div>
+      <aside class="margin-r" aria-hidden="true"></aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VIII. APRENDIZADOS (ERRATA)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">VIII.</span>
+        <span class="name"><span class="t" lang="pt">Aprendizados</span><span class="t" lang="en">Learnings</span></span>
+        <span class="gloss"><span class="t" lang="pt">Errata &amp; revisões</span><span class="t" lang="en">Errata &amp; revisions</span></span>
+      </header>
+
+      <div class="learnings reveal" data-stagger>
+        <div class="learning">
+          <span class="learning__num"><span class="t" lang="pt">Lição 01 · IA como medium</span><span class="t" lang="en">Lesson 01 · AI as medium</span></span>
+          <h3 class="learning__title"><span class="t" lang="pt">O designer deve compreender o modelo, não apenas aplicá-lo.</span><span class="t" lang="en">The designer must understand the model, not just apply it.</span></h3>
+          <p class="learning__body"><span class="t" lang="pt">É fundamental discutir desde o início o que o modelo realmente faz, onde alucina, recusa ou apresenta risco. As POCs me exigiram colaborar com cada squad para entender o comportamento real da IA antes de desenhar — prática que adoto em todo produto com IA desde então.</span><span class="t" lang="en">It's essential to discuss from the start what the model really does, where it hallucinates, refuses or carries risk. The POCs required me to work with each squad to understand the AI's real behaviour before designing — a practice I've kept in every AI product since.</span></p>
+        </div>
+        <div class="learning">
+          <span class="learning__num"><span class="t" lang="pt">Lição 02 · Honestidade do modelo</span><span class="t" lang="en">Lesson 02 · Model honesty</span></span>
+          <h3 class="learning__title"><span class="t" lang="pt">Evidenciar a incerteza, não ocultá-la.</span><span class="t" lang="en">Surface uncertainty, don't hide it.</span></h3>
+          <p class="learning__body"><span class="t" lang="pt">Nos primeiros protótipos, as squads tratavam a saída do modelo como verdade absoluta. O diferencial do UX para IA está em mostrar claramente confiança, fontes, escopo de acesso e reversibilidade. Adotei como critério deixar explícito na interface que a informação foi gerada por um modelo.</span><span class="t" lang="en">In early prototypes, squads treated model output as absolute truth. The differentiator of AI UX is clearly showing confidence, sources, access scope and reversibility. I made it a rule to state explicitly in the interface that information was model-generated.</span></p>
+        </div>
+        <div class="learning">
+          <span class="learning__num"><span class="t" lang="pt">Lição 03 · Design System como linguagem</span><span class="t" lang="en">Lesson 03 · Design System as language</span></span>
+          <h3 class="learning__title"><span class="t" lang="pt">Distinguir o essencial do decorativo.</span><span class="t" lang="en">Separate the essential from the decorative.</span></h3>
+          <p class="learning__body"><span class="t" lang="pt">Quando um padrão precisa funcionar em DevOps, jurídico, supply chain e marketing sem reinventar o vocabulário, o decorativo cai naturalmente. O Gen.AI me ensinou a perguntar, em cada componente: "isso é estrutura ou é enfeite?" — e a justificar a escolha aos stakeholders.</span><span class="t" lang="en">When a pattern must work across DevOps, legal, supply chain and marketing without reinventing the vocabulary, the decorative falls away naturally. Gen.AI taught me to ask, for each component: "is this structure or ornament?" — and to justify the choice to stakeholders.</span></p>
+        </div>
+        <div class="learning">
+          <span class="learning__num"><span class="t" lang="pt">Lição 04 · Design System como infraestrutura</span><span class="t" lang="en">Lesson 04 · Design System as infrastructure</span></span>
+          <h3 class="learning__title"><span class="t" lang="pt">Sustentável só se incorporar a intenção de uso, não apenas os tokens.</span><span class="t" lang="en">Sustainable only if it carries usage intent, not just tokens.</span></h3>
+          <p class="learning__body"><span class="t" lang="pt">Entreguei paletas, componentes e specs — mas o que fez o Gen.AI durar depois do programa foi a documentação de quando usar o quê, por quê, com qual modelo, sob qual acesso e o que não fazer. Em design para IA, tokens envelhecem rápido; heurísticas de decisão, bem mais devagar.</span><span class="t" lang="en">I delivered palettes, components and specs — but what made Gen.AI last beyond the programme was documenting when to use what, why, with which model, under which access, and what not to do. In AI design, tokens age fast; decision heuristics age far slower.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       COLOPHÃO & NAVEGAÇÃO
+       ============================================================ -->
+  <section class="case-colophon" data-folio>
+    <div class="ornament">✦</div>
+    <p class="case-colophon-body">
+      <span class="t" lang="pt">Esta prancha foi composta pelo autor para a <em>Accenture · One Studio</em> em MMXXIII–MMXXIV. Todos os dados, respostas de IA e métricas exibidos servem como estudo conceitual de design de produtos de IA generativa, mantendo os parâmetros de confidencialidade acordados. Nenhum dado real da Accenture ou de seus clientes é representado.</span>
+      <span class="t" lang="en">This plate was set by the author for <em>Accenture · One Studio</em> in MMXXIII–MMXXIV. All data, AI responses and metrics shown serve as a conceptual specimen of generative-AI product design, under agreed confidentiality terms. No real Accenture or client data is represented.</span>
+    </p>
+    <div class="case-colophon-meta">Plate I · Vol. I · MMXXIII–MMXXIV</div>
+  </section>
+
+  <nav class="folio-nav" aria-label="Navegação entre cases">
+    <a class="verso" href="../index.html#works" rel="prev">
+      <span class="folio-marker"><span class="t" lang="pt">← Catálogo (Anverso)</span><span class="t" lang="en">← Catalogue (Anverso)</span></span>
+      <span class="folio-title"><em><span class="t" lang="pt">Catálogo de Obras</span><span class="t" lang="en">A Catalogue of Works</span></em></span>
+    </a>
+    <a class="recto" href="../index.html#works" rel="next">
+      <span class="folio-marker"><span class="t" lang="pt">Próximo Case (Recto) →</span><span class="t" lang="en">Next Plate (Recto) →</span></span>
+      <span class="folio-title"><em><span class="t" lang="pt">Voltar ao catálogo</span><span class="t" lang="en">Return to catalogue</span></em></span>
+    </a>
+  </nav>
+
+</main>
+
+<footer class="chrome-bot">
+  <div class="page-counter" aria-hidden="true">
+    <span class="num" data-counter-current>—</span>
+    <span class="of">/ <span data-counter-total>—</span></span>
+  </div>
+  <div class="ink-progress" aria-hidden="true"></div>
+  <div class="page-counter">
+    <span class="of"><span class="t" lang="pt">Prancha</span><span class="t" lang="en">Plate</span></span>
+    <span class="num">I</span>
+  </div>
+</footer>
+
+<script src="./case-template.js"></script>
+
+<!-- Lightbox das galerias de spotlight (escopo desta página) -->
+<script>
+(function () {
+  function collect(gallery, clicked) {
+    var links = Array.prototype.slice.call(gallery.querySelectorAll('.lightboxgallery-link'));
+    var items = links.map(function (link) {
+      var img = link.querySelector('img');
+      var cap = link.querySelector('.sl-hero__cap');
+      var caption = (cap && cap.textContent.trim()) || (link.getAttribute('aria-label') || '') || (img && img.getAttribute('alt')) || '';
+      return { href: link.getAttribute('href'), caption: caption, thumb: img ? img.src : link.getAttribute('href') };
+    });
+    return { items: items, startIndex: Math.max(0, links.indexOf(clicked)) };
+  }
+  function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+  function open(gallery, clicked) {
+    var data = collect(gallery, clicked);
+    var items = data.items; if (!items.length) return;
+    var current = data.startIndex;
+    var overlay = document.createElement('div');
+    overlay.className = 'lbg-overlay';
+    var multi = items.length > 1;
+    var sidebar = multi ? '<div class="lbg__sidebar">' + items.map(function (it, i) {
+      return '<button class="lbg__thumb' + (i === current ? ' is-active' : '') + '" data-index="' + i + '" type="button"><img src="' + esc(it.thumb) + '" alt=""></button>';
+    }).join('') + '</div>' : '';
+    overlay.innerHTML =
+      '<button class="lbg__close" data-action="close" aria-label="Close">&times;</button>' +
+      sidebar +
+      '<div class="lbg__stage">' +
+        (multi ? '<button class="lbg__nav lbg__nav--prev" data-action="prev" aria-label="Previous">&#8249;</button>' : '') +
+        '<div class="lbg__viewer">' +
+          '<img src="' + esc(items[current].href) + '" alt="">' +
+          '<div class="lbg__caption"><span class="lbg__caption__text">' + esc(items[current].caption) + '</span>' +
+          (multi ? '<span class="lbg__counter">' + (current + 1) + ' / ' + items.length + '</span>' : '') + '</div>' +
+        '</div>' +
+        (multi ? '<button class="lbg__nav lbg__nav--next" data-action="next" aria-label="Next">&#8250;</button>' : '') +
+      '</div>';
+    document.body.appendChild(overlay);
+    document.body.style.overflow = 'hidden';
+
+    var viewer = overlay.querySelector('.lbg__viewer');
+    var imgEl = viewer.querySelector('img');
+    var capEl = overlay.querySelector('.lbg__caption__text');
+    var cntEl = overlay.querySelector('.lbg__counter');
+    var thumbs = Array.prototype.slice.call(overlay.querySelectorAll('.lbg__thumb'));
+
+    function goTo(i) {
+      var n = ((i % items.length) + items.length) % items.length;
+      if (n === current) return;
+      current = n;
+      viewer.classList.remove('is-swapping'); void viewer.offsetWidth;
+      imgEl.src = items[current].href;
+      capEl.textContent = items[current].caption;
+      if (cntEl) cntEl.textContent = (current + 1) + ' / ' + items.length;
+      viewer.classList.add('is-swapping');
+      thumbs.forEach(function (t, k) { t.classList.toggle('is-active', k === current); });
+      if (thumbs[current] && thumbs[current].scrollIntoView) thumbs[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+    }
+    function close() {
+      if (overlay.parentNode) document.body.removeChild(overlay);
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', onKey);
+    }
+    function onKey(e) {
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(current - 1); }
+    }
+    overlay.addEventListener('click', function (e) {
+      var action = e.target.closest('[data-action]');
+      if (action) { e.stopPropagation(); var a = action.getAttribute('data-action'); if (a === 'prev') goTo(current - 1); else if (a === 'next') goTo(current + 1); else close(); return; }
+      var thumb = e.target.closest('.lbg__thumb');
+      if (thumb) { e.stopPropagation(); goTo(parseInt(thumb.dataset.index, 10)); return; }
+      if (e.target.closest('.lbg__viewer, .lbg__sidebar, .lbg__caption, .lbg__nav, .lbg__close')) return;
+      close();
+    });
+    var sx = 0, sy = 0, ta = false;
+    var stage = overlay.querySelector('.lbg__stage');
+    stage.addEventListener('touchstart', function (e) { if (e.touches.length !== 1) return; ta = true; sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+    stage.addEventListener('touchend', function (e) { if (!ta) return; ta = false; var t = e.changedTouches[0]; var dx = t.clientX - sx, dy = t.clientY - sy; if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) { if (dx < 0) goTo(current + 1); else goTo(current - 1); } }, { passive: true });
+    document.addEventListener('keydown', onKey);
+  }
+
+  document.querySelectorAll('.lightboxgallery-link').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var gallery = link.closest('.sl-gallery') || link.parentElement;
+      open(gallery, link);
+    });
+  });
+})();
+</script>
+</body>
+</html>

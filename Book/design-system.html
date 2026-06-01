@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Design System — A Catalogue of Parts · Lucas Schoenherr</title>
+<meta name="description" content="The living design system of the Lucas Schoenherr portfolio — tokens, type, colour, motion and components, set as a catalogue raisonné. Figma-ready." />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<!-- Single source of truth -->
+<link rel="stylesheet" href="design-system/tokens.css" />
+<link rel="stylesheet" href="design-system/specimen-page.css" />
+</head>
+<body>
+
+<!-- ============================ CHROME TOP ============================ -->
+<header class="chrome-top">
+  <div class="running-head"><b>Design System</b> — A Catalogue of Parts · Vol. I</div>
+  <div class="mode-controls">
+    <div class="mode-group">
+      <span class="sc">Accent</span>
+      <button class="swatch-btn" data-accent="oxblood" style="--btn-bg: #7a2620" aria-pressed="true" title="Oxblood accent" aria-label="Oxblood accent"></button>
+      <button class="swatch-btn" data-accent="cobalt" style="--btn-bg: #1d3a78" aria-pressed="false" title="Cobalt accent" aria-label="Cobalt accent"></button>
+    </div>
+    <div class="mode-group">
+      <span class="sc">Light</span>
+      <button class="mode-toggle" id="mode-toggle" aria-pressed="false">Daylight</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="page">
+
+  <!-- ============================ FRONTISPIECE ============================ -->
+  <section class="section frontispiece" id="frontispiece" data-label="Frontispiece">
+    <div class="pub-line">A Living Reference · No Build Step</div>
+    <div class="rule-orn"><span></span><span class="glyph serif-display">❧</span><span></span></div>
+    <h1 class="serif-display">A Catalogue<br>of <em>Parts</em></h1>
+    <p class="subtitle">The design system behind the catalogue raisonné — every token, type-set, ornament and component, set in order and ready to be lifted.</p>
+    <div class="imprint">
+      <span>Lucas Schoenherr</span><span class="dot">·</span>
+      <span>Volume I</span><span class="dot">·</span>
+      <span>MMXXVI</span><span class="dot">·</span>
+      <span>Figma-ready</span>
+    </div>
+    <div class="scroll-cue"><span>Turn the page</span><span class="arrow">↓</span></div>
+  </section>
+
+  <!-- ============================ CONTENTS ============================ -->
+  <section class="section" id="contents" data-label="Contents">
+    <div class="section-head">
+      <div class="roman serif-display">—</div>
+      <div>
+        <h2 class="section-name">Contents</h2>
+        <p class="gloss">Eleven gatherings. Tokens lead; the components follow. Every value is a click away from your clipboard.</p>
+      </div>
+    </div>
+    <nav class="toc">
+      <a class="toc-row" href="#principles"><span class="toc-num">I</span><span class="toc-title">Principles<span class="leader"></span></span><span class="toc-page">p. 01</span></a>
+      <a class="toc-row" href="#colour"><span class="toc-num">II</span><span class="toc-title">Colour<span class="leader"></span></span><span class="toc-page">p. 02</span></a>
+      <a class="toc-row" href="#typography"><span class="toc-num">III</span><span class="toc-title">Typography<span class="leader"></span></span><span class="toc-page">p. 03</span></a>
+      <a class="toc-row" href="#spacing"><span class="toc-num">IV</span><span class="toc-title">Spacing &amp; Measure<span class="leader"></span></span><span class="toc-page">p. 04</span></a>
+      <a class="toc-row" href="#surface"><span class="toc-num">V</span><span class="toc-title">Radius, Borders &amp; Elevation<span class="leader"></span></span><span class="toc-page">p. 05</span></a>
+      <a class="toc-row" href="#motion"><span class="toc-num">VI</span><span class="toc-title">Motion<span class="leader"></span></span><span class="toc-page">p. 06</span></a>
+      <a class="toc-row" href="#layers"><span class="toc-num">VII</span><span class="toc-title">Layers (z-index)<span class="leader"></span></span><span class="toc-page">p. 07</span></a>
+      <a class="toc-row" href="#components"><span class="toc-num">VIII</span><span class="toc-title">Components<span class="leader"></span></span><span class="toc-page">p. 08</span></a>
+      <a class="toc-row" href="#breakpoints"><span class="toc-num">IX</span><span class="toc-title">Breakpoints<span class="leader"></span></span><span class="toc-page">p. 09</span></a>
+      <a class="toc-row" href="#accessibility"><span class="toc-num">X</span><span class="toc-title">Accessibility<span class="leader"></span></span><span class="toc-page">p. 10</span></a>
+      <a class="toc-row" href="#colophon"><span class="toc-num">XI</span><span class="toc-title">Colophon &amp; Figma Export<span class="leader"></span></span><span class="toc-page">p. 11</span></a>
+    </nav>
+  </section>
+
+  <!-- ============================ I · PRINCIPLES ============================ -->
+  <section class="section" id="principles" data-label="I · Principles">
+    <div class="section-head">
+      <div class="roman serif-display">I</div>
+      <div>
+        <h2 class="section-name">Principles</h2>
+        <p class="gloss">Five tenets. Read them before you touch the CSS — they explain every decision the tokens encode.</p>
+      </div>
+    </div>
+    <div class="tenets">
+      <div class="tenet">
+        <div class="tenet-num serif-display">1</div>
+        <div><h3>Editorial first</h3><p>Typography leads, colour punctuates, hairlines divide. Marginalia — gloss, footnotes, page counter — builds the atmosphere.</p></div>
+      </div>
+      <div class="tenet">
+        <div class="tenet-num serif-display">2</div>
+        <div><h3>Classic, not dated</h3><p>Drop caps, roman numerals and EB Garamond live beside a modern grid, subtle micro-interactions and serious responsiveness.</p></div>
+      </div>
+      <div class="tenet">
+        <div class="tenet-num serif-display">3</div>
+        <div><h3>Chromatic restraint</h3><p>The page is cream and ink. Oxblood, cobalt and highlighter appear sparingly — when they appear, they matter.</p></div>
+      </div>
+      <div class="tenet">
+        <div class="tenet-num serif-display">4</div>
+        <div><h3>Contained movement</h3><p>Animation is short (≤1s), eased and never pyrotechnic. Everything respects <span class="mono">prefers-reduced-motion</span>.</p></div>
+      </div>
+      <div class="tenet">
+        <div class="tenet-num serif-display">5</div>
+        <div><h3>Accessibility</h3><p>AA contrast minimum. Visible focus. Touch targets ≥ 44px on mobile. The inactive language leaves the a11y tree entirely.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ II · COLOUR ============================ -->
+  <section class="section" id="colour" data-label="II · Colour">
+    <div class="section-head">
+      <div class="roman serif-display">II</div>
+      <div>
+        <h2 class="section-name">Colour</h2>
+        <p class="gloss">Paper for grounds, ink for text and rules, oxblood &amp; cobalt for rare accents. Never a raw hex in a component — always <span class="mono">var(--token)</span>.</p>
+      </div>
+    </div>
+    <div class="specimen-block">
+      <div class="specimen-label"><h3>Palette</h3><span class="count" id="color-count"></span></div>
+      <div class="swatch-grid" id="color-grid"></div>
+    </div>
+  </section>
+
+  <!-- ============================ III · TYPOGRAPHY ============================ -->
+  <section class="section" id="typography" data-label="III · Typography">
+    <div class="section-head">
+      <div class="roman serif-display">III</div>
+      <div>
+        <h2 class="section-name">Typography</h2>
+        <p class="gloss">Three families. Italic marks voice, not decoration. Numbers run on tabular figures; chapters on roman numerals.</p>
+      </div>
+    </div>
+    <div class="specimen-block">
+      <div class="specimen-label"><h3>Families</h3><span class="count">3 typefaces</span></div>
+      <div id="font-families"></div>
+    </div>
+    <div class="specimen-block">
+      <div class="specimen-label"><h3>Type scale</h3><span class="count">9 steps · 10 → 120px</span></div>
+      <div class="type-scale" id="type-scale"></div>
+    </div>
+  </section>
+
+  <!-- ============================ IV · SPACING ============================ -->
+  <section class="section" id="spacing" data-label="IV · Spacing">
+    <div class="section-head">
+      <div class="roman serif-display">IV</div>
+      <div>
+        <h2 class="section-name">Spacing &amp; Measure</h2>
+        <p class="gloss">A 4px base with editorial leaps for page and spread. Container widths set the measure of every column.</p>
+      </div>
+    </div>
+    <div class="specimen-block">
+      <div class="specimen-label"><h3>Spacing scale</h3><span class="count">12 steps · 4 → 160px</span></div>
+      <div id="spacing-scale"></div>
+    </div>
+    <div class="specimen-block">
+      <div class="specimen-label"><h3>Container widths</h3><span class="count">3 measures</span></div>
+      <div class="width-rows" id="width-scale"></div>
+    </div>
+  </section>
+
+  <!-- ============================ V · SURFACE ============================ -->
+  <section class="section" id="surface" data-label="V · Surface">
+    <div class="section-head">
+      <div class="roman serif-display">V</div>
+      <div>
+        <h2 class="section-name">Radius, Borders &amp; Elevation</h2>
+        <p class="gloss">Corners stay sharp; the pill is the one exception. Borders are hairlines first. Shadow is used with great reluctance.</p>
+      </div>
+    </div>
+    <div class="specimen-block">
+      <div class="specimen-label"><h3>Radius</h3><span class="count">4 tokens</span></div>
+      <div class="spec-cards" id="radius-cards"></div>
+    </div>
+    <div class="specimen-block">
+      <div class="specimen-label"><h3>Borders</h3><span class="count">4 tokens</span></div>
+      <div class="spec-cards" id="border-cards"></div>
+    </div>
+    <div class="specimen-block">
+      <div class="specimen-label"><h3>Elevation</h3><span class="count">2 tokens</span></div>
+      <div class="spec-cards" id="shadow-cards"></div>
+    </div>
+  </section>
+
+  <!-- ============================ VI · MOTION ============================ -->
+  <section class="section" id="motion" data-label="VI · Motion">
+    <div class="section-head">
+      <div class="roman serif-display">VI</div>
+      <div>
+        <h2 class="section-name">Motion</h2>
+        <p class="gloss">Four easings, four durations. Nothing exceeds <span class="mono">--dur-page</span>. Hover any card to watch the curve; click to copy it.</p>
+      </div>
+    </div>
+    <div class="specimen-block">
+      <div class="specimen-label"><h3>Easings</h3><span class="count">3 curves</span></div>
+      <div class="motion-grid" id="easing-cards"></div>
+    </div>
+    <div class="specimen-block">
+      <div class="specimen-label"><h3>Durations</h3><span class="count">4 steps</span></div>
+      <div class="motion-grid" id="duration-cards"></div>
+    </div>
+  </section>
+
+  <!-- ============================ VII · LAYERS ============================ -->
+  <section class="section" id="layers" data-label="VII · Layers">
+    <div class="section-head">
+      <div class="roman serif-display">VII</div>
+      <div>
+        <h2 class="section-name">Layers</h2>
+        <p class="gloss">Four named stacking levels. Content sits low; cursor glyph rides on top. Never invent a one-off z-index.</p>
+      </div>
+    </div>
+    <div class="zstack" id="z-stack"></div>
+  </section>
+
+  <!-- ============================ VIII · COMPONENTS ============================ -->
+  <section class="section" id="components" data-label="VIII · Components">
+    <div class="section-head">
+      <div class="roman serif-display">VIII</div>
+      <div>
+        <h2 class="section-name">Components</h2>
+        <p class="gloss">Live specimens — the real parts, rendered from the same tokens. Each is a section of the book made physical.</p>
+      </div>
+    </div>
+
+    <!-- Drop cap -->
+    <div class="specimen-block">
+      <div class="specimen-label"><h3>Drop cap</h3><span class="count">.drop-cap</span></div>
+      <div class="stage" data-stage-label="Preface · first paragraph">
+        <div class="dropcap-demo">
+          <p>The catalogue opens, as catalogues do, with a held breath. A drop cap sets the first letter of a long passage in display serif and oxblood, anchoring the eye before the body settles into its even, generous measure — nineteen pixels of EB Garamond at a loose line height.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Epigraph -->
+    <div class="specimen-block">
+      <div class="specimen-label"><h3>Epigraph</h3><span class="count">.case-epigraph</span></div>
+      <div class="stage" data-stage-label="Interlude · uncounted">
+        <div class="epigraph-demo">
+          <div class="bigquote serif-display">&ldquo;</div>
+          <blockquote>Restraint is the loudest thing on the page.</blockquote>
+          <cite>— House rule, plate I</cite>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footnotes -->
+    <div class="specimen-block">
+      <div class="specimen-label"><h3>Footnotes</h3><span class="count">.fn · .footnotes</span></div>
+      <div class="stage" data-stage-label="Marginalia · synced on hover">
+        <div class="fn-demo">
+          <p>Footnotes are set as superscript numerals in oxblood<span class="fn mono" data-fn="1" tabindex="0">1</span>, and hovering one lifts its corresponding entry below in highlighter<span class="fn mono" data-fn="2" tabindex="0">2</span>. The apparatus is part of the atmosphere, not an afterthought.</p>
+          <div class="footnotes">
+            <div class="fn-item" data-fn="1"><span class="fn-mark">1.</span><span>Superscript marks use JetBrains Mono so the figure reads cleanly at small sizes.</span></div>
+            <div class="fn-item" data-fn="2"><span class="fn-mark">2.</span><span>Highlight colour is <span class="mono">--highlighter</span>, the same swatch used for <span class="mono">::selection</span>.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ToC row -->
+    <div class="specimen-block">
+      <div class="specimen-label"><h3>Table of contents</h3><span class="count">.toc-row</span></div>
+      <div class="stage" data-stage-label="Sumário · leader dots">
+        <nav class="toc toc-mini">
+          <a class="toc-row" href="#components"><span class="toc-num">I</span><span class="toc-title">Lighthouse<span class="leader"></span></span><span class="toc-page">p. 12</span></a>
+          <a class="toc-row" href="#components"><span class="toc-num">II</span><span class="toc-title">Porto Editorial<span class="leader"></span></span><span class="toc-page">p. 28</span></a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Plate -->
+    <div class="specimen-block">
+      <div class="specimen-label"><h3>Plate</h3><span class="count">.plate · .plate-grid</span></div>
+      <div class="stage" data-stage-label="Work / case card">
+        <div class="plate">
+          <div class="plate-meta">
+            <div class="pm-row"><b>Plate</b>IV</div>
+            <div class="pm-row"><b>Client</b>Confidential</div>
+            <div class="pm-row"><b>Year</b>MMXXV</div>
+            <div class="pm-row"><b>Role</b>Product Design</div>
+            <div class="pm-row"><b>Dimensions</b>1440 × 1024</div>
+          </div>
+          <div class="plate-body">
+            <div class="plate-image">[ product shot ]</div>
+            <h4 class="serif-display">A design conducted like a score</h4>
+            <p>A short gloss in EB Garamond italic-adjacent prose describing the work, its constraints, and the part the studio played in it.</p>
+            <div class="plate-stats">
+              <div class="plate-stat"><span class="num serif-display"><span data-count="38" data-dec="0">0</span>%</span><span class="lab">Conversion lift</span></div>
+              <div class="plate-stat"><span class="num serif-display"><span data-count="6" data-dec="0">0</span></span><span class="lab">Markets</span></div>
+              <div class="plate-stat"><span class="num serif-display"><span data-count="4.8" data-dec="1">0</span></span><span class="lab">Store rating</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Buttons + lang toggle -->
+    <div class="specimen-block">
+      <div class="specimen-label"><h3>Buttons &amp; controls</h3><span class="count">.btn · .lang-toggle</span></div>
+      <div class="stage stage--row" data-stage-label="Actions">
+        <button class="btn">Read the case</button>
+        <button class="btn btn--accent">View plate ↗</button>
+        <button class="btn btn--ghost">Verso</button>
+        <a class="btn btn--link" href="#components">return to catalogue</a>
+        <div class="lang-toggle">
+          <button aria-pressed="true">PT</button>
+          <button aria-pressed="false">EN</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Marginalia stats -->
+    <div class="specimen-block">
+      <div class="specimen-label"><h3>Marginalia statistics</h3><span class="count">.marginalia-stat</span></div>
+      <div class="stage" data-stage-label="Metrics as margin notes">
+        <div class="marg-stat">
+          <div class="ms"><div class="ms-num serif-display"><span class="unit-pre">+</span><span data-count="124" data-dec="0">0</span></div><div class="ms-lab">Daily active, thousands</div></div>
+          <div class="ms"><div class="ms-num serif-display"><span data-count="13" data-dec="0">0</span></div><div class="ms-lab">Years in practice</div></div>
+          <div class="ms"><div class="ms-num serif-display"><span class="unit-pre">~</span><span data-count="2.4" data-dec="1">0</span><span style="font-size:0.5em">×</span></div><div class="ms-lab">Faster checkout</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reception clipping -->
+    <div class="specimen-block">
+      <div class="specimen-label"><h3>Reception clipping</h3><span class="count">.reception-clipping</span></div>
+      <div class="stage stage--center" data-stage-label="Testimonial · pasted slightly crooked">
+        <figure class="clipping">
+          <span class="clip-tape"></span>
+          <span class="clip-tape r"></span>
+          <blockquote>&ldquo;He treats an interface the way a binder treats a book — every seam considered, nothing loud for its own sake.&rdquo;</blockquote>
+          <cite>— A collaborator, on the record</cite>
+        </figure>
+      </div>
+    </div>
+
+    <!-- Ex Libris -->
+    <div class="specimen-block">
+      <div class="specimen-label"><h3>Ex Libris card</h3><span class="count">.exlibris-card</span></div>
+      <div class="stage stage--center" data-stage-label="Self-contained CV slip">
+        <div class="exlibris">
+          <div class="eyebrow">Ex Libris</div>
+          <h4 class="serif-display">Lucas Schoenherr</h4>
+          <div class="gloss">Product designer · thirteen years at the bench</div>
+          <a class="btn btn--accent" href="#colophon">Correspond ↗</a>
+          <div class="motto">Mensura · Ordo · Lux</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inline marks -->
+    <div class="specimen-block">
+      <div class="specimen-label"><h3>Inline marks</h3><span class="count">highlighter · tabular-nums</span></div>
+      <div class="stage" data-stage-label="Within the body">
+        <div class="inline-demos">
+          <div>The marker draws the eye to <span class="hl">a single passage</span> without breaking the line.</div>
+          <div>Figures align on <span class="tnums">1,204.50</span> / <span class="tnums">9,887.00</span> with tabular numerals.</div>
+          <div>Roman numerals carry chapters: <span class="serif-display oxblood">I · II · III · IV · V · VI</span>.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ IX · BREAKPOINTS ============================ -->
+  <section class="section" id="breakpoints" data-label="IX · Breakpoints">
+    <div class="section-head">
+      <div class="roman serif-display">IX</div>
+      <div>
+        <h2 class="section-name">Breakpoints</h2>
+        <p class="gloss">Five widths. Marginalia never disappears — below 1024 it folds into an inline note with an oxblood left rule.</p>
+      </div>
+    </div>
+    <div class="bp-table">
+      <div class="bp-row"><span class="bp-w serif-display">≥1280</span><span class="bp-name">Wide desktop</span><span class="bp-note">Full layout: 3-col spread, 3-col plate-grid, 2-col apparatus.</span></div>
+      <div class="bp-row"><span class="bp-w serif-display">≤1024</span><span class="bp-name">Laptop / landscape tablet</span><span class="bp-note">Single-column spread. Margins become inline blocks with a 2px oxblood left border.</span></div>
+      <div class="bp-row"><span class="bp-w serif-display">≤768</span><span class="bp-name">Portrait tablet</span><span class="bp-note">Reduced page padding. Frontispiece min-height 80vh. Footnote targets ≥22px.</span></div>
+      <div class="bp-row"><span class="bp-w serif-display">≤640</span><span class="bp-name">Large mobile</span><span class="bp-note">17px body. Compact chrome. Touch targets ≥44px. ToC drops its leaders.</span></div>
+      <div class="bp-row"><span class="bp-w serif-display">≤380</span><span class="bp-name">Small mobile</span><span class="bp-note">16px body. Lower type-scale floor. Single-column acta &amp; stats.</span></div>
+    </div>
+  </section>
+
+  <!-- ============================ X · ACCESSIBILITY ============================ -->
+  <section class="section" id="accessibility" data-label="X · Accessibility">
+    <div class="section-head">
+      <div class="roman serif-display">X</div>
+      <div>
+        <h2 class="section-name">Accessibility</h2>
+        <p class="gloss">The atmosphere never costs access. Status below: ✓ shipped, ○ on the docket.</p>
+      </div>
+    </div>
+    <div class="a11y-list">
+      <div class="a11y-item done"><span class="mark">✓</span><div class="body"><strong>prefers-reduced-motion</strong><p>A global rule in tokens.css cuts transitions, animations and smooth scroll; reveals become instant; lens &amp; cursor glyph vanish.</p></div></div>
+      <div class="a11y-item done"><span class="mark">✓</span><div class="body"><strong>Visible focus</strong><p>Global <span class="mono">:focus-visible</span> — 2px oxblood outline, 3px offset.</p></div></div>
+      <div class="a11y-item done"><span class="mark">✓</span><div class="body"><strong>Touch targets ≥ 44×44</strong><p>Applied to language toggle, footnotes, to-catalogue and folio nav at ≤640.</p></div></div>
+      <div class="a11y-item done"><span class="mark">✓</span><div class="body"><strong>Hover off on touch</strong><p><span class="mono">@media (hover: none)</span> hides the lens and the cursor glyph.</p></div></div>
+      <div class="a11y-item done"><span class="mark">✓</span><div class="body"><strong>AA contrast</strong><p>Ink on paper runs high; ink-faint is reserved for captions and metadata only.</p></div></div>
+      <div class="a11y-item todo"><span class="mark">○</span><div class="body"><strong>Semantic hierarchy audit</strong><p>Confirm each case has exactly one h1 and ordered h2/h3.</p></div></div>
+      <div class="a11y-item todo"><span class="mark">○</span><div class="body"><strong>Alt text on plates</strong><p>When real screenshots land, guarantee descriptive alt on every plate image.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ============================ XI · COLOPHON / FIGMA ============================ -->
+  <section class="section colophon" id="colophon" data-label="XI · Colophon">
+    <div class="section-head" style="grid-template-columns:1fr; text-align:center;">
+      <div>
+        <h2 class="section-name">Colophon &amp; Figma Export</h2>
+      </div>
+    </div>
+    <div class="orn serif-display">⁂</div>
+    <p>This catalogue of parts is set in EB Garamond, Instrument Serif and JetBrains Mono. Every value shown is mirrored, one-for-one, from <span class="mono">design-system/tokens.css</span> — the single source of truth.</p>
+    <p>The tokens are CSS custom properties shaped to match Figma Variables (collection → group → token). The export below ships them as a Tokens Studio JSON, importable directly via the Tokens Studio plugin.</p>
+
+    <div class="figma-export">
+      <h3>Take it into Figma</h3>
+      <p>One file, every token, grouped by kind (colour, type, spacing, radius, shadow, motion, layers).</p>
+      <ol>
+        <li>Download the JSON below.</li>
+        <li>In Figma, open the <code>Tokens Studio</code> plugin → <code>Settings</code> → <code>Import</code>.</li>
+        <li>Choose the file, then <code>Import &amp; override</code>.</li>
+        <li>Push the set to native Figma Variables from the plugin.</li>
+      </ol>
+      <div class="export-actions">
+        <button class="btn btn--accent" id="download-tokens">↓ Download tokens.studio.json</button>
+        <button class="btn btn--ghost" id="copy-tokens">Copy JSON</button>
+      </div>
+    </div>
+  </section>
+
+  </div>
+</main>
+
+<!-- ============================ CHROME BOTTOM ============================ -->
+<footer class="chrome-bot">
+  <span class="section-here">Reading · <b>Frontispiece</b></span>
+  <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+  <span>Vol. I · MMXXVI</span>
+</footer>
+
+<script src="design-system/design-system-page.js"></script>
+</body>
+</html>

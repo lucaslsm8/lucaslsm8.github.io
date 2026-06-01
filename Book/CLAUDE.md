@@ -59,11 +59,13 @@ My Portifolio/
 ├── design-system/
 │   ├── tokens.css               ← FONTE ÚNICA dos tokens (cor, type, espaço, easing)
 │   ├── case-template.css        ← estilos da página de case (plate)
+│   ├── vitrine.css              ← estilos da VITRINE: índice lateral fixo (scroll-spy) + seções absorvidas (Materiais, Marginalia, Cronologia, Fragmenta)
 │   └── DESIGN-SYSTEM.md         ← documentação consultável do DS
 └── projects/
     ├── case-template.html       ← página-base de case (template, bilíngue PT/EN). Seções: Frontispiece · Epígrafe · I Argument · II Dramatis · III Acta · Intermezzo · IV Plates · V Reception · VI Errata · VII Instrumentarium · Colophon · Folio nav
     ├── case-template.js         ← interações compartilhadas (template + vitrine): reveal+stagger, marginalia, footnotes, slider before/after, plate-flip, tilt 3D, progress, page-counter, count-up, i18n PT/EN + (vitrine) copiar-código, carrossel, luneta-demo
-    └── mockup-showcase.html     ← VITRINE DE COMPONENTES. Catálogo consultável das peças do DS em Formato A/B, cada uma com gaveta "Ver o código" (HTML copiável). Reaproveita catalogue.css + case-template.css/.js
+    ├── vitrine.html             ← VITRINE ÚNICA (fusão de mockup-showcase + specimen). Catálogo consultável das peças do DS em Formato A/B com gaveta "Ver o código" (I–XVI) + specimens absorvidos da antiga Vitrina Arcana: XVII Materiais & Pigmentos · XVIII Marginalia · XIX Cronologia · XX Fragmenta. Índice lateral fixo com scroll-spy. Reaproveita catalogue.css + case-template.css/.js + vitrine.css/.js
+    └── vitrine.js               ← constrói o índice lateral (scroll-spy via IntersectionObserver), toggle mobile e flash das footnotes da Marginalia. Complementa catalogue.js + case-template.js
 ```
 
 **Assets:** todo arquivo de imagem (`.png/.jpg/.svg` raster) vive em `images/`, exceto o `favicon.svg` (raiz, convenção web). Referências sempre relativas: `images/arquivo.png` no CSS/JS da raiz. **Atenção a maiúsculas** — GitHub Pages é case-sensitive (`Lupa2.png` ≠ `lupa2.png`).
@@ -82,6 +84,7 @@ My Portifolio/
 
 ## Decisões já tomadas (não revisitar sem motivo)
 
+- **Vitrines unificadas (2026-06-01):** havia duas vitrines de assets — `mockup-showcase.html` (componentes A/B com código) e `specimen.html` (Vitrina Arcana). Fundidas numa só, `projects/vitrine.html`, com base no mockup-showcase. As seções únicas do specimen (Materiais & Pigmentos, Marginalia, Cronologia, Fragmenta) foram absorvidas como XVII–XX, cada uma com gaveta de código. **`mockup-showcase.html`, `specimen.html`, `specimen.js` e `specimen.css` foram apagados.** Navegação nova: índice lateral fixo (`.index-rail`) com scroll-spy, em `vitrine.css`/`vitrine.js`. (Não absorvidos do specimen, por decisão de escopo/responsividade: Atelier de posição absoluta, Vitrinarium de ícones SVG, Tabula Rerum — substituída pelo índice lateral.)
 - Tema "Noir Cinematográfico" foi **descartado** em 2026-05-13. Apagado da pasta.
 - JSX foi **eliminado**. JS puro com `React.createElement` quando precisar de React.
 - Estrutura de pastas: raiz simples + `design-system/` + `projects/`. Sem subpastas por feature.

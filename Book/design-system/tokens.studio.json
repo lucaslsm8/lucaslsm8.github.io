@@ -1,0 +1,104 @@
+{
+  "Lucas Schoenherr / Catalogue": {
+    "color": {
+      "paper": { "value": "#f1ece0", "type": "color" },
+      "paper-shade": { "value": "#e8e1cd", "type": "color" },
+      "paper-deep": { "value": "#ddd4bd", "type": "color" },
+      "paper-card": { "value": "#f7f2e3", "type": "color" },
+      "ink": { "value": "#1a1612", "type": "color" },
+      "ink-soft": { "value": "#4a4136", "type": "color" },
+      "ink-faint": { "value": "#8b7f6e", "type": "color" },
+      "ink-ghost": { "value": "#c4b8a0", "type": "color" },
+      "oxblood": { "value": "#7a2620", "type": "color" },
+      "oxblood-deep": { "value": "#5a1814", "type": "color" },
+      "cobalt": { "value": "#1d3a78", "type": "color" },
+      "highlighter": { "value": "#f5e3a8", "type": "color" },
+      "hairline": { "value": "rgba(26,22,18,0.14)", "type": "color" },
+      "hairline-strong": { "value": "rgba(26,22,18,0.28)", "type": "color" }
+    },
+    "fontFamilies": {
+      "serif": { "value": "EB Garamond", "type": "fontFamilies" },
+      "serif-display": { "value": "Instrument Serif", "type": "fontFamilies" },
+      "mono": { "value": "JetBrains Mono", "type": "fontFamilies" }
+    },
+    "fontSize": {
+      "caption": { "value": "10", "type": "fontSizes" },
+      "small": { "value": "11", "type": "fontSizes" },
+      "meta": { "value": "13", "type": "fontSizes" },
+      "body": { "value": "19", "type": "fontSizes" },
+      "lead": { "value": "22", "type": "fontSizes" },
+      "h4": { "value": "24", "type": "fontSizes" },
+      "h3": { "value": "36", "type": "fontSizes" },
+      "h2": { "value": "56", "type": "fontSizes" },
+      "h1": { "value": "120", "type": "fontSizes" }
+    },
+    "lineHeights": {
+      "tight": { "value": "1", "type": "lineHeights" },
+      "snug": { "value": "1.2", "type": "lineHeights" },
+      "normal": { "value": "1.5", "type": "lineHeights" },
+      "loose": { "value": "1.6", "type": "lineHeights" }
+    },
+    "spacing": {
+      "1": { "value": "4", "type": "spacing" },
+      "2": { "value": "8", "type": "spacing" },
+      "3": { "value": "12", "type": "spacing" },
+      "4": { "value": "16", "type": "spacing" },
+      "5": { "value": "24", "type": "spacing" },
+      "6": { "value": "32", "type": "spacing" },
+      "7": { "value": "48", "type": "spacing" },
+      "8": { "value": "64", "type": "spacing" },
+      "9": { "value": "80", "type": "spacing" },
+      "10": { "value": "96", "type": "spacing" },
+      "11": { "value": "120", "type": "spacing" },
+      "12": { "value": "160", "type": "spacing" }
+    },
+    "sizing": {
+      "prose": { "value": "640", "type": "sizing" },
+      "narrow": { "value": "880", "type": "sizing" },
+      "page": { "value": "1280", "type": "sizing" }
+    },
+    "borderRadius": {
+      "none": { "value": "0", "type": "borderRadius" },
+      "sm": { "value": "2", "type": "borderRadius" },
+      "md": { "value": "4", "type": "borderRadius" },
+      "pill": { "value": "999", "type": "borderRadius" }
+    },
+    "borderWidth": {
+      "hair": { "value": "1", "type": "borderWidth" }
+    },
+    "boxShadow": {
+      "soft": {
+        "value": { "x": "0", "y": "4", "blur": "12", "spread": "0", "color": "rgba(26,22,18,0.08)", "type": "dropShadow" },
+        "type": "boxShadow"
+      },
+      "lens": {
+        "value": [
+          { "x": "0", "y": "0", "blur": "0", "spread": "1", "color": "rgba(26,22,18,0.14)", "type": "dropShadow" },
+          { "x": "0", "y": "16", "blur": "40", "spread": "0", "color": "rgba(26,22,18,0.2)", "type": "dropShadow" }
+        ],
+        "type": "boxShadow"
+      }
+    },
+    "easing": {
+      "out": { "value": "cubic-bezier(0.22, 1, 0.36, 1)", "type": "other" },
+      "power": { "value": "cubic-bezier(0.16, 1, 0.3, 1)", "type": "other" },
+      "in-out": { "value": "cubic-bezier(0.65, 0, 0.35, 1)", "type": "other" }
+    },
+    "duration": {
+      "fast": { "value": "200ms", "type": "other" },
+      "base": { "value": "300ms", "type": "other" },
+      "slow": { "value": "600ms", "type": "other" },
+      "page": { "value": "1000ms", "type": "other" }
+    },
+    "zIndex": {
+      "content": { "value": "2", "type": "other" },
+      "chrome": { "value": "50", "type": "other" },
+      "lens": { "value": "99", "type": "other" },
+      "cursor": { "value": "100", "type": "other" }
+    }
+  },
+  "$themes": [],
+  "$metadata": {
+    "tokenSetOrder": ["Lucas Schoenherr / Catalogue"]
+  }
+}

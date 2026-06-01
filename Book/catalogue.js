@@ -186,8 +186,8 @@ const CONTENT = {
           val: "06",
           lab: "Módulos\nintegrados"
         }, {
-          val: "~70%",
-          lab: "Redução\npré-comitê"
+          val: "20+",
+          lab: "Planilhas\nsubstituídas"
         }],
         link: "ler a ficha completa",
         href: "projects/pmo-dashboards.html",
@@ -225,8 +225,8 @@ const CONTENT = {
           val: "~200",
           lab: "Gestores\nimpactados"
         }, {
-          val: "70%",
-          lab: "Reuso\nestimado"
+          val: "02",
+          lab: "Plataformas\niOS · Android"
         }],
         link: "ler a ficha completa",
         href: "projects/lighthouse.html",
@@ -380,8 +380,8 @@ const CONTENT = {
         titleEm: "vitæ",
         contextLabel: "Argumento · recto",
         contextBody: [
-          "Este volume reúne provas críticas do trabalho de Lucas Schoenherr entre MMXVII e MMXXVI, organizadas como pranchas de um catálogo de razão. Cada prancha traz o argumento, o elenco, os atos e as erratas — vocabulário emprestado da tradição editorial e ajustado ao ofício do design de produto.",
-          "O leitor encontrará, à direita desta página, uma feuille volante com o currículo do autor, disponível para retirada imediata. As demais pranchas seguem em ordem romana, de I a XI."
+          "Este volume reúne provas críticas do trabalho de Lucas Schoenherr entre MMXII e MMXXVI, organizadas como pranchas de um catálogo de razão. Cada prancha traz o argumento, o elenco, os atos e as erratas — vocabulário emprestado da tradição editorial e ajustado ao ofício do design de produto.",
+          "O leitor encontrará, à direita desta página, uma feuille volante com o currículo do autor, disponível para retirada imediata. As demais pranchas seguem em ordem romana, de I a III."
         ],
         contextNote: "vide infra",
         gloss: "Currículo do autor, em duas folhas — treze anos de product design, sistemas e interfaces generativas.",
@@ -622,8 +622,8 @@ const CONTENT = {
           val: "06",
           lab: "Integrated\nmodules"
         }, {
-          val: "~70%",
-          lab: "Pre-committee\nreduction"
+          val: "20+",
+          lab: "Spreadsheets\nreplaced"
         }],
         link: "read the full entry",
         href: "projects/pmo-dashboards.html",
@@ -661,8 +661,8 @@ const CONTENT = {
           val: "~200",
           lab: "Managers\nimpacted"
         }, {
-          val: "70%",
-          lab: "Estimated\nreuse"
+          val: "02",
+          lab: "Platforms\niOS · Android"
         }],
         link: "read the full entry",
         href: "projects/lighthouse.html",
@@ -816,8 +816,8 @@ const CONTENT = {
         titleEm: "vitæ",
         contextLabel: "Argument · recto",
         contextBody: [
-          "This volume gathers critical proofs of Lucas Schoenherr's work between MMXVII and MMXXVI, arranged as plates in a catalogue raisonné. Each plate carries the argument, cast, acts, and errata — a vocabulary borrowed from editorial tradition and adjusted to the craft of product design.",
-          "The reader will find, to the right of this page, a feuille volante with the author's curriculum, available for immediate withdrawal. The remaining plates follow in Roman order, from I to XI."
+          "This volume gathers critical proofs of Lucas Schoenherr's work between MMXII and MMXXVI, arranged as plates in a catalogue raisonné. Each plate carries the argument, cast, acts, and errata — a vocabulary borrowed from editorial tradition and adjusted to the craft of product design.",
+          "The reader will find, to the right of this page, a feuille volante with the author's curriculum, available for immediate withdrawal. The remaining plates follow in Roman order, from I to III."
         ],
         contextNote: "vide infra",
         gloss: "The author's curriculum, in two leaves — thirteen years of product design, systems, and generative interfaces.",
@@ -828,7 +828,7 @@ const CONTENT = {
         aria: "Loose leaf — Lucas Schoenherr's Curriculum Vitæ, in PDF format",
         href: "lucas-schoenherr-vitae.pdf",
         filename: "lucas-schoenherr-vitae.pdf",
-        stamp: { roman: "v.", country: "U.S.A.", postmark: "MMXXVI" }
+        stamp: { roman: "v.", country: "Brazil", postmark: "MMXXVI" }
       }
     },
     contact: {
