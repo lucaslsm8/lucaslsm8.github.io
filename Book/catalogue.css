@@ -289,6 +289,14 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   z-index: 2;
 }
 
+/* Guarda contra scroll horizontal causado por elementos decorativos que
+   vazam a borda (carimbo da carta com width:280%, mancha de café, retrato).
+   `clip` não cria contexto de scroll e não quebra o chrome fixo; mantém o
+   eixo vertical livre. Aplicada no wrapper raiz da home. */
+.book-content {
+  overflow-x: clip;
+}
+
 .page {
   position: relative;
   padding: 96px 0;
@@ -2259,6 +2267,45 @@ body.candle .ti-stage .cv-slip {
     gap: 18px;
     margin-bottom: 30px;
   }
+  /* Variante Ex Libris (Prefácio): a regra-base é `.ti-stage .cv-slip-copy`
+     com `1fr 1fr` — mais específica que `.cv-slip-copy`, por isso precisa
+     do seu próprio override, senão as duas colunas estreitas quebram o
+     texto palavra-a-palavra no mobile. */
+  .cv-slip-band .ti-stage {
+    padding: 40px 22px 48px;
+    width: min(100%, calc(100vw - 40px));
+  }
+  .cv-slip-band .ti-stage::before {
+    width: 150px;
+    height: 140px;
+    top: -28px;
+    left: -14px;
+  }
+  .ti-stage .cv-slip-copy {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    width: 100%;
+  }
+  .ti-stage .cv-slip-copy p {
+    text-align: left;
+    font-size: 16px;
+  }
+  /* O cartão Ex Libris é `position:absolute` via `.ti-stage .cv-slip`
+     (0,2,0) — vence o override genérico `.cv-slip` (0,1,0) e por isso
+     continuava flutuando POR CIMA do texto, espremendo-o em uma sílaba
+     por linha. Aqui, na mesma especificidade, ele passa a fluir abaixo. */
+  .ti-stage .cv-slip {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 100%;
+    max-width: 320px;
+    min-height: 0;
+    margin: 28px auto 0;
+    transform: rotate(1deg);
+  }
+  .ti-stage .cv-slip:hover,
+  .ti-stage .cv-slip:focus-visible { transform: translateY(-4px) rotate(0deg); }
   .cv-slip {
     position: relative;
     top: auto;
@@ -2900,6 +2947,10 @@ body.candle .carta .ink-bleed {
   .spread { padding: 0 40px; gap: var(--sp-5); }
   .plate-grid { padding: 0 40px; }
 
+  /* Running head ocupa muito espaço no tablet retrato e colide com os
+     títulos de seção (ex.: Sumário). Recolhe já aqui, não só em ≤640. */
+  .chrome-top .running-head { display: none; }
+
   /* Toolbox / Apparatus em 1 col já vem de 1024 */
   .process-row { grid-template-columns: repeat(2, 1fr); gap: var(--sp-6) var(--sp-3); }
   .plate-stats { grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); }
@@ -2964,6 +3015,11 @@ body.candle .carta .ink-bleed {
   .carta .name { font-size: 40px; }
   .carta .seal-wrap { right: 8px; bottom: -16px; }
   .carta .cancel { right: 4px; bottom: 46px; width: 110px; }
+  /* Campos: rótulo mais estreito e valor que pode quebrar (e-mail longo
+     não cabe numa única linha em 320px). Some a coluna `auto` da dica. */
+  .carta .field { grid-template-columns: 64px 1fr; column-gap: 12px; }
+  .carta .f-val { overflow-wrap: anywhere; word-break: break-word; }
+  .carta .f-copy .copy-hint { display: none; }
 }
 
 /* ============================================================
