@@ -2963,6 +2963,13 @@ body.candle .carta .ink-bleed {
      títulos de seção (ex.: Sumário). Recolhe já aqui, não só em ≤640. */
   .chrome-top .running-head { display: none; }
 
+  /* Selo "Volume I · MMXXVI" (absoluto em top:88px) colide com o
+     fleur-de-lis do título em telas estreitas/baixas — e nelas ainda
+     quebra em 2 linhas. A mesma informação está no title-meta abaixo do
+     título, então o ocultamos em ≤768px (vale para todos os celulares e
+     tablets pequenos, retrato e paisagem). Desktop mantém o selo. */
+  .frontispiece .stamp { display: none; }
+
   /* Toolbox / Apparatus em 1 col já vem de 1024 */
   .process-row { grid-template-columns: repeat(2, 1fr); gap: var(--sp-6) var(--sp-3); }
   .plate-stats { grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); }
