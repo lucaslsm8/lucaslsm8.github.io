@@ -2946,6 +2946,12 @@ body.candle .carta .ink-bleed {
   .page { padding: 80px 0; }
   .spread { padding: 0 40px; gap: var(--sp-5); }
   .plate-grid { padding: 0 40px; }
+  /* `.page { padding: 80px 0 }` zera o padding horizontal; o `.spread`
+     é resgatado acima, mas o `.spread-narrow` (Sumário, Aparato, Método)
+     só ganhava margem lateral em ≤640 — deixando a faixa 641–768px
+     (telefone em paisagem, tablet pequeno) com os rótulos colados nas
+     bordas. Restaura aqui também. */
+  .spread-narrow { padding-left: 40px; padding-right: 40px; }
 
   /* Running head ocupa muito espaço no tablet retrato e colide com os
      títulos de seção (ex.: Sumário). Recolhe já aqui, não só em ≤640. */
