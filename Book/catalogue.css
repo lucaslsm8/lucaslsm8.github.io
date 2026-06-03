@@ -279,6 +279,12 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 @media (max-height: 580px) {
   .frontispiece .invitation { display: none; }
   .frontispiece { padding-bottom: 80px; }
+  /* Em telas baixas o conteúdo centralizado sobe até a altura do selo
+     absoluto (top:88px), e o fleur-de-lis (.ornament-1) cai por cima de
+     "VOLUME · MMXXVI". O selo é redundante (a mesma info está no
+     title-meta abaixo do título), então o ocultamos para evitar a
+     sobreposição. */
+  .frontispiece .stamp { display: none; }
 }
 
 /* ============================================================
