@@ -3352,7 +3352,11 @@ body.candle .paper-grain {
    preservando os paddings laterais. --- */
 @media (orientation: landscape) and (max-height: 480px) {
   .frontispiece { min-height: 0; padding: 72px 32px 96px; }
-  .page { padding: 48px 0; }
+  /* IMPORTANTE: usar longhand vertical. O shorthand `padding: 48px 0`
+     re-zera o padding horizontal e, como este bloco vem depois no
+     arquivo, sobreporia o resgate lateral do `.spread-narrow` (≤768),
+     colando Sumário/Aparato nas bordas em paisagem. */
+  .page { padding-top: 48px; padding-bottom: 48px; }
   .heading { margin-bottom: 32px; }
   .cv-slip-band .ti-stage { margin-top: 56px; }
   .correspondence { padding: 56px 24px 80px; }
