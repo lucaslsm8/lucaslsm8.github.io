@@ -3008,13 +3008,21 @@ body.candle .carta .ink-bleed {
   .process-row { grid-template-columns: 1fr; gap: var(--sp-4); }
   .process-arrow { transform: rotate(90deg); margin: var(--sp-2) auto; }
 
-  .plate-stats { grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
+  /* Estatísticas numa única faixa de 3 colunas (intenção editorial:
+     "uma faixa", não empilhadas). Números menores para caberem lado a
+     lado mantendo a leitura confortável. */
+  .plate-stats { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .plate-stat .val { font-size: 24px; }
+  .plate-stat .lab { font-size: 8.5px; letter-spacing: 0.08em; }
 
-  .correspondence { padding: 64px 16px 100px; }
-  .carta { padding: 32px 20px 40px; }
+  /* Carta: mais respiro das bordas da tela e mais padding interno para
+     o conteúdo não colar nos cantos/colchetes. */
+  .correspondence { padding: 72px 22px 120px; }
+  .carta { padding: 44px 26px 52px; }
   .carta .name { font-size: 40px; }
-  .carta .seal-wrap { right: 8px; bottom: -16px; }
-  .carta .cancel { right: 4px; bottom: 46px; width: 110px; }
+  /* Lacre recolhido para dentro do cartão (não pendurado no canto). */
+  .carta .seal-wrap { right: 18px; bottom: 14px; width: 84px; height: 84px; }
+  .carta .cancel { right: 14px; bottom: 58px; width: 104px; }
   /* Campos: rótulo mais estreito e valor que pode quebrar (e-mail longo
      não cabe numa única linha em 320px). Some a coluna `auto` da dica. */
   .carta .field { grid-template-columns: 64px 1fr; column-gap: 12px; }
@@ -3321,8 +3329,25 @@ body.candle .paper-grain {
   .toc-row .toc-title { font-size: 19px; }
   .heading .title { font-size: 32px; line-height: 1.05; }
 
-  /* Stats em uma coluna garante leitura confortável */
-  .plate-stats { grid-template-columns: 1fr; gap: var(--sp-3); padding-top: var(--sp-4); }
+  /* Stats mantêm a faixa de 3 colunas, com número um pouco menor */
+  .plate-stats { grid-template-columns: repeat(3, 1fr); gap: 10px; padding-top: var(--sp-4); }
+  .plate-stat .val { font-size: 21px; }
+  .plate-stat .lab { font-size: 8px; letter-spacing: 0.06em; }
+
+  /* Carta: padding lateral interno preservado mesmo em telas estreitas */
+  .correspondence { padding: 64px 16px 104px; }
+  .carta { padding: 40px 22px 48px; }
 
   .colophon { padding: 56px 16px; }
+}
+
+/* --- Paisagem em telas baixas (telefone girado): comprime as alturas
+   verticais para o conteúdo não ficar espremido entre chrome e bordas,
+   preservando os paddings laterais. --- */
+@media (orientation: landscape) and (max-height: 480px) {
+  .frontispiece { min-height: 0; padding: 72px 32px 96px; }
+  .page { padding: 48px 0; }
+  .heading { margin-bottom: 32px; }
+  .cv-slip-band .ti-stage { margin-top: 56px; }
+  .correspondence { padding: 56px 24px 80px; }
 }
