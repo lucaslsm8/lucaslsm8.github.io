@@ -279,12 +279,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 @media (max-height: 580px) {
   .frontispiece .invitation { display: none; }
   .frontispiece { padding-bottom: 80px; }
-  /* Em telas baixas o conteúdo centralizado sobe até a altura do selo
-     absoluto (top:88px), e o fleur-de-lis (.ornament-1) cai por cima de
-     "VOLUME · MMXXVI". O selo é redundante (a mesma info está no
-     title-meta abaixo do título), então o ocultamos para evitar a
-     sobreposição. */
-  .frontispiece .stamp { display: none; }
 }
 
 /* ============================================================
@@ -2963,12 +2957,24 @@ body.candle .carta .ink-bleed {
      títulos de seção (ex.: Sumário). Recolhe já aqui, não só em ≤640. */
   .chrome-top .running-head { display: none; }
 
-  /* Selo "Volume I · MMXXVI" (absoluto em top:88px) colide com o
-     fleur-de-lis do título em telas estreitas/baixas — e nelas ainda
-     quebra em 2 linhas. A mesma informação está no title-meta abaixo do
-     título, então o ocultamos em ≤768px (vale para todos os celulares e
-     tablets pequenos, retrato e paisagem). Desktop mantém o selo. */
-  .frontispiece .stamp { display: none; }
+  /* Frontispício no mobile: a flor-de-lis (.ornament-1) e o selo absoluto
+     "Volume I · MMXXVI" (top:88px) colidiam em telas estreitas/baixas.
+     Preferência: manter o TEXTO do selo e remover a flor.
+     - oculta a flor;
+     - selo em uma linha só (sem a quebra feia em duas) e um pouco menor;
+     - `safe center` + padding-top folgado mantêm o título abaixo do selo
+       mesmo quando o conteúdo é alto e encosta no topo. */
+  .frontispiece .ornament-1 { display: none; }
+  .frontispiece .stamp {
+    white-space: nowrap;
+    letter-spacing: 0.18em;
+  }
+  .frontispiece .stamp::before,
+  .frontispiece .stamp::after { width: 20px; }
+  .frontispiece {
+    place-items: safe center;
+    padding-top: 120px;
+  }
 
   /* Toolbox / Apparatus em 1 col já vem de 1024 */
   .process-row { grid-template-columns: repeat(2, 1fr); gap: var(--sp-6) var(--sp-3); }
@@ -3342,8 +3348,9 @@ body.candle .paper-grain {
   .spread-narrow { padding-left: 16px; padding-right: 16px; }
   .plate-grid { padding: 0 16px; }
 
-  /* Type-scale floor mais baixa para não quebrar */
-  .frontispiece { padding: 80px 16px 130px; }
+  /* Type-scale floor mais baixa para não quebrar. padding-top alto
+     (120px) mantém o título abaixo do selo no frontispício mobile. */
+  .frontispiece { padding: 120px 16px 130px; }
   .drop-cap { width: 110px; height: 110px; margin-right: 14px; }
   .toc-row .toc-title { font-size: 19px; }
   .heading .title { font-size: 32px; line-height: 1.05; }
@@ -3364,7 +3371,9 @@ body.candle .paper-grain {
    verticais para o conteúdo não ficar espremido entre chrome e bordas,
    preservando os paddings laterais. --- */
 @media (orientation: landscape) and (max-height: 480px) {
-  .frontispiece { min-height: 0; padding: 72px 32px 96px; }
+  /* padding-top ≥112px preserva a folga abaixo do selo (com `safe center`
+     vindo do bloco ≤768); o resto comprime para a paisagem baixa. */
+  .frontispiece { min-height: 0; padding: 112px 32px 72px; }
   /* IMPORTANTE: usar longhand vertical. O shorthand `padding: 48px 0`
      re-zera o padding horizontal e, como este bloco vem depois no
      arquivo, sobreporia o resgate lateral do `.spread-narrow` (≤768),
