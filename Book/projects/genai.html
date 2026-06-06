@@ -78,22 +78,217 @@
   .sl-dot--parcial { background: var(--cobalt); } .sl-dot--pesquisa { background: var(--ink-ghost); }
 
   /* ---------- 5 princípios (numerados, editoriais) ---------- */
-  .principles { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-5); margin-top: var(--sp-6); }
-  .principle {
-    position: relative; padding: var(--sp-5) var(--sp-5) var(--sp-5) var(--sp-6);
+  .principle-atlas {
+    margin-top: var(--sp-7);
+    display: grid;
+    grid-template-columns: minmax(220px, .82fr) 1.18fr;
+    gap: var(--sp-7);
+    align-items: start;
+  }
+  .atlas-thesis {
+    position: sticky;
+    top: 104px;
+    padding: var(--sp-6);
+    background:
+      linear-gradient(180deg, rgba(245,227,168,.16), transparent 42%),
+      var(--paper-shade);
+    border: 1px solid var(--hairline-strong);
+    box-shadow: var(--shadow-soft);
+  }
+  .atlas-thesis::before,
+  .atlas-thesis::after {
+    content: '';
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-color: var(--oxblood);
+    opacity: .58;
+    pointer-events: none;
+  }
+  .atlas-thesis::before { left: 10px; top: 10px; border-left: 1px solid; border-top: 1px solid; }
+  .atlas-thesis::after { right: 10px; bottom: 10px; border-right: 1px solid; border-bottom: 1px solid; }
+  .atlas-thesis__label {
+    display: block;
+    font-family: var(--mono);
+    font-size: var(--fs-caption);
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin-bottom: var(--sp-4);
+  }
+  .atlas-thesis__title {
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-size: clamp(30px, 4vw, 48px);
+    font-weight: 400;
+    line-height: 1;
+    color: var(--ink);
+    margin: 0 0 var(--sp-4);
+  }
+  .atlas-thesis__body {
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: var(--lh-loose);
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .atlas-thesis__body .em { color: var(--ink); font-style: normal; font-weight: 600; }
+  .atlas-thesis__rule {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--sp-3);
+    align-items: center;
+    margin-top: var(--sp-5);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .atlas-thesis__rule::before,
+  .atlas-thesis__rule::after { content: ''; height: 1px; background: var(--hairline-strong); }
+
+  .atlas-flow {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-5);
+  }
+  .atlas-flow::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    bottom: 28px;
+    left: 27px;
+    width: 1px;
+    background: repeating-linear-gradient(180deg, var(--ink-ghost) 0 7px, transparent 7px 14px);
+  }
+  .atlas-principle {
+    position: relative;
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: var(--sp-4);
+    align-items: start;
+  }
+  .atlas-principle__seal {
+    position: relative;
+    z-index: 2;
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 30%, #a02b25 0%, #7a2620 56%, #4d1612 100%);
+    box-shadow: 0 8px 18px rgba(80,15,12,.32), inset 0 -4px 10px rgba(0,0,0,.28);
+    color: rgba(245,227,168,.9);
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1;
+  }
+  .atlas-principle__seal::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px dashed rgba(245,227,168,.42);
+    border-radius: 50%;
+  }
+  .atlas-principle__card {
+    position: relative;
+    padding: var(--sp-4) var(--sp-5);
+    background: var(--paper-card);
+    border: 1px solid var(--hairline);
     border-left: 2px solid var(--hairline-strong);
+    box-shadow: var(--shadow-soft);
+    transition: transform var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
   }
-  .principle:hover { border-left-color: var(--oxblood); }
-  .principle__num { font-family: var(--mono); font-size: var(--fs-small); letter-spacing: .2em; color: var(--oxblood); }
-  .principle__title { font-family: var(--serif); font-weight: 600; font-size: 22px; line-height: 1.2; margin: 8px 0 4px; color: var(--ink); }
-  .principle__tag { font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--ink-faint); margin-bottom: var(--sp-3); display: block; }
-  .principle__body { font-family: var(--serif); font-size: 16px; line-height: var(--lh-loose); color: var(--ink-soft); }
-  .principle__num-big {
-    position: absolute; right: var(--sp-4); top: var(--sp-3);
-    font-family: var(--serif-display); font-style: italic; font-size: 56px;
-    color: var(--paper-deep); line-height: 1; z-index: 0; pointer-events: none;
+  .atlas-principle__card:hover {
+    transform: translateX(4px);
+    border-left-color: var(--oxblood);
   }
-  .principle > * { position: relative; z-index: 1; }
+  .atlas-principle__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px var(--sp-3);
+    align-items: baseline;
+    margin-bottom: var(--sp-2);
+    font-family: var(--mono);
+    font-size: var(--fs-caption);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+  }
+  .atlas-principle__domain { color: var(--ink-faint); }
+  .atlas-principle__title {
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 1.05;
+    margin: 0 0 6px;
+    color: var(--ink);
+  }
+  .atlas-principle__tag {
+    display: block;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    line-height: var(--lh-normal);
+    color: var(--ink-faint);
+    margin-bottom: var(--sp-3);
+  }
+  .atlas-principle__body {
+    font-family: var(--serif);
+    font-size: 16px;
+    line-height: var(--lh-loose);
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .atlas-output {
+    margin-top: var(--sp-6);
+    padding: var(--sp-5);
+    background: var(--paper-shade);
+    border: 1px solid var(--hairline-strong);
+    border-top: 2px solid var(--oxblood);
+  }
+  .atlas-output__label {
+    display: block;
+    font-family: var(--mono);
+    font-size: var(--fs-caption);
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin-bottom: var(--sp-4);
+  }
+  .atlas-output__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-3);
+  }
+  .atlas-output__chip {
+    min-height: 82px;
+    padding: var(--sp-3);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--paper-card);
+    border: 1px solid var(--hairline);
+  }
+  .atlas-output__chip strong {
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .atlas-output__chip span {
+    margin-top: var(--sp-2);
+    font-family: var(--mono);
+    font-size: 10px;
+    line-height: 1.45;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
 
   /* ---------- Spotlight ---------- */
   .spotlight { margin-top: var(--sp-8); padding-top: var(--sp-6); border-top: var(--border-hair); }
@@ -188,14 +383,73 @@
   }
   .fiction-note::before { content: '⚜'; color: var(--oxblood); font-size: 18px; flex: 0 0 auto; line-height: 1.2; }
 
+  /* ---------- Argumento & Contexto: página editorial com marginalia à direita ---------- */
+  .argument .spread {
+    max-width: 1040px;
+    grid-template-columns: 116px minmax(0, 720px) 140px;
+    gap: 28px;
+    padding-inline: 32px;
+  }
+  .argument .margin-l { min-height: 1px; }
+  .argument .content {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .argument .margin-l {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .argument .margin-r {
+    grid-column: 3;
+    grid-row: 1;
+    padding-top: 142px;
+    text-align: left;
+  }
+  .argument .margin-r .gloss {
+    display: block;
+    margin-bottom: var(--sp-3);
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .argument .preface .body {
+    max-width: 640px;
+  }
+  .argument .footnotes {
+    max-width: 640px;
+  }
+
   /* ---------- Responsividade ---------- */
   @media (max-width: 1024px) { .poc-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 768px)  {
-    .principles { grid-template-columns: 1fr; }
+    .argument .spread { grid-template-columns: 1fr; }
+    .argument .content,
+    .argument .margin-r,
+    .argument .margin-l {
+      grid-column: auto;
+      grid-row: auto;
+    }
+    .argument .content { order: 1; }
+    .argument .margin-r { order: 2; }
+    .argument .margin-l { display: none; }
+    .argument .margin-r {
+      padding-top: 0;
+      border-left: 2px solid var(--oxblood);
+      padding-left: var(--sp-4);
+      margin-top: var(--sp-5);
+    }
+    .principle-atlas { grid-template-columns: 1fr; gap: var(--sp-6); }
+    .atlas-thesis { position: relative; top: auto; }
+    .atlas-output__grid { grid-template-columns: 1fr; }
     .sl-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 640px)  {
     .poc-grid { grid-template-columns: 1fr; }
+    .atlas-principle { grid-template-columns: 44px 1fr; gap: var(--sp-3); }
+    .atlas-flow::before { left: 21px; }
+    .atlas-principle__seal { width: 44px; height: 44px; font-size: 15px; }
+    .atlas-principle__seal::before { inset: 5px; }
+    .atlas-principle__card { padding: var(--sp-4); }
+    .atlas-principle__title { font-size: 24px; }
     .lbg-overlay { flex-direction: column; padding: var(--sp-4) var(--sp-3); }
     .lbg__stage { max-width: 100%; }
     .lbg__sidebar { flex: 0 0 auto; order: 0; flex-direction: row; width: 100%; max-height: 86px; overflow-x: auto; overflow-y: hidden; }
@@ -203,7 +457,7 @@
     .lbg__viewer img { max-height: calc(100vh - 14rem); }
   }
   @media (prefers-reduced-motion: reduce) {
-    .sl-hero img, .sl-thumb img, .poc-entry, .sl-hero, .sl-thumb { transition: none !important; }
+    .sl-hero img, .sl-thumb img, .poc-entry, .sl-hero, .sl-thumb, .atlas-principle__card { transition: none !important; }
   }
 </style>
 </head>
@@ -321,7 +575,7 @@
        ============================================================ -->
   <section class="page case-section argument" data-folio>
     <div class="spread">
-      <aside class="margin-l">
+      <aside class="margin-r">
         <p class="gloss" data-anchor="arg-p1">
           <span class="gloss-num">i</span>
           <span class="t" lang="pt">9 squads, 9 domínios: DevOps, engenharia, jurídico, marketing, customer success, supply chain, QA e conhecimento interno.</span>
@@ -362,7 +616,7 @@
           </ol>
         </div>
       </div>
-      <aside class="margin-r" aria-hidden="true"></aside>
+      <aside class="margin-l" aria-hidden="true"></aside>
     </div>
   </section>
 
@@ -551,7 +805,82 @@
         <span class="t" lang="en">The focus was not the 9 POCs in isolation, but the presence of AI in each — <span class="em">legible, controllable and auditable</span>. The AI generated, interpreted, compared and predicted; the Design System kept the same visual grammar and the same uncertainty patterns across the 9 contexts. The integration was built around 5 principles, discussed with each squad before becoming components.</span>
       </p>
 
-      <div class="principles reveal" data-stagger>
+      <div class="principle-atlas reveal">
+        <aside class="atlas-thesis">
+          <span class="atlas-thesis__label"><span class="t" lang="pt">Tese operacional</span><span class="t" lang="en">Operating thesis</span></span>
+          <h3 class="atlas-thesis__title"><span class="t" lang="pt">Do modelo ao componente</span><span class="t" lang="en">From model to component</span></h3>
+          <p class="atlas-thesis__body">
+            <span class="t" lang="pt">Cada princípio precisava atravessar três camadas: <span class="em">comportamento do modelo</span>, decisão de UX e componente reutilizável. A estratégia foi desenhar a gramática antes de desenhar cada produto.</span>
+            <span class="t" lang="en">Each principle had to cross three layers: <span class="em">model behaviour</span>, UX decision and reusable component. The strategy was to design the grammar before designing each product.</span>
+          </p>
+          <div class="atlas-thesis__rule"><span>Gen.AI DS</span></div>
+        </aside>
+
+        <div>
+          <div class="atlas-flow" data-stagger>
+            <article class="atlas-principle">
+              <span class="atlas-principle__seal">I</span>
+              <div class="atlas-principle__card">
+                <div class="atlas-principle__meta"><span>01</span><span class="atlas-principle__domain">Model behaviour</span></div>
+                <h3 class="atlas-principle__title"><span class="t" lang="pt">IA como medium</span><span class="t" lang="en">AI as medium</span></h3>
+                <span class="atlas-principle__tag"><span class="t" lang="pt">Projetar com a IA, não apenas para a IA.</span><span class="t" lang="en">Design with the AI, not just for it.</span></span>
+                <p class="atlas-principle__body"><span class="t" lang="pt">A capacidade do modelo, suas respostas, limitações e erros, foi considerada desde o início. Cada POC partiu da análise do comportamento real e dos limites do modelo.</span><span class="t" lang="en">The model's capability, answers, limits and errors, was considered from the start. Each POC began by analysing the model's real behaviour and boundaries.</span></p>
+              </div>
+            </article>
+
+            <article class="atlas-principle">
+              <span class="atlas-principle__seal">II</span>
+              <div class="atlas-principle__card">
+                <div class="atlas-principle__meta"><span>02</span><span class="atlas-principle__domain">Conversation unit</span></div>
+                <h3 class="atlas-principle__title"><span class="t" lang="pt">Design System como linguagem</span><span class="t" lang="en">Design System as language</span></h3>
+                <span class="atlas-principle__tag"><span class="t" lang="pt">A conversa é o elemento fundamental.</span><span class="t" lang="en">The conversation is the fundamental unit.</span></span>
+                <p class="atlas-principle__body"><span class="t" lang="pt">A unidade mínima virou a troca: pergunta, resposta da IA, fontes e ações possíveis. Isso substituiu layouts dashboard-first por interfaces progressivas, pensadas para dialogar com o modelo.</span><span class="t" lang="en">The smallest unit became the exchange: question, AI answer, sources and possible actions. This replaced dashboard-first layouts with progressive interfaces built to converse with the model.</span></p>
+              </div>
+            </article>
+
+            <article class="atlas-principle">
+              <span class="atlas-principle__seal">III</span>
+              <div class="atlas-principle__card">
+                <div class="atlas-principle__meta"><span>03</span><span class="atlas-principle__domain">Trust layer</span></div>
+                <h3 class="atlas-principle__title"><span class="t" lang="pt">Honestidade do modelo</span><span class="t" lang="en">Model honesty</span></h3>
+                <span class="atlas-principle__tag"><span class="t" lang="pt">Transparência quanto à incerteza.</span><span class="t" lang="en">Transparency about uncertainty.</span></span>
+                <p class="atlas-principle__body"><span class="t" lang="pt">Cada resposta precisava explicitar confiança, fontes citáveis, escopo de acesso e reversibilidade. O usuário não deveria confiar cegamente: a interface precisava mostrar por que a resposta existia.</span><span class="t" lang="en">Each answer had to expose confidence, citable sources, access scope and reversibility. Users should not trust blindly: the interface had to show why the answer existed.</span></p>
+              </div>
+            </article>
+
+            <article class="atlas-principle">
+              <span class="atlas-principle__seal">IV</span>
+              <div class="atlas-principle__card">
+                <div class="atlas-principle__meta"><span>04</span><span class="atlas-principle__domain">Reusable context</span></div>
+                <h3 class="atlas-principle__title"><span class="t" lang="pt">Contexto vivo</span><span class="t" lang="en">Living context</span></h3>
+                <span class="atlas-principle__tag"><span class="t" lang="pt">Memória operacional, não só histórico.</span><span class="t" lang="en">Operational memory, not just history.</span></span>
+                <p class="atlas-principle__body"><span class="t" lang="pt">Anexos, sessões, filtros, templates de prompt e níveis de acesso foram tratados como contexto recuperável. O sistema precisava levar o usuário de uma tarefa para outra sem reiniciar a conversa.</span><span class="t" lang="en">Attachments, sessions, filters, prompt templates and access levels were treated as recoverable context. The system had to move users from one task to another without restarting the conversation.</span></p>
+              </div>
+            </article>
+
+            <article class="atlas-principle">
+              <span class="atlas-principle__seal">V</span>
+              <div class="atlas-principle__card">
+                <div class="atlas-principle__meta"><span>05</span><span class="atlas-principle__domain">Learning loop</span></div>
+                <h3 class="atlas-principle__title"><span class="t" lang="pt">Loop fechado</span><span class="t" lang="en">Closed loop</span></h3>
+                <span class="atlas-principle__tag"><span class="t" lang="pt">Feedback como parte da resposta.</span><span class="t" lang="en">Feedback as part of the answer.</span></span>
+                <p class="atlas-principle__body"><span class="t" lang="pt">Avaliação positiva, negativa, correções, exemplos e refutações deixaram de ser acessórios. Viraram componente recorrente para evoluir modelos, prompts e mecanismos de segurança.</span><span class="t" lang="en">Positive ratings, negative ratings, corrections, examples and rebuttals stopped being accessories. They became a recurring component for evolving models, prompts and safety mechanisms.</span></p>
+              </div>
+            </article>
+          </div>
+
+          <div class="atlas-output">
+            <span class="atlas-output__label"><span class="t" lang="pt">Resultado em componentes</span><span class="t" lang="en">Component outcome</span></span>
+            <div class="atlas-output__grid">
+              <div class="atlas-output__chip"><strong><span class="t" lang="pt">Prompt inputs</span><span class="t" lang="en">Prompt inputs</span></strong><span><span class="t" lang="pt">templates, anexos, escopo</span><span class="t" lang="en">templates, attachments, scope</span></span></div>
+              <div class="atlas-output__chip"><strong><span class="t" lang="pt">Response cards</span><span class="t" lang="en">Response cards</span></strong><span><span class="t" lang="pt">streaming, citações, confiança</span><span class="t" lang="en">streaming, citations, confidence</span></span></div>
+              <div class="atlas-output__chip"><strong><span class="t" lang="pt">Domain blocks</span><span class="t" lang="en">Domain blocks</span></strong><span><span class="t" lang="pt">contratos, testes, risco, chamadas</span><span class="t" lang="en">contracts, tests, risk, calls</span></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="principles reveal" data-stagger hidden>
         <div class="principle">
           <span class="principle__num-big" aria-hidden="true">1</span>
           <span class="principle__num">01</span>
