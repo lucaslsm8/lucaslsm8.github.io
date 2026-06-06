@@ -77,218 +77,44 @@
   .sl-dot--dev { background: #3e7d4f; } .sl-dot--proto { background: var(--oxblood); }
   .sl-dot--parcial { background: var(--cobalt); } .sl-dot--pesquisa { background: var(--ink-ghost); }
 
-  /* ---------- 5 princípios (numerados, editoriais) ---------- */
-  .principle-atlas {
-    margin-top: var(--sp-7);
-    display: grid;
-    grid-template-columns: minmax(220px, .82fr) 1.18fr;
-    gap: var(--sp-7);
-    align-items: start;
+  /* ---------- Princípios como cronologia (selos de lacre) ---------- */
+  .principles-timeline { position: relative; margin-top: var(--sp-7); padding: 8px 0; }
+  .principles-timeline::before {
+    content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px;
+    background: repeating-linear-gradient(180deg, var(--ink-ghost) 0 6px, transparent 6px 12px);
+    transform: translateX(-50%);
   }
-  .atlas-thesis {
-    position: sticky;
-    top: 104px;
-    padding: var(--sp-6);
-    background:
-      linear-gradient(180deg, rgba(245,227,168,.16), transparent 42%),
-      var(--paper-shade);
-    border: 1px solid var(--hairline-strong);
+  .t-row { display: grid; grid-template-columns: 1fr 88px 1fr; align-items: center; gap: var(--sp-5); margin: var(--sp-5) 0; }
+  .t-row .seal-mark {
+    width: 56px; height: 56px; margin: 0 auto; border-radius: 50%;
+    background: radial-gradient(circle at 32% 30%, #a02b25 0%, #7a2620 55%, #4d1612 100%);
+    box-shadow: 0 8px 18px rgba(80,15,12,0.4), inset 0 -4px 10px rgba(0,0,0,0.3);
+    display: grid; place-items: center; color: rgba(245,227,168,0.9);
+    font-family: var(--serif-display); font-style: italic; font-size: 20px;
+    position: relative; z-index: 2;
+  }
+  .t-row .seal-mark::before { content: ""; position: absolute; inset: 6px; border: 1px dashed rgba(245,227,168,0.4); border-radius: 50%; }
+  .t-card {
+    background: var(--paper-card); border: 1px solid var(--hairline-strong);
+    border-radius: var(--radius-sm); padding: var(--sp-5);
     box-shadow: var(--shadow-soft);
+    transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
   }
-  .atlas-thesis::before,
-  .atlas-thesis::after {
-    content: '';
-    position: absolute;
-    width: 22px;
-    height: 22px;
-    border-color: var(--oxblood);
-    opacity: .58;
-    pointer-events: none;
-  }
-  .atlas-thesis::before { left: 10px; top: 10px; border-left: 1px solid; border-top: 1px solid; }
-  .atlas-thesis::after { right: 10px; bottom: 10px; border-right: 1px solid; border-bottom: 1px solid; }
-  .atlas-thesis__label {
-    display: block;
-    font-family: var(--mono);
-    font-size: var(--fs-caption);
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: var(--oxblood);
-    margin-bottom: var(--sp-4);
-  }
-  .atlas-thesis__title {
-    font-family: var(--serif-display);
-    font-style: italic;
-    font-size: clamp(30px, 4vw, 48px);
-    font-weight: 400;
-    line-height: 1;
-    color: var(--ink);
-    margin: 0 0 var(--sp-4);
-  }
-  .atlas-thesis__body {
-    font-family: var(--serif);
-    font-size: 17px;
-    line-height: var(--lh-loose);
-    color: var(--ink-soft);
-    margin: 0;
-  }
-  .atlas-thesis__body .em { color: var(--ink); font-style: normal; font-weight: 600; }
-  .atlas-thesis__rule {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    gap: var(--sp-3);
-    align-items: center;
-    margin-top: var(--sp-5);
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-  }
-  .atlas-thesis__rule::before,
-  .atlas-thesis__rule::after { content: ''; height: 1px; background: var(--hairline-strong); }
-
-  .atlas-flow {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-5);
-  }
-  .atlas-flow::before {
-    content: '';
-    position: absolute;
-    top: 28px;
-    bottom: 28px;
-    left: 27px;
-    width: 1px;
-    background: repeating-linear-gradient(180deg, var(--ink-ghost) 0 7px, transparent 7px 14px);
-  }
-  .atlas-principle {
-    position: relative;
-    display: grid;
-    grid-template-columns: 56px 1fr;
-    gap: var(--sp-4);
-    align-items: start;
-  }
-  .atlas-principle__seal {
-    position: relative;
-    z-index: 2;
-    width: 56px;
-    height: 56px;
-    display: grid;
-    place-items: center;
-    border-radius: 50%;
-    background: radial-gradient(circle at 32% 30%, #a02b25 0%, #7a2620 56%, #4d1612 100%);
-    box-shadow: 0 8px 18px rgba(80,15,12,.32), inset 0 -4px 10px rgba(0,0,0,.28);
-    color: rgba(245,227,168,.9);
-    font-family: var(--serif-display);
-    font-style: italic;
-    font-size: 18px;
-    line-height: 1;
-  }
-  .atlas-principle__seal::before {
-    content: '';
-    position: absolute;
-    inset: 6px;
-    border: 1px dashed rgba(245,227,168,.42);
-    border-radius: 50%;
-  }
-  .atlas-principle__card {
-    position: relative;
-    padding: var(--sp-4) var(--sp-5);
-    background: var(--paper-card);
-    border: 1px solid var(--hairline);
-    border-left: 2px solid var(--hairline-strong);
-    box-shadow: var(--shadow-soft);
-    transition: transform var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
-  }
-  .atlas-principle__card:hover {
-    transform: translateX(4px);
-    border-left-color: var(--oxblood);
-  }
-  .atlas-principle__meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px var(--sp-3);
-    align-items: baseline;
-    margin-bottom: var(--sp-2);
-    font-family: var(--mono);
-    font-size: var(--fs-caption);
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: var(--oxblood);
-  }
-  .atlas-principle__domain { color: var(--ink-faint); }
-  .atlas-principle__title {
-    font-family: var(--serif-display);
-    font-style: italic;
-    font-weight: 400;
-    font-size: 28px;
-    line-height: 1.05;
-    margin: 0 0 6px;
-    color: var(--ink);
-  }
-  .atlas-principle__tag {
-    display: block;
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 16px;
-    line-height: var(--lh-normal);
-    color: var(--ink-faint);
-    margin-bottom: var(--sp-3);
-  }
-  .atlas-principle__body {
-    font-family: var(--serif);
-    font-size: 16px;
-    line-height: var(--lh-loose);
-    color: var(--ink-soft);
-    margin: 0;
-  }
-  .atlas-output {
-    margin-top: var(--sp-6);
-    padding: var(--sp-5);
-    background: var(--paper-shade);
-    border: 1px solid var(--hairline-strong);
-    border-top: 2px solid var(--oxblood);
-  }
-  .atlas-output__label {
-    display: block;
-    font-family: var(--mono);
-    font-size: var(--fs-caption);
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: var(--oxblood);
-    margin-bottom: var(--sp-4);
-  }
-  .atlas-output__grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--sp-3);
-  }
-  .atlas-output__chip {
-    min-height: 82px;
-    padding: var(--sp-3);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background: var(--paper-card);
-    border: 1px solid var(--hairline);
-  }
-  .atlas-output__chip strong {
-    font-family: var(--serif);
-    font-size: 17px;
-    line-height: 1.15;
-    color: var(--ink);
-  }
-  .atlas-output__chip span {
-    margin-top: var(--sp-2);
-    font-family: var(--mono);
-    font-size: 10px;
-    line-height: 1.45;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-  }
+  .t-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lens); border-color: var(--oxblood); }
+  .t-row.left  .t-card { grid-column: 1; }
+  .t-row.right .t-card { grid-column: 3; }
+  .t-row .t-eyebrow { font-family: var(--mono); font-size: var(--fs-small); letter-spacing: .18em; text-transform: uppercase; color: var(--oxblood); display: block; margin-bottom: 7px; }
+  .t-row .t-title { font-family: var(--serif); font-weight: 600; font-size: 22px; line-height: 1.2; margin: 0 0 6px; color: var(--ink); }
+  .t-row .t-tag { font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--ink-faint); display: block; margin-bottom: var(--sp-3); }
+  .t-row .t-body { font-family: var(--serif); font-size: 16px; line-height: var(--lh-loose); color: var(--ink-soft); margin: 0; }
+  /* linha de desfecho — selo dourado */
+  .t-row--outcome .seal-mark { background: radial-gradient(circle at 32% 30%, #d8a23e 0%, #b07d23 55%, #6f4d12 100%); color: rgba(28,21,16,0.85); font-size: 22px; }
+  .t-row--outcome .t-card { background: var(--paper-shade); border-color: var(--oxblood); }
+  /* modo vela */
+  body.candle .t-card { background: #2b1f23; border-color: rgba(245,227,168,0.18); }
+  body.candle .t-row .t-title { color: #f3ead0; }
+  body.candle .t-row .t-body { color: rgba(243,234,208,0.78); }
+  body.candle .t-row--outcome .t-card { background: #36242a; }
 
   /* ---------- Spotlight ---------- */
   .spotlight { margin-top: var(--sp-8); padding-top: var(--sp-6); border-top: var(--border-hair); }
@@ -299,29 +125,114 @@
   .spotlight__lead p { margin-bottom: var(--sp-3); }
   .spotlight__lead .em { color: var(--ink); font-weight: 600; font-style: normal; }
 
-  /* galeria: hero + mosaico, com moldura creme (tipped-in plate) */
-  .sl-gallery { margin-top: var(--sp-5); display: flex; flex-direction: column; gap: var(--sp-3); }
-  .sl-hero, .sl-thumb {
-    position: relative; display: block; overflow: hidden; cursor: zoom-in;
+  /* ---------- Galeria: prancha real (passe-partout) + mosaico ---------- */
+  /* Linha 1: prancha real com flip para o wireframe.
+     Linha 2: mosaico de provas em duotom, largura cheia. */
+  .sl-gallery {
+    margin-top: var(--sp-5);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--sp-5);
+    align-items: start;
+  }
+
+  /* Prancha real montada em passe-partout (moldura de museu creme) */
+  .sl-hero {
+    grid-column: 2;
+    position: relative; display: flex; flex-direction: column; gap: 10px;
+    cursor: zoom-in; padding: 12px;
+    background: var(--paper-card); border: 1px solid var(--oxblood); border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-soft);
+    transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+  }
+  .sl-hero img {
+    width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top center; display: block;
+    border: 1px solid rgba(122,38,32,.22);
+    transition: transform var(--dur-slow) var(--ease-out);
+  }
+  .sl-hero:hover { transform: translateY(-3px); box-shadow: var(--shadow-lens); }
+  .sl-hero:hover img { transform: scale(1.015); }
+  .sl-hero__cap {
+    position: static; padding: 0 2px 2px; background: none;
+    color: var(--ink-soft); font-family: var(--mono); font-size: 11px; letter-spacing: .04em; line-height: 1.4;
+    display: flex; align-items: center; gap: 9px;
+  }
+  .sl-hero__cap::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--oxblood); flex: 0 0 auto; }
+  .sl-hero__cap--wf::before { background: var(--ink-faint); }
+
+  /* ---------- Plate-flip: recto (prancha) ⇄ verso (wireframe do esboço) ---------- */
+  .sl-plate-flip { grid-column: 1; max-width: 760px; display: flex; flex-direction: column; gap: 10px; perspective: 1800px; }
+  .sl-flip-inner {
+    position: relative; transform-style: preserve-3d;
+    transition: transform 0.75s var(--ease-power);
+  }
+  .sl-plate-flip.is-flipped .sl-flip-inner { transform: rotateY(180deg); }
+  .sl-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; margin: 0; }
+  .sl-face--recto { position: relative; z-index: 2; }
+  .sl-face--verso {
+    position: absolute; inset: 0; transform: rotateY(180deg);
+    pointer-events: none; cursor: default;
+  }
+  .sl-plate-flip.is-flipped .sl-face--recto { pointer-events: none; }
+  .sl-plate-flip.is-flipped .sl-face--verso { pointer-events: auto; }
+  .sl-face--verso img { background: #f7f2e3; }
+  /* dentro do flip, o hover não desloca a face (atrapalharia o eixo 3D) */
+  .sl-plate-flip .sl-hero:hover { transform: none; }
+  .sl-face--recto:hover { box-shadow: var(--shadow-lens); }
+
+  .sl-flip-btn {
+    align-self: flex-start; display: inline-flex; align-items: center; gap: 9px;
+    min-height: 38px; padding: 8px 16px; cursor: pointer;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--ink-soft); background: var(--paper-card);
+    border: 1px solid var(--hairline-strong); border-radius: var(--radius-pill);
+    transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
+  .sl-flip-btn:hover { border-color: var(--oxblood); color: var(--oxblood); }
+  .sl-flip-glyph { display: inline-block; font-size: 13px; line-height: 1; color: var(--oxblood); transition: transform 0.6s var(--ease-power); }
+  .sl-plate-flip.is-flipped .sl-flip-glyph { transform: rotate(180deg); }
+  .sl-flip-label--back { display: none; }
+  .sl-plate-flip.is-flipped .sl-flip-label--front { display: none; }
+  .sl-plate-flip.is-flipped .sl-flip-label--back { display: inline; }
+
+  /* Mosaico de provas — largura cheia, em duotom de gravura que floresce em cor no hover */
+  .sl-grid {
+    grid-column: 1 / -1;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--sp-3);
+  }
+  .sl-thumb {
+    position: relative; display: block; overflow: hidden; cursor: zoom-in; aspect-ratio: 4 / 3;
     background: var(--paper-shade); border: 1px solid var(--hairline-strong);
     border-radius: var(--radius-sm); box-shadow: var(--shadow-soft);
     transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
   }
-  .sl-hero { aspect-ratio: 16 / 10; }
-  .sl-hero img, .sl-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block;
-    transition: transform var(--dur-slow) var(--ease-out); }
-  .sl-hero:hover, .sl-thumb:hover { transform: translateY(-3px); border-color: var(--oxblood); box-shadow: var(--shadow-lens); }
-  .sl-hero:hover img, .sl-thumb:hover img { transform: scale(1.03); }
-  .sl-hero__cap {
-    position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
-    padding: var(--sp-4) var(--sp-4) var(--sp-3);
-    background: linear-gradient(0deg, rgba(26,22,18,.82) 8%, rgba(26,22,18,.35) 55%, transparent 100%);
-    color: var(--paper); font-family: var(--mono); font-size: 12px; letter-spacing: .04em; line-height: 1.4;
-    display: flex; align-items: center; gap: 9px;
+  .sl-thumb img {
+    width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block;
+    filter: sepia(0.5) saturate(0.62) brightness(0.97) contrast(1.02);
+    transition: transform var(--dur-slow) var(--ease-out), filter var(--dur-base) var(--ease-out);
   }
-  .sl-hero__cap::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--highlighter); flex: 0 0 auto; }
-  .sl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: var(--sp-3); }
-  .sl-thumb { aspect-ratio: 4 / 3; }
+  .sl-thumb::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: rgba(122,38,32,.12); mix-blend-mode: multiply;
+    transition: opacity var(--dur-base) var(--ease-out);
+  }
+  .sl-thumb:hover { transform: translateY(-3px); border-color: var(--oxblood); box-shadow: var(--shadow-lens); }
+  .sl-thumb:hover img { transform: scale(1.03); filter: none; }
+  .sl-thumb:hover::after { opacity: 0; }
+
+  /* Marginália do Argumento na coluna direita: alinhada à esquerda (ragged
+     right, como o Figma). No desktop (3 colunas) ela é empurrada para baixo
+     até a altura do corpo; em ≤1024 o .spread colapsa numa coluna e a glosa
+     vira nota inline — então o deslocamento não se aplica. */
+  .argument .spread .margin-r { text-align: left; }
+  .argument .spread .margin-r .gloss + .gloss { margin-top: var(--sp-4); }
+  @media (min-width: 1025px) {
+    .argument .spread {
+      grid-template-columns: 140px minmax(0, 640px) minmax(170px, 1fr);
+      gap: var(--sp-6);
+    }
+    .argument .spread .margin-r { padding-top: clamp(96px, 11vw, 148px); }
+  }
 
   /* ---------- Lightbox (recolorido p/ tema livro) ---------- */
   .lbg-overlay {
@@ -348,7 +259,7 @@
   .lbg__sidebar { flex: 0 0 150px; order: -1; display: flex; flex-direction: column; gap: var(--sp-3); overflow-y: auto; overflow-x: hidden;
     padding: 4px; scrollbar-width: thin; scrollbar-color: rgba(245,227,168,.4) transparent; cursor: default; }
   .lbg__sidebar::-webkit-scrollbar { width: 6px; } .lbg__sidebar::-webkit-scrollbar-thumb { background: rgba(245,227,168,.35); border-radius: 3px; }
-  .lbg__thumb { position: relative; display: block; width: 100%; aspect-ratio: 4/3; border-radius: var(--radius-sm); overflow: hidden;
+  .lbg__thumb { position: relative; display: block; flex: 0 0 auto; width: 100%; aspect-ratio: 4/3; border-radius: var(--radius-sm); overflow: hidden;
     border: 2px solid rgba(241,236,224,.1); background: rgba(241,236,224,.05); padding: 0; cursor: pointer; opacity: .6;
     transition: opacity var(--dur-fast), border-color var(--dur-fast), transform var(--dur-fast); }
   .lbg__thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
@@ -383,73 +294,20 @@
   }
   .fiction-note::before { content: '⚜'; color: var(--oxblood); font-size: 18px; flex: 0 0 auto; line-height: 1.2; }
 
-  /* ---------- Argumento & Contexto: página editorial com marginalia à direita ---------- */
-  .argument .spread {
-    max-width: 1040px;
-    grid-template-columns: 116px minmax(0, 720px) 140px;
-    gap: 28px;
-    padding-inline: 32px;
-  }
-  .argument .margin-l { min-height: 1px; }
-  .argument .content {
-    grid-column: 2;
-    grid-row: 1;
-  }
-  .argument .margin-l {
-    grid-column: 1;
-    grid-row: 1;
-  }
-  .argument .margin-r {
-    grid-column: 3;
-    grid-row: 1;
-    padding-top: 142px;
-    text-align: left;
-  }
-  .argument .margin-r .gloss {
-    display: block;
-    margin-bottom: var(--sp-3);
-    font-size: 13px;
-    line-height: 1.45;
-  }
-  .argument .preface .body {
-    max-width: 640px;
-  }
-  .argument .footnotes {
-    max-width: 640px;
-  }
-
   /* ---------- Responsividade ---------- */
   @media (max-width: 1024px) { .poc-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 880px)  {
+    .sl-plate-flip { max-width: 100%; }
+  }
   @media (max-width: 768px)  {
-    .argument .spread { grid-template-columns: 1fr; }
-    .argument .content,
-    .argument .margin-r,
-    .argument .margin-l {
-      grid-column: auto;
-      grid-row: auto;
-    }
-    .argument .content { order: 1; }
-    .argument .margin-r { order: 2; }
-    .argument .margin-l { display: none; }
-    .argument .margin-r {
-      padding-top: 0;
-      border-left: 2px solid var(--oxblood);
-      padding-left: var(--sp-4);
-      margin-top: var(--sp-5);
-    }
-    .principle-atlas { grid-template-columns: 1fr; gap: var(--sp-6); }
-    .atlas-thesis { position: relative; top: auto; }
-    .atlas-output__grid { grid-template-columns: 1fr; }
+    .principles-timeline::before { left: 22px; }
+    .t-row { grid-template-columns: 44px 1fr; gap: var(--sp-4); }
+    .t-row.left .t-card, .t-row.right .t-card { grid-column: 2; text-align: left; }
+    .t-row .seal-mark { grid-column: 1; width: 44px; height: 44px; font-size: 16px; }
     .sl-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 640px)  {
     .poc-grid { grid-template-columns: 1fr; }
-    .atlas-principle { grid-template-columns: 44px 1fr; gap: var(--sp-3); }
-    .atlas-flow::before { left: 21px; }
-    .atlas-principle__seal { width: 44px; height: 44px; font-size: 15px; }
-    .atlas-principle__seal::before { inset: 5px; }
-    .atlas-principle__card { padding: var(--sp-4); }
-    .atlas-principle__title { font-size: 24px; }
     .lbg-overlay { flex-direction: column; padding: var(--sp-4) var(--sp-3); }
     .lbg__stage { max-width: 100%; }
     .lbg__sidebar { flex: 0 0 auto; order: 0; flex-direction: row; width: 100%; max-height: 86px; overflow-x: auto; overflow-y: hidden; }
@@ -457,7 +315,7 @@
     .lbg__viewer img { max-height: calc(100vh - 14rem); }
   }
   @media (prefers-reduced-motion: reduce) {
-    .sl-hero img, .sl-thumb img, .poc-entry, .sl-hero, .sl-thumb, .atlas-principle__card { transition: none !important; }
+    .sl-hero img, .sl-thumb img, .poc-entry, .sl-hero, .sl-thumb { transition: none !important; }
   }
 </style>
 </head>
@@ -575,18 +433,7 @@
        ============================================================ -->
   <section class="page case-section argument" data-folio>
     <div class="spread">
-      <aside class="margin-r">
-        <p class="gloss" data-anchor="arg-p1">
-          <span class="gloss-num">i</span>
-          <span class="t" lang="pt">9 squads, 9 domínios: DevOps, engenharia, jurídico, marketing, customer success, supply chain, QA e conhecimento interno.</span>
-          <span class="t" lang="en">9 squads, 9 domains: DevOps, engineering, legal, marketing, customer success, supply chain, QA and internal knowledge.</span>
-        </p>
-        <p class="gloss" data-anchor="arg-p2">
-          <span class="gloss-num">ii</span>
-          <span class="t" lang="pt">O requisito central de design: que o usuário enxergasse o que a IA produziu, onde errou e o que não conseguiu fazer.</span>
-          <span class="t" lang="en">The core design requirement: that the user could see what the AI produced, where it erred, and what it could not do.</span>
-        </p>
-      </aside>
+      <aside class="margin-l" aria-hidden="true"></aside>
 
       <div class="content">
         <header class="section-head reveal">
@@ -616,7 +463,18 @@
           </ol>
         </div>
       </div>
-      <aside class="margin-l" aria-hidden="true"></aside>
+      <aside class="margin-r">
+        <p class="gloss" data-anchor="arg-p1">
+          <span class="gloss-num">i</span>
+          <span class="t" lang="pt">9 squads, 9 domínios: DevOps, engenharia, jurídico, marketing, customer success, supply chain, QA e conhecimento interno.</span>
+          <span class="t" lang="en">9 squads, 9 domains: DevOps, engineering, legal, marketing, customer success, supply chain, QA and internal knowledge.</span>
+        </p>
+        <p class="gloss" data-anchor="arg-p2">
+          <span class="gloss-num">ii</span>
+          <span class="t" lang="pt">O requisito central de design: que o usuário enxergasse o que a IA produziu, onde errou e o que não conseguiu fazer.</span>
+          <span class="t" lang="en">The core design requirement: that the user could see what the AI produced, where it erred, and what it could not do.</span>
+        </p>
+      </aside>
     </div>
   </section>
 
@@ -805,82 +663,7 @@
         <span class="t" lang="en">The focus was not the 9 POCs in isolation, but the presence of AI in each — <span class="em">legible, controllable and auditable</span>. The AI generated, interpreted, compared and predicted; the Design System kept the same visual grammar and the same uncertainty patterns across the 9 contexts. The integration was built around 5 principles, discussed with each squad before becoming components.</span>
       </p>
 
-      <div class="principle-atlas reveal">
-        <aside class="atlas-thesis">
-          <span class="atlas-thesis__label"><span class="t" lang="pt">Tese operacional</span><span class="t" lang="en">Operating thesis</span></span>
-          <h3 class="atlas-thesis__title"><span class="t" lang="pt">Do modelo ao componente</span><span class="t" lang="en">From model to component</span></h3>
-          <p class="atlas-thesis__body">
-            <span class="t" lang="pt">Cada princípio precisava atravessar três camadas: <span class="em">comportamento do modelo</span>, decisão de UX e componente reutilizável. A estratégia foi desenhar a gramática antes de desenhar cada produto.</span>
-            <span class="t" lang="en">Each principle had to cross three layers: <span class="em">model behaviour</span>, UX decision and reusable component. The strategy was to design the grammar before designing each product.</span>
-          </p>
-          <div class="atlas-thesis__rule"><span>Gen.AI DS</span></div>
-        </aside>
-
-        <div>
-          <div class="atlas-flow" data-stagger>
-            <article class="atlas-principle">
-              <span class="atlas-principle__seal">I</span>
-              <div class="atlas-principle__card">
-                <div class="atlas-principle__meta"><span>01</span><span class="atlas-principle__domain">Model behaviour</span></div>
-                <h3 class="atlas-principle__title"><span class="t" lang="pt">IA como medium</span><span class="t" lang="en">AI as medium</span></h3>
-                <span class="atlas-principle__tag"><span class="t" lang="pt">Projetar com a IA, não apenas para a IA.</span><span class="t" lang="en">Design with the AI, not just for it.</span></span>
-                <p class="atlas-principle__body"><span class="t" lang="pt">A capacidade do modelo, suas respostas, limitações e erros, foi considerada desde o início. Cada POC partiu da análise do comportamento real e dos limites do modelo.</span><span class="t" lang="en">The model's capability, answers, limits and errors, was considered from the start. Each POC began by analysing the model's real behaviour and boundaries.</span></p>
-              </div>
-            </article>
-
-            <article class="atlas-principle">
-              <span class="atlas-principle__seal">II</span>
-              <div class="atlas-principle__card">
-                <div class="atlas-principle__meta"><span>02</span><span class="atlas-principle__domain">Conversation unit</span></div>
-                <h3 class="atlas-principle__title"><span class="t" lang="pt">Design System como linguagem</span><span class="t" lang="en">Design System as language</span></h3>
-                <span class="atlas-principle__tag"><span class="t" lang="pt">A conversa é o elemento fundamental.</span><span class="t" lang="en">The conversation is the fundamental unit.</span></span>
-                <p class="atlas-principle__body"><span class="t" lang="pt">A unidade mínima virou a troca: pergunta, resposta da IA, fontes e ações possíveis. Isso substituiu layouts dashboard-first por interfaces progressivas, pensadas para dialogar com o modelo.</span><span class="t" lang="en">The smallest unit became the exchange: question, AI answer, sources and possible actions. This replaced dashboard-first layouts with progressive interfaces built to converse with the model.</span></p>
-              </div>
-            </article>
-
-            <article class="atlas-principle">
-              <span class="atlas-principle__seal">III</span>
-              <div class="atlas-principle__card">
-                <div class="atlas-principle__meta"><span>03</span><span class="atlas-principle__domain">Trust layer</span></div>
-                <h3 class="atlas-principle__title"><span class="t" lang="pt">Honestidade do modelo</span><span class="t" lang="en">Model honesty</span></h3>
-                <span class="atlas-principle__tag"><span class="t" lang="pt">Transparência quanto à incerteza.</span><span class="t" lang="en">Transparency about uncertainty.</span></span>
-                <p class="atlas-principle__body"><span class="t" lang="pt">Cada resposta precisava explicitar confiança, fontes citáveis, escopo de acesso e reversibilidade. O usuário não deveria confiar cegamente: a interface precisava mostrar por que a resposta existia.</span><span class="t" lang="en">Each answer had to expose confidence, citable sources, access scope and reversibility. Users should not trust blindly: the interface had to show why the answer existed.</span></p>
-              </div>
-            </article>
-
-            <article class="atlas-principle">
-              <span class="atlas-principle__seal">IV</span>
-              <div class="atlas-principle__card">
-                <div class="atlas-principle__meta"><span>04</span><span class="atlas-principle__domain">Reusable context</span></div>
-                <h3 class="atlas-principle__title"><span class="t" lang="pt">Contexto vivo</span><span class="t" lang="en">Living context</span></h3>
-                <span class="atlas-principle__tag"><span class="t" lang="pt">Memória operacional, não só histórico.</span><span class="t" lang="en">Operational memory, not just history.</span></span>
-                <p class="atlas-principle__body"><span class="t" lang="pt">Anexos, sessões, filtros, templates de prompt e níveis de acesso foram tratados como contexto recuperável. O sistema precisava levar o usuário de uma tarefa para outra sem reiniciar a conversa.</span><span class="t" lang="en">Attachments, sessions, filters, prompt templates and access levels were treated as recoverable context. The system had to move users from one task to another without restarting the conversation.</span></p>
-              </div>
-            </article>
-
-            <article class="atlas-principle">
-              <span class="atlas-principle__seal">V</span>
-              <div class="atlas-principle__card">
-                <div class="atlas-principle__meta"><span>05</span><span class="atlas-principle__domain">Learning loop</span></div>
-                <h3 class="atlas-principle__title"><span class="t" lang="pt">Loop fechado</span><span class="t" lang="en">Closed loop</span></h3>
-                <span class="atlas-principle__tag"><span class="t" lang="pt">Feedback como parte da resposta.</span><span class="t" lang="en">Feedback as part of the answer.</span></span>
-                <p class="atlas-principle__body"><span class="t" lang="pt">Avaliação positiva, negativa, correções, exemplos e refutações deixaram de ser acessórios. Viraram componente recorrente para evoluir modelos, prompts e mecanismos de segurança.</span><span class="t" lang="en">Positive ratings, negative ratings, corrections, examples and rebuttals stopped being accessories. They became a recurring component for evolving models, prompts and safety mechanisms.</span></p>
-              </div>
-            </article>
-          </div>
-
-          <div class="atlas-output">
-            <span class="atlas-output__label"><span class="t" lang="pt">Resultado em componentes</span><span class="t" lang="en">Component outcome</span></span>
-            <div class="atlas-output__grid">
-              <div class="atlas-output__chip"><strong><span class="t" lang="pt">Prompt inputs</span><span class="t" lang="en">Prompt inputs</span></strong><span><span class="t" lang="pt">templates, anexos, escopo</span><span class="t" lang="en">templates, attachments, scope</span></span></div>
-              <div class="atlas-output__chip"><strong><span class="t" lang="pt">Response cards</span><span class="t" lang="en">Response cards</span></strong><span><span class="t" lang="pt">streaming, citações, confiança</span><span class="t" lang="en">streaming, citations, confidence</span></span></div>
-              <div class="atlas-output__chip"><strong><span class="t" lang="pt">Domain blocks</span><span class="t" lang="en">Domain blocks</span></strong><span><span class="t" lang="pt">contratos, testes, risco, chamadas</span><span class="t" lang="en">contracts, tests, risk, calls</span></span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="principles reveal" data-stagger hidden>
+      <div class="principles reveal" data-stagger>
         <div class="principle">
           <span class="principle__num-big" aria-hidden="true">1</span>
           <span class="principle__num">01</span>
@@ -952,10 +735,27 @@
           <p><span class="t" lang="pt">O maior desafio de UX foi integrar geração de imagens e editor visual num único fluxo. O usuário gera variações, seleciona uma e edita com precisão sem trocar de ferramenta. Isso exigiu ir além do "card de resposta": canvas, máscara, ajustes paramétricos e versionamento. O padrão <span class="em">generate → curate → fine-edit</span> nasceu aqui — o maior avanço do Design System.</span><span class="t" lang="en">The biggest UX challenge was integrating image generation and a full visual editor into one flow. The user generates variations, picks one and edits it precisely without switching tools. This pushed the Design System beyond the "response card": canvas, mask, parametric adjustments and versioning. The <span class="em">generate → curate → fine-edit</span> pattern was born here — the system's biggest leap.</span></p>
         </div>
         <div class="sl-gallery">
-          <a class="sl-hero lightboxgallery-link" href="../images/genai/campaign-genius/1.webp" aria-label="Campaign Genius — Main view — campaign generator with prompts and parameters">
+          <figure class="sl-engraving reveal">
+            <img src="../images/genai/plates/campaign-genius.svg" alt="Esquema gravado — fluxo gerar, curar e refinar" loading="lazy" />
+            <figcaption><span class="t" lang="pt">Gerar · curar · refinar</span><span class="t" lang="en">Generate · curate · fine-edit</span></figcaption>
+          </figure>
+          <div class="sl-plate-flip reveal">
+            <div class="sl-flip-inner">
+              <a class="sl-hero sl-face sl-face--recto lightboxgallery-link" href="../images/genai/campaign-genius/1.webp" aria-label="Campaign Genius — Main view — campaign generator with prompts and parameters">
             <img src="../images/genai/campaign-genius/1.webp" alt="Campaign Genius — Main view — campaign generator with prompts and parameters" loading="lazy" />
             <div class="sl-hero__cap"><span class="t" lang="pt">Vista principal — gerador de campanhas com prompts e parâmetros</span><span class="t" lang="en">Main view — campaign generator with prompts and parameters</span></div>
           </a>
+              <div class="sl-hero sl-face sl-face--verso" aria-hidden="true">
+                <img src="../images/genai/wireframes/campaign-genius.svg" alt="Wireframe — esboço da tela principal" loading="lazy" />
+                <div class="sl-hero__cap sl-hero__cap--wf"><span class="t" lang="pt">Verso · wireframe do esboço</span><span class="t" lang="en">Verso · the sketch wireframe</span></div>
+              </div>
+            </div>
+            <button class="sl-flip-btn" type="button" aria-pressed="false">
+              <span class="sl-flip-glyph" aria-hidden="true">↻</span>
+              <span class="sl-flip-label sl-flip-label--front"><span class="t" lang="pt">Ver o wireframe</span><span class="t" lang="en">See the wireframe</span></span>
+              <span class="sl-flip-label sl-flip-label--back"><span class="t" lang="pt">Ver a prancha</span><span class="t" lang="en">See the plate</span></span>
+            </button>
+          </div>
           <div class="sl-grid">
             <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/2.webp"><img src="../images/genai/campaign-genius/2.webp" alt="Campaign Genius — view 2" loading="lazy" /></a>
             <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/3.webp"><img src="../images/genai/campaign-genius/3.webp" alt="Campaign Genius — view 3" loading="lazy" /></a>
@@ -987,10 +787,27 @@
           <p><span class="t" lang="pt">O desafio central: alinhar as <span class="em">permissões de ação</span> ao papel do usuário. Além de responder, o chatbot edita — mas respeitando limites: leitores consultam, autores editam rascunhos, aprovadores publicam. Virou o padrão de <span class="em">action-bar contextual</span>, depois adotado no SC Copilot e no Code Assistant como a referência de "edição autorizada".</span><span class="t" lang="en">The core challenge: aligning <span class="em">action permissions</span> to the user's role. Beyond answering, the chatbot edits — but within limits: readers consult, authors edit drafts, approvers publish. This became the <span class="em">contextual action-bar</span> pattern, later adopted in SC Copilot and Code Assistant as the reference for "authorised editing".</span></p>
         </div>
         <div class="sl-gallery">
-          <a class="sl-hero lightboxgallery-link" href="../images/genai/contract-explorer/1.webp" aria-label="Contract Explorer — Main view — chat over the contract base with traceable citations">
+          <figure class="sl-engraving reveal">
+            <img src="../images/genai/plates/contract-explorer.svg" alt="Esquema gravado — resposta rastreada até a cláusula citada" loading="lazy" />
+            <figcaption><span class="t" lang="pt">Resposta → cláusula citada</span><span class="t" lang="en">Answer → cited clause</span></figcaption>
+          </figure>
+          <div class="sl-plate-flip reveal">
+            <div class="sl-flip-inner">
+              <a class="sl-hero sl-face sl-face--recto lightboxgallery-link" href="../images/genai/contract-explorer/1.webp" aria-label="Contract Explorer — Main view — chat over the contract base with traceable citations">
             <img src="../images/genai/contract-explorer/1.webp" alt="Contract Explorer — Main view — chat over the contract base with traceable citations" loading="lazy" />
             <div class="sl-hero__cap"><span class="t" lang="pt">Vista principal — chat sobre a base de contratos com citação rastreável</span><span class="t" lang="en">Main view — chat over the contract base with traceable citations</span></div>
           </a>
+              <div class="sl-hero sl-face sl-face--verso" aria-hidden="true">
+                <img src="../images/genai/wireframes/contract-explorer.svg" alt="Wireframe — esboço da tela principal" loading="lazy" />
+                <div class="sl-hero__cap sl-hero__cap--wf"><span class="t" lang="pt">Verso · wireframe do esboço</span><span class="t" lang="en">Verso · the sketch wireframe</span></div>
+              </div>
+            </div>
+            <button class="sl-flip-btn" type="button" aria-pressed="false">
+              <span class="sl-flip-glyph" aria-hidden="true">↻</span>
+              <span class="sl-flip-label sl-flip-label--front"><span class="t" lang="pt">Ver o wireframe</span><span class="t" lang="en">See the wireframe</span></span>
+              <span class="sl-flip-label sl-flip-label--back"><span class="t" lang="pt">Ver a prancha</span><span class="t" lang="en">See the plate</span></span>
+            </button>
+          </div>
           <div class="sl-grid">
             <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/2.webp"><img src="../images/genai/contract-explorer/2.webp" alt="Contract Explorer — view 2" loading="lazy" /></a>
             <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/3.webp"><img src="../images/genai/contract-explorer/3.webp" alt="Contract Explorer — view 3" loading="lazy" /></a>
@@ -1016,10 +833,27 @@
           <p><span class="t" lang="pt">O problema de design era <span class="em">separar visualmente</span> os 4 tipos de saída na mesma vista: fato medido, predição (com intervalo de confiança), sugestão (ignorável) e comparativo (delta). Cada tipo ganhou um padrão próprio — <span class="em">fact-card, prediction-card, suggestion-card e delta-card</span>. Em QA, confundir "o que aconteceu" com "o que pode acontecer" custa caro.</span><span class="t" lang="en">The design problem was to <span class="em">visually separate</span> the 4 output types on the same view: measured fact, prediction (with confidence interval), suggestion (skippable) and comparison (delta). Each got its own pattern — <span class="em">fact-card, prediction-card, suggestion-card and delta-card</span>. In QA, confusing "what happened" with "what might" is costly.</span></p>
         </div>
         <div class="sl-gallery">
-          <a class="sl-hero lightboxgallery-link" href="../images/genai/test-insights/1.webp" aria-label="Test Insights — Main view — 4 AI output types on a single screen">
+          <figure class="sl-engraving reveal">
+            <img src="../images/genai/plates/test-insights.svg" alt="Esquema gravado — quatro tipos de saída mantidos distintos" loading="lazy" />
+            <figcaption><span class="t" lang="pt">Quatro saídas, distintas</span><span class="t" lang="en">Four outputs, kept distinct</span></figcaption>
+          </figure>
+          <div class="sl-plate-flip reveal">
+            <div class="sl-flip-inner">
+              <a class="sl-hero sl-face sl-face--recto lightboxgallery-link" href="../images/genai/test-insights/1.webp" aria-label="Test Insights — Main view — 4 AI output types on a single screen">
             <img src="../images/genai/test-insights/1.webp" alt="Test Insights — Main view — 4 AI output types on a single screen" loading="lazy" />
             <div class="sl-hero__cap"><span class="t" lang="pt">Vista principal — 4 tipos de saída da IA na mesma tela</span><span class="t" lang="en">Main view — 4 AI output types on a single screen</span></div>
           </a>
+              <div class="sl-hero sl-face sl-face--verso" aria-hidden="true">
+                <img src="../images/genai/wireframes/test-insights.svg" alt="Wireframe — esboço da tela principal" loading="lazy" />
+                <div class="sl-hero__cap sl-hero__cap--wf"><span class="t" lang="pt">Verso · wireframe do esboço</span><span class="t" lang="en">Verso · the sketch wireframe</span></div>
+              </div>
+            </div>
+            <button class="sl-flip-btn" type="button" aria-pressed="false">
+              <span class="sl-flip-glyph" aria-hidden="true">↻</span>
+              <span class="sl-flip-label sl-flip-label--front"><span class="t" lang="pt">Ver o wireframe</span><span class="t" lang="en">See the wireframe</span></span>
+              <span class="sl-flip-label sl-flip-label--back"><span class="t" lang="pt">Ver a prancha</span><span class="t" lang="en">See the plate</span></span>
+            </button>
+          </div>
           <div class="sl-grid">
             <a class="sl-thumb lightboxgallery-link" href="../images/genai/test-insights/2.webp"><img src="../images/genai/test-insights/2.webp" alt="Test Insights — view 2" loading="lazy" /></a>
             <a class="sl-thumb lightboxgallery-link" href="../images/genai/test-insights/3.webp"><img src="../images/genai/test-insights/3.webp" alt="Test Insights — view 3" loading="lazy" /></a>
@@ -1043,10 +877,27 @@
           <p><span class="t" lang="pt">A interação principal é um <span class="em">gauge</span> (baixo, médio, alto) com justificativas clicáveis. Para cada item, o engenheiro pode aceitar, refutar ou anotar — e tudo fica como audit trail. Esse ato de justificar concordância ou discordância com a IA virou o padrão de <span class="em">audit trail</span> do Design System: a camada automatizada complementa o julgamento humano, não o substitui.</span><span class="t" lang="en">The main interaction is a <span class="em">gauge</span> (low, medium, high) with clickable justifications. For each item, the engineer can accept, contest or annotate — all logged as an audit trail. That act of justifying agreement or disagreement with the AI became the Design System's <span class="em">audit trail</span> pattern: the automated layer complements human judgement, it doesn't replace it.</span></p>
         </div>
         <div class="sl-gallery">
-          <a class="sl-hero lightboxgallery-link" href="../images/genai/deploy-check/1.webp" aria-label="Deploy Check — Main view — pre-deploy risk gauge with clickable justifications">
+          <figure class="sl-engraving reveal">
+            <img src="../images/genai/plates/deploy-check.svg" alt="Esquema gravado — medidor de risco e audit trail" loading="lazy" />
+            <figcaption><span class="t" lang="pt">Medidor de risco · audit trail</span><span class="t" lang="en">Risk gauge · audit trail</span></figcaption>
+          </figure>
+          <div class="sl-plate-flip reveal">
+            <div class="sl-flip-inner">
+              <a class="sl-hero sl-face sl-face--recto lightboxgallery-link" href="../images/genai/deploy-check/1.webp" aria-label="Deploy Check — Main view — pre-deploy risk gauge with clickable justifications">
             <img src="../images/genai/deploy-check/1.webp" alt="Deploy Check — Main view — pre-deploy risk gauge with clickable justifications" loading="lazy" />
             <div class="sl-hero__cap"><span class="t" lang="pt">Vista principal — gauge de risco pré-deploy com justificativas clicáveis</span><span class="t" lang="en">Main view — pre-deploy risk gauge with clickable justifications</span></div>
           </a>
+              <div class="sl-hero sl-face sl-face--verso" aria-hidden="true">
+                <img src="../images/genai/wireframes/deploy-check.svg" alt="Wireframe — esboço da tela principal" loading="lazy" />
+                <div class="sl-hero__cap sl-hero__cap--wf"><span class="t" lang="pt">Verso · wireframe do esboço</span><span class="t" lang="en">Verso · the sketch wireframe</span></div>
+              </div>
+            </div>
+            <button class="sl-flip-btn" type="button" aria-pressed="false">
+              <span class="sl-flip-glyph" aria-hidden="true">↻</span>
+              <span class="sl-flip-label sl-flip-label--front"><span class="t" lang="pt">Ver o wireframe</span><span class="t" lang="en">See the wireframe</span></span>
+              <span class="sl-flip-label sl-flip-label--back"><span class="t" lang="pt">Ver a prancha</span><span class="t" lang="en">See the plate</span></span>
+            </button>
+          </div>
           <div class="sl-grid">
             <a class="sl-thumb lightboxgallery-link" href="../images/genai/deploy-check/2.webp"><img src="../images/genai/deploy-check/2.webp" alt="Deploy Check — view 2" loading="lazy" /></a>
             <a class="sl-thumb lightboxgallery-link" href="../images/genai/deploy-check/3.webp"><img src="../images/genai/deploy-check/3.webp" alt="Deploy Check — view 3" loading="lazy" /></a>
@@ -1065,10 +916,27 @@
           <p><span class="t" lang="pt">Foi um desafio de design <span class="em">e</span> de engenharia. O Design System criou componentes que indicam o <span class="em">escopo de conhecimento</span> da IA em cada resposta: fontes consultadas, restrições de acesso por segurança e casos que exigem intervenção humana. Nasceu o padrão de <span class="em">indicador de escopo e encaminhamento para humanos</span>, diretriz para qualquer copilot interno. A IA nunca simula conhecimento além do permitido.</span><span class="t" lang="en">It was a design <span class="em">and</span> engineering challenge. The Design System built components that signal the AI's <span class="em">knowledge scope</span> in each answer: sources consulted, access restrictions for security and cases needing human intervention. The <span class="em">scope indicator and human hand-off</span> pattern was born, a guideline for any internal copilot. The AI never feigns knowledge beyond what is allowed.</span></p>
         </div>
         <div class="sl-gallery">
-          <a class="sl-hero lightboxgallery-link" href="../images/genai/sc-copilot/1.webp" aria-label="SC Copilot — Main view — internal copilot operating fully on sensitive knowledge">
+          <figure class="sl-engraving reveal">
+            <img src="../images/genai/plates/sc-copilot.svg" alt="Esquema gravado — escopo de conhecimento, fontes e encaminhamento ao humano" loading="lazy" />
+            <figcaption><span class="t" lang="pt">Escopo · fontes · hand-off</span><span class="t" lang="en">Scope · sources · hand-off</span></figcaption>
+          </figure>
+          <div class="sl-plate-flip reveal">
+            <div class="sl-flip-inner">
+              <a class="sl-hero sl-face sl-face--recto lightboxgallery-link" href="../images/genai/sc-copilot/1.webp" aria-label="SC Copilot — Main view — internal copilot operating fully on sensitive knowledge">
             <img src="../images/genai/sc-copilot/1.webp" alt="SC Copilot — Main view — internal copilot operating fully on sensitive knowledge" loading="lazy" />
             <div class="sl-hero__cap"><span class="t" lang="pt">Vista principal — copilot interno operando 100% sobre conhecimento sensível</span><span class="t" lang="en">Main view — internal copilot operating fully on sensitive knowledge</span></div>
           </a>
+              <div class="sl-hero sl-face sl-face--verso" aria-hidden="true">
+                <img src="../images/genai/wireframes/sc-copilot.svg" alt="Wireframe — esboço da tela principal" loading="lazy" />
+                <div class="sl-hero__cap sl-hero__cap--wf"><span class="t" lang="pt">Verso · wireframe do esboço</span><span class="t" lang="en">Verso · the sketch wireframe</span></div>
+              </div>
+            </div>
+            <button class="sl-flip-btn" type="button" aria-pressed="false">
+              <span class="sl-flip-glyph" aria-hidden="true">↻</span>
+              <span class="sl-flip-label sl-flip-label--front"><span class="t" lang="pt">Ver o wireframe</span><span class="t" lang="en">See the wireframe</span></span>
+              <span class="sl-flip-label sl-flip-label--back"><span class="t" lang="pt">Ver a prancha</span><span class="t" lang="en">See the plate</span></span>
+            </button>
+          </div>
           <div class="sl-grid">
             <a class="sl-thumb lightboxgallery-link" href="../images/genai/sc-copilot/2.webp"><img src="../images/genai/sc-copilot/2.webp" alt="SC Copilot — view 2" loading="lazy" /></a>
             <a class="sl-thumb lightboxgallery-link" href="../images/genai/sc-copilot/3.webp"><img src="../images/genai/sc-copilot/3.webp" alt="SC Copilot — view 3" loading="lazy" /></a>
@@ -1221,6 +1089,26 @@
 </footer>
 
 <script src="./case-template.js"></script>
+
+<!-- Plate-flip: vira a prancha de spotlight para revelar o wireframe do esboço -->
+<script>
+(function () {
+  document.querySelectorAll('.sl-flip-btn').forEach(function (btn) {
+    var card = btn.closest('.sl-plate-flip');
+    if (!card) return;
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var flipped = card.classList.toggle('is-flipped');
+      btn.setAttribute('aria-pressed', flipped ? 'true' : 'false');
+      var verso = card.querySelector('.sl-face--verso');
+      var recto = card.querySelector('.sl-face--recto');
+      if (verso) verso.setAttribute('aria-hidden', flipped ? 'false' : 'true');
+      if (recto) recto.setAttribute('aria-hidden', flipped ? 'true' : 'false');
+    });
+  });
+})();
+</script>
 
 <!-- Lightbox das galerias de spotlight (escopo desta página) -->
 <script>
