@@ -101,7 +101,7 @@ const CONTENT = {
       label: "Capítulo II",
       title: ["Catálogo de obras"],
       page: "viii",
-      intro: "Três obras representativas, dispostas em ordem cronológica decrescente. Cada prancha pode ser consultada em maior detalhe na ficha respectiva.",
+      intro: "Três obras representativas, montadas como telas e dispostas em ordem cronológica decrescente. Examine cada tela de perto com a lupa, vire-a para ver o esboço no verso — ou abra a ficha completa.",
       flip: {
         toVerso:     "Ver o verso",
         toRecto:     "Voltar ao anverso",
@@ -149,7 +149,7 @@ const CONTENT = {
           lab: "End-to-end"
         }],
         link: "ler a ficha completa",
-        href: "projects/gen-ai.html",
+        href: "projects/genai.html",
         imgClass: "plate-img-1"
       }, {
         roman: "Plate II",
@@ -455,7 +455,7 @@ const CONTENT = {
       { label: "Errata", lines: ["Não existe ", { strike: "pronto" }, " — existe ", { em: "lançado" }, " e depois iterado."] }
     ],
     cursorLabels: {
-      seePlate: "ver a prancha",
+      seePlate: "abrir a ficha",
       readLetter: "ler a carta",
       takeLeaf:  "pegue uma cópia"
     }
@@ -537,7 +537,7 @@ const CONTENT = {
       label: "Chapter II",
       title: ["Catalogue of works"],
       page: "viii",
-      intro: "Three representative pieces, in reverse chronological order. Each plate may be consulted in detail in its respective entry.",
+      intro: "Three representative works, mounted as canvases in reverse chronological order. Study each canvas closely with the loupe, turn it to see the sketch on its verso — or open the full entry.",
       flip: {
         toVerso:     "See the verso",
         toRecto:     "Return to the recto",
@@ -585,7 +585,7 @@ const CONTENT = {
           lab: "End-to-end"
         }],
         link: "read the full entry",
-        href: "projects/gen-ai.html",
+        href: "projects/genai.html",
         imgClass: "plate-img-1"
       }, {
         roman: "Plate II",
@@ -891,7 +891,7 @@ const CONTENT = {
       { label: "Errata", lines: ["There is no such thing as ", { strike: "done" }, " — only ", { em: "shipped" }, " and iterated."] }
     ],
     cursorLabels: {
-      seePlate: "see the plate",
+      seePlate: "open the entry",
       readLetter: "read the letter",
       takeLeaf:  "take a copy"
     }
@@ -993,6 +993,7 @@ function CursorGlyph() {
       let offsetY = 28; // padrão: verso wireframe, junto ao cursor
       if (tgt) {
         if (tgt.classList.contains("plate-image")) offsetY = 136; // recto: clearance da lupa
+        else if (tgt.classList.contains("plate-quadro-link")) offsetY = 168; // quadro 3D: acima da lupa
         else if (tgt.classList.contains("cv-slip")) offsetY = 50;  // folha avulsa: um pouco mais alto
       }
       el.style.left = e.clientX + "px";
@@ -1028,105 +1029,122 @@ function CursorGlyph() {
 function Lens() {
   const ref      = useRef(null);
   const glassRef = useRef(null);
+  const canvRef  = useRef(null);
 
   useEffect(() => {
-    const el    = ref.current;
-    const glass = glassRef.current;
-    if (!el || !glass) return;
+    const el      = ref.current;
+    const glass   = glassRef.current;
+    const gcanvas = canvRef.current;
+    if (!el || !glass || !gcanvas) return;
 
-    const LENS_R = 100;   // half of 200px glass diameter
-    const SCALE  = 2.8;
-    let currentPlate = null;
-    let clone        = null;
+    // A lupa é DESKTOP-ONLY: em touch / ≤1024px nem o JS roda. O CSS já
+    // esconde .loupe, mas pulamos os listeners por performance.
+    if (window.matchMedia("(hover: none), (max-width: 1024px)").matches) return;
 
-    /* Clone the plate DOM and inject it into the glass */
-    const attachClone = plate => {
-      if (clone) { clone.remove(); clone = null; }
-      const rect = plate.getBoundingClientRect();
-      clone = plate.cloneNode(true);
-      clone.removeAttribute("href");
-      Object.assign(clone.style, {
-        position:        "absolute",
-        width:           rect.width  + "px",
-        height:          rect.height + "px",
-        transform:       `scale(${SCALE})`,
-        transformOrigin: "0 0",
-        pointerEvents:   "none",
-        cursor:          "none",
-        margin:          "0",
-        left:            "0px",
-        top:             "0px"
-      });
-      glass.appendChild(clone);
+    const GLASS  = 200;          // diâmetro CSS do vidro
+    const LENS_R = GLASS / 2;     // 100
+    const SCALE  = 2.8;           // ampliação
+    const dpr    = Math.min(window.devicePixelRatio || 1, 2);
+    gcanvas.width  = Math.round(GLASS * dpr);
+    gcanvas.height = Math.round(GLASS * dpr);
+    const gctx = gcanvas.getContext("2d");
+    gctx.imageSmoothingEnabled = true;
+    gctx.imageSmoothingQuality = "high";
+
+    let srcCanvas = null;         // canvas WebGL da tela sob o cursor
+    let activeStage = null;       // .plate-quadro-stage atualmente sob o cursor
+    let overPaint = false;        // cursor está sobre pixels opacos da pintura?
+    let lastX = 0, lastY = 0;
+
+    // Desenha a região ampliada dos pixels do canvas WebGL dentro do vidro.
+    // (O canvas tem preserveDrawingBuffer, então drawImage funciona.)
+    // Também testa o pixel central (sob o cursor): se for transparente, o
+    // cursor está na margem vazia da tela — a lupa só deve surgir sobre a
+    // pintura em si, então escondemos o vidro e devolvemos o cursor.
+    const draw = () => {
+      if (!srcCanvas) return;
+      const rect = srcCanvas.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      const sxScale = srcCanvas.width  / rect.width;
+      const syScale = srcCanvas.height / rect.height;
+      const srcW = (GLASS / SCALE) * sxScale;
+      const srcH = (GLASS / SCALE) * syScale;
+      let sx = (lastX - rect.left) * sxScale - srcW / 2;
+      let sy = (lastY - rect.top)  * syScale - srcH / 2;
+      sx = Math.max(0, Math.min(srcCanvas.width  - srcW, sx));
+      sy = Math.max(0, Math.min(srcCanvas.height - srcH, sy));
+      gctx.clearRect(0, 0, gcanvas.width, gcanvas.height);
+      try {
+        gctx.drawImage(srcCanvas, sx, sy, srcW, srcH, 0, 0, gcanvas.width, gcanvas.height);
+      } catch (err) { /* buffer ainda não pintado */ }
+
+      // Hit-test: o pixel central do vidro = ponto sob o cursor.
+      let alpha = 255;
+      try {
+        const cx = gcanvas.width >> 1, cy = gcanvas.height >> 1;
+        alpha = gctx.getImageData(cx, cy, 1, 1).data[3];
+      } catch (err) { alpha = 255; }
+      const nowOver = alpha > 24;
+      if (nowOver !== overPaint) {
+        overPaint = nowOver;
+        el.classList.toggle("show", nowOver);   // pêndulo entra só na pintura
+        if (activeStage) activeStage.style.cursor = nowOver ? "none" : "";
+      }
     };
 
-    /* Keep loupe anchored to cursor; shift clone so cursor-point stays centred.
-       Clamp position so the glass circle never exits the viewport. */
+    // Ancla o vidro ao cursor sem deixar o círculo sair da viewport.
     const onMove = e => {
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
-      // Clamp loupe anchor so the glass (radius LENS_R) stays fully on screen
+      const vw = window.innerWidth, vh = window.innerHeight;
       const px = Math.max(LENS_R, Math.min(vw - LENS_R, e.clientX));
       const py = Math.max(LENS_R, Math.min(vh - LENS_R, e.clientY));
       el.style.left = px + "px";
       el.style.top  = py + "px";
-      if (!currentPlate || !clone) return;
-      // Use real cursor coords for the zoom offset (not clamped)
-      const rect = currentPlate.getBoundingClientRect();
-      clone.style.left = (LENS_R - (e.clientX - rect.left)  * SCALE) + "px";
-      clone.style.top  = (LENS_R - (e.clientY - rect.top)   * SCALE) + "px";
+      lastX = e.clientX; lastY = e.clientY;
+      draw();
     };
 
     const onEnter = e => {
-      currentPlate = e.currentTarget;
-      currentPlate.style.cursor = "none";
-      el.classList.add("show");
-      attachClone(currentPlate);
+      const stage = e.currentTarget;
+      const cnv = stage.querySelector("canvas");
+      if (!cnv) return;
+      srcCanvas = cnv;
+      activeStage = stage;
+      // A visibilidade é decidida no draw() pelo hit-test de transparência.
+      draw();
     };
 
-    const onLeave = () => {
-      if (currentPlate) { currentPlate.style.cursor = ""; }
-      if (clone) { clone.remove(); clone = null; }
-      currentPlate = null;
+    const onLeave = e => {
+      e.currentTarget.style.cursor = "";
+      srcCanvas = null;
+      activeStage = null;
+      overPaint = false;
       el.classList.remove("show");
     };
 
-    const plates = document.querySelectorAll(".plate-image");
-    plates.forEach(p => {
-      p.addEventListener("mouseenter", onEnter);
-      p.addEventListener("mouseleave", onLeave);
+    const stages = document.querySelectorAll(".plate-quadro-stage");
+    stages.forEach(s => {
+      s.addEventListener("mouseenter", onEnter);
+      s.addEventListener("mouseleave", onLeave);
     });
     window.addEventListener("mousemove", onMove);
 
     return () => {
       window.removeEventListener("mousemove", onMove);
-      plates.forEach(p => {
-        p.removeEventListener("mouseenter", onEnter);
-        p.removeEventListener("mouseleave", onLeave);
+      stages.forEach(s => {
+        s.removeEventListener("mouseenter", onEnter);
+        s.removeEventListener("mouseleave", onLeave);
       });
     };
   }, []);
 
-  /* ──────────────────────────────────────────────────────────────
-     SVG frame — antique turned wooden magnifying glass
-     Origin (0,0) = glass centre = cursor.
-     Ring: r=100, stroke 18 → spans r=91..109.
-     Handle anatomy (translate(77,77) rotate(45), extends in +x):
-       [brass socket] [thin waist] [connector bulge]
-       [wood body] [end neck] [brass collar] [wood ball]
-     ViewBox: -130 -130 360 360  →  x/y: -130 → 230
-  ────────────────────────────────────────────────────────────── */
+  // Vidro circular (canvas de ampliação) + a moldura fotográfica da lupa
+  // (Lupa2.png). O pêndulo é puramente CSS, disparado pela classe .show.
   const ce = React.createElement;
-  const frame = ce("img", {
-    src: "images/Lupa2.png",
-    className: "loupe-frame",
-    alt: "",
-    draggable: "false"
-  });
-
   return ce("div", { ref, className: "loupe" },
-    ce("div", { ref: glassRef, className: "loupe-glass" }),
-    frame
+    ce("div", { ref: glassRef, className: "loupe-glass" },
+      ce("canvas", { ref: canvRef, className: "loupe-canvas" })
+    ),
+    ce("img", { src: "images/Lupa2.png", className: "loupe-frame", alt: "", draggable: "false" })
   );
 }
 
@@ -1600,11 +1618,20 @@ function Plate3Phone() {
   }, "\u2197 +2.1"))));
 }
 
+/* Variações leves por tela (ângulo de montagem, escala e tom de luz).
+   Diferencia as três sem inventar conteúdo — dá ritmo de "coleção". */
+const QUADRO_VARIANTS = [
+  { tiltX: 0, rollZ: 0, scale: 1, tint: "#f6eede" },
+  { tiltX: 0, rollZ: 0, scale: 1, tint: "#fff5ec" },
+  { tiltX: 0, rollZ: 0, scale: 1, tint: "#f1eadd" }
+];
+
 /* ============================================================
-   PlateCard — uma plate da seção Works, com flip 3D opcional.
-   Estado de flip por-plate (cada cartão é independente). O verso
-   mostra um placeholder de wireframe; o recto é o link clicável
-   para a ficha do case.
+   PlateCard — uma tela (pintura) da seção Works. Cada obra é
+   montada como um quadro 3D (WebGL): frente = arte, verso =
+   chassi/wireframe. O recto é o link clicável para a ficha; o
+   botão de pena gira a tela; a lupa-pêndulo amplia de perto.
+   Estado de flip por-tela (cada cartão é independente).
    ============================================================ */
 function PlateCard({ p, i, t }) {
   const e = React.createElement;
@@ -1613,10 +1640,95 @@ function PlateCard({ p, i, t }) {
   const flipLabel = flipped ? w.flip.toRecto  : w.flip.toVerso;
   const flipAria  = flipped ? w.flip.ariaRecto : w.flip.ariaVerso;
 
+  // Quadro 3D (objeto WebGL) — imagens por prancha (default: tela genérica).
+  // Para arte específica de cada projeto, defina p.quadro = { front, back, side }.
+  const q = p.quadro || {
+    front: "images/paint-front.png",
+    back:  "images/paint-back.png",
+    side:  "images/paint-side.png"
+  };
+  const stageRef = useRef(null);
+  const instRef  = useRef(null);
+
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    if (window.mountQuadro && window.THREE) {
+      // A lupa-pêndulo (Lupa2.png) é desenhada pelo componente <Lens/>,
+      // não pela lupa lisa embutida — por isso loupe:false aqui.
+      // As variações dão um ângulo/tom distinto a cada tela.
+      const v = QUADRO_VARIANTS[i] || {};
+      instRef.current = window.mountQuadro(stage, {
+        front: q.front, back: q.back, side: q.side,
+        loupe: false,
+        tiltX: v.tiltX, rollZ: v.rollZ, scale: v.scale, tint: v.tint
+      });
+    }
+    // Fallback: sem WebGL/Three, mostra a frente da tela como imagem.
+    if (!instRef.current) {
+      const img = document.createElement("img");
+      img.src = q.front; img.alt = ""; img.className = "plate-quadro-fallimg";
+      stage.appendChild(img);
+    }
+    return () => {
+      if (instRef.current && instRef.current.destroy) instRef.current.destroy();
+      instRef.current = null;
+    };
+  }, []);
+
+  // Alinha o trilho repetível (lights-repeat) à barra da luminária (lights):
+  // a barra ocupa 0.213–0.343 da altura da imagem, então posicionamos o
+  // trilho exatamente nessa faixa para que pareça uma peça contínua.
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    const plate = stage.closest(".plate");
+    if (!plate) return;
+    const rail    = plate.querySelector(".plate-rail");
+    const fixture = plate.querySelector(".plate-rail__fixture");
+    const track   = plate.querySelector(".plate-rail__track");
+    if (!rail || !fixture || !track) return;
+    const BAR_TOP = 0.213, BAR_H = 0.130;
+    const place = () => {
+      const fr = fixture.getBoundingClientRect();
+      const rr = rail.getBoundingClientRect();
+      if (!fr.height) return;
+      track.style.top    = (fr.top - rr.top + BAR_TOP * fr.height) + "px";
+      track.style.height = Math.max(3, BAR_H * fr.height) + "px";
+    };
+    place();
+    const ro = new ResizeObserver(place);
+    ro.observe(fixture);
+    ro.observe(rail);
+    window.addEventListener("resize", place);
+    const t = setTimeout(place, 300);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", place);
+      clearTimeout(t);
+    };
+  }, []);
+
+  const onFlip = () => {
+    setFlipped(f => !f);
+    if (instRef.current && instRef.current.flip) instRef.current.flip();
+  };
+
   return e("article", {
     className: "plate",
     ...(i === 1 ? { "data-page": "ix" } : i === 2 ? { "data-page": "xi" } : {})
   },
+    // Trilho de teto (lights-repeat) + holofote de galeria (lights) sobre a
+    // tela. Decorativo (aria-hidden); o grid espelha .plate-grid para que o
+    // holofote caia exatamente sobre a coluna central da prancha.
+    e(Reveal, { className: "plate-rail", as: "div" },
+      e("div", { className: "plate-rail__track", "aria-hidden": "true" }),
+      e("div", { className: "plate-rail__grid", "aria-hidden": "true" },
+        e("span", { className: "plate-rail__cell" }),
+        e("span", { className: "plate-rail__fixture" }),
+        e("span", { className: "plate-rail__cell" })
+      )
+    ),
     e(Reveal, { className: "plate-grid" },
       // -------- Coluna meta (esquerda) --------
       e("div", { className: "plate-meta" },
@@ -1629,7 +1741,7 @@ function PlateCard({ p, i, t }) {
         e("button", {
           type: "button",
           className: "plate-flip-btn" + (flipped ? " is-flipped" : ""),
-          onClick: () => setFlipped(f => !f),
+          onClick: onFlip,
           "aria-pressed": flipped ? "true" : "false",
           "aria-label": flipAria
         },
@@ -1652,58 +1764,15 @@ function PlateCard({ p, i, t }) {
         )
       ),
 
-      // -------- Coluna central: imagem da plate com flip 3D --------
-      e("div", {
-        className: "plate-image-flip" + (flipped ? " is-flipped" : "")
+      // -------- Coluna central: quadro 3D (objeto WebGL) --------
+      // Clicar leva à ficha; o botão de flip (na meta) gira o objeto.
+      e("a", {
+        href: p.href,
+        className: "plate-quadro-link",
+        "data-cursor-label": t.cursorLabels.seePlate,
+        "aria-label": t.cursorLabels.seePlate + " \u2014 " + p.roman
       },
-        // Recto — arte final (link clicável)
-        e("a", {
-          href: p.href,
-          className: "plate-image plate-image-recto " + p.imgClass,
-          "data-cursor-label": t.cursorLabels.seePlate,
-          tabIndex: flipped ? -1 : 0,
-          "aria-hidden": flipped ? "true" : undefined
-        },
-          e("span", { className: "plate-image-num" }, p.roman),
-          p.imgClass === "plate-img-1" && e("span", { className: "ornament" },
-            "— ARS \xB7 ARTIS \xB7 GRATIA —"),
-          p.imgClass === "plate-img-2" && e(Plate2SVG, null),
-          p.imgClass === "plate-img-3" && e(Plate3Phone, null)
-        ),
-        // Verso — wireframe placeholder. Clicável: leva à ficha do case
-        // (mesma URL do recto). Só recebe foco quando a prancha está virada.
-        e("a", {
-          href: p.href,
-          className: "plate-image-verso",
-          // Sem cursor-label no verso: a wireframe não mostra o tooltip "ver a prancha".
-          tabIndex: flipped ? 0 : -1,
-          "aria-hidden": flipped ? undefined : "true"
-        },
-          e("div", { className: "verso-head" },
-            e("span", { className: "verso-tag"   }, w.flip.versoLabel),
-            e("span", { className: "verso-roman" }, p.roman)
-          ),
-          e("svg", {
-            className: "verso-wireframe",
-            viewBox: "0 0 200 260",
-            xmlns: "http://www.w3.org/2000/svg",
-            "aria-hidden": "true",
-            preserveAspectRatio: "xMidYMid meet"
-          },
-            // Caixas de wireframe — composição abstrata de bloco
-            e("rect", { x: "16",  y: "20",  width: "120", height: "12" }),
-            e("rect", { x: "16",  y: "38",  width: "80",  height: "8"  }),
-            e("rect", { x: "16",  y: "62",  width: "168", height: "98" }),
-            e("rect", { x: "16",  y: "170", width: "78",  height: "70" }),
-            e("rect", { x: "106", y: "170", width: "78",  height: "70" }),
-            // Linhas guia diagonais
-            e("line", { x1: "16",  y1: "20",  x2: "184", y2: "240",
-                        className: "wf-guide", strokeDasharray: "2 3" }),
-            e("line", { x1: "184", y1: "20",  x2: "16",  y2: "240",
-                        className: "wf-guide", strokeDasharray: "2 3" })
-          ),
-          e("span", { className: "verso-caption" }, w.flip.versoCaption)
-        )
+        e("div", { className: "plate-quadro-stage", ref: stageRef, "aria-hidden": "true" })
       ),
 
       // -------- Coluna conteúdo (direita) --------

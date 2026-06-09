@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pranchas — Gen.AI · escolha de prancha para a home</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper:      #f1ece0;
+    --paper-deep: #ddd4bd;
+    --ink:        #1a1612;
+    --ink-soft:   #4a4136;
+    --ink-faint:  #8b7f6e;
+    --hairline:   rgba(26, 22, 18, 0.14);
+    --oxblood:    #7a2620;
+    --gold:       #b58d3d;
+    --serif:      "EB Garamond", Georgia, serif;
+    --display:    "Instrument Serif", Georgia, serif;
+    --mono:       "JetBrains Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(120% 80% at 50% -10%, #f7f2e3 0%, #f1ece0 55%, #e8e1cd 100%);
+    color: var(--ink);
+    font-family: var(--serif);
+    padding: clamp(28px, 5vw, 72px) clamp(20px, 5vw, 64px) 96px;
+  }
+
+  /* ---------- Page header ---------- */
+  .masthead { max-width: 1180px; margin: 0 auto clamp(36px, 5vw, 64px); }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin: 0 0 18px;
+  }
+  .masthead h1 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(34px, 5.4vw, 60px);
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    margin: 0 0 14px;
+  }
+  .masthead h1 em { font-style: italic; color: var(--oxblood); }
+  .masthead p {
+    max-width: 62ch;
+    font-size: clamp(15px, 1.5vw, 18px);
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin: 0;
+    text-wrap: pretty;
+  }
+  .rule {
+    height: 1px;
+    background: var(--hairline);
+    max-width: 1180px;
+    margin: clamp(28px, 4vw, 44px) auto 0;
+    position: relative;
+  }
+  .rule::after {
+    content: "❧";
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--paper);
+    padding: 0 16px;
+    color: var(--oxblood);
+    font-size: 15px;
+  }
+
+  /* ---------- Gallery ---------- */
+  .gallery {
+    max-width: 1180px;
+    margin: clamp(40px, 5vw, 64px) auto 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(258px, 1fr));
+    gap: clamp(36px, 4.5vw, 60px) clamp(28px, 3.5vw, 48px);
+  }
+  figure { margin: 0; }
+
+  /* passe-partout (cream mat) around each dark plate */
+  .mat {
+    background: #f7f2e3;
+    border: 1px solid var(--hairline);
+    padding: clamp(14px, 1.6vw, 20px);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.7) inset,
+      0 10px 28px rgba(26, 22, 18, 0.12);
+    position: relative;
+  }
+  .mat::before {
+    /* engraved bevel line on the mat */
+    content: "";
+    position: absolute; inset: 7px;
+    border: 1px solid rgba(26, 22, 18, 0.10);
+    pointer-events: none;
+  }
+  .plate-svg {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    background: #14100c;
+  }
+
+  figcaption {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--hairline);
+  }
+  .cap-top {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .cap-roman {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .cap-name {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--ink);
+  }
+  figcaption p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    text-wrap: pretty;
+  }
+
+  .footnote {
+    max-width: 1180px;
+    margin: clamp(48px, 6vw, 72px) auto 0;
+    padding-top: 20px;
+    border-top: 1px solid var(--hairline);
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+  .footnote strong { font-style: normal; color: var(--ink-soft); font-weight: 500; }
+</style>
+</head>
+<body>
+
+  <header class="masthead">
+    <p class="eyebrow">Plate I · Gen.AI · Estudo de prancha para a home</p>
+    <h1>Quatro pranchas para a <em>vitrine</em>.</h1>
+    <p>A entrada do Gen.AI na home ainda usa um placeholder tipográfico (“Gen.”). Abaixo, quatro pranchas gravadas no mesmo léxico das nove lâminas de POC — fundo escuro, filete dourado, canto em esquadro, título em itálico. Todas em proporção 4:5, prontas para entrar como a face <em>recto</em> do cartão. Escolha uma — ou um cruzamento de duas — e eu a fixo como a prancha oficial.</p>
+  </header>
+  <div class="rule"></div>
+
+  <div class="gallery">
+
+    <!-- ============================================================
+         OPTION I — NOVEM · grade de nove (o ecossistema)
+         ============================================================ -->
+    <figure>
+      <div class="mat">
+        <svg class="plate-svg" viewBox="0 0 320 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Prancha gravada — grade de nove POCs do ecossistema Gen.AI">
+          <defs>
+            <radialGradient id="o1-bg" cx="50%" cy="30%" r="80%">
+              <stop offset="0%" stop-color="#2a2520"></stop>
+              <stop offset="100%" stop-color="#14100c"></stop>
+            </radialGradient>
+          </defs>
+          <rect width="320" height="400" fill="url(#o1-bg)"></rect>
+          <rect x="10" y="10" width="300" height="380" fill="none" stroke="#7a2620" stroke-width="0.9" opacity="0.55"></rect>
+          <rect x="15" y="15" width="290" height="370" fill="none" stroke="#b58d3d" stroke-width="0.5" opacity="0.32"></rect>
+          <g stroke="#b58d3d" stroke-width="1.1" opacity="0.75" fill="none">
+            <path d="M22 30 V22 H30"></path><path d="M298 22 H290 V30" transform="translate(-8,0)"></path>
+            <path d="M290 30 V22 H298"></path>
+            <path d="M22 370 V378 H30"></path><path d="M290 370 V378 H298"></path>
+          </g>
+          <text x="160" y="44" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8" fill="#b58d3d" letter-spacing="5" opacity="0.85">PLATE · I</text>
+          <text x="160" y="74" text-anchor="middle" font-family="'Instrument Serif', serif" font-size="34" font-style="italic" fill="#f1ece0">Gen.AI</text>
+          <line x1="120" y1="84" x2="200" y2="84" stroke="#7a2620" stroke-width="0.7" opacity="0.6"></line>
+          <text x="160" y="100" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="7" fill="#c4b8a0" letter-spacing="3.5" opacity="0.7">IX · POCS · UM SISTEMA</text>
+
+          <!-- 3x3 grid of POC mini-cards -->
+          <g>
+            <!-- generated cells: x = 32 + col*(76+14); y = 122 + row*(72+12) -->
+            <!-- row 0 -->
+            <g transform="translate(32,122)">
+              <rect width="76" height="72" rx="3" fill="#f1ece0" opacity="0.04" stroke="#c4b8a0" stroke-width="0.5" stroke-opacity="0.32"></rect>
+              <!-- bell -->
+              <g transform="translate(13,12)" stroke="#b58d3d" stroke-width="1.1" fill="none" opacity="0.9"><path d="M3 9 a5 5 0 0 1 10 0 c0 4 2 5 2 6 H1 c0 -1 2 -2 2 -6Z"></path><path d="M6 17 a2 2 0 0 0 4 0"></path></g>
+              <rect x="11" y="40" width="54" height="3" rx="1.5" fill="#f1ece0" opacity="0.3"></rect>
+              <rect x="11" y="49" width="38" height="2.5" rx="1.25" fill="#c4b8a0" opacity="0.2"></rect>
+              <circle cx="60" cy="59" r="2.4" fill="#7a2620"></circle>
+            </g>
+            <g transform="translate(122,122)">
+              <rect width="76" height="72" rx="3" fill="#f1ece0" opacity="0.04" stroke="#c4b8a0" stroke-width="0.5" stroke-opacity="0.32"></rect>
+              <!-- code </> -->
+              <g transform="translate(13,11)" stroke="#b58d3d" stroke-width="1.2" fill="none" opacity="0.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5 L1 11 L7 17"></path><path d="M14 5 L20 11 L14 17"></path></g>
+              <rect x="11" y="40" width="54" height="3" rx="1.5" fill="#f1ece0" opacity="0.3"></rect>
+              <rect x="11" y="49" width="44" height="2.5" rx="1.25" fill="#c4b8a0" opacity="0.2"></rect>
+            </g>
+            <g transform="translate(212,122)">
+              <rect width="76" height="72" rx="3" fill="#f1ece0" opacity="0.04" stroke="#c4b8a0" stroke-width="0.5" stroke-opacity="0.32"></rect>
+              <!-- doc -->
+              <g transform="translate(15,10)" stroke="#b58d3d" stroke-width="1.1" fill="none" opacity="0.9" stroke-linejoin="round"><path d="M2 2 H11 L16 7 V20 H2 Z"></path><path d="M11 2 V7 H16"></path><path d="M5 12 H13 M5 16 H11" stroke-width="0.9"></path></g>
+              <rect x="11" y="40" width="54" height="3" rx="1.5" fill="#f1ece0" opacity="0.3"></rect>
+              <rect x="11" y="49" width="34" height="2.5" rx="1.25" fill="#c4b8a0" opacity="0.2"></rect>
+            </g>
+            <!-- row 1 -->
+            <g transform="translate(32,206)">
+              <rect width="76" height="72" rx="3" fill="#f1ece0" opacity="0.04" stroke="#c4b8a0" stroke-width="0.5" stroke-opacity="0.32"></rect>
+              <!-- spark -->
+              <g transform="translate(13,9)" fill="#b58d3d" opacity="0.92"><path d="M9 0 C10 6 12 8 18 9 C12 10 10 12 9 18 C8 12 6 10 0 9 C6 8 8 6 9 0 Z"></path></g>
+              <rect x="11" y="40" width="54" height="3" rx="1.5" fill="#f1ece0" opacity="0.3"></rect>
+              <rect x="11" y="49" width="40" height="2.5" rx="1.25" fill="#c4b8a0" opacity="0.2"></rect>
+              <rect x="11" y="58" width="20" height="6" rx="3" fill="#7a2620" opacity="0.5"></rect>
+              <rect x="35" y="58" width="20" height="6" rx="3" fill="#1d3a78" opacity="0.5"></rect>
+            </g>
+            <g transform="translate(122,206)">
+              <rect width="76" height="72" rx="3" fill="#f1ece0" opacity="0.04" stroke="#c4b8a0" stroke-width="0.5" stroke-opacity="0.32"></rect>
+              <!-- mic -->
+              <g transform="translate(20,9)" stroke="#b58d3d" stroke-width="1.1" fill="none" opacity="0.9"><rect x="4" y="0" width="8" height="14" rx="4"></rect><path d="M1 11 a7 7 0 0 0 14 0"></path><path d="M8 18 V22 M4 22 H12"></path></g>
+              <!-- equalizer -->
+              <g transform="translate(11,42)" stroke="#c4b8a0" stroke-width="1.4" opacity="0.5"><path d="M2 18 V12 M8 18 V6 M14 18 V14 M20 18 V8 M26 18 V11 M32 18 V4 M38 18 V13"></path></g>
+            </g>
+            <g transform="translate(212,206)">
+              <rect width="76" height="72" rx="3" fill="#f1ece0" opacity="0.04" stroke="#c4b8a0" stroke-width="0.5" stroke-opacity="0.32"></rect>
+              <!-- shield + check -->
+              <g transform="translate(16,9)" stroke="#b58d3d" stroke-width="1.1" fill="none" opacity="0.9" stroke-linejoin="round"><path d="M9 0 L17 3 V11 C17 16 13 19 9 21 C5 19 1 16 1 11 V3 Z"></path><path d="M5 10 l3 3 l5 -6" stroke-width="1.3"></path></g>
+              <rect x="11" y="42" width="54" height="3" rx="1.5" fill="#f1ece0" opacity="0.3"></rect>
+              <circle cx="15" cy="56" r="2.2" fill="#2f6d3a" opacity="0.7"></circle>
+              <circle cx="30" cy="56" r="2.2" fill="#2f6d3a" opacity="0.7"></circle>
+              <circle cx="45" cy="56" r="2.2" fill="#b58d3d" opacity="0.7"></circle>
+            </g>
+            <!-- row 2 -->
+            <g transform="translate(32,290)">
+              <rect width="76" height="72" rx="3" fill="#f1ece0" opacity="0.04" stroke="#c4b8a0" stroke-width="0.5" stroke-opacity="0.32"></rect>
+              <!-- bars -->
+              <g transform="translate(14,11)" stroke="#b58d3d" stroke-width="2.2" opacity="0.85" stroke-linecap="round"><path d="M2 18 V8 M10 18 V2 M18 18 V12"></path></g>
+              <path d="M30 14 q6 -10 18 -6" fill="none" stroke="#7a2620" stroke-width="1" opacity="0.7"></path>
+              <rect x="11" y="42" width="54" height="3" rx="1.5" fill="#f1ece0" opacity="0.3"></rect>
+              <rect x="11" y="51" width="30" height="2.5" rx="1.25" fill="#c4b8a0" opacity="0.2"></rect>
+            </g>
+            <g transform="translate(122,290)">
+              <rect width="76" height="72" rx="3" fill="#f1ece0" opacity="0.04" stroke="#c4b8a0" stroke-width="0.5" stroke-opacity="0.32"></rect>
+              <!-- graph/network -->
+              <g transform="translate(13,10)" opacity="0.9"><line x1="4" y1="6" x2="18" y2="3" stroke="#c4b8a0" stroke-width="0.8"></line><line x1="18" y1="3" x2="26" y2="16" stroke="#c4b8a0" stroke-width="0.8"></line><line x1="4" y1="6" x2="14" y2="18" stroke="#c4b8a0" stroke-width="0.8"></line><circle cx="4" cy="6" r="2.6" fill="#b58d3d"></circle><circle cx="18" cy="3" r="2.6" fill="#b58d3d"></circle><circle cx="26" cy="16" r="2.6" fill="#1d3a78"></circle><circle cx="14" cy="18" r="2.6" fill="#b58d3d"></circle></g>
+              <rect x="11" y="42" width="54" height="3" rx="1.5" fill="#f1ece0" opacity="0.3"></rect>
+              <rect x="11" y="51" width="42" height="2.5" rx="1.25" fill="#c4b8a0" opacity="0.2"></rect>
+            </g>
+            <g transform="translate(212,290)">
+              <rect width="76" height="72" rx="3" fill="#f1ece0" opacity="0.04" stroke="#c4b8a0" stroke-width="0.5" stroke-opacity="0.32"></rect>
+              <!-- chat -->
+              <g transform="translate(13,11)" stroke="#b58d3d" stroke-width="1.1" fill="none" opacity="0.9" stroke-linejoin="round"><path d="M2 2 H22 V15 H10 L4 20 V15 H2 Z"></path><path d="M7 8 H17 M7 11 H13" stroke-width="0.9"></path></g>
+              <rect x="11" y="42" width="54" height="3" rx="1.5" fill="#f1ece0" opacity="0.3"></rect>
+              <rect x="11" y="51" width="36" height="2.5" rx="1.25" fill="#c4b8a0" opacity="0.2"></rect>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <figcaption>
+        <div class="cap-top"><span class="cap-roman">Opção I</span><span class="cap-name">Novem</span></div>
+        <p>O ecossistema inteiro numa lâmina: nove POCs gravadas em grade 3×3, cada uma com seu glifo. Lê-se como um índice — “nove provas, um sistema”. A mais literal ao argumento do case.</p>
+      </figcaption>
+    </figure>
+
+    <!-- ============================================================
+         OPTION II — FRONTISPÍCIO · título iluminado
+         ============================================================ -->
+    <figure>
+      <div class="mat">
+        <svg class="plate-svg" viewBox="0 0 320 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Prancha gravada — frontispício tipográfico Gen.AI">
+          <defs>
+            <radialGradient id="o2-bg" cx="50%" cy="38%" r="78%">
+              <stop offset="0%" stop-color="#2c2722"></stop>
+              <stop offset="100%" stop-color="#14100c"></stop>
+            </radialGradient>
+          </defs>
+          <rect width="320" height="400" fill="url(#o2-bg)"></rect>
+          <rect x="22" y="22" width="276" height="356" fill="none" stroke="#b58d3d" stroke-width="0.6" opacity="0.4"></rect>
+          <rect x="28" y="28" width="264" height="344" fill="none" stroke="#7a2620" stroke-width="1" opacity="0.55"></rect>
+          <!-- ornamental inner corner flourishes -->
+          <g stroke="#b58d3d" stroke-width="1" fill="none" opacity="0.7">
+            <path d="M40 40 q14 0 14 14"></path><path d="M280 40 q-14 0 -14 14"></path>
+            <path d="M40 360 q14 0 14 -14"></path><path d="M280 360 q-14 0 -14 -14"></path>
+          </g>
+          <circle cx="40" cy="40" r="1.6" fill="#b58d3d" opacity="0.8"></circle>
+          <circle cx="280" cy="40" r="1.6" fill="#b58d3d" opacity="0.8"></circle>
+          <circle cx="40" cy="360" r="1.6" fill="#b58d3d" opacity="0.8"></circle>
+          <circle cx="280" cy="360" r="1.6" fill="#b58d3d" opacity="0.8"></circle>
+
+          <text x="160" y="86" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8" fill="#b58d3d" letter-spacing="6" opacity="0.85">PLATE · I</text>
+
+          <!-- spark glyph above title -->
+          <g transform="translate(160,118)" fill="#b58d3d" opacity="0.9"><path d="M0 -13 C2 -3 4 -2 13 0 C4 2 2 4 0 13 C-2 4 -4 2 -13 0 C-4 -2 -2 -3 0 -13 Z"></path></g>
+          <g transform="translate(133,112)" fill="#b58d3d" opacity="0.6"><path d="M0 -5 C1 -1 1 -1 5 0 C1 1 1 1 0 5 C-1 1 -1 1 -5 0 C-1 -1 -1 -1 0 -5 Z"></path></g>
+          <g transform="translate(189,124)" fill="#b58d3d" opacity="0.45"><path d="M0 -4 C0.8 -1 0.8 -1 4 0 C0.8 1 0.8 1 0 4 C-0.8 1 -0.8 1 -4 0 C-0.8 -1 -0.8 -1 0 -4 Z"></path></g>
+
+          <text x="160" y="218" text-anchor="middle" font-family="'Instrument Serif', serif" font-size="72" font-style="italic" fill="#f1ece0">Gen.AI</text>
+
+          <line x1="86" y1="248" x2="234" y2="248" stroke="#7a2620" stroke-width="0.8" opacity="0.6"></line>
+          <text x="160" y="278" text-anchor="middle" font-family="'EB Garamond', serif" font-size="15" font-style="italic" fill="#c4b8a0">Ecossistema de IA generativa</text>
+          <text x="160" y="316" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#8b7f6e" letter-spacing="3.5">ACCENTURE · ONE STUDIO · MMXXIII</text>
+          <text x="160" y="348" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="7" fill="#b58d3d" letter-spacing="4" opacity="0.7">— IX POCS · UM SISTEMA —</text>
+        </svg>
+      </div>
+      <figcaption>
+        <div class="cap-top"><span class="cap-roman">Opção II</span><span class="cap-name">Frontispício</span></div>
+        <p>A página de rosto clássica: “Gen.AI” em Instrument Serif grande, moldura ornamental com cantos de pena e um trio de faíscas. Sóbria e legível à distância — uma evolução do placeholder atual.</p>
+      </figcaption>
+    </figure>
+
+    <!-- ============================================================
+         OPTION III — APPARATUS · prompt → motor → resposta
+         ============================================================ -->
+    <figure>
+      <div class="mat">
+        <svg class="plate-svg" viewBox="0 0 320 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Prancha gravada — aparato prompt, motor e resposta">
+          <defs>
+            <radialGradient id="o3-bg" cx="50%" cy="46%" r="72%">
+              <stop offset="0%" stop-color="#2a2520"></stop>
+              <stop offset="100%" stop-color="#14100c"></stop>
+            </radialGradient>
+          </defs>
+          <rect width="320" height="400" fill="url(#o3-bg)"></rect>
+          <rect x="10" y="10" width="300" height="380" fill="none" stroke="#7a2620" stroke-width="0.9" opacity="0.55"></rect>
+          <rect x="15" y="15" width="290" height="370" fill="none" stroke="#b58d3d" stroke-width="0.5" opacity="0.32"></rect>
+          <g stroke="#b58d3d" stroke-width="1.1" opacity="0.75" fill="none">
+            <path d="M22 30 V22 H30"></path><path d="M290 30 V22 H298"></path>
+            <path d="M22 370 V378 H30"></path><path d="M290 370 V378 H298"></path>
+          </g>
+          <text x="160" y="44" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8" fill="#b58d3d" letter-spacing="5" opacity="0.85">PLATE · I</text>
+          <text x="160" y="70" text-anchor="middle" font-family="'Instrument Serif', serif" font-size="28" font-style="italic" fill="#f1ece0">Gen.AI</text>
+
+          <!-- PROMPT field -->
+          <text x="54" y="104" font-family="'JetBrains Mono', monospace" font-size="7" fill="#b58d3d" letter-spacing="3" opacity="0.8">PROMPT</text>
+          <rect x="54" y="112" width="212" height="40" rx="4" fill="#f1ece0" opacity="0.04" stroke="#c4b8a0" stroke-width="0.6" stroke-opacity="0.4"></rect>
+          <rect x="64" y="124" width="150" height="3.5" rx="1.75" fill="#f1ece0" opacity="0.32"></rect>
+          <rect x="64" y="134" width="110" height="3" rx="1.5" fill="#c4b8a0" opacity="0.22"></rect>
+          <rect x="232" y="130" width="26" height="13" rx="6.5" fill="#7a2620" opacity="0.75"></rect>
+
+          <!-- feed lines down into the engine -->
+          <g stroke="#b58d3d" stroke-width="0.8" opacity="0.55" fill="none">
+            <path d="M120 152 C120 176 160 176 160 198"></path>
+            <path d="M200 152 C200 176 160 176 160 198"></path>
+          </g>
+
+          <!-- the engine: octagon rosette with spark -->
+          <g transform="translate(160,232)">
+            <polygon points="-34,-14 -14,-34 14,-34 34,-14 34,14 14,34 -14,34 -34,14" fill="#1d3a78" fill-opacity="0.10" stroke="#b58d3d" stroke-width="1" opacity="0.9"></polygon>
+            <polygon points="-24,-10 -10,-24 10,-24 24,-10 24,10 10,24 -10,24 -24,10" fill="none" stroke="#7a2620" stroke-width="0.7" opacity="0.7"></polygon>
+            <g fill="#b58d3d"><path d="M0 -16 C2 -4 4 -2 16 0 C4 2 2 4 0 16 C-2 4 -4 2 -16 0 C-4 -2 -2 -4 0 -16 Z"></path></g>
+            <circle cx="0" cy="0" r="42" fill="none" stroke="#c4b8a0" stroke-width="0.4" stroke-dasharray="2 4" opacity="0.4"></circle>
+          </g>
+          <text x="160" y="294" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="7" fill="#b58d3d" letter-spacing="3" opacity="0.8">MODEL</text>
+
+          <!-- branch out into responses -->
+          <g stroke="#b58d3d" stroke-width="0.8" opacity="0.5" fill="none">
+            <path d="M160 274 C160 300 96 300 96 320"></path>
+            <path d="M160 274 V320"></path>
+            <path d="M160 274 C160 300 224 300 224 320"></path>
+          </g>
+          <text x="160" y="338" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="7" fill="#b58d3d" letter-spacing="3" opacity="0.8">RESPONSE</text>
+          <g>
+            <rect x="74" y="346" width="44" height="22" rx="3" fill="#f1ece0" opacity="0.04" stroke="#c4b8a0" stroke-width="0.5" stroke-opacity="0.35"></rect>
+            <rect x="138" y="346" width="44" height="22" rx="3" fill="#f1ece0" opacity="0.04" stroke="#c4b8a0" stroke-width="0.5" stroke-opacity="0.35"></rect>
+            <rect x="202" y="346" width="44" height="22" rx="3" fill="#f1ece0" opacity="0.04" stroke="#c4b8a0" stroke-width="0.5" stroke-opacity="0.35"></rect>
+            <rect x="82" y="354" width="28" height="2.5" rx="1.25" fill="#c4b8a0" opacity="0.3"></rect>
+            <rect x="146" y="354" width="28" height="2.5" rx="1.25" fill="#c4b8a0" opacity="0.3"></rect>
+            <rect x="210" y="354" width="28" height="2.5" rx="1.25" fill="#c4b8a0" opacity="0.3"></rect>
+            <rect x="82" y="361" width="18" height="2.5" rx="1.25" fill="#c4b8a0" opacity="0.2"></rect>
+            <rect x="146" y="361" width="20" height="2.5" rx="1.25" fill="#c4b8a0" opacity="0.2"></rect>
+            <rect x="210" y="361" width="16" height="2.5" rx="1.25" fill="#c4b8a0" opacity="0.2"></rect>
+          </g>
+        </svg>
+      </div>
+      <figcaption>
+        <div class="cap-top"><span class="cap-roman">Opção III</span><span class="cap-name">Apparatus</span></div>
+        <p>O gesto comum a todos os nove produtos, gravado como um aparato científico: o prompt desce a um motor (roseta octogonal com faísca) e ramifica em respostas. Fala de “linguagem de UX para IA”, não de um produto só.</p>
+      </figcaption>
+    </figure>
+
+    <!-- ============================================================
+         OPTION IV — CONSTELLATIO · sistema no centro, 9 satélites
+         ============================================================ -->
+    <figure>
+      <div class="mat">
+        <svg class="plate-svg" viewBox="0 0 320 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Prancha gravada — constelação do design system e nove POCs">
+          <defs>
+            <radialGradient id="o4-bg" cx="50%" cy="52%" r="72%">
+              <stop offset="0%" stop-color="#2a2520"></stop>
+              <stop offset="100%" stop-color="#14100c"></stop>
+            </radialGradient>
+          </defs>
+          <rect width="320" height="400" fill="url(#o4-bg)"></rect>
+          <rect x="10" y="10" width="300" height="380" fill="none" stroke="#7a2620" stroke-width="0.9" opacity="0.55"></rect>
+          <rect x="15" y="15" width="290" height="370" fill="none" stroke="#b58d3d" stroke-width="0.5" opacity="0.32"></rect>
+          <g stroke="#b58d3d" stroke-width="1.1" opacity="0.75" fill="none">
+            <path d="M22 30 V22 H30"></path><path d="M290 30 V22 H298"></path>
+            <path d="M22 370 V378 H30"></path><path d="M290 370 V378 H298"></path>
+          </g>
+          <text x="160" y="44" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8" fill="#b58d3d" letter-spacing="5" opacity="0.85">PLATE · I</text>
+          <text x="160" y="70" text-anchor="middle" font-family="'Instrument Serif', serif" font-size="28" font-style="italic" fill="#f1ece0">Gen.AI</text>
+          <text x="160" y="90" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="6.5" fill="#c4b8a0" letter-spacing="3" opacity="0.65">UM SISTEMA · NOVE PROVAS</text>
+
+          <!-- orbit rings -->
+          <g transform="translate(160,250)">
+            <circle r="118" fill="none" stroke="#c4b8a0" stroke-width="0.4" stroke-dasharray="1.5 5" opacity="0.3"></circle>
+            <circle r="78" fill="none" stroke="#c4b8a0" stroke-width="0.4" stroke-dasharray="1.5 5" opacity="0.35"></circle>
+
+            <!-- spokes + satellites (9 nodes) -->
+            <g stroke="#b58d3d" stroke-width="0.6" opacity="0.5">
+              <line x1="0" y1="0" x2="0" y2="-100"></line>
+              <line x1="0" y1="0" x2="64" y2="-77"></line>
+              <line x1="0" y1="0" x2="98" y2="-21"></line>
+              <line x1="0" y1="0" x2="86" y2="51"></line>
+              <line x1="0" y1="0" x2="34" y2="94"></line>
+              <line x1="0" y1="0" x2="-34" y2="94"></line>
+              <line x1="0" y1="0" x2="-86" y2="51"></line>
+              <line x1="0" y1="0" x2="-98" y2="-21"></line>
+              <line x1="0" y1="0" x2="-64" y2="-77"></line>
+            </g>
+            <!-- satellite nodes -->
+            <g>
+              <circle cx="0" cy="-100" r="6" fill="#14100c" stroke="#b58d3d" stroke-width="1"></circle><circle cx="0" cy="-100" r="2" fill="#b58d3d"></circle>
+              <circle cx="64" cy="-77" r="6" fill="#14100c" stroke="#b58d3d" stroke-width="1"></circle><circle cx="64" cy="-77" r="2" fill="#7a2620"></circle>
+              <circle cx="98" cy="-21" r="6" fill="#14100c" stroke="#b58d3d" stroke-width="1"></circle><circle cx="98" cy="-21" r="2" fill="#b58d3d"></circle>
+              <circle cx="86" cy="51" r="6" fill="#14100c" stroke="#b58d3d" stroke-width="1"></circle><circle cx="86" cy="51" r="2" fill="#1d3a78"></circle>
+              <circle cx="34" cy="94" r="6" fill="#14100c" stroke="#b58d3d" stroke-width="1"></circle><circle cx="34" cy="94" r="2" fill="#b58d3d"></circle>
+              <circle cx="-34" cy="94" r="6" fill="#14100c" stroke="#b58d3d" stroke-width="1"></circle><circle cx="-34" cy="94" r="2" fill="#7a2620"></circle>
+              <circle cx="-86" cy="51" r="6" fill="#14100c" stroke="#b58d3d" stroke-width="1"></circle><circle cx="-86" cy="51" r="2" fill="#b58d3d"></circle>
+              <circle cx="-98" cy="-21" r="6" fill="#14100c" stroke="#b58d3d" stroke-width="1"></circle><circle cx="-98" cy="-21" r="2" fill="#1d3a78"></circle>
+              <circle cx="-64" cy="-77" r="6" fill="#14100c" stroke="#b58d3d" stroke-width="1"></circle><circle cx="-64" cy="-77" r="2" fill="#b58d3d"></circle>
+            </g>
+            <!-- central hub: the design system -->
+            <circle r="26" fill="#1d3a78" fill-opacity="0.12" stroke="#7a2620" stroke-width="1" opacity="0.9"></circle>
+            <circle r="19" fill="none" stroke="#b58d3d" stroke-width="0.6" opacity="0.7"></circle>
+            <g fill="#b58d3d"><path d="M0 -12 C1.5 -3 3 -1.5 12 0 C3 1.5 1.5 3 0 12 C-1.5 3 -3 1.5 -12 0 C-3 -1.5 -1.5 -3 0 -12 Z"></path></g>
+          </g>
+          <text x="160" y="386" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="6.5" fill="#8b7f6e" letter-spacing="2.5">DESIGN SYSTEM · NÚCLEO</text>
+        </svg>
+      </div>
+      <figcaption>
+        <div class="cap-top"><span class="cap-roman">Opção IV</span><span class="cap-name">Constellatio</span></div>
+        <p>O design system no centro, nove POCs em órbita ligadas por raios — uma carta celeste. Sintetiza a tese “desenhar o sistema antes dos produtos” numa única figura memorável.</p>
+      </figcaption>
+    </figure>
+
+  </div>
+
+  <p class="footnote"><strong>Como ler.</strong> Todas usam a mesma paleta das lâminas de POC (tinta #14100c, ouro #b58d3d, oxblood #7a2620, papel #f1ece0) e a proporção 4:5 do cartão. Me diga o número — <em>“fixa a III”</em> — e eu a aplico como a prancha oficial do Gen.AI na home, substituindo o placeholder “Gen.”. Combinações também valem (ex.: título da II + grade da I).</p>
+
+</body>
+</html>

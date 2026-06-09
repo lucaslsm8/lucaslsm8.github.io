@@ -1237,6 +1237,39 @@
 
   // Bootstrap
   // -----------------------------------------------------------
+  function initCandle() {
+    const btn = $(".candle-toggle");
+    if (!btn) return;
+    const KEY = "lucas:candle";
+    const refreshLabel = (on) => {
+      const lang = currentLang();
+      const label = on
+        ? (lang === "en" ? "Day mode"   : "Modo dia")
+        : (lang === "en" ? "Candle mode" : "Modo vela");
+      btn.title = label;
+      btn.setAttribute("aria-label", label);
+    };
+    const apply = (on) => {
+      document.body.classList.toggle("candle", on);
+      document.documentElement.style.background = on ? "#1c1418" : "";
+      btn.classList.toggle("active", on);
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+      refreshLabel(on);
+    };
+    let on = false;
+    try { on = localStorage.getItem(KEY) === "1"; } catch (e) {}
+    apply(on);
+    btn.addEventListener("click", () => {
+      on = !on;
+      try { localStorage.setItem(KEY, on ? "1" : "0"); } catch (e) {}
+      apply(on);
+    });
+    // Mantém o rótulo do tooltip em sincronia ao trocar de idioma
+    $$(".lang-toggle button").forEach((b) =>
+      b.addEventListener("click", () => refreshLabel(on))
+    );
+  }
+
   function init() {
     initReveal();
     initMarginalia();
@@ -1255,6 +1288,7 @@
     initScreensRow();
     initBookSwipers();
     initFanCarousels();
+    initCandle();
     initI18n();
   }
 

@@ -231,7 +231,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   height: 200px;
   border-radius: 50%;
   overflow: hidden;
-  background: #1a1612;
+  background: var(--paper);
   top: -100px;
   left: -100px;
   /* Pendulum: pivot no cabo (dx=+313px, dy=+108px do centro da lente) */
@@ -267,6 +267,15 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   pointer-events: none !important;
   cursor: none !important;
   transition: none !important;
+}
+
+/* Canvas de ampliação dentro do vidro — preenche o círculo (recortado
+   por overflow:hidden + border-radius do .loupe-glass). Os pixels são
+   pintados por <Lens/> a partir do canvas WebGL da tela sob o cursor. */
+.loupe-glass .loupe-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 /* Loupe desabilitado em touch e em viewports ≤ 1024px */
@@ -749,10 +758,58 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   padding: 120px 0;
 }
 .plate {
-  padding: 80px 0;
-  border-top: 1px solid var(--hairline);
+  position: relative;
+  padding: 40px 0 80px;
 }
-.plate:first-of-type { border-top: none; }
+.plate:first-of-type { padding-top: 8px; }
+
+/* ============================================================
+   MUSEUM LIGHTING — trilho de teto + holofote sobre cada tela
+   lights-repeat.png = corrimão/trilho (separador entre projetos)
+   lights.png        = luminária de 3 focos suspensa sobre a tela
+   ============================================================ */
+.plate-rail {
+  position: relative;
+  width: 100%;
+  height: 96px;
+  margin-bottom: 8px;
+  pointer-events: none;
+}
+.plate-rail__grid {
+  position: relative;
+  height: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 64px;
+  display: grid;
+  grid-template-columns: 200px 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.plate-rail__cell { display: block; }
+/* Trilho repetível (corrimão) — estende a barra da luminária de borda a
+   borda. top/height são definidos por JS para casar com a barra do lights.
+   Fica ATRÁS do fixture, então a barra detalhada cobre a emenda central. */
+.plate-rail__track {
+  position: absolute;
+  left: 0; right: 0;
+  top: 0;
+  height: 6px;
+  background: url("images/lights-repeat.png") repeat-x left center / auto 100%;
+  z-index: 0;
+}
+/* Luminária de 3 focos — pendurada na coluna central, presa ao trilho */
+.plate-rail__fixture {
+  position: relative;
+  z-index: 1;
+  justify-self: center;
+  width: 86%;
+  max-width: 380px;
+  aspect-ratio: 2640 / 534;
+  margin-top: 2px;
+  background: url("images/lights.png") no-repeat center top / contain;
+  filter: drop-shadow(0 9px 13px rgba(20, 16, 12, 0.3));
+}
 
 .plate-grid {
   max-width: 1280px;
@@ -845,6 +902,81 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
    A lente segue funcionando no recto (face .plate-image-recto);
    o verso fica fora do alcance da lente.
    ============================================================ */
+/* ============================================================
+   PLATE QUADRO — objeto 3D (WebGL) no lugar da prancha plana.
+   O <a> envolve o palco do canvas; clicar leva à ficha. O giro
+   é disparado pelo botão de flip na coluna meta (quadro-3d.js).
+   ============================================================ */
+.plate-quadro-link {
+  display: block;
+  position: relative;
+  aspect-ratio: 4 / 5;
+  text-decoration: none;
+  color: inherit;
+}
+.plate-quadro-stage {
+  position: absolute;
+  inset: 0;
+}
+.plate-quadro-stage canvas {
+  display: block;
+}
+.plate-quadro-fallimg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.plate-quadro-link:focus-visible {
+  outline: 2px solid var(--oxblood);
+  outline-offset: 6px;
+}
+
+/* Placard de galeria sob a tela — sinaliza a interação (lupa + verso).
+   Discreto, em maiúsculas mono; some quando o cursor entra na tela para
+   não competir com a lupa. Oculto em mobile (sem lupa). */
+.plate-quadro-hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -28px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-ghost);
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.4s var(--ease-out);
+}
+.plate-quadro-link:hover .plate-quadro-hint { opacity: 0; }
+@media (hover: none), (max-width: 1024px) {
+  .plate-quadro-hint { display: none; }
+}
+
+/* Lupa de aumento sobre o quadro 3D — vidro circular que segue o cursor.
+   O conteúdo é desenhado por quadro-3d.js a partir dos pixels do canvas. */
+.quadro-loupe {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.15s var(--ease-out);
+  background: var(--paper-card);
+  box-shadow:
+    0 0 0 1px var(--hairline-strong),
+    0 0 0 5px rgba(252, 248, 236, 0.92),
+    0 10px 26px rgba(26, 22, 18, 0.28),
+    inset 0 0 20px rgba(26, 22, 18, 0.16);
+}
+.quadro-loupe.show { opacity: 1; }
+.quadro-loupe canvas { display: block; }
+
 .plate-image-flip {
   position: relative;
   aspect-ratio: 4 / 5;
@@ -1137,39 +1269,69 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 }
 
 /* Plate image variations */
+/* PLACEHOLDER — prancha customizada do Gen.AI ainda a ser criada.
+   Slot 4:5 no tom do livro: hachura sutil + moldura tracejada (real)
+   + nota em mono. Substituir por .plate-img-1 com a arte final. */
 .plate-img-1 {
   background:
-    radial-gradient(ellipse at 30% 35%, #2a2520 0%, #1a1612 60%),
+    repeating-linear-gradient(45deg,
+      rgba(241, 236, 224, 0.035) 0 11px,
+      transparent 11px 22px),
+    radial-gradient(ellipse at 50% 35%, #2a2520 0%, #1a1612 62%),
     #1a1612;
   display: grid;
   place-items: center;
   position: relative;
 }
-.plate-img-1::before {
-  content: "";
+.plate-img-1 .plate-ph-frame {
   position: absolute;
-  inset: 30px;
-  border: 1px solid rgba(241, 236, 224, 0.2);
+  inset: 22px;
+  border: 1px dashed rgba(241, 236, 224, 0.26);
+  pointer-events: none;
 }
-.plate-img-1::after {
-  content: "Gen.";
-  font-family: var(--serif-display);
-  font-style: italic;
-  font-size: clamp(72px, 9vw, 130px);
-  color: var(--paper);
+.plate-img-1 .plate-ph-label {
   position: relative;
   z-index: 2;
+  text-align: center;
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: clamp(12px, 1.4vw, 15px);
+  letter-spacing: 0.3em;
+  line-height: 2;
+  color: rgba(241, 236, 224, 0.66);
+  text-transform: uppercase;
+  text-indent: 0.3em;
+}
+.plate-img-1 .plate-ph-sub {
+  display: block;
+  margin-top: 10px;
+  font-size: clamp(10px, 1.1vw, 12px);
+  letter-spacing: 0.24em;
+  color: rgba(241, 236, 224, 0.42);
+}
+.plate-img-1 .plate-ph-size {
+  display: inline-block;
+  margin-top: 22px;
+  padding: 7px 14px;
+  border: 1px solid rgba(181, 141, 61, 0.5);
+  border-radius: 2px;
+  font-size: clamp(10px, 1.15vw, 12.5px);
+  letter-spacing: 0.16em;
+  text-indent: 0.16em;
+  color: rgba(181, 141, 61, 0.92);
+  text-transform: none;
 }
 .plate-img-1 .ornament {
   position: absolute;
-  bottom: 24%;
+  bottom: 9%;
   left: 0; right: 0;
   text-align: center;
   font-family: var(--mono);
   font-size: 9px;
-  letter-spacing: 0.4em;
-  color: rgba(241, 236, 224, 0.5);
+  letter-spacing: 0.34em;
+  color: rgba(241, 236, 224, 0.4);
   text-transform: uppercase;
+  text-indent: 0.34em;
 }
 
 .plate-img-2 {
@@ -2930,7 +3092,12 @@ body.candle .carta .ink-bleed {
   .spread .margin-l .gloss,
   .spread .margin-r .gloss { font-size: 14px; }
 
-  .plate-grid { grid-template-columns: 1fr; gap: 32px; padding: 0 32px; }
+  .plate-grid,
+  .plate-rail__grid { grid-template-columns: 1fr; gap: 32px; padding: 0 32px; }
+  /* Coluna única: a tela passa a ser full-width; o holofote centraliza sobre
+     ela. Os cells vazios saem para o fixture virar o único item do grid. */
+  .plate-rail__cell { display: none; }
+  .plate-rail__fixture { width: 100%; max-width: 340px; }
   .apparatus-grid { grid-template-columns: 1fr; gap: 48px; }
   .tenets { grid-template-columns: repeat(2, 1fr); }
   .tenet:nth-child(2n) { border-right: none; }
@@ -2945,7 +3112,7 @@ body.candle .carta .ink-bleed {
 @media (max-width: 768px) {
   .page { padding: 80px 0; }
   .spread { padding: 0 40px; gap: var(--sp-5); }
-  .plate-grid { padding: 0 40px; }
+  .plate-grid, .plate-rail__grid { padding: 0 40px; }
   /* `.page { padding: 80px 0 }` zera o padding horizontal; o `.spread`
      é resgatado acima, mas o `.spread-narrow` (Sumário, Aparato, Método)
      só ganhava margem lateral em ≤640 — deixando a faixa 641–768px
@@ -3006,7 +3173,7 @@ body.candle .carta .ink-bleed {
   .page { padding: 64px 0; }
   .spread { padding: 0 20px; }
   .spread-narrow { padding-left: 20px; padding-right: 20px; }
-  .plate-grid { padding: 0 20px; }
+  .plate-grid, .plate-rail__grid { padding: 0 20px; }
 
   /* Drop cap proporcional */
   .drop-cap { width: 134px; height: 134px; margin-right: 18px; }
@@ -3077,6 +3244,10 @@ body.candle {
   --oxblood-deep:     #a04b59;
   --cobalt:           #a08fc6;
   --highlighter:      rgba(196, 106, 120, 0.22);
+  /* Fundo escuro EXPLÍCITO: especificidade (0,1,1) vence o
+     `html,body{background:transparent}` que o preview injeta — sem isto
+     o body fica transparente e revela o html (cujo --paper é o creme claro). */
+  background-color: var(--paper);
   /* Aurora noturna em rosa-plum / lavanda */
   background-image:
     radial-gradient(circle at 20% 30%, rgba(196, 106, 120, 0.06), transparent 45%),
@@ -3086,8 +3257,9 @@ body.candle {
     color            0.6s var(--ease-out);
 }
 /* HTML também precisa do tom escuro — body cobre quase tudo, mas
-   barras de scroll e overscroll usam o html como fundo. */
-html:has(body.candle) { background: var(--paper); }
+   barras de scroll e overscroll usam o html como fundo. Tom LITERAL:
+   o token --paper do <html> continua claro (a classe candle vive no body). */
+html:has(body.candle) { background-color: #1c1418; }
 /* Grain em modo vela: screen para aparecer sobre fundo escuro */
 body.candle .paper-grain {
   mix-blend-mode: screen;
@@ -3253,7 +3425,8 @@ body.candle .paper-grain {
   .reveal { opacity: 1 !important; transform: none !important; }
 
   /* Expansão da largura: sem sidebars em papel */
-  .spread, .spread-narrow, .plate-grid, .method-body {
+  .plate-rail { display: none; }
+  .spread, .spread-narrow, .plate-grid, .plate-rail__grid, .method-body {
     max-width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
@@ -3346,7 +3519,7 @@ body.candle .paper-grain {
   .page { padding: 56px 0; }
   .spread { padding: 0 16px; }
   .spread-narrow { padding-left: 16px; padding-right: 16px; }
-  .plate-grid { padding: 0 16px; }
+  .plate-grid, .plate-rail__grid { padding: 0 16px; }
 
   /* Type-scale floor mais baixa para não quebrar. padding-top alto
      (120px) mantém o título abaixo do selo no frontispício mobile. */

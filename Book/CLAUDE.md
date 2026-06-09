@@ -154,6 +154,14 @@ Avaliação no navegador (Playwright headless) revelou problemas que só aparece
 - **Cinema/Vídeo refinados:** Formato A ganhou **plateia em silhueta** (`.cinema-audience`, SVG cabeças+ombros) na base + gradiente de projeção. Formato B virou **rolo de celuloide real** (`.film-strip` grid 30/1fr/30 + `.film-perfs` com perfurações que correm + `.film-window` com `.film-sheen` de projeção) em vez do quadrado preto.
 - Validado em Playwright headless (host sincronizado): 0 erros de console, carrossel I→II→loop III, flip, copiar (clipboard recebe o HTML real), i18n EN. Estilos em `case-template.css` (§ VITRINE), interações em `case-template.js`.
 
+### Quadros 3D da home — lupa, variação e placard (2026-06-08, feedback do Lucas)
+- **Lupa-pêndulo de volta sobre as telas 3D.** O componente `Lens` (catalogue.js) foi reescrito: em vez de clonar DOM (que não existe mais — as pranchas viraram canvas WebGL), ele amplia os **pixels do canvas WebGL** com `drawImage` (o renderer usa `preserveDrawingBuffer`). Mantém a moldura fotográfica `images/Lupa2.png` e o pêndulo CSS (`.loupe-glass`/`.loupe-frame` `rotate(35°→0°)` no `.show`). Agora se prende a `.plate-quadro-stage`, não a `.plate-image`.
+- **Lupa lisa embutida desligada:** `PlateCard` chama `mountQuadro` com `loupe:false`. A `.quadro-loupe` (CSS) ficou órfã, mantida sem uso.
+- **Desktop-only:** o `Lens` aborta o `useEffect` em `(hover:none),(max-width:1024px)` (além do `display:none` que o CSS já fazia) — zero listeners/canvas em mobile/touch.
+- **Três telas diferenciadas:** `quadro-3d.js` aceita `tiltX`, `rollZ`, `scale`, `tint`; `QUADRO_VARIANTS` (catalogue.js) dá ângulo/escala/tom distintos a cada uma. tiltX/rollZ são no eixo X/Z (independem do giro Y, sobrevivem ao flip).
+- **Placard de interação:** `.plate-quadro-hint` sob cada tela ("✦ lupa amplia · vire para o verso" / EN), some no hover, oculto em mobile. i18n em `works.quadroHint`. *(Lucas pode pedir p/ remover.)*
+- **Coerência "tela de pintura":** microcópia ajustada — `works.intro` (telas montadas, examinar/virar), `cursorLabels.seePlate` → "abrir a ficha"/"open the entry"; comentários do código atualizados.
+
 ---
 
 ## Conteúdo pendente do Lucas

@@ -21,6 +21,72 @@
      raisonné, sem violeta/ciano do projeto antigo.
      ============================================================ -->
 <style>
+  /* Zera o espaço entre o Colophão e a navegação Verso/Recto nesta página */
+  .case-colophon + .folio-nav { margin-top: 0; }
+
+  /* ---------- Dramatis Personæ: tese editorial + grade 2×2 de papéis ----------
+     Sem objeto decorativo à esquerda. Uma frase-tese grande abre a seção e
+     enquadra o papel; os quatro papéis vêm numa grade 2×2 com filetes, como
+     uma ficha. Distinto das listas numeradas do resto da página: deixas em
+     itálico oxblood + nome em romano vertical (contraponto ao itálico usado
+     para nomes nas demais seções). */
+  .bill-roles {
+    list-style: none;
+    margin: var(--sp-6) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--hairline);
+  }
+  .bill-role {
+    padding: var(--sp-5) var(--sp-6);
+    border-bottom: 1px solid var(--hairline);
+  }
+  /* Coluna esquerda: alinhada à margem do texto (sem recuo) */
+  .bill-role:nth-child(odd) { padding-left: 0; }
+  /* Coluna direita: divisória vertical central + recuo após ela */
+  .bill-role:nth-child(even) {
+    padding-right: 0;
+    border-left: 1px solid var(--hairline);
+  }
+  /* Deixa: lead-in em serif itálico (não mono) — voz de rubrica teatral */
+  .bill-role__cue {
+    display: block;
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-size: var(--fs-meta);
+    color: var(--oxblood);
+    margin-bottom: 4px;
+  }
+  /* Valor em romano vertical: o resto da página usa itálico p/ nomes, então
+     o upright aqui é deliberadamente o contraponto. */
+  .bill-role__name {
+    display: block;
+    font-family: var(--serif);
+    font-size: var(--fs-h4);
+    line-height: var(--lh-snug);
+    color: var(--ink);
+  }
+  .bill-role__note {
+    display: block;
+    margin-top: var(--sp-2);
+    font-family: var(--serif);
+    font-size: var(--fs-meta);
+    line-height: var(--lh-loose);
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 640px) {
+    .bill-roles { grid-template-columns: 1fr; }
+    .bill-role,
+    .bill-role:nth-child(odd),
+    .bill-role:nth-child(even) {
+      padding-left: 0;
+      padding-right: 0;
+      border-left: none;
+    }
+  }
+
   /* ---------- Grade dos 9 produtos (o ecossistema) ---------- */
   .poc-grid {
     display: grid;
@@ -28,22 +94,24 @@
     gap: var(--sp-4);
     margin-top: var(--sp-6);
   }
+  /* Base = POC em PESQUISA: recua. Papel plano, stroke pontilhado corrido,
+     acento e título atenuados — leitura de "hipótese / exploração". */
   .poc-entry {
     position: relative;
     display: flex; flex-direction: column; gap: var(--sp-3);
     padding: var(--sp-5) var(--sp-5) var(--sp-4);
-    background: var(--paper-card);
-    border: var(--border-hair);
-    border-top: 2px solid var(--hairline-strong);
+    background: transparent;
+    border: 1px dotted var(--ink-ghost);
     border-radius: var(--radius-sm);
     transition: transform var(--dur-base) var(--ease-out),
                 box-shadow var(--dur-base) var(--ease-out),
                 border-color var(--dur-base) var(--ease-out);
   }
+  .poc-entry .poc-entry__roman { color: var(--ink-faint); }
+  .poc-entry .poc-entry__name  { color: var(--ink-soft); }
   .poc-entry:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-soft);
-    border-top-color: var(--oxblood);
+    transform: translateY(-3px);
+    border-color: var(--ink-faint);
   }
   .poc-entry__head { display: flex; align-items: baseline; gap: var(--sp-3); }
   .poc-entry__roman {
@@ -67,7 +135,52 @@
   .st--proto::before    { background: var(--oxblood); }
   .st--parcial::before  { background: var(--cobalt); }
   .st--pesquisa::before { background: var(--ink-ghost); }
-  .poc-entry--featured { border-top-color: var(--oxblood); background: var(--paper-shade); }
+  /* Badge de PESQUISA: stroke pontilhado corrido, sem preenchimento — recua. */
+  /* Badge de PESQUISA: traço tracejado com folga ampla. A borda nativa
+     `dashed` tem gap fixo/apertado e o SVG de fundo esticado distorcia os
+     cantos. Solução: um <svg> inline preenchendo o badge com rect em % e
+     rx em px — cantos sempre circulares e traços uniformes, sem distorção.
+     Tom tan (#8b7f6e) legível tanto no creme quanto no plum (modo vela). */
+  .st--pesquisa {
+    position: relative;
+    border: 0;
+    color: var(--ink-faint);
+    background-color: transparent;
+    background-image: none;
+  }
+  .st--pesquisa .st-dash {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .st--pesquisa .st-dash rect { stroke: #8b7f6e; }
+  .st--pesquisa > span { position: relative; z-index: 1; }
+  .st--pesquisa::before { position: relative; z-index: 1; }
+  /* Badges de projetos que avançaram: stroke sólido + leve preenchimento do acento — destacam. */
+  .st--dev     { border-color: #3e7d4f;       color: #2f5d3b;       background: rgba(62,125,79,0.09); }
+  .st--proto   { border-color: var(--oxblood); color: var(--oxblood); background: rgba(122,38,32,0.08); }
+  .st--parcial { border-color: var(--cobalt);  color: var(--cobalt);  background: rgba(29,58,120,0.08); }
+
+  /* POC que avançou (dev/parcial/protótipo): papel claro, borda sólida,
+     topo oxblood mais forte e elevação — ganha o destaque. */
+  .poc-entry--featured {
+    background: var(--paper-card);
+    border: 1px solid var(--hairline-strong);
+    border-top: 3px solid var(--oxblood);
+    box-shadow: var(--shadow-soft);
+  }
+  .poc-entry--featured .poc-entry__roman { color: var(--oxblood); }
+  .poc-entry--featured .poc-entry__name  { color: var(--ink); }
+  .poc-entry--featured:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lens);
+    border-top-color: var(--oxblood);
+  }
 
   /* legenda de status */
   .status-legend { display: flex; flex-wrap: wrap; gap: var(--sp-3) var(--sp-6); margin-top: var(--sp-5);
@@ -76,6 +189,144 @@
   .status-legend__dot { width: 10px; height: 10px; border-radius: 50%; }
   .sl-dot--dev { background: #3e7d4f; } .sl-dot--proto { background: var(--oxblood); }
   .sl-dot--parcial { background: var(--cobalt); } .sl-dot--pesquisa { background: var(--ink-ghost); }
+
+  /* ============================================================
+     V. ESTRATÉGIA & PRINCÍPIOS — 5 princípios numerados + desfecho
+     Lista editorial: numeral iluminado à esquerda, texto à direita.
+     ============================================================ */
+  .principles { margin-top: var(--sp-7); border-top: 1px solid var(--ink); }
+  .principle {
+    display: grid;
+    grid-template-columns: clamp(64px, 8vw, 116px) minmax(0, 1fr);
+    column-gap: var(--sp-6); row-gap: 5px;
+    align-items: start;
+    padding: var(--sp-6) 0;
+    border-bottom: 1px solid var(--hairline);
+    transition: background var(--dur-base) var(--ease-out);
+  }
+  .principle__num-big {
+    grid-column: 1; grid-row: 1 / span 4; align-self: start; text-align: center;
+    font-family: var(--serif-display); font-style: italic; font-weight: 400;
+    font-size: clamp(54px, 7.5vw, 104px); line-height: .8;
+    color: var(--ink-ghost);
+    transition: color var(--dur-base) var(--ease-out);
+  }
+  .principle__num {
+    grid-column: 2; display: none;
+    font-family: var(--mono); font-size: var(--fs-small); letter-spacing: .2em;
+    text-transform: uppercase; color: var(--oxblood);
+  }
+  /* Mantém o rótulo só no desfecho (RESULTADO/OUTCOME) — não é número. */
+  .principle:last-child .principle__num { display: block; }
+  .principle__title {
+    grid-column: 2; margin: 3px 0 0; font-weight: 400;
+    font-family: var(--serif-display); font-style: italic;
+    font-size: clamp(23px, 2.5vw, 31px); line-height: 1.08; color: var(--ink);
+  }
+  .principle__tag {
+    grid-column: 2; margin-top: 2px;
+    font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--ink-faint);
+  }
+  .principle__body {
+    grid-column: 2; margin: var(--sp-3) 0 0; max-width: 64ch;
+    font-family: var(--serif); font-size: 16px; line-height: var(--lh-loose); color: var(--ink-soft);
+  }
+  .principle:not(:last-child):hover { background: rgba(122,38,32,0.025); }
+  .principle:not(:last-child):hover .principle__num-big { color: var(--oxblood); }
+  /* Desfecho (RESULTADO ✦) — painel destacado encerrando a gramática */
+  .principle:last-child {
+    margin-top: var(--sp-6); padding: var(--sp-6);
+    border-bottom: none; border-top: 2px solid var(--oxblood);
+    background: var(--paper-shade);
+  }
+  .principle:last-child .principle__num-big { color: var(--oxblood); font-style: normal; font-size: clamp(40px, 5vw, 64px); }
+  @media (max-width: 640px) {
+    .principle { grid-template-columns: 1fr; row-gap: 3px; padding: var(--sp-5) 0; }
+    .principle__num-big { grid-row: auto; text-align: left; font-size: 52px; line-height: 1; }
+    .principle:last-child { padding: var(--sp-5); }
+  }
+
+  /* ---------- Desfecho: a "biblioteca" como página-de-rosto + índice ----------
+     O resultado é, literalmente, uma biblioteca de componentes — então o card
+     final deixa de imitar os 5 princípios e vira uma estampa de frontispício
+     (cabeçalho centrado, dupla filete) seguida de um índice catalogado em
+     dois grupos. */
+  .outcome {
+    position: relative;
+    margin-top: var(--sp-7);
+    padding: clamp(30px, 4.2vw, 56px);
+    background:
+      radial-gradient(125% 90% at 50% 0%, rgba(122,38,32,0.06), transparent 62%),
+      var(--paper-shade);
+    border: 1px solid var(--ink-ghost);
+  }
+  .outcome::before {
+    content: "";
+    position: absolute;
+    inset: 9px;
+    border: 1px solid rgba(122,38,32,0.26);
+    pointer-events: none;
+  }
+
+  .outcome__head { text-align: center; max-width: 52ch; margin: 0 auto; }
+  .outcome__mark {
+    display: block; line-height: 1;
+    font-family: var(--serif-display); color: var(--oxblood);
+    font-size: clamp(26px, 3vw, 34px);
+  }
+  .outcome__eyebrow {
+    display: block; margin-top: 12px;
+    font-family: var(--mono); font-size: var(--fs-small);
+    letter-spacing: 0.26em; text-transform: uppercase; color: var(--oxblood);
+  }
+  .outcome__title {
+    margin: 8px 0 0; font-weight: 400;
+    font-family: var(--serif-display); font-style: italic;
+    font-size: clamp(31px, 4vw, 47px); line-height: 1.04; color: var(--ink);
+  }
+  .outcome__sub {
+    display: block; margin-top: 12px;
+    font-family: var(--serif); font-style: italic;
+    font-size: clamp(15px, 1.5vw, 18px); line-height: var(--lh-loose);
+    color: var(--ink-faint);
+  }
+
+  .outcome__index {
+    margin-top: clamp(24px, 3vw, 36px);
+    padding-top: clamp(24px, 3vw, 36px);
+    border-top: 1px solid var(--ink-ghost);
+    display: grid; grid-template-columns: 1fr 1fr;
+    column-gap: clamp(28px, 5vw, 64px);
+  }
+  .outcome__group:nth-child(2) {
+    border-left: 1px solid var(--ink-ghost);
+    padding-left: clamp(28px, 5vw, 64px);
+  }
+  .outcome__group-title {
+    display: block; margin-bottom: var(--sp-3); padding-bottom: 7px;
+    border-bottom: 1px solid var(--hairline);
+    font-family: var(--mono); font-size: var(--fs-small);
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-faint);
+  }
+  .outcome__list { list-style: none; margin: 0; padding: 0; counter-reset: cat; }
+  .outcome__list li {
+    counter-increment: cat; position: relative;
+    padding: 8px 0 8px 32px;
+    font-family: var(--serif); font-size: 16px; line-height: 1.38; color: var(--ink);
+    border-bottom: 1px dotted var(--ink-ghost);
+  }
+  .outcome__list li:last-child { border-bottom: none; }
+  .outcome__list li::before {
+    content: counter(cat, decimal-leading-zero);
+    position: absolute; left: 0; top: 11px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: var(--oxblood);
+  }
+  .outcome__list em { font-style: italic; color: var(--ink-soft); }
+
+  @media (max-width: 560px) {
+    .outcome__index { grid-template-columns: 1fr; row-gap: var(--sp-6); }
+    .outcome__group:nth-child(2) { border-left: none; padding-left: 0; }
+  }
 
   /* ---------- Princípios como cronologia (selos de lacre) ---------- */
   .principles-timeline { position: relative; margin-top: var(--sp-7); padding: 8px 0; }
@@ -146,7 +397,7 @@
     transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
   }
   .sl-hero img {
-    width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top center; display: block;
+    width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: top center; display: block;
     border: 1px solid rgba(122,38,32,.22);
     transition: transform var(--dur-slow) var(--ease-out);
   }
@@ -160,65 +411,153 @@
   .sl-hero__cap::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--oxblood); flex: 0 0 auto; }
   .sl-hero__cap--wf::before { background: var(--ink-faint); }
 
-  /* ---------- Plate-flip: recto (prancha) ⇄ verso (wireframe do esboço) ---------- */
-  .sl-plate-flip { grid-column: 1; max-width: 760px; display: flex; flex-direction: column; gap: 10px; perspective: 1800px; }
+  /* ---------- Plate-flip: recto (prancha) ⇄ verso (wireframe do esboço) ----------
+     Largura cheia (mesmo limite do mosaico de thumbs). A prancha ocupa a
+     coluna esquerda; o controle de flip vira um painel à direita, centrado
+     verticalmente no espaço livre ao lado da imagem. */
+  .sl-plate-flip {
+    grid-column: 1 / -1; max-width: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 56px;
+    gap: var(--sp-4); align-items: stretch;
+    perspective: 1800px;
+  }
   .sl-flip-inner {
     position: relative; transform-style: preserve-3d;
     transition: transform 0.75s var(--ease-power);
   }
   .sl-plate-flip.is-flipped .sl-flip-inner { transform: rotateY(180deg); }
   .sl-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; margin: 0; }
-  .sl-face--recto { position: relative; z-index: 2; }
+  .sl-face--recto { position: relative; z-index: 2; transform: translateZ(1px); }
   .sl-face--verso {
-    position: absolute; inset: 0; transform: rotateY(180deg);
+    position: absolute; inset: 0; transform: rotateY(180deg) translateZ(1px);
     pointer-events: none; cursor: default;
   }
   .sl-plate-flip.is-flipped .sl-face--recto { pointer-events: none; }
   .sl-plate-flip.is-flipped .sl-face--verso { pointer-events: auto; }
   .sl-face--verso img { background: #f7f2e3; }
-  /* dentro do flip, o hover não desloca a face (atrapalharia o eixo 3D) */
-  .sl-plate-flip .sl-hero:hover { transform: none; }
+  /* dentro do flip, nenhum hover mexe na face nem na imagem — evita o
+     z-fighting que fazia o protótipo "voltar" ao passar o mouse no verso.
+     O giro é só pelo botão. */
+  /* dentro do flip, o hover NÃO pode zerar o transform das faces — isso
+     removia o rotateY(180deg) do verso e o fazia "desgirar" de volta. Em vez
+     de transform:none, reaplica o transform exato de cada face (sem
+     deslocamento), preservando a rotação. O giro só acontece pelo botão. */
+  .sl-plate-flip .sl-face--recto:hover { transform: translateZ(1px); }
+  .sl-plate-flip .sl-face--verso:hover { transform: rotateY(180deg) translateZ(1px); box-shadow: none; }
+  .sl-plate-flip .sl-hero:hover img { transform: none; }
   .sl-face--recto:hover { box-shadow: var(--shadow-lens); }
 
+  /* Controle de giro = marca do gravador. Um medalhão intaglio (relevo seco,
+     anel duplo gravado) com a pena que vira o fólio, legendado em mono pela
+     face que será revelada: verso (esboço) ⇄ recto (prancha). */
   .sl-flip-btn {
-    align-self: flex-start; display: inline-flex; align-items: center; gap: 9px;
-    min-height: 38px; padding: 8px 16px; cursor: pointer;
-    font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
-    color: var(--ink-soft); background: var(--paper-card);
-    border: 1px solid var(--hairline-strong); border-radius: var(--radius-pill);
-    transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+    align-self: start; justify-self: center;
+    display: flex; flex-direction: column; align-items: center; gap: 9px;
+    width: 56px; padding: 4px 0 0; cursor: pointer;
+    background: none; border: 0; color: var(--ink-soft);
+    -webkit-tap-highlight-color: transparent;
   }
-  .sl-flip-btn:hover { border-color: var(--oxblood); color: var(--oxblood); }
-  .sl-flip-glyph { display: inline-block; font-size: 13px; line-height: 1; color: var(--oxblood); transition: transform 0.6s var(--ease-power); }
+  .sl-flip-medallion {
+    position: relative;
+    width: 46px; height: 46px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: radial-gradient(circle at 50% 36%, #fcf8ec, var(--paper-card) 72%);
+    /* anel externo gravado · sulco claro · anel interno · relevo seco · sombra de apoio */
+    box-shadow:
+      inset 0 0 0 1px var(--hairline-strong),
+      inset 0 0 0 3.5px var(--paper-card),
+      inset 0 0 0 4.5px var(--hairline),
+      inset 0 2px 5px rgba(26,22,18,.10),
+      0 2px 6px rgba(26,22,18,.10);
+    transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-base) var(--ease-out);
+  }
+  .sl-flip-glyph {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 21px; line-height: 1; color: var(--oxblood);
+    text-shadow: 0 1px 0 rgba(252,248,236,.7);
+    transition: transform 0.7s var(--ease-power);
+  }
   .sl-plate-flip.is-flipped .sl-flip-glyph { transform: rotate(180deg); }
-  .sl-flip-label--back { display: none; }
-  .sl-plate-flip.is-flipped .sl-flip-label--front { display: none; }
-  .sl-plate-flip.is-flipped .sl-flip-label--back { display: inline; }
 
-  /* Mosaico de provas — largura cheia, em duotom de gravura que floresce em cor no hover */
+  /* Legenda editorial — qual fólio aparece ao virar */
+  .sl-flip-tag {
+    position: relative;
+    font-family: var(--mono); font-size: 9.5px; line-height: 1;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-faint);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .sl-flip-tag-side { display: none; }
+  .sl-flip-tag--front { display: inline; }
+  .sl-plate-flip.is-flipped .sl-flip-tag--front { display: none; }
+  .sl-plate-flip.is-flipped .sl-flip-tag--back { display: inline; }
+
+  /* hover — o anel acende em oxblood e o medalhão sobe levemente */
+  .sl-flip-btn:hover .sl-flip-medallion,
+  .sl-flip-btn:focus-visible .sl-flip-medallion {
+    box-shadow:
+      inset 0 0 0 1px var(--oxblood),
+      inset 0 0 0 3.5px var(--paper-card),
+      inset 0 0 0 4.5px rgba(122,38,32,.34),
+      inset 0 2px 5px rgba(26,22,18,.10),
+      0 7px 18px rgba(26,22,18,.16);
+    transform: translateY(-2px);
+  }
+  .sl-flip-btn:hover .sl-flip-tag,
+  .sl-flip-btn:focus-visible .sl-flip-tag { color: var(--oxblood); }
+  .sl-flip-btn:focus { outline: none; }
+
+  /* MODO VELA — sem volume: o medalhão fica plano, só as linhas rosas.
+     Remove o preenchimento radial claro e as sombras de relevo/apoio que,
+     no escuro, viravam um disco brilhante saliente. */
+  body.candle .sl-flip-medallion {
+    background: transparent !important;
+    box-shadow:
+      inset 0 0 0 1px #c46a78,
+      inset 0 0 0 4.5px rgba(196,106,120,0.22) !important;
+  }
+  body.candle .sl-flip-btn:hover .sl-flip-medallion,
+  body.candle .sl-flip-btn:focus-visible .sl-flip-medallion {
+    background: transparent !important;
+    box-shadow:
+      inset 0 0 0 1.5px #c46a78,
+      inset 0 0 0 4.5px rgba(196,106,120,0.34) !important;
+    transform: translateY(-2px);
+  }
+  body.candle .sl-flip-glyph { text-shadow: none; }
+
+  /* descrição completa só para leitores de tela */
+  .sl-flip-label { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  .sl-plate-flip.is-flipped .sl-flip-label--front { display: none; }
+
+  /* Mosaico de provas — largura cheia, em cor plena, montado como num álbum */
   .sl-grid {
     grid-column: 1 / -1;
     display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--sp-3);
   }
   .sl-thumb {
-    position: relative; display: block; overflow: hidden; cursor: zoom-in; aspect-ratio: 4 / 3;
+    position: relative; display: block; overflow: visible; cursor: zoom-in; aspect-ratio: 4 / 3;
     background: var(--paper-shade); border: 1px solid var(--hairline-strong);
     border-radius: var(--radius-sm); box-shadow: var(--shadow-soft);
     transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
   }
   .sl-thumb img {
     width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block;
-    filter: sepia(0.5) saturate(0.62) brightness(0.97) contrast(1.02);
-    transition: transform var(--dur-slow) var(--ease-out), filter var(--dur-base) var(--ease-out);
-  }
-  .sl-thumb::after {
-    content: ''; position: absolute; inset: 0; pointer-events: none;
-    background: rgba(122,38,32,.12); mix-blend-mode: multiply;
-    transition: opacity var(--dur-base) var(--ease-out);
+    border-radius: var(--radius-sm);
   }
   .sl-thumb:hover { transform: translateY(-3px); border-color: var(--oxblood); box-shadow: var(--shadow-lens); }
-  .sl-thumb:hover img { transform: scale(1.03); filter: none; }
-  .sl-thumb:hover::after { opacity: 0; }
+  /* Fita adesiva (washi) translúcida — só em alguns thumbs, cantos alternados */
+  .sl-thumb:nth-child(4n+1)::after,
+  .sl-thumb:nth-child(6n+5)::after {
+    content: ''; position: absolute; z-index: 4;
+    width: 56px; height: 19px;
+    background: linear-gradient(115deg, rgba(255,255,255,.24), rgba(255,255,255,0) 48%), rgba(216,199,154,.52);
+    box-shadow: 0 1px 3px rgba(26,22,18,.12);
+    border-left: 1px solid rgba(255,255,255,.28); border-right: 1px solid rgba(255,255,255,.28);
+  }
+  .sl-thumb:nth-child(4n+1)::after { top: -8px; left: 14px; transform: rotate(-5deg); }
+  .sl-thumb:nth-child(6n+5)::after { top: -7px; right: 14px; transform: rotate(4.5deg); }
 
   /* Marginália do Argumento na coluna direita: alinhada à esquerda (ragged
      right, como o Figma). No desktop (3 colunas) ela é empurrada para baixo
@@ -234,6 +573,54 @@
     .argument .spread .margin-r { padding-top: clamp(96px, 11vw, 148px); }
   }
 
+  /* ---------- Desafio: grade de post-its (2 em cima · 1 largo embaixo) ---------- */
+  .insights-grid--split { grid-template-columns: repeat(2, 1fr); }
+  .insight-card--wide {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: var(--sp-7);
+    align-items: stretch;
+  }
+  .insight-card--wide .insight-card__lead p { margin-top: var(--sp-3); }
+  .insight-card__aside {
+    display: flex; flex-direction: column; gap: var(--sp-3);
+    padding-left: var(--sp-7);
+    border-left: 1px solid var(--hairline-strong);
+  }
+  .rework-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--ink-faint);
+  }
+  /* Livro-razão vertical: cada padrão numa linha pautada, preenchendo a altura */
+  .rework-list {
+    list-style: none; margin: 0; padding: 0;
+    display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0;
+  }
+  .rework-list li {
+    display: grid; grid-template-columns: 1.6em minmax(0,1fr) auto;
+    align-items: baseline; gap: var(--sp-3);
+    flex: 1 1 0; padding: var(--sp-3) 0;
+    border-top: 1px solid var(--hairline-strong);
+  }
+  .rework-list li:first-child { border-top: none; }
+  .rework-list__n { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: var(--oxblood); }
+  .rework-list__name { font-family: var(--serif); font-style: italic; font-size: 16px; line-height: 1.2; color: var(--ink); }
+  .rework-list__mult { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: var(--ink-faint); justify-self: end; white-space: nowrap; }
+  .rework-foot {
+    display: flex; justify-content: space-between; align-items: baseline; gap: var(--sp-3);
+    margin-top: var(--sp-2); padding-top: var(--sp-3); border-top: 2px solid var(--oxblood);
+  }
+  .rework-foot__k { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint); max-width: 60%; line-height: 1.3; }
+  .rework-foot__v { font-family: var(--serif-display); font-style: italic; font-size: 26px; line-height: 1; color: var(--oxblood); white-space: nowrap; }
+
+  @media (max-width: 900px) {
+    .insight-card--wide { grid-template-columns: 1fr; gap: var(--sp-5); }
+    .insight-card__aside { padding-left: 0; border-left: none; padding-top: var(--sp-5); border-top: 1px solid var(--hairline-strong); }
+  }
+  @media (max-width: 720px) {
+    .insights-grid--split { grid-template-columns: 1fr; }
+  }
   /* ---------- Lightbox (recolorido p/ tema livro) ---------- */
   .lbg-overlay {
     position: fixed; inset: 0; z-index: 9999;
@@ -297,7 +684,8 @@
   /* ---------- Responsividade ---------- */
   @media (max-width: 1024px) { .poc-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 880px)  {
-    .sl-plate-flip { max-width: 100%; }
+    .sl-plate-flip { grid-template-columns: 1fr; max-width: 100%; }
+    .sl-flip-btn { justify-self: start; }
   }
   @media (max-width: 768px)  {
     .principles-timeline::before { left: 22px; }
@@ -349,6 +737,27 @@
     <a href="../index.html" class="to-catalogue">
       <em><span class="t" lang="pt">Voltar ao catálogo</span><span class="t" lang="en">Return to catalogue</span></em>
     </a>
+    <button class="candle-toggle" type="button" aria-pressed="false" title="Modo vela" aria-label="Modo vela">
+      <svg class="candle-icon candle-icon--off" width="22" height="18" viewBox="0 0 24 22" fill="none" aria-hidden="true">
+        <path d="M9 4.6 C 9.6 5.3, 10 5.9, 9 6.6" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" />
+        <rect x="7.2" y="6.6" width="3.6" height="6.4" fill="currentColor" />
+        <path d="M5.6 13 H12.4 L11.2 14.6 H6.8 Z" fill="currentColor" />
+        <rect x="7.4" y="14.6" width="3.2" height="1.6" fill="currentColor" />
+        <ellipse cx="9" cy="17.8" rx="8" ry="1.7" fill="currentColor" />
+        <ellipse cx="9" cy="16.8" rx="6.8" ry="0.7" fill="none" stroke="var(--paper)" stroke-width="0.5" opacity="0.55" />
+        <path d="M16.4 17.4 C 21.4 17.6, 22.8 13.4, 18.6 12.6 C 16.6 12.4, 16.6 14.4, 18.2 14.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <svg class="candle-icon candle-icon--on" width="22" height="18" viewBox="0 0 24 22" fill="none" aria-hidden="true">
+        <path d="M9 0.5 C 7.6 2.2, 7 3.7, 9 5.2 C 11 3.7, 10.4 2.2, 9 0.5 Z" fill="currentColor" opacity="0.9" />
+        <line x1="9" y1="5.2" x2="9" y2="6.6" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" />
+        <rect x="7.2" y="6.6" width="3.6" height="6.4" fill="currentColor" />
+        <path d="M5.6 13 H12.4 L11.2 14.6 H6.8 Z" fill="currentColor" />
+        <rect x="7.4" y="14.6" width="3.2" height="1.6" fill="currentColor" />
+        <ellipse cx="9" cy="17.8" rx="8" ry="1.7" fill="currentColor" />
+        <ellipse cx="9" cy="16.8" rx="6.8" ry="0.7" fill="none" stroke="var(--paper)" stroke-width="0.5" opacity="0.55" />
+        <path d="M16.4 17.4 C 21.4 17.6, 22.8 13.4, 18.6 12.6 C 16.6 12.4, 16.6 14.4, 18.2 14.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
     <div class="lang-toggle" role="group" aria-label="Language / Idioma">
       <button class="active" type="button" data-lang="pt" aria-pressed="true">PT</button>
       <span class="pipe">|</span>
@@ -489,36 +898,28 @@
         <span class="gloss"><span class="t" lang="pt">Dramatis personæ</span><span class="t" lang="en">Cast &amp; duties</span></span>
       </header>
 
-      <dl class="dramatis reveal" data-stagger>
-        <div class="dramatis-block">
-          <dt><span class="t" lang="pt">Responsabilidade</span><span class="t" lang="en">Responsibility</span></dt>
-          <dd>
-            Lead Product Designer
-            <span class="role"><span class="t" lang="pt">Único designer do programa: discovery, arquitetura de informação, Design System, protótipos de alta fidelidade e handoff das 9 aplicações</span><span class="t" lang="en">Sole designer of the programme: discovery, information architecture, Design System, high-fidelity prototypes and handoff of all 9 applications</span></span>
-          </dd>
-        </div>
-        <div class="dramatis-block">
-          <dt><span class="t" lang="pt">Colaboradores</span><span class="t" lang="en">Collaborators</span></dt>
-          <dd>
-            POs · Engenharia · Liderança
-            <span class="role"><span class="t" lang="pt">POs e engenharia de 9 squads, reportando diretamente à liderança do One Studio</span><span class="t" lang="en">POs and engineering across 9 squads, reporting directly to One Studio leadership</span></span>
-          </dd>
-        </div>
-        <div class="dramatis-block">
-          <dt><span class="t" lang="pt">Duas frentes</span><span class="t" lang="en">Two fronts</span></dt>
-          <dd>
-            <span class="t" lang="pt">Campo &amp; Sistema</span><span class="t" lang="en">Field &amp; System</span>
-            <span class="role"><span class="t" lang="pt">Acompanhei cada squad para entender o comportamento real da IA em cada domínio — e converti esses aprendizados em padrões reutilizáveis do Design System</span><span class="t" lang="en">I shadowed each squad to understand the real behaviour of the AI in each domain — and turned those learnings into reusable Design System patterns</span></span>
-          </dd>
-        </div>
-        <div class="dramatis-block">
-          <dt><span class="t" lang="pt">Objetivo Estratégico</span><span class="t" lang="en">Strategic Goal</span></dt>
-          <dd>
-            <span class="t" lang="pt">Coerência em escala</span><span class="t" lang="en">Coherence at scale</span>
-            <span class="role"><span class="t" lang="pt">Evitar que 9 squads criassem 9 soluções distintas para o mesmo problema de transparência da IA</span><span class="t" lang="en">Prevent 9 squads from creating 9 distinct solutions to the same AI-transparency problem</span></span>
-          </dd>
-        </div>
-      </dl>
+      <ol class="bill-roles reveal" data-stagger>
+          <li class="bill-role">
+            <span class="bill-role__cue"><span class="t" lang="pt">No papel principal</span><span class="t" lang="en">In the leading role</span></span>
+            <span class="bill-role__name">Lead Product Designer</span>
+            <span class="bill-role__note"><span class="t" lang="pt">Único designer do programa: discovery, arquitetura de informação, Design System, protótipos de alta fidelidade e handoff das 9 aplicações.</span><span class="t" lang="en">Sole designer of the programme: discovery, information architecture, Design System, high-fidelity prototypes and handoff of all 9 applications.</span></span>
+          </li>
+          <li class="bill-role">
+            <span class="bill-role__cue"><span class="t" lang="pt">Em cena com</span><span class="t" lang="en">Sharing the stage with</span></span>
+            <span class="bill-role__name"><span class="t" lang="pt">POs · Engenharia · Liderança</span><span class="t" lang="en">POs · Engineering · Leadership</span></span>
+            <span class="bill-role__note"><span class="t" lang="pt">POs e engenharia de 9 squads, reportando diretamente à liderança do One Studio.</span><span class="t" lang="en">POs and engineering across 9 squads, reporting directly to One Studio leadership.</span></span>
+          </li>
+          <li class="bill-role">
+            <span class="bill-role__cue"><span class="t" lang="pt">Em dois palcos</span><span class="t" lang="en">On two stages</span></span>
+            <span class="bill-role__name"><span class="t" lang="pt">Campo &amp; Sistema</span><span class="t" lang="en">Field &amp; System</span></span>
+            <span class="bill-role__note"><span class="t" lang="pt">Acompanhei cada squad para entender o comportamento real da IA em cada domínio — e converti esses aprendizados em padrões reutilizáveis do Design System.</span><span class="t" lang="en">I shadowed each squad to understand the real behaviour of the AI in each domain — and turned those learnings into reusable Design System patterns.</span></span>
+          </li>
+          <li class="bill-role">
+            <span class="bill-role__cue"><span class="t" lang="pt">Com a deixa</span><span class="t" lang="en">On the cue</span></span>
+            <span class="bill-role__name"><span class="t" lang="pt">Coerência em escala</span><span class="t" lang="en">Coherence at scale</span></span>
+            <span class="bill-role__note"><span class="t" lang="pt">Evitar que 9 squads criassem 9 soluções distintas para o mesmo problema de transparência da IA.</span><span class="t" lang="en">Prevent 9 squads from creating 9 distinct solutions to the same AI-transparency problem.</span></span>
+          </li>
+        </ol>
     </div>
   </section>
 
@@ -527,11 +928,7 @@
        ============================================================ -->
   <section class="page case-section" data-folio>
     <div class="spread">
-      <aside class="margin-l">
-        <div class="parchment-stamp" aria-hidden="true">
-          <span class="st-num">DESAFIO</span>
-        </div>
-      </aside>
+      <aside class="margin-l" aria-hidden="true"></aside>
       <div class="content">
         <header class="section-head reveal">
           <span class="roman">III.</span>
@@ -548,7 +945,7 @@
           </div>
         </div>
 
-        <div class="insights-grid reveal" data-stagger>
+        <div class="insights-grid insights-grid--split reveal" data-stagger>
           <div class="insight-card">
             <span class="card-num">01.</span>
             <h4 class="card-title"><span class="t" lang="pt">Vocabulário fragmentado</span><span class="t" lang="en">Fragmented vocabulary</span></h4>
@@ -559,10 +956,26 @@
             <h4 class="card-title"><span class="t" lang="pt">Incerteza invisível</span><span class="t" lang="en">Invisible uncertainty</span></h4>
             <p><span class="t" lang="pt">Os primeiros protótipos tratavam a saída do modelo como sempre correta — sem mostrar confiança, fontes ou a possibilidade de desfazer.</span><span class="t" lang="en">Early prototypes treated model output as always correct — with no confidence signals, sources or undo path shown.</span></p>
           </div>
-          <div class="insight-card">
-            <span class="card-num">03.</span>
-            <h4 class="card-title"><span class="t" lang="pt">Retrabalho de interface</span><span class="t" lang="en">Interface rework</span></h4>
-            <p><span class="t" lang="pt">Padrões básicos — input de prompt, card de resposta, histórico, feedback, edição assistida — eram recriados do zero em cada POC.</span><span class="t" lang="en">Basic patterns — prompt input, response card, history, feedback, assisted editing — were rebuilt from scratch in every POC.</span></p>
+          <div class="insight-card insight-card--wide">
+            <div class="insight-card__lead">
+              <span class="card-num">03.</span>
+              <h4 class="card-title"><span class="t" lang="pt">Retrabalho de interface</span><span class="t" lang="en">Interface rework</span></h4>
+              <p><span class="t" lang="pt">Padrões básicos de interface eram recriados do zero em cada POC. Sem uma biblioteca comum, cada squad reescrevia os mesmos componentes — multiplicando o esforço e abrindo divergência visual entre os 9 produtos.</span><span class="t" lang="en">Basic interface patterns were rebuilt from scratch in every POC. With no shared library, each squad rewrote the same components — multiplying the effort and opening visual divergence across the 9 products.</span></p>
+            </div>
+            <div class="insight-card__aside">
+              <span class="rework-label"><span class="t" lang="pt">Padrões recriados a cada POC</span><span class="t" lang="en">Patterns rebuilt in every POC</span></span>
+              <ul class="rework-list">
+                <li><span class="rework-list__n">i</span><span class="rework-list__name"><span class="t" lang="pt">Input de prompt</span><span class="t" lang="en">Prompt input</span></span><span class="rework-list__mult">×9</span></li>
+                <li><span class="rework-list__n">ii</span><span class="rework-list__name"><span class="t" lang="pt">Card de resposta</span><span class="t" lang="en">Response card</span></span><span class="rework-list__mult">×9</span></li>
+                <li><span class="rework-list__n">iii</span><span class="rework-list__name"><span class="t" lang="pt">Histórico</span><span class="t" lang="en">History</span></span><span class="rework-list__mult">×9</span></li>
+                <li><span class="rework-list__n">iv</span><span class="rework-list__name"><span class="t" lang="pt">Feedback</span><span class="t" lang="en">Feedback</span></span><span class="rework-list__mult">×9</span></li>
+                <li><span class="rework-list__n">v</span><span class="rework-list__name"><span class="t" lang="pt">Edição assistida</span><span class="t" lang="en">Assisted editing</span></span><span class="rework-list__mult">×9</span></li>
+              </ul>
+              <div class="rework-foot">
+                <span class="rework-foot__k"><span class="t" lang="pt">5 padrões reescritos em 9 produtos</span><span class="t" lang="en">5 patterns rewritten across 9 products</span></span>
+                <span class="rework-foot__v">45×</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -699,12 +1112,36 @@
           <span class="principle__tag"><span class="t" lang="pt">Feedback como elemento central.</span><span class="t" lang="en">Feedback as a core element.</span></span>
           <p class="principle__body"><span class="t" lang="pt">A avaliação das respostas — positiva, negativa, correções, exemplos, refutações — não é opcional: é componente presente em toda resposta, alimentando a evolução de modelos, prompts e mecanismos de segurança.</span><span class="t" lang="en">Rating answers — positive, negative, corrections, examples, rebuttals — is not optional: it is a component present in every response, feeding the evolution of models, prompts and safety mechanisms.</span></p>
         </div>
-        <div class="principle">
-          <span class="principle__num-big" aria-hidden="true">✦</span>
-          <span class="principle__num"><span class="t" lang="pt">RESULTADO</span><span class="t" lang="en">OUTCOME</span></span>
-          <h3 class="principle__title"><span class="t" lang="pt">Uma biblioteca de IA</span><span class="t" lang="en">A library for AI</span></h3>
-          <span class="principle__tag"><span class="t" lang="pt">Padrões reutilizáveis por domínio.</span><span class="t" lang="en">Reusable, domain-aware patterns.</span></span>
-          <p class="principle__body"><span class="t" lang="pt">Entradas de prompt, cartões de resposta com streaming e citações, histórico, feedback, edição assistida com permissões — e blocos por domínio: visualizador de contratos, editor de imagens, ranking de testes, indicador de risco e resumo de chamadas.</span><span class="t" lang="en">Prompt inputs, response cards with streaming and citations, history, feedback, permission-aware assisted editing — plus domain blocks: contract viewer, generated-image editor, test ranking, risk gauge and call summaries.</span></p>
+        <div class="outcome">
+          <div class="outcome__head">
+            <span class="outcome__mark" aria-hidden="true">✦</span>
+            <span class="outcome__eyebrow"><span class="t" lang="pt">Resultado · Outcome</span><span class="t" lang="en">Outcome · Resultado</span></span>
+            <h3 class="outcome__title"><span class="t" lang="pt">Uma biblioteca de IA</span><span class="t" lang="en">A library for AI</span></h3>
+            <span class="outcome__sub"><span class="t" lang="pt">Padrões reutilizáveis, por domínio — a gramática dos 5 princípios feita componente.</span><span class="t" lang="en">Reusable, domain-aware patterns — the grammar of the 5 principles made component.</span></span>
+          </div>
+
+          <div class="outcome__index">
+            <div class="outcome__group">
+              <span class="outcome__group-title"><span class="t" lang="pt">Núcleo</span><span class="t" lang="en">Core</span></span>
+              <ol class="outcome__list">
+                <li><span class="t" lang="pt">Entradas de prompt</span><span class="t" lang="en">Prompt inputs</span></li>
+                <li><span class="t" lang="pt">Cartões de resposta <em>com streaming e citações</em></span><span class="t" lang="en">Response cards <em>with streaming and citations</em></span></li>
+                <li><span class="t" lang="pt">Histórico</span><span class="t" lang="en">History</span></li>
+                <li><span class="t" lang="pt">Feedback</span><span class="t" lang="en">Feedback</span></li>
+                <li><span class="t" lang="pt">Edição assistida <em>com permissões</em></span><span class="t" lang="en">Assisted editing <em>with permissions</em></span></li>
+              </ol>
+            </div>
+            <div class="outcome__group">
+              <span class="outcome__group-title"><span class="t" lang="pt">Por domínio</span><span class="t" lang="en">Domain blocks</span></span>
+              <ol class="outcome__list">
+                <li><span class="t" lang="pt">Visualizador de contratos</span><span class="t" lang="en">Contract viewer</span></li>
+                <li><span class="t" lang="pt">Editor de imagens</span><span class="t" lang="en">Generated-image editor</span></li>
+                <li><span class="t" lang="pt">Ranking de testes</span><span class="t" lang="en">Test ranking</span></li>
+                <li><span class="t" lang="pt">Indicador de risco</span><span class="t" lang="en">Risk gauge</span></li>
+                <li><span class="t" lang="pt">Resumo de chamadas</span><span class="t" lang="en">Call summaries</span></li>
+              </ol>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -735,10 +1172,6 @@
           <p><span class="t" lang="pt">O maior desafio de UX foi integrar geração de imagens e editor visual num único fluxo. O usuário gera variações, seleciona uma e edita com precisão sem trocar de ferramenta. Isso exigiu ir além do "card de resposta": canvas, máscara, ajustes paramétricos e versionamento. O padrão <span class="em">generate → curate → fine-edit</span> nasceu aqui — o maior avanço do Design System.</span><span class="t" lang="en">The biggest UX challenge was integrating image generation and a full visual editor into one flow. The user generates variations, picks one and edits it precisely without switching tools. This pushed the Design System beyond the "response card": canvas, mask, parametric adjustments and versioning. The <span class="em">generate → curate → fine-edit</span> pattern was born here — the system's biggest leap.</span></p>
         </div>
         <div class="sl-gallery">
-          <figure class="sl-engraving reveal">
-            <img src="../images/genai/plates/campaign-genius.svg" alt="Esquema gravado — fluxo gerar, curar e refinar" loading="lazy" />
-            <figcaption><span class="t" lang="pt">Gerar · curar · refinar</span><span class="t" lang="en">Generate · curate · fine-edit</span></figcaption>
-          </figure>
           <div class="sl-plate-flip reveal">
             <div class="sl-flip-inner">
               <a class="sl-hero sl-face sl-face--recto lightboxgallery-link" href="../images/genai/campaign-genius/1.webp" aria-label="Campaign Genius — Main view — campaign generator with prompts and parameters">
@@ -751,7 +1184,8 @@
               </div>
             </div>
             <button class="sl-flip-btn" type="button" aria-pressed="false">
-              <span class="sl-flip-glyph" aria-hidden="true">↻</span>
+              <span class="sl-flip-medallion" aria-hidden="true"><span class="sl-flip-glyph">↻</span></span>
+              <span class="sl-flip-tag" aria-hidden="true"><span class="sl-flip-tag-side sl-flip-tag--front">verso</span><span class="sl-flip-tag-side sl-flip-tag--back">recto</span></span>
               <span class="sl-flip-label sl-flip-label--front"><span class="t" lang="pt">Ver o wireframe</span><span class="t" lang="en">See the wireframe</span></span>
               <span class="sl-flip-label sl-flip-label--back"><span class="t" lang="pt">Ver a prancha</span><span class="t" lang="en">See the plate</span></span>
             </button>
@@ -787,10 +1221,6 @@
           <p><span class="t" lang="pt">O desafio central: alinhar as <span class="em">permissões de ação</span> ao papel do usuário. Além de responder, o chatbot edita — mas respeitando limites: leitores consultam, autores editam rascunhos, aprovadores publicam. Virou o padrão de <span class="em">action-bar contextual</span>, depois adotado no SC Copilot e no Code Assistant como a referência de "edição autorizada".</span><span class="t" lang="en">The core challenge: aligning <span class="em">action permissions</span> to the user's role. Beyond answering, the chatbot edits — but within limits: readers consult, authors edit drafts, approvers publish. This became the <span class="em">contextual action-bar</span> pattern, later adopted in SC Copilot and Code Assistant as the reference for "authorised editing".</span></p>
         </div>
         <div class="sl-gallery">
-          <figure class="sl-engraving reveal">
-            <img src="../images/genai/plates/contract-explorer.svg" alt="Esquema gravado — resposta rastreada até a cláusula citada" loading="lazy" />
-            <figcaption><span class="t" lang="pt">Resposta → cláusula citada</span><span class="t" lang="en">Answer → cited clause</span></figcaption>
-          </figure>
           <div class="sl-plate-flip reveal">
             <div class="sl-flip-inner">
               <a class="sl-hero sl-face sl-face--recto lightboxgallery-link" href="../images/genai/contract-explorer/1.webp" aria-label="Contract Explorer — Main view — chat over the contract base with traceable citations">
@@ -803,7 +1233,8 @@
               </div>
             </div>
             <button class="sl-flip-btn" type="button" aria-pressed="false">
-              <span class="sl-flip-glyph" aria-hidden="true">↻</span>
+              <span class="sl-flip-medallion" aria-hidden="true"><span class="sl-flip-glyph">↻</span></span>
+              <span class="sl-flip-tag" aria-hidden="true"><span class="sl-flip-tag-side sl-flip-tag--front">verso</span><span class="sl-flip-tag-side sl-flip-tag--back">recto</span></span>
               <span class="sl-flip-label sl-flip-label--front"><span class="t" lang="pt">Ver o wireframe</span><span class="t" lang="en">See the wireframe</span></span>
               <span class="sl-flip-label sl-flip-label--back"><span class="t" lang="pt">Ver a prancha</span><span class="t" lang="en">See the plate</span></span>
             </button>
@@ -833,10 +1264,6 @@
           <p><span class="t" lang="pt">O problema de design era <span class="em">separar visualmente</span> os 4 tipos de saída na mesma vista: fato medido, predição (com intervalo de confiança), sugestão (ignorável) e comparativo (delta). Cada tipo ganhou um padrão próprio — <span class="em">fact-card, prediction-card, suggestion-card e delta-card</span>. Em QA, confundir "o que aconteceu" com "o que pode acontecer" custa caro.</span><span class="t" lang="en">The design problem was to <span class="em">visually separate</span> the 4 output types on the same view: measured fact, prediction (with confidence interval), suggestion (skippable) and comparison (delta). Each got its own pattern — <span class="em">fact-card, prediction-card, suggestion-card and delta-card</span>. In QA, confusing "what happened" with "what might" is costly.</span></p>
         </div>
         <div class="sl-gallery">
-          <figure class="sl-engraving reveal">
-            <img src="../images/genai/plates/test-insights.svg" alt="Esquema gravado — quatro tipos de saída mantidos distintos" loading="lazy" />
-            <figcaption><span class="t" lang="pt">Quatro saídas, distintas</span><span class="t" lang="en">Four outputs, kept distinct</span></figcaption>
-          </figure>
           <div class="sl-plate-flip reveal">
             <div class="sl-flip-inner">
               <a class="sl-hero sl-face sl-face--recto lightboxgallery-link" href="../images/genai/test-insights/1.webp" aria-label="Test Insights — Main view — 4 AI output types on a single screen">
@@ -849,7 +1276,8 @@
               </div>
             </div>
             <button class="sl-flip-btn" type="button" aria-pressed="false">
-              <span class="sl-flip-glyph" aria-hidden="true">↻</span>
+              <span class="sl-flip-medallion" aria-hidden="true"><span class="sl-flip-glyph">↻</span></span>
+              <span class="sl-flip-tag" aria-hidden="true"><span class="sl-flip-tag-side sl-flip-tag--front">verso</span><span class="sl-flip-tag-side sl-flip-tag--back">recto</span></span>
               <span class="sl-flip-label sl-flip-label--front"><span class="t" lang="pt">Ver o wireframe</span><span class="t" lang="en">See the wireframe</span></span>
               <span class="sl-flip-label sl-flip-label--back"><span class="t" lang="pt">Ver a prancha</span><span class="t" lang="en">See the plate</span></span>
             </button>
@@ -877,10 +1305,6 @@
           <p><span class="t" lang="pt">A interação principal é um <span class="em">gauge</span> (baixo, médio, alto) com justificativas clicáveis. Para cada item, o engenheiro pode aceitar, refutar ou anotar — e tudo fica como audit trail. Esse ato de justificar concordância ou discordância com a IA virou o padrão de <span class="em">audit trail</span> do Design System: a camada automatizada complementa o julgamento humano, não o substitui.</span><span class="t" lang="en">The main interaction is a <span class="em">gauge</span> (low, medium, high) with clickable justifications. For each item, the engineer can accept, contest or annotate — all logged as an audit trail. That act of justifying agreement or disagreement with the AI became the Design System's <span class="em">audit trail</span> pattern: the automated layer complements human judgement, it doesn't replace it.</span></p>
         </div>
         <div class="sl-gallery">
-          <figure class="sl-engraving reveal">
-            <img src="../images/genai/plates/deploy-check.svg" alt="Esquema gravado — medidor de risco e audit trail" loading="lazy" />
-            <figcaption><span class="t" lang="pt">Medidor de risco · audit trail</span><span class="t" lang="en">Risk gauge · audit trail</span></figcaption>
-          </figure>
           <div class="sl-plate-flip reveal">
             <div class="sl-flip-inner">
               <a class="sl-hero sl-face sl-face--recto lightboxgallery-link" href="../images/genai/deploy-check/1.webp" aria-label="Deploy Check — Main view — pre-deploy risk gauge with clickable justifications">
@@ -893,7 +1317,8 @@
               </div>
             </div>
             <button class="sl-flip-btn" type="button" aria-pressed="false">
-              <span class="sl-flip-glyph" aria-hidden="true">↻</span>
+              <span class="sl-flip-medallion" aria-hidden="true"><span class="sl-flip-glyph">↻</span></span>
+              <span class="sl-flip-tag" aria-hidden="true"><span class="sl-flip-tag-side sl-flip-tag--front">verso</span><span class="sl-flip-tag-side sl-flip-tag--back">recto</span></span>
               <span class="sl-flip-label sl-flip-label--front"><span class="t" lang="pt">Ver o wireframe</span><span class="t" lang="en">See the wireframe</span></span>
               <span class="sl-flip-label sl-flip-label--back"><span class="t" lang="pt">Ver a prancha</span><span class="t" lang="en">See the plate</span></span>
             </button>
@@ -916,14 +1341,10 @@
           <p><span class="t" lang="pt">Foi um desafio de design <span class="em">e</span> de engenharia. O Design System criou componentes que indicam o <span class="em">escopo de conhecimento</span> da IA em cada resposta: fontes consultadas, restrições de acesso por segurança e casos que exigem intervenção humana. Nasceu o padrão de <span class="em">indicador de escopo e encaminhamento para humanos</span>, diretriz para qualquer copilot interno. A IA nunca simula conhecimento além do permitido.</span><span class="t" lang="en">It was a design <span class="em">and</span> engineering challenge. The Design System built components that signal the AI's <span class="em">knowledge scope</span> in each answer: sources consulted, access restrictions for security and cases needing human intervention. The <span class="em">scope indicator and human hand-off</span> pattern was born, a guideline for any internal copilot. The AI never feigns knowledge beyond what is allowed.</span></p>
         </div>
         <div class="sl-gallery">
-          <figure class="sl-engraving reveal">
-            <img src="../images/genai/plates/sc-copilot.svg" alt="Esquema gravado — escopo de conhecimento, fontes e encaminhamento ao humano" loading="lazy" />
-            <figcaption><span class="t" lang="pt">Escopo · fontes · hand-off</span><span class="t" lang="en">Scope · sources · hand-off</span></figcaption>
-          </figure>
           <div class="sl-plate-flip reveal">
             <div class="sl-flip-inner">
               <a class="sl-hero sl-face sl-face--recto lightboxgallery-link" href="../images/genai/sc-copilot/1.webp" aria-label="SC Copilot — Main view — internal copilot operating fully on sensitive knowledge">
-            <img src="../images/genai/sc-copilot/1.webp" alt="SC Copilot — Main view — internal copilot operating fully on sensitive knowledge" loading="lazy" />
+            <img src="../images/genai/sc-copilot/1.webp" alt="SC Copilot — Main view — internal copilot operating fully on sensitive knowledge" loading="lazy" style="object-fit: cover" />
             <div class="sl-hero__cap"><span class="t" lang="pt">Vista principal — copilot interno operando 100% sobre conhecimento sensível</span><span class="t" lang="en">Main view — internal copilot operating fully on sensitive knowledge</span></div>
           </a>
               <div class="sl-hero sl-face sl-face--verso" aria-hidden="true">
@@ -932,7 +1353,8 @@
               </div>
             </div>
             <button class="sl-flip-btn" type="button" aria-pressed="false">
-              <span class="sl-flip-glyph" aria-hidden="true">↻</span>
+              <span class="sl-flip-medallion" aria-hidden="true"><span class="sl-flip-glyph">↻</span></span>
+              <span class="sl-flip-tag" aria-hidden="true"><span class="sl-flip-tag-side sl-flip-tag--front">verso</span><span class="sl-flip-tag-side sl-flip-tag--back">recto</span></span>
               <span class="sl-flip-label sl-flip-label--front"><span class="t" lang="pt">Ver o wireframe</span><span class="t" lang="en">See the wireframe</span></span>
               <span class="sl-flip-label sl-flip-label--back"><span class="t" lang="pt">Ver a prancha</span><span class="t" lang="en">See the plate</span></span>
             </button>
@@ -1199,6 +1621,34 @@
       var gallery = link.closest('.sl-gallery') || link.parentElement;
       open(gallery, link);
     });
+  });
+})();
+</script>
+
+<!-- Badge "Pesquisa": contorno tracejado desenhado como <svg> inline, sem
+     distorção nas dobras (cantos circulares reais via rx + traço non-scaling). -->
+<script>
+(function () {
+  var NS = "http://www.w3.org/2000/svg";
+  document.querySelectorAll(".st--pesquisa").forEach(function (el) {
+    if (el.querySelector(".st-dash")) return;
+    var svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("class", "st-dash");
+    svg.setAttribute("preserveAspectRatio", "none");
+    var rect = document.createElementNS(NS, "rect");
+    rect.setAttribute("x", "0");
+    rect.setAttribute("y", "0");
+    rect.setAttribute("width", "100%");
+    rect.setAttribute("height", "100%");
+    rect.setAttribute("rx", "12");
+    rect.setAttribute("ry", "12");
+    rect.setAttribute("fill", "none");
+    rect.setAttribute("stroke-width", "1");
+    rect.setAttribute("stroke-dasharray", "2.5 7");
+    rect.setAttribute("stroke-linecap", "round");
+    rect.setAttribute("vector-effect", "non-scaling-stroke");
+    svg.appendChild(rect);
+    el.insertBefore(svg, el.firstChild);
   });
 })();
 </script>

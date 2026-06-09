@@ -1,0 +1,54 @@
+<svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Engraved schematic — Test Insights: four output types kept visually distinct">
+  <defs>
+    <radialGradient id="ti-glow" cx="50%" cy="32%" r="75%">
+      <stop offset="0%" stop-color="#1e3014"></stop>
+      <stop offset="100%" stop-color="#141c10"></stop>
+    </radialGradient>
+  </defs>
+  <rect width="320" height="200" fill="url(#ti-glow)"></rect>
+  <rect x="8" y="8" width="304" height="184" fill="none" stroke="#7a2620" stroke-width="0.8" opacity="0.5"></rect>
+  <rect x="13" y="13" width="294" height="174" fill="none" stroke="#b58d3d" stroke-width="0.4" opacity="0.3"></rect>
+  <g stroke="#b58d3d" stroke-width="1" opacity="0.7">
+    <path d="M18 24 V18 H24"></path><path d="M296 18 H302 V24"></path><path d="M18 176 V182 H24"></path><path d="M302 176 V182 H296"></path>
+  </g>
+  <text x="160" y="34" text-anchor="middle" font-family="&#39;JetBrains Mono&#39;, monospace" font-size="7" fill="#b58d3d" letter-spacing="4" opacity="0.85">PLATE · VII</text>
+  <text x="160" y="52" text-anchor="middle" font-family="&#39;Instrument Serif&#39;, serif" font-size="17" font-style="italic" fill="#f1ece0" opacity="0.96">Test Insights</text>
+  <line x1="124" y1="60" x2="196" y2="60" stroke="#7a2620" stroke-width="0.6" opacity="0.55"></line>
+
+  
+  
+  <g transform="translate(48,70)">
+    <rect x="0" y="0" width="100" height="44" rx="2" fill="#c4b8a0" opacity="0.1" stroke="#f1ece0" stroke-width="0.8" stroke-opacity="0.45"></rect>
+    <text x="6" y="13" font-family="&#39;JetBrains Mono&#39;, monospace" font-size="6" fill="#f1ece0" letter-spacing="1" opacity="0.7">FACT</text>
+    <text x="92" y="34" text-anchor="end" font-family="&#39;JetBrains Mono&#39;, monospace" font-size="15" fill="#f1ece0" opacity="0.85">98%</text>
+  </g>
+  
+  <g transform="translate(172,70)">
+    <rect x="0" y="0" width="100" height="44" rx="2" fill="#1d3a78" opacity="0.12" stroke="#1d3a78" stroke-width="0.9" stroke-opacity="0.7"></rect>
+    <text x="6" y="13" font-family="&#39;JetBrains Mono&#39;, monospace" font-size="6" fill="#9db4e0" letter-spacing="1" opacity="0.85">PREDICT</text>
+    <line x1="16" y1="30" x2="84" y2="30" stroke="#1d3a78" stroke-width="1.2" opacity="0.8"></line>
+    <line x1="16" y1="25" x2="16" y2="35" stroke="#1d3a78" stroke-width="1.2" opacity="0.8"></line>
+    <line x1="84" y1="25" x2="84" y2="35" stroke="#1d3a78" stroke-width="1.2" opacity="0.8"></line>
+    <circle cx="56" cy="30" r="3.5" fill="#1d3a78" opacity="0.9"></circle>
+  </g>
+  
+  <g transform="translate(48,120)">
+    <rect x="0" y="0" width="100" height="44" rx="2" fill="none" stroke="#b58d3d" stroke-width="0.9" stroke-dasharray="3 3" stroke-opacity="0.7"></rect>
+    <text x="6" y="13" font-family="&#39;JetBrains Mono&#39;, monospace" font-size="6" fill="#b58d3d" letter-spacing="1" opacity="0.85">SUGGEST</text>
+    <rect x="6" y="22" width="60" height="3" rx="1.5" fill="#b58d3d" opacity="0.3"></rect>
+    <rect x="6" y="30" width="44" height="3" rx="1.5" fill="#b58d3d" opacity="0.3"></rect>
+    <text x="92" y="33" text-anchor="end" font-family="&#39;JetBrains Mono&#39;, monospace" font-size="9" fill="#b58d3d" opacity="0.6">×</text>
+  </g>
+  
+  <g transform="translate(172,120)">
+    <rect x="0" y="0" width="100" height="44" rx="2" fill="#7a2620" opacity="0.12" stroke="#7a2620" stroke-width="0.9" stroke-opacity="0.75"></rect>
+    <text x="6" y="13" font-family="&#39;JetBrains Mono&#39;, monospace" font-size="6" fill="#d98a82" letter-spacing="1" opacity="0.85">DELTA</text>
+    <path d="M22 36 L28 24 L34 36 Z" fill="#7a8a4a" opacity="0.9"></path>
+    <text x="40" y="35" font-family="&#39;JetBrains Mono&#39;, monospace" font-size="9" fill="#c4b8a0" opacity="0.7">+12</text>
+    <path d="M70 24 L76 36 L82 24 Z" fill="#7a2620" opacity="0.9"></path>
+    <text x="86" y="35" text-anchor="end" font-family="&#39;JetBrains Mono&#39;, monospace" font-size="9" fill="#c4b8a0" opacity="0.7">−4</text>
+  </g>
+
+  <line x1="40" y1="174" x2="280" y2="174" stroke="#b58d3d" stroke-width="0.6" opacity="0.4"></line>
+  <text x="160" y="188" text-anchor="middle" font-family="&#39;EB Garamond&#39;, serif" font-size="8.5" font-style="italic" fill="#c4b8a0" opacity="0.7">Fig. vii — fato · predição · sugestão · comparativo</text>
+</svg>
