@@ -778,7 +778,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .plate-rail__grid {
   position: relative;
   height: 100%;
-  max-width: 1280px;
+  max-width: 1080px;
   margin: 0 auto;
   padding: 0 64px;
   display: grid;
@@ -812,7 +812,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 }
 
 .plate-grid {
-  max-width: 1280px;
+  max-width: 1080px;
   margin: 0 auto;
   padding: 0 64px;
   display: grid;
