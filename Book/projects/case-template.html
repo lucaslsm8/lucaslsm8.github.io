@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Aura App — Conversational GenAI · Lucas Schoenherr</title>
 <meta name="description" content="Estudo de caso de design de interface generativa e conversacional Aura por Lucas Schoenherr." />
+<!-- Open Graph / social — TROCAR [placeholders] ao criar um case real a partir deste template -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="[Título do case] · Lucas Schoenherr" />
+<meta property="og:description" content="[Resumo de uma linha do case]" />
+<meta property="og:locale" content="pt_BR" />
+<meta property="og:url" content="https://lucaslsm8.github.io/Book/projects/[arquivo].html" />
+<meta property="og:image" content="https://lucaslsm8.github.io/Book/images/[projeto]/capa.webp" />
+<meta property="og:image:alt" content="[Capa do case]" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="[Título do case] · Lucas Schoenherr" />
+<meta name="twitter:description" content="[Resumo de uma linha do case]" />
+<meta name="twitter:image" content="https://lucaslsm8.github.io/Book/images/[projeto]/capa.webp" />
 <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -800,6 +812,193 @@
     </div>
   </section>
 
+  <!-- ============================================================================
+       BIBLIOTECA DE BLOCOS — componentes portados do genai.html (2026-06-08)
+       ----------------------------------------------------------------------------
+       NÃO é uma seção de conteúdo: é um catálogo de marcação pronta. Ao montar um
+       case real, RECORTE o bloco desejado, mova-o para a seção numerada que fizer
+       sentido e troque os [placeholders]. Apague esta <section> inteira antes de
+       publicar. O CSS vive em design-system/case-template.css (§ "Componentes
+       portados do genai"); as interações (flip + lightbox) são os <script> no fim
+       deste arquivo. Imagens usam caminhos-exemplo ../images/[projeto]/… .
+       ============================================================================ -->
+  <section class="page case-section blocks-library" data-blocks-library>
+    <div class="spread-narrow">
+      <header class="section-head">
+        <span class="roman">∎</span>
+        <span class="name">Biblioteca de blocos</span>
+        <span class="gloss">Componentes reutilizáveis — recortar e usar</span>
+      </header>
+
+      <!-- ===== A. Dramatis em grade 2×2 (bill-roles) ===== -->
+      <ol class="bill-roles reveal" data-stagger>
+        <li class="bill-role">
+          <span class="bill-role__cue"><span class="t" lang="pt">No papel principal</span><span class="t" lang="en">In the leading role</span></span>
+          <span class="bill-role__name">[Cargo / papel]</span>
+          <span class="bill-role__note"><span class="t" lang="pt">[O que você fez — uma frase.]</span><span class="t" lang="en">[What you did — one line.]</span></span>
+        </li>
+        <li class="bill-role">
+          <span class="bill-role__cue"><span class="t" lang="pt">Em cena com</span><span class="t" lang="en">Sharing the stage with</span></span>
+          <span class="bill-role__name">[Time / stakeholders]</span>
+          <span class="bill-role__note"><span class="t" lang="pt">[Com quem você atuou.]</span><span class="t" lang="en">[Who you worked with.]</span></span>
+        </li>
+      </ol>
+
+      <!-- ===== B. Grade de sub-projetos (poc-grid) + legenda de status ===== -->
+      <div class="poc-grid reveal" data-stagger>
+        <div class="poc-entry poc-entry--featured">
+          <div class="poc-entry__head"><span class="poc-entry__roman">I</span><span class="poc-entry__titles"><span class="poc-entry__name">[Nome do item]</span><span class="poc-entry__domain">[Domínio]</span></span></div>
+          <p class="poc-entry__body"><span class="t" lang="pt">[Descrição curta do item em destaque.]</span><span class="t" lang="en">[Short description of the featured item.]</span></p>
+          <span class="poc-entry__status st--dev"><span class="t" lang="pt">Desenvolvido</span><span class="t" lang="en">Developed</span></span>
+        </div>
+        <div class="poc-entry">
+          <div class="poc-entry__head"><span class="poc-entry__roman">II</span><span class="poc-entry__titles"><span class="poc-entry__name">[Nome do item]</span><span class="poc-entry__domain">[Domínio]</span></span></div>
+          <p class="poc-entry__body"><span class="t" lang="pt">[Descrição curta de um item em pesquisa.]</span><span class="t" lang="en">[Short description of a research item.]</span></p>
+          <span class="poc-entry__status st--pesquisa"><span class="t" lang="pt">Pesquisa</span><span class="t" lang="en">Research</span></span>
+        </div>
+      </div>
+      <div class="status-legend reveal">
+        <span class="status-legend__item"><span class="status-legend__dot sl-dot--pesquisa"></span><span class="t" lang="pt">Pesquisa</span><span class="t" lang="en">Research</span></span>
+        <span class="status-legend__item"><span class="status-legend__dot sl-dot--proto"></span><span class="t" lang="pt">Protótipo</span><span class="t" lang="en">Prototype</span></span>
+        <span class="status-legend__item"><span class="status-legend__dot sl-dot--parcial"></span><span class="t" lang="pt">Dev. parcial</span><span class="t" lang="en">Partial dev.</span></span>
+        <span class="status-legend__item"><span class="status-legend__dot sl-dot--dev"></span><span class="t" lang="pt">Desenvolvido</span><span class="t" lang="en">Developed</span></span>
+      </div>
+
+      <!-- ===== C. Princípios numerados + desfecho (principles / outcome) ===== -->
+      <div class="principles reveal" data-stagger>
+        <div class="principle">
+          <span class="principle__num-big" aria-hidden="true">1</span>
+          <span class="principle__num">01</span>
+          <h3 class="principle__title"><span class="t" lang="pt">[Princípio um]</span><span class="t" lang="en">[Principle one]</span></h3>
+          <span class="principle__tag"><span class="t" lang="pt">[Subtítulo curto.]</span><span class="t" lang="en">[Short tagline.]</span></span>
+          <p class="principle__body"><span class="t" lang="pt">[Descrição do princípio.]</span><span class="t" lang="en">[Principle description.]</span></p>
+        </div>
+        <div class="outcome">
+          <div class="outcome__head">
+            <span class="outcome__mark" aria-hidden="true">✦</span>
+            <span class="outcome__eyebrow"><span class="t" lang="pt">Resultado · Outcome</span><span class="t" lang="en">Outcome · Resultado</span></span>
+            <h3 class="outcome__title"><span class="t" lang="pt">[Desfecho]</span><span class="t" lang="en">[Outcome]</span></h3>
+            <span class="outcome__sub"><span class="t" lang="pt">[Uma linha de síntese.]</span><span class="t" lang="en">[One synthesis line.]</span></span>
+          </div>
+          <div class="outcome__index">
+            <div class="outcome__group">
+              <span class="outcome__group-title"><span class="t" lang="pt">Grupo A</span><span class="t" lang="en">Group A</span></span>
+              <ol class="outcome__list"><li>[Item]</li><li>[Item <em>com nota</em>]</li></ol>
+            </div>
+            <div class="outcome__group">
+              <span class="outcome__group-title"><span class="t" lang="pt">Grupo B</span><span class="t" lang="en">Group B</span></span>
+              <ol class="outcome__list"><li>[Item]</li><li>[Item]</li></ol>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== D. Cronologia em selos de lacre (principles-timeline / t-row) ===== -->
+      <div class="principles-timeline reveal">
+        <div class="t-row left">
+          <div class="t-card">
+            <span class="t-eyebrow"><span class="t" lang="pt">Fase 01</span><span class="t" lang="en">Phase 01</span></span>
+            <h3 class="t-title">[Título]</h3>
+            <span class="t-tag">[Tag]</span>
+            <p class="t-body"><span class="t" lang="pt">[O que aconteceu nesta fase.]</span><span class="t" lang="en">[What happened in this phase.]</span></p>
+          </div>
+          <span class="seal-mark" aria-hidden="true">i</span>
+        </div>
+        <div class="t-row right">
+          <span class="seal-mark" aria-hidden="true">ii</span>
+          <div class="t-card">
+            <span class="t-eyebrow"><span class="t" lang="pt">Fase 02</span><span class="t" lang="en">Phase 02</span></span>
+            <h3 class="t-title">[Título]</h3>
+            <span class="t-tag">[Tag]</span>
+            <p class="t-body"><span class="t" lang="pt">[O que aconteceu nesta fase.]</span><span class="t" lang="en">[What happened in this phase.]</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== E. Spotlight com galeria: prancha + flip recto/verso + mosaico =====
+           A face --recto e cada .sl-thumb abrem a lightbox (classe .lightboxgallery-link).
+           O botão .sl-flip-btn vira a prancha para revelar o --verso (wireframe). -->
+      <article class="spotlight reveal">
+        <span class="spotlight__eyebrow"><span class="t" lang="pt">Spotlight 01 — [Domínio]</span><span class="t" lang="en">Spotlight 01 — [Domain]</span></span>
+        <h3 class="spotlight__title">[Nome do produto]</h3>
+        <div class="spotlight__lead">
+          <p><span class="t" lang="pt">[Parágrafo de abertura do spotlight.]</span><span class="t" lang="en">[Opening paragraph of the spotlight.]</span></p>
+        </div>
+        <div class="sl-gallery">
+          <div class="sl-plate-flip reveal">
+            <div class="sl-flip-inner">
+              <a class="sl-hero sl-face sl-face--recto lightboxgallery-link" href="../images/genai/campaign-genius/1.webp" aria-label="[Produto] — vista principal">
+                <img src="../images/genai/campaign-genius/1.webp" alt="[Produto] — vista principal" loading="lazy" />
+                <div class="sl-hero__cap"><span class="t" lang="pt">[Legenda da vista principal]</span><span class="t" lang="en">[Main view caption]</span></div>
+              </a>
+              <div class="sl-hero sl-face sl-face--verso" aria-hidden="true">
+                <img src="../images/genai/wireframes/campaign-genius.svg" alt="Wireframe — esboço da tela" loading="lazy" />
+                <div class="sl-hero__cap sl-hero__cap--wf"><span class="t" lang="pt">Verso · wireframe do esboço</span><span class="t" lang="en">Verso · the sketch wireframe</span></div>
+              </div>
+            </div>
+            <button class="sl-flip-btn" type="button" aria-pressed="false">
+              <span class="sl-flip-medallion" aria-hidden="true"><span class="sl-flip-glyph">↻</span></span>
+              <span class="sl-flip-tag" aria-hidden="true"><span class="sl-flip-tag-side sl-flip-tag--front">verso</span><span class="sl-flip-tag-side sl-flip-tag--back">recto</span></span>
+              <span class="sl-flip-label sl-flip-label--front"><span class="t" lang="pt">Ver o wireframe</span><span class="t" lang="en">See the wireframe</span></span>
+              <span class="sl-flip-label sl-flip-label--back"><span class="t" lang="pt">Ver a prancha</span><span class="t" lang="en">See the plate</span></span>
+            </button>
+          </div>
+          <div class="sl-grid">
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/2.webp"><img src="../images/genai/campaign-genius/2.webp" alt="[Produto] — vista 2" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/3.webp"><img src="../images/genai/campaign-genius/3.webp" alt="[Produto] — vista 3" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/4.webp"><img src="../images/genai/campaign-genius/4.webp" alt="[Produto] — vista 4" loading="lazy" /></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===== F. Desafio: grade de cards + card largo com livro-razão (rework-list) ===== -->
+      <div class="insights-grid insights-grid--split reveal" data-stagger>
+        <div class="insight-card">
+          <span class="card-num">01.</span>
+          <h4 class="card-title"><span class="t" lang="pt">[Problema um]</span><span class="t" lang="en">[Problem one]</span></h4>
+          <p><span class="t" lang="pt">[Descrição.]</span><span class="t" lang="en">[Description.]</span></p>
+        </div>
+        <div class="insight-card">
+          <span class="card-num">02.</span>
+          <h4 class="card-title"><span class="t" lang="pt">[Problema dois]</span><span class="t" lang="en">[Problem two]</span></h4>
+          <p><span class="t" lang="pt">[Descrição.]</span><span class="t" lang="en">[Description.]</span></p>
+        </div>
+        <div class="insight-card insight-card--wide">
+          <div class="insight-card__lead">
+            <span class="card-num">03.</span>
+            <h4 class="card-title"><span class="t" lang="pt">[Problema com dados ao lado]</span><span class="t" lang="en">[Problem with data aside]</span></h4>
+            <p><span class="t" lang="pt">[Descrição do problema.]</span><span class="t" lang="en">[Problem description.]</span></p>
+          </div>
+          <div class="insight-card__aside">
+            <span class="rework-label"><span class="t" lang="pt">[Rótulo do livro-razão]</span><span class="t" lang="en">[Ledger label]</span></span>
+            <ul class="rework-list">
+              <li><span class="rework-list__n">i</span><span class="rework-list__name">[Item]</span><span class="rework-list__mult">×N</span></li>
+              <li><span class="rework-list__n">ii</span><span class="rework-list__name">[Item]</span><span class="rework-list__mult">×N</span></li>
+            </ul>
+            <div class="rework-foot">
+              <span class="rework-foot__k"><span class="t" lang="pt">[Síntese do total]</span><span class="t" lang="en">[Total synthesis]</span></span>
+              <span class="rework-foot__v">[N×]</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== G. Lições / aprendizados (learnings) ===== -->
+      <div class="learnings reveal" data-stagger>
+        <div class="learning">
+          <span class="learning__num"><span class="t" lang="pt">Lição 01</span><span class="t" lang="en">Learning 01</span></span>
+          <h3 class="learning__title"><span class="t" lang="pt">[Título da lição]</span><span class="t" lang="en">[Learning title]</span></h3>
+          <p class="learning__body"><span class="t" lang="pt">[O que você aprendeu.]</span><span class="t" lang="en">[What you learned.]</span></p>
+        </div>
+      </div>
+
+      <!-- ===== H. Nota de dados fictícios (fiction-note) ===== -->
+      <div class="fiction-note reveal">
+        <span><span class="t" lang="pt">[Aviso: dados e telas são fictícios, apenas para demonstração.]</span><span class="t" lang="en">[Disclaimer: data and screens are fictional, for demonstration only.]</span></span>
+      </div>
+    </div>
+  </section>
+
   <!-- ============================================================
        XV. COLOPHÃO & EPÍLOGO (FINAL CTA / NAVEGAÇÃO)
        ============================================================ -->
@@ -843,5 +1042,123 @@
 
 <!-- Modais e interações da galeria e scripts locais -->
 <script src="./case-template.js"></script>
+
+<!-- ============================================================================
+     Interações dos blocos portados do genai (flip de prancha + lightbox).
+     Mantidos inline no template (espelham o genai) para que cada case criado a
+     partir daqui já saia funcional, sem depender de edição do case-template.js.
+     ============================================================================ -->
+<!-- Plate-flip: vira a prancha de spotlight para revelar o wireframe do esboço -->
+<script>
+(function () {
+  document.querySelectorAll('.sl-flip-btn').forEach(function (btn) {
+    var card = btn.closest('.sl-plate-flip');
+    if (!card) return;
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var flipped = card.classList.toggle('is-flipped');
+      btn.setAttribute('aria-pressed', flipped ? 'true' : 'false');
+      var verso = card.querySelector('.sl-face--verso');
+      var recto = card.querySelector('.sl-face--recto');
+      if (verso) verso.setAttribute('aria-hidden', flipped ? 'false' : 'true');
+      if (recto) recto.setAttribute('aria-hidden', flipped ? 'true' : 'false');
+    });
+  });
+})();
+</script>
+
+<!-- Lightbox das galerias de spotlight (escopo desta página) -->
+<script>
+(function () {
+  function collect(gallery, clicked) {
+    var links = Array.prototype.slice.call(gallery.querySelectorAll('.lightboxgallery-link'));
+    var items = links.map(function (link) {
+      var img = link.querySelector('img');
+      var cap = link.querySelector('.sl-hero__cap');
+      var caption = (cap && cap.textContent.trim()) || (link.getAttribute('aria-label') || '') || (img && img.getAttribute('alt')) || '';
+      return { href: link.getAttribute('href'), caption: caption, thumb: img ? img.src : link.getAttribute('href') };
+    });
+    return { items: items, startIndex: Math.max(0, links.indexOf(clicked)) };
+  }
+  function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+  function open(gallery, clicked) {
+    var data = collect(gallery, clicked);
+    var items = data.items; if (!items.length) return;
+    var current = data.startIndex;
+    var overlay = document.createElement('div');
+    overlay.className = 'lbg-overlay';
+    var multi = items.length > 1;
+    var sidebar = multi ? '<div class="lbg__sidebar">' + items.map(function (it, i) {
+      return '<button class="lbg__thumb' + (i === current ? ' is-active' : '') + '" data-index="' + i + '" type="button"><img src="' + esc(it.thumb) + '" alt=""></button>';
+    }).join('') + '</div>' : '';
+    overlay.innerHTML =
+      '<button class="lbg__close" data-action="close" aria-label="Close">&times;</button>' +
+      sidebar +
+      '<div class="lbg__stage">' +
+        (multi ? '<button class="lbg__nav lbg__nav--prev" data-action="prev" aria-label="Previous">&#8249;</button>' : '') +
+        '<div class="lbg__viewer">' +
+          '<img src="' + esc(items[current].href) + '" alt="">' +
+          '<div class="lbg__caption"><span class="lbg__caption__text">' + esc(items[current].caption) + '</span>' +
+          (multi ? '<span class="lbg__counter">' + (current + 1) + ' / ' + items.length + '</span>' : '') + '</div>' +
+        '</div>' +
+        (multi ? '<button class="lbg__nav lbg__nav--next" data-action="next" aria-label="Next">&#8250;</button>' : '') +
+      '</div>';
+    document.body.appendChild(overlay);
+    document.body.style.overflow = 'hidden';
+
+    var viewer = overlay.querySelector('.lbg__viewer');
+    var imgEl = viewer.querySelector('img');
+    var capEl = overlay.querySelector('.lbg__caption__text');
+    var cntEl = overlay.querySelector('.lbg__counter');
+    var thumbs = Array.prototype.slice.call(overlay.querySelectorAll('.lbg__thumb'));
+
+    function goTo(i) {
+      var n = ((i % items.length) + items.length) % items.length;
+      if (n === current) return;
+      current = n;
+      viewer.classList.remove('is-swapping'); void viewer.offsetWidth;
+      imgEl.src = items[current].href;
+      capEl.textContent = items[current].caption;
+      if (cntEl) cntEl.textContent = (current + 1) + ' / ' + items.length;
+      viewer.classList.add('is-swapping');
+      thumbs.forEach(function (t, k) { t.classList.toggle('is-active', k === current); });
+      if (thumbs[current] && thumbs[current].scrollIntoView) thumbs[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+    }
+    function close() {
+      if (overlay.parentNode) document.body.removeChild(overlay);
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', onKey);
+    }
+    function onKey(e) {
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(current - 1); }
+    }
+    overlay.addEventListener('click', function (e) {
+      var action = e.target.closest('[data-action]');
+      if (action) { e.stopPropagation(); var a = action.getAttribute('data-action'); if (a === 'prev') goTo(current - 1); else if (a === 'next') goTo(current + 1); else close(); return; }
+      var thumb = e.target.closest('.lbg__thumb');
+      if (thumb) { e.stopPropagation(); goTo(parseInt(thumb.dataset.index, 10)); return; }
+      if (e.target.closest('.lbg__viewer, .lbg__sidebar, .lbg__caption, .lbg__nav, .lbg__close')) return;
+      close();
+    });
+    var sx = 0, sy = 0, ta = false;
+    var stage = overlay.querySelector('.lbg__stage');
+    stage.addEventListener('touchstart', function (e) { if (e.touches.length !== 1) return; ta = true; sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+    stage.addEventListener('touchend', function (e) { if (!ta) return; ta = false; var t = e.changedTouches[0]; var dx = t.clientX - sx, dy = t.clientY - sy; if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) { if (dx < 0) goTo(current + 1); else goTo(current - 1); } }, { passive: true });
+    document.addEventListener('keydown', onKey);
+  }
+
+  document.querySelectorAll('.lightboxgallery-link').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var gallery = link.closest('.sl-gallery') || link.parentElement;
+      open(gallery, link);
+    });
+  });
+})();
+</script>
 </body>
 </html>

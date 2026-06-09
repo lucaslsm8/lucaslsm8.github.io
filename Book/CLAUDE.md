@@ -39,36 +39,45 @@ Detalhes completos em `memory/project_portfolio_rules.md`.
 ```
 My Portifolio/
 ├── CLAUDE.md                    ← este arquivo (consulta rápida)
-├── index.html                   ← home (catalogue raisonné)
+├── TODO.md                      ← backlog vivo de melhorias
+├── index.html                   ← home (catalogue raisonné). Tem meta sociais (og:image/twitter)
 ├── catalogue.css                ← estilos da home (usa tokens)
 ├── catalogue.js                 ← React UMD compilado, JS puro
+├── quadro-3d.js                 ← telas 3D (Three.js r128) das pranchas; aceita tiltX/rollZ/scale/tint
 ├── favicon.svg                  ← ícone editorial (fica na raiz, por convenção)
-├── 404.html                     ← página de erro (Errata · CDIV) com física Matter.js — torre de livros 3D interativa
-├── errata-scene.css             ← CSS do cuboide de livros 3D (usado pela 404)
-├── errata-scene.js              ← JS CSS-3D da 404 (não usado na v. física, mas mantido p/ referência)
+├── design-system.html           ← página viva do DS (specimen-page.css + design-system-page.js)
+├── 404.html                     ← erro (Errata · CDIV), física Matter.js — torre de livros 3D
+├── errata-scene.css             ← CSS do cuboide 3D da 404 (:root local "gilt" intencional)
+├── errata-scene.js              ← JS CSS-3D da 404 (mantido p/ referência, não usado na v. física)
 ├── errata-physics.js            ← motor físico da 404 (Matter.js + canvas próprio)
-├── tweaks-panel.jsx             ← painel de ajustes React (dev only, não carregado na 404 de produção)
-├── deploy-to-github.ps1         ← script de deploy p/ GitHub Pages
-├── images/                      ← TODOS os assets raster (ver regra abaixo)
-│   ├── S.png                    ← capitular iluminada "S" (drop-cap do Prefácio · PT → "Sou")
-│   ├── I.png                    ← capitular iluminada "I" (drop-cap do Prefácio · EN → "I am")
-│   ├── Me.png                   ← retrato do autor
-│   ├── Lupa2.png                ← textura/arte da lupa
-│   ├── stamp.png                ← ferramenta de carimbo (lacre na Correspondência)
-│   └── cafe.png                 ← mancha de café (Method + folha do CV). Renomeado de café.png (sem acento, p/ deploy)
+├── tweaks-panel.jsx             ← painel React (dev); HOJE ainda carregado pela 404 via Babel — ver TODO.md
+├── (deploy-to-github.ps1)       ← CITADO mas AUSENTE do repo — recriar ou remover (ver TODO.md)
+├── images/                      ← assets raster por área, em WebP (PNGs da raiz apagados em 2026-06-08)
+│   ├── home/                    ← chrome da home: S, I, Me, cafe, Lupa2, stamp, lights, lights-repeat, paint-front/back/side, Plateia, recto-canvas (.webp)
+│   ├── 404/                     ← table.webp (cena da 404)
+│   ├── genai/                   ← prancha Gen.AI: capa, plates/, wireframes/, subpastas por POC
+│   └── lighthouse/              ← prancha Lighthouse (órfã até a página existir)
 ├── design-system/
 │   ├── tokens.css               ← FONTE ÚNICA dos tokens (cor, type, espaço, easing)
-│   ├── case-template.css        ← estilos da página de case (plate)
-│   ├── vitrine.css              ← estilos da VITRINE: índice lateral fixo (scroll-spy) + seções absorvidas (Materiais, Marginalia, Cronologia, Fragmenta)
+│   ├── tokens.studio.json       ← export dos tokens p/ Tokens Studio (Figma)
+│   ├── case-template.css        ← estilos da página de case (plate) + da VITRINE
+│   ├── vitrine.css              ← índice lateral fixo (scroll-spy) + seções absorvidas
+│   ├── specimen.css             ← (legado) estilos da antiga specimen.html
+│   ├── specimen-page.css        ← estilos da design-system.html
+│   ├── design-system-page.js    ← JS da design-system.html
 │   └── DESIGN-SYSTEM.md         ← documentação consultável do DS
 └── projects/
-    ├── case-template.html       ← página-base de case (template, bilíngue PT/EN). Seções: Frontispiece · Epígrafe · I Argument · II Dramatis · III Acta · Intermezzo · IV Plates · V Reception · VI Errata · VII Instrumentarium · Colophon · Folio nav
-    ├── case-template.js         ← interações compartilhadas (template + vitrine): reveal+stagger, marginalia, footnotes, slider before/after, plate-flip, tilt 3D, progress, page-counter, count-up, i18n PT/EN + (vitrine) copiar-código, carrossel, luneta-demo
-    ├── vitrine.html             ← VITRINE ÚNICA (fusão de mockup-showcase + specimen). Catálogo consultável das peças do DS em Formato A/B com gaveta "Ver o código" (I–XVI) + specimens absorvidos da antiga Vitrina Arcana: XVII Materiais & Pigmentos · XVIII Marginalia · XIX Cronologia · XX Fragmenta. Índice lateral fixo com scroll-spy. Reaproveita catalogue.css + case-template.css/.js + vitrine.css/.js
-    └── vitrine.js               ← constrói o índice lateral (scroll-spy via IntersectionObserver), toggle mobile e flash das footnotes da Marginalia. Complementa catalogue.js + case-template.js
+    ├── case-template.html       ← página-base de case (bilíngue PT/EN). Meta sociais com [placeholders]
+    ├── case-template.js         ← interações compartilhadas (template + vitrine)
+    ├── genai.html               ← 1º case real (Gen.AI). CSS inline próprio; componentes novos (poc-grid, insight-card, learning, principle, outcome, sl-plate-flip, galeria lbg__) — candidatos a portar p/ o template (TODO.md)
+    ├── vitrine.html             ← VITRINE de componentes do DS (Formato A/B + "Ver o código")
+    ├── vitrine.js               ← índice lateral (scroll-spy), toggle mobile, flash de footnotes
+    ├── mockup-showcase.html     ← (legado — CLAUDE.md dava como apagado, mas existe; consolidar — TODO.md)
+    ├── specimen.html            ← (legado — idem)
+    └── specimen.js              ← (legado — idem)
 ```
 
-**Assets:** todo arquivo de imagem (`.png/.jpg/.svg` raster) vive em `images/`, exceto o `favicon.svg` (raiz, convenção web). Referências sempre relativas: `images/arquivo.png` no CSS/JS da raiz. **Atenção a maiúsculas** — GitHub Pages é case-sensitive (`Lupa2.png` ≠ `lupa2.png`).
+**Assets:** imagens vivem em `images/<área>/` (`home/`, `404/`, `genai/`, `lighthouse/`) em **WebP** (alpha preservado), exceto o `favicon.svg` (raiz). Referências relativas: `images/home/arquivo.webp` na raiz, `../images/...` em `projects/`. **Atenção a maiúsculas** — GitHub Pages é case-sensitive (`Lupa2.webp` ≠ `lupa2.webp`).
 
 **Regra de ouro:** ao mudar cor, tipo ou escala, editar **`design-system/tokens.css`** e atualizar a tabela correspondente em `DESIGN-SYSTEM.md`. Nunca redeclarar `:root` em outro CSS.
 
@@ -162,11 +171,6 @@ Avaliação no navegador (Playwright headless) revelou problemas que só aparece
 - **Placard de interação:** `.plate-quadro-hint` sob cada tela ("✦ lupa amplia · vire para o verso" / EN), some no hover, oculto em mobile. i18n em `works.quadroHint`. *(Lucas pode pedir p/ remover.)*
 - **Coerência "tela de pintura":** microcópia ajustada — `works.intro` (telas montadas, examinar/virar), `cursorLabels.seePlate` → "abrir a ficha"/"open the entry"; comentários do código atualizados.
 
----
-
-## Conteúdo pendente do Lucas
-
-- Cases reais (Gen.AI, Lighthouse, PMO Dashboards ou outros) — problema, dramatis, atos, telas, métricas, erratas. Substituir os textos entre `[colchetes]` no template (já bilíngues).
-- Confirmação da bio rascunho preservada em memória.
-- i18n: **case-template já é funcional**; falta decidir se a **home** ganha toggle funcional também (hoje inerte) para unificar a experiência.
-- Decidir qual variação da caligrafia traçada (i–v em `projects/calligraphy-demo.html`) aplicar no Frontispiece — ou descartar.
+### Otimização de imagens + reorganização de assets (2026-06-08)
+- **Todos os PNGs decorativos da raiz de `images/` viraram WebP** (transparência preservada — café, lupa, capitulares etc. mantêm alpha). `images/` caiu de ~21 MB → 5,5 MB.
+- **Assets reorganizados em subpastas:** `images/home/` (chrome da home: S, I, Me, cafe, Lupa2, stamp, lights, lights-repeat, paint-front/back/side, Plateia, recto-canvas) e `images/404/` (table). `genai/` e `lighthouse/` inalterados. Referências atualizadas em `catalogue.css`, `catalogue.js`, `quadro-3d.js`, `er

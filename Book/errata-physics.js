@@ -1492,7 +1492,7 @@
     engine.world.gravity.scale = 0.0012;
 
     tableImg = new Image();
-    tableImg.src = "images/table.png";
+    tableImg.src = "images/404/table.webp";
 
     sizeCanvas();
     rebuild();

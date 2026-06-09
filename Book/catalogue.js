@@ -80,7 +80,7 @@ const CONTENT = {
       glossRight: ["² O termo \"catálogo raisonné\"", "designa, na tradição editorial", "a compilação crítica das obras", "de um autor — geralmente", "publicada póstuma. Aqui,", "tomamos a liberdade do", "presente."],
       portrait: "L. Schoenherr",
       portraitCap: ["O autor, retratado em estúdio."],
-      body: [[{img: {src: "images/S.png", alt: "S", className: "drop-cap"}}, "ou Lucas Schoenherr, designer de produto sênior, baseado no Brasil¹. Esta publicação reúne, num único volume, treze anos de prática em design — com notas sobre método, sistemas, interfaces para modelos de linguagem, e sobre as ", {
+      body: [[{img: {src: "images/home/S.webp", alt: "S", className: "drop-cap"}}, "ou Lucas Schoenherr, designer de produto sênior, baseado no Brasil¹. Esta publicação reúne, num único volume, treze anos de prática em design — com notas sobre método, sistemas, interfaces para modelos de linguagem, e sobre as ", {
         it: "questões inacabadas"
       }, " que continuam a animar o trabalho."], ["Como ", {
         it: "catálogo raisonné"
@@ -516,7 +516,7 @@ const CONTENT = {
       glossRight: ["² The term \"catalogue raisonné\"", "denotes, in editorial tradition,", "the critical compilation of an", "author's works — typically", "published posthumously. Here,", "we take the present tense's", "liberty."],
       portrait: "L. Schoenherr",
       portraitCap: ["The author, photographed in studio."],
-      body: [[{img: {src: "images/I.png", alt: "I", className: "drop-cap"}}, "am Lucas Schoenherr, senior product designer, based in Brazil¹. This publication gathers, in a single volume, thirteen years of design practice — with notes on method, systems, interfaces for language models, and on the ", {
+      body: [[{img: {src: "images/home/I.webp", alt: "I", className: "drop-cap"}}, "am Lucas Schoenherr, senior product designer, based in Brazil¹. This publication gathers, in a single volume, thirteen years of design practice — with notes on method, systems, interfaces for language models, and on the ", {
         it: "unfinished questions"
       }, " that continue to animate the work."], ["As a ", {
         it: "catalogue raisonné"
@@ -908,6 +908,7 @@ function rich(parts) {
       src: p.img.src,
       alt: p.img.alt || "",
       className: p.img.className || "drop-cap",
+      loading: "lazy",
       key: i
     });
     if (p.strong) return /*#__PURE__*/React.createElement("strong", {
@@ -1144,7 +1145,7 @@ function Lens() {
     ce("div", { ref: glassRef, className: "loupe-glass" },
       ce("canvas", { ref: canvRef, className: "loupe-canvas" })
     ),
-    ce("img", { src: "images/Lupa2.png", className: "loupe-frame", alt: "", draggable: "false" })
+    ce("img", { src: "images/home/Lupa2.webp", className: "loupe-frame", alt: "", draggable: "false" })
   );
 }
 
@@ -1406,9 +1407,10 @@ function Preface({
   }, /*#__PURE__*/React.createElement("div", {
     className: "portrait"
   }, /*#__PURE__*/React.createElement("img", {
-    src: "images/Me.png",
+    src: "images/home/Me.webp",
     alt: p.portrait,
-    className: "portrait-img"
+    className: "portrait-img",
+    loading: "lazy"
   })), /*#__PURE__*/React.createElement("div", {
     className: "portrait-cap"
   }, /*#__PURE__*/React.createElement("span", {
@@ -1643,9 +1645,9 @@ function PlateCard({ p, i, t }) {
   // Quadro 3D (objeto WebGL) — imagens por prancha (default: tela genérica).
   // Para arte específica de cada projeto, defina p.quadro = { front, back, side }.
   const q = p.quadro || {
-    front: "images/paint-front.png",
-    back:  "images/paint-back.png",
-    side:  "images/paint-side.png"
+    front: "images/home/paint-front.webp",
+    back:  "images/home/paint-back.webp",
+    side:  "images/home/paint-side.webp"
   };
   const stageRef = useRef(null);
   const instRef  = useRef(null);
@@ -2441,10 +2443,11 @@ function Correspondence({ t }) {
         // Ferramenta de carimbo — PNG do cabo de madeira que vai descer e subir
         e('img', {
           className: 'stamp-tool',
-          src: 'images/stamp.png',
+          src: 'images/home/stamp.webp',
           alt: '',
           'aria-hidden': 'true',
-          draggable: 'false'
+          draggable: 'false',
+          loading: 'lazy'
         }),
         e('div', { className: 'ink-bleed', 'aria-hidden': 'true' }),
         e('span', { className: 'speck s1', 'aria-hidden': 'true' }),

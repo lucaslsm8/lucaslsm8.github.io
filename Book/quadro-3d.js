@@ -4,9 +4,9 @@
 
    Uso:
      const inst = window.mountQuadro(containerEl, {
-       front: "images/paint-front.png",
-       back:  "images/paint-back.png",
-       side:  "images/paint-side.png",
+       front: "images/home/paint-front.webp",
+       back:  "images/home/paint-back.webp",
+       side:  "images/home/paint-side.webp",
        loupe: true,           // lupa de aumento ao passar o mouse
        flipStep: 0.008        // velocidade do giro (menor = mais lento)
      });
@@ -22,9 +22,9 @@
     opts = opts || {};
     if (!window.THREE || !container) return null;
 
-    var FRONT = opts.front || "images/paint-front.png";
-    var BACK  = opts.back  || "images/paint-back.png";
-    var SIDE  = opts.side  || "images/paint-side.png";
+    var FRONT = opts.front || "images/home/paint-front.webp";
+    var BACK  = opts.back  || "images/home/paint-back.webp";
+    var SIDE  = opts.side  || "images/home/paint-side.webp";
     var flipStep = opts.flipStep || 0.008;
 
     var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
