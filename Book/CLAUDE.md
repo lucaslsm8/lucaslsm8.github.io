@@ -48,7 +48,6 @@ My Portifolio/
 ├── design-system.html           ← página viva do DS (specimen-page.css + design-system-page.js)
 ├── 404.html                     ← erro (Errata · CDIV), física Matter.js — torre de livros 3D
 ├── errata-scene.css             ← CSS do cuboide 3D da 404 (:root local "gilt" intencional)
-├── errata-scene.js              ← JS CSS-3D da 404 (mantido p/ referência, não usado na v. física)
 ├── errata-physics.js            ← motor físico da 404 (Matter.js + canvas próprio)
 ├── tweaks-panel.jsx             ← painel React (dev); HOJE ainda carregado pela 404 via Babel — ver TODO.md
 ├── (deploy-to-github.ps1)       ← CITADO mas AUSENTE do repo — recriar ou remover (ver TODO.md)
@@ -61,8 +60,6 @@ My Portifolio/
 │   ├── tokens.css               ← FONTE ÚNICA dos tokens (cor, type, espaço, easing)
 │   ├── tokens.studio.json       ← export dos tokens p/ Tokens Studio (Figma)
 │   ├── case-template.css        ← estilos da página de case (plate) + da VITRINE
-│   ├── vitrine.css              ← índice lateral fixo (scroll-spy) + seções absorvidas
-│   ├── specimen.css             ← (legado) estilos da antiga specimen.html
 │   ├── specimen-page.css        ← estilos da design-system.html
 │   ├── design-system-page.js    ← JS da design-system.html
 │   └── DESIGN-SYSTEM.md         ← documentação consultável do DS
@@ -70,11 +67,9 @@ My Portifolio/
     ├── case-template.html       ← página-base de case (bilíngue PT/EN). Meta sociais com [placeholders]
     ├── case-template.js         ← interações compartilhadas (template + vitrine)
     ├── genai.html               ← 1º case real (Gen.AI). CSS inline próprio; componentes novos (poc-grid, insight-card, learning, principle, outcome, sl-plate-flip, galeria lbg__) — candidatos a portar p/ o template (TODO.md)
-    ├── vitrine.html             ← VITRINE de componentes do DS (Formato A/B + "Ver o código")
-    ├── vitrine.js               ← índice lateral (scroll-spy), toggle mobile, flash de footnotes
-    ├── mockup-showcase.html     ← (legado — CLAUDE.md dava como apagado, mas existe; consolidar — TODO.md)
-    ├── specimen.html            ← (legado — idem)
-    └── specimen.js              ← (legado — idem)
+    ├── projects.html            ← PÁGINA DE PROJETOS: Vitrine de Componentes (Formato A/B + "Ver o código") + Parecer do Editor (apêndice). Fusão de vitrine + parecer (2026-06-11)
+    ├── projects.css             ← CSS único da projects.html: união enxuta (PurgeCSS) de catalogue+case-template+vitrine + parecer escopado. Tokens seguem em tokens.css
+    └── projects.js              ← JS único da projects.html: case-template.js + vitrine.js + parecer-do-editor.js (3 IIFEs). catalogue.js dispensado (só montava a home React)
 ```
 
 **Assets:** imagens vivem em `images/<área>/` (`home/`, `404/`, `genai/`, `lighthouse/`) em **WebP** (alpha preservado), exceto o `favicon.svg` (raiz). Referências relativas: `images/home/arquivo.webp` na raiz, `../images/...` em `projects/`. **Atenção a maiúsculas** — GitHub Pages é case-sensitive (`Lupa2.webp` ≠ `lupa2.webp`).
@@ -94,6 +89,7 @@ My Portifolio/
 ## Decisões já tomadas (não revisitar sem motivo)
 
 - **Vitrines unificadas (2026-06-01):** havia duas vitrines de assets — `mockup-showcase.html` (componentes A/B com código) e `specimen.html` (Vitrina Arcana). Fundidas numa só, `projects/vitrine.html`, com base no mockup-showcase. As seções únicas do specimen (Materiais & Pigmentos, Marginalia, Cronologia, Fragmenta) foram absorvidas como XVII–XX, cada uma com gaveta de código. **`mockup-showcase.html`, `specimen.html`, `specimen.js` e `specimen.css` foram apagados.** Navegação nova: índice lateral fixo (`.index-rail`) com scroll-spy, em `vitrine.css`/`vitrine.js`. (Não absorvidos do specimen, por decisão de escopo/responsividade: Atelier de posição absoluta, Vitrinarium de ícones SVG, Tabula Rerum — substituída pelo índice lateral.)
+- **Página de projetos consolidada (2026-06-11):** a Vitrine e o Parecer do Editor viraram um trio único — `projects/projects.html` + `projects.css` + `projects.js`. Apagados: `vitrine.html`, `vitrine.js`, `design-system/vitrine.css`, `parecer-do-editor.{html,css,js}`. O `projects.css` é a união **enxuta** (PurgeCSS) de `catalogue.css` + `case-template.css` + `vitrine.css` (só as regras usadas; ~282 KB → ~150 KB) + o CSS do parecer escopado sob `.memo` (reset universal removido, `body`→`.memo`, `code`→`.memo code`). **Tokens continuam em `tokens.css` (link, fonte única — nunca duplicar `:root`).** O `projects.js` concatena `case-template.js` + `vitrine.js` + `parecer-do-editor.js` (3 IIFEs independentes); `catalogue.js` foi dispensado (só montava a home React em `#root`, ausente aqui — removê-lo também eliminou um erro latente de console). Swiper segue via CDN. Validado em jsdom: 0 erros, índice lateral, lang-toggle, 19 specimens de código, carrossel e demos do parecer inicializam. Limpeza junto: apagados os legados `mockup-showcase.html`, `specimen.html`, `specimen.js`, `design-system/specimen.css` e o órfão `errata-scene.js`. Link de `case-template.html` reapontado p/ `projects.html`.
 - Tema "Noir Cinematográfico" foi **descartado** em 2026-05-13. Apagado da pasta.
 - JSX foi **eliminado**. JS puro com `React.createElement` quando precisar de React.
 - Estrutura de pastas: raiz simples + `design-system/` + `projects/`. Sem subpastas por feature.

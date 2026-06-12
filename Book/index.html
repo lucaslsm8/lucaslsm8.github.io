@@ -28,6 +28,7 @@
 <!-- Design tokens (fonte única de verdade — ver design-system/DESIGN-SYSTEM.md) -->
 <link rel="stylesheet" href="design-system/tokens.css" />
 <link rel="stylesheet" href="catalogue.css" />
+<link rel="stylesheet" href="home.css" /><!-- dedicatória, bolso, index rerum -->
 </head>
 <body>
 <div id="root"></div>
@@ -45,13 +46,18 @@
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"
         onerror="window.__reactLoadError()"></script>
 
-<!-- Three.js (r128) para o quadro 3D das pranchas. Se falhar, a home
-     cai num <img> da frente da tela (ver quadro-3d.js / PlateCard). -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- Three.js (r128) NÃO carrega aqui — home.js o injeta sob demanda
+     quando o leitor se aproxima do Capítulo II (#works). Até lá, a frente
+     da tela aparece como <img> (mesmo fallback de sempre). -->
+<script>window.__THREE_LAZY = true;</script>
 <script src="quadro-3d.js"></script>
 
 <!-- Scripts da home (JS puro, sem JSX/build). -->
 <script src="catalogue.js"></script>
+
+<!-- Camada de melhorias: lazy-Three, dedicatória ex dono (?to=Nome),
+     edição de bolso (ícone à dir. da vela) e Index Rerum (luneta à esq., ⌘K). -->
+<script src="home.js"></script>
 
 </body>
 </html>

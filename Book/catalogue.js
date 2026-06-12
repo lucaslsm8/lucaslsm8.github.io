@@ -57,18 +57,13 @@ const CONTENT = {
         href: "#works"
       }, {
         num: "III.",
-        title: ["Notas sobre método"],
-        page: "xii",
-        href: "#method"
-      }, {
-        num: "IV.",
         title: ["Aparato técnico"],
-        page: "xvi",
+        page: "xii",
         href: "#apparatus"
       }, {
-        num: "V.",
+        num: "IV.",
         title: ["Correspondência"],
-        page: "xx",
+        page: "xvi",
         href: "#contact"
       }]
     },
@@ -268,6 +263,11 @@ const CONTENT = {
         desc: "Métricas de negócio e métricas humanas — ambas importam."
       }],
       diagram: {
+        spaces: [
+          { label: "Espaço do problema", sub: "achar a coisa certa" },
+          { label: "Espaço da solução", sub: "fazer a coisa bem feita" }
+        ],
+        flow: { diverge: "divergir", converge: "convergir" },
         nodes: [{
           roman: "I",
           name: "Descobrir",
@@ -285,13 +285,37 @@ const CONTENT = {
           name: "Entregar",
           note: "QA · Métricas"
         }],
-        loop: "↻  com iteração contínua, não em cascata."
+        loop: "↻  duplo diamante, em iteração contínua — nunca em cascata."
       }
     },
+    minorWorks: {
+      label: "Miscellanea",
+      title: ["Pranchas menores"],
+      page: "xi",
+      hint: "clique numa prancha para ampliar",
+      items: [
+        { roman: "Prancha I", title: "Aplicativo Sírio-Libanês", tag: "Mobile App · UI/UX", img: "images/other/sirio.webp",
+          desc: "Aplicativo para o Hospital Sírio-Libanês — jornada do paciente, agendamento e prontuário em uma experiência mobile clara e acolhedora.",
+          label: "Sírio-Libanês", labelSub: "Mobile · UI/UX" },
+        { roman: "Prancha II", title: "Vale News", tag: "Mobile App · UI/UX", img: "images/other/valenews.webp",
+          desc: "App de comunicação interna da Vale — notícias, comunicados e cultura organizacional na palma da mão dos colaboradores.",
+          label: "Vale News", labelSub: "Mobile · UI/UX" },
+        { roman: "Prancha III", title: "Leap to the new branding", tag: "Vale · múltiplas mídias", img: "images/other/cracha.webp",
+          desc: "Aplicação do novo branding da Vale em múltiplas mídias gráficas, digitais e físicas — do crachá à sinalização.",
+          label: "New branding", labelSub: "Vale · mídias" },
+        { roman: "Prancha IV", title: "Power BI Dashboard", tag: "Vale · data viz", img: "images/other/data.webp",
+          desc: "Painéis de visualização de dados no Power BI para a Vale — indicadores operacionais traduzidos em leitura rápida e acionável.",
+          label: "Power BI", labelSub: "Vale · data viz" },
+        { roman: "Prancha V", title: "Múltiplos sistemas de IA", tag: "Accenture · UI/UX", img: "images/other/ai.webp",
+          desc: "Interfaces para diversos sistemas de Inteligência Artificial na Accenture — de exploradores de dados a assistentes generativos.",
+          label: "Sistemas de IA", labelSub: "Accenture · UI/UX" }
+      ],
+      close: "Fechar", prev: "Prancha anterior", next: "Próxima prancha"
+    },
     apparatus: {
-      label: "Capítulo IV",
+      label: "Capítulo III",
       title: ["Aparato técnico"],
-      page: "xvi",
+      page: "xii",
       intro: "Instrumentos correntes, idiomas falados, e cronologia de prática.",
       tools: {
         label: "Instrumentos",
@@ -387,18 +411,19 @@ const CONTENT = {
         gloss: "Currículo do autor, em duas folhas — treze anos de product design, sistemas e interfaces generativas.",
         motto: "Ars longa, vita brevis",
         meta: ["PDF", "2 pp", "240 KB", "MMXXVI"],
-        printCta: "Take leaf",
+        printCta: "Abrir a folha",
         cta: "Pegue uma folha",
-        aria: "Folha avulsa — Curriculum Vitæ de Lucas Schoenherr, em formato PDF",
-        href: "lucas-schoenherr-vitae.pdf",
-        filename: "lucas-schoenherr-vitae.pdf",
+        aria: "Folha avulsa — Curriculum Vitæ de Lucas Schoenherr",
+        editions: { themed: "Composição temática", modern: "Composição moderna" },
+        peek: "ver esta edição",
+        download: { label: "Baixar o currículo", note: "em breve" },
         stamp: { roman: "v.", country: "Brasil", postmark: "MMXXVI" }
       }
     },
     contact: {
-      label: "Capítulo V",
+      label: "Capítulo IV",
       title: ["Correspondência"],
-      page: "xx",
+      page: "xvi",
       titleDisplay: ["Vamos", {
         reg: " conversar."
       }],
@@ -493,18 +518,13 @@ const CONTENT = {
         href: "#works"
       }, {
         num: "III.",
-        title: ["Notes on method"],
-        page: "xii",
-        href: "#method"
-      }, {
-        num: "IV.",
         title: ["Technical apparatus"],
-        page: "xvi",
+        page: "xii",
         href: "#apparatus"
       }, {
-        num: "V.",
+        num: "IV.",
         title: ["Correspondence"],
-        page: "xx",
+        page: "xvi",
         href: "#contact"
       }]
     },
@@ -704,6 +724,11 @@ const CONTENT = {
         desc: "Business metrics and human metrics — both matter."
       }],
       diagram: {
+        spaces: [
+          { label: "Problem space", sub: "finding the right thing" },
+          { label: "Solution space", sub: "making the thing right" }
+        ],
+        flow: { diverge: "diverge", converge: "converge" },
         nodes: [{
           roman: "I",
           name: "Discover",
@@ -721,13 +746,37 @@ const CONTENT = {
           name: "Deliver",
           note: "QA · Metrics"
         }],
-        loop: "↻  with continuous iteration, not waterfall."
+        loop: "↻  a double diamond, in continuous iteration — never waterfall."
       }
     },
+    minorWorks: {
+      label: "Miscellanea",
+      title: ["Minor plates"],
+      page: "xi",
+      hint: "click a plate to enlarge",
+      items: [
+        { roman: "Plate I", title: "Sírio-Libanês App", tag: "Mobile App · UI/UX", img: "images/other/sirio.webp",
+          desc: "App for Hospital Sírio-Libanês — patient journey, scheduling and records in a clear, welcoming mobile experience.",
+          label: "Sírio-Libanês", labelSub: "Mobile · UI/UX" },
+        { roman: "Plate II", title: "Vale News", tag: "Mobile App · UI/UX", img: "images/other/valenews.webp",
+          desc: "Vale's internal-communications app — news, announcements and culture in employees' hands.",
+          label: "Vale News", labelSub: "Mobile · UI/UX" },
+        { roman: "Plate III", title: "Leap to the new branding", tag: "Vale · multiple media", img: "images/other/cracha.webp",
+          desc: "Rollout of Vale's new branding across graphic, digital and physical media — from badge to signage.",
+          label: "New branding", labelSub: "Vale · media" },
+        { roman: "Plate IV", title: "Power BI Dashboard", tag: "Vale · data viz", img: "images/other/data.webp",
+          desc: "Power BI data-visualization panels for Vale — operational indicators turned into fast, actionable reading.",
+          label: "Power BI", labelSub: "Vale · data viz" },
+        { roman: "Plate V", title: "Multiple AI systems", tag: "Accenture · UI/UX", img: "images/other/ai.webp",
+          desc: "Interfaces for several Artificial Intelligence systems at Accenture — from data explorers to generative assistants.",
+          label: "AI systems", labelSub: "Accenture · UI/UX" }
+      ],
+      close: "Close", prev: "Previous plate", next: "Next plate"
+    },
     apparatus: {
-      label: "Chapter IV",
+      label: "Chapter III",
       title: ["Technical apparatus"],
-      page: "xvi",
+      page: "xii",
       intro: "Current instruments, spoken languages, and chronology of practice.",
       tools: {
         label: "Instruments",
@@ -823,18 +872,19 @@ const CONTENT = {
         gloss: "The author's curriculum, in two leaves — thirteen years of product design, systems, and generative interfaces.",
         motto: "Ars longa, vita brevis",
         meta: ["PDF", "2 pp", "240 KB", "MMXXVI"],
-        printCta: "Take leaf",
+        printCta: "Open the leaf",
         cta: "Take a leaf",
-        aria: "Loose leaf — Lucas Schoenherr's Curriculum Vitæ, in PDF format",
-        href: "lucas-schoenherr-vitae.pdf",
-        filename: "lucas-schoenherr-vitae.pdf",
+        aria: "Loose leaf — Lucas Schoenherr's Curriculum Vitæ",
+        editions: { themed: "Themed setting", modern: "Modern setting" },
+        peek: "see this edition",
+        download: { label: "Download the curriculum", note: "coming soon" },
         stamp: { roman: "v.", country: "Brazil", postmark: "MMXXVI" }
       }
     },
     contact: {
-      label: "Chapter V",
+      label: "Chapter IV",
       title: ["Correspondence"],
-      page: "xx",
+      page: "xvi",
       titleDisplay: ["Let us", {
         reg: " talk."
       }],
@@ -992,12 +1042,14 @@ function CursorGlyph() {
       // logo acima do ponteiro, como tooltip clássico.
       const tgt = e.target.closest("[data-cursor-label]");
       let offsetY = 28; // padrão: verso wireframe, junto ao cursor
+      let offsetX = 0;  // padrão: centrado no cursor (o rótulo usa translateX(-50%))
       if (tgt) {
         if (tgt.classList.contains("plate-image")) offsetY = 136; // recto: clearance da lupa
         else if (tgt.classList.contains("plate-quadro-link")) offsetY = 168; // quadro 3D: acima da lupa
-        else if (tgt.classList.contains("cv-slip")) offsetY = 50;  // folha avulsa: um pouco mais alto
+        else if (tgt.classList.contains("cv-thumb-card")) { offsetY = 72; offsetX = 58; } // folha: mais acima e à direita do cursor
+        else if (tgt.classList.contains("cv-slip")) offsetY = 50;  // folha avulsa (legado)
       }
-      el.style.left = e.clientX + "px";
+      el.style.left = e.clientX + offsetX + "px";
       el.style.top  = e.clientY - offsetY + "px";
     };
     const onOver = e => {
@@ -1238,7 +1290,7 @@ function TopChrome({ lang, setLang, t, candle, setCandle }) {
       // Chamberstick (castiçal de quarto) — pires largo + vela + alça em curva.
       // Modo vela ON: chama acesa. Modo dia: vela apagada.
       candle
-        ? e('svg', { width: '22', height: '18', viewBox: '0 0 24 22', fill: 'none', xmlns: 'http://www.w3.org/2000/svg', 'aria-hidden': 'true', style: { display: 'block' } },
+        ? e('svg', { width: '25', height: '22', viewBox: '0.5 0.5 22.3 19.5', fill: 'none', xmlns: 'http://www.w3.org/2000/svg', 'aria-hidden': 'true', style: { display: 'block' } },
             // Chama
             e('path', { d: 'M9 0.5 C 7.6 2.2, 7 3.7, 9 5.2 C 11 3.7, 10.4 2.2, 9 0.5 Z', fill: 'currentColor', opacity: '0.9' }),
             // Pavio
@@ -1256,7 +1308,7 @@ function TopChrome({ lang, setLang, t, candle, setCandle }) {
             // Alça — curl à direita, com pequeno polegar
             e('path', { d: 'M16.4 17.4 C 21.4 17.6, 22.8 13.4, 18.6 12.6 C 16.6 12.4, 16.6 14.4, 18.2 14.6', stroke: 'currentColor', strokeWidth: '1.3', strokeLinecap: 'round', strokeLinejoin: 'round' })
           )
-        : e('svg', { width: '22', height: '18', viewBox: '0 0 24 22', fill: 'none', xmlns: 'http://www.w3.org/2000/svg', 'aria-hidden': 'true', style: { display: 'block' } },
+        : e('svg', { width: '25', height: '22', viewBox: '0.5 0.5 22.3 19.5', fill: 'none', xmlns: 'http://www.w3.org/2000/svg', 'aria-hidden': 'true', style: { display: 'block' } },
             // Pavio apagado (curvinha)
             e('path', { d: 'M9 4.6 C 9.6 5.3, 10 5.9, 9 6.6', stroke: 'currentColor', strokeWidth: '0.8', strokeLinecap: 'round' }),
             // Corpo da vela
@@ -1655,7 +1707,12 @@ function PlateCard({ p, i, t }) {
   useEffect(() => {
     const stage = stageRef.current;
     if (!stage) return;
-    if (window.mountQuadro && window.THREE) {
+    // O Three.js pode chegar DEPOIS (lazy via IntersectionObserver, ver
+    // home.js, quando window.__THREE_LAZY está ligado). Tentamos montar já;
+    // se ainda não chegou, esperamos o evento 'three-ready' e montamos então.
+    // Enquanto isso, a frente da tela aparece como imagem (fallback de sempre).
+    const tryMount = () => {
+      if (instRef.current || !window.mountQuadro || !window.THREE) return !!instRef.current;
       // A lupa-pêndulo (Lupa2.png) é desenhada pelo componente <Lens/>,
       // não pela lupa lisa embutida — por isso loupe:false aqui.
       // As variações dão um ângulo/tom distinto a cada tela.
@@ -1665,14 +1722,25 @@ function PlateCard({ p, i, t }) {
         loupe: false,
         tiltX: v.tiltX, rollZ: v.rollZ, scale: v.scale, tint: v.tint
       });
-    }
-    // Fallback: sem WebGL/Three, mostra a frente da tela como imagem.
-    if (!instRef.current) {
+      if (instRef.current) {
+        const fall = stage.querySelector(".plate-quadro-fallimg");
+        if (fall) fall.remove();
+      }
+      return !!instRef.current;
+    };
+    const onThreeReady = () => { tryMount(); };
+    if (!tryMount()) {
+      if (window.__THREE_LAZY) {
+        window.addEventListener("three-ready", onThreeReady);
+      }
+      // Fallback: sem WebGL/Three (ou enquanto o lazy não chega),
+      // mostra a frente da tela como imagem.
       const img = document.createElement("img");
       img.src = q.front; img.alt = ""; img.className = "plate-quadro-fallimg";
       stage.appendChild(img);
     }
     return () => {
+      window.removeEventListener("three-ready", onThreeReady);
       if (instRef.current && instRef.current.destroy) instRef.current.destroy();
       instRef.current = null;
     };
@@ -1825,6 +1893,215 @@ function Works({
 }
 
 /* ============================================================
+   MinorWorks — "Pranchas menores" (rolo de filme 35 mm)
+   ------------------------------------------------------------
+   Fita full-bleed correndo em loop infinito (clones suficientes
+   para cobrir a tela; avança exatamente um conjunto). Clique numa
+   prancha amplia no lightbox, com navegação por setas/teclado.
+   Toda a mecânica vive no useEffect (DOM puro sobre os refs).
+   Perfurações = SVG inline repetido (background) — sem assets.
+   ============================================================ */
+function MinorWorks({ t }) {
+  const e = React.createElement;
+  const m = t.minorWorks;
+  const reelRef  = useRef(null);
+  const trackRef = useRef(null);
+  const lbRef    = useRef(null);
+
+  useEffect(() => {
+    const reel = reelRef.current, track = trackRef.current, lb = lbRef.current;
+    if (!reel || !track || !lb) return;
+    const viewport = reel.querySelector('.reel-viewport');
+    const SPEED = 42; // px/s
+    const originals = Array.prototype.slice.call(track.querySelectorAll('.reel-frame'));
+
+    function buildLoop() {
+      track.querySelectorAll('[data-clone]').forEach(n => n.remove());
+      const setW = originals.reduce((s, f) => s + f.getBoundingClientRect().width, 0);
+      if (!setW) return;
+      const target = viewport.clientWidth * 2 + setW;   // folga p/ telas largas
+      let total = setW;
+      while (total < target) {
+        originals.forEach(f => {
+          const c = f.cloneNode(true);
+          c.setAttribute('data-clone', '1');
+          c.setAttribute('aria-hidden', 'true');
+          track.appendChild(c);
+        });
+        total += setW;
+      }
+      track.style.setProperty('--reel-shift', setW + 'px');  // avança 1 conjunto → emenda invisível
+      reel.style.setProperty('--reel-speed', (setW / SPEED) + 's');
+    }
+    let raf;
+    function relayout() { cancelAnimationFrame(raf); raf = requestAnimationFrame(buildLoop); }
+    window.addEventListener('resize', relayout);
+    track.querySelectorAll('img').forEach(img => { if (!img.complete) img.addEventListener('load', relayout, { once: true }); });
+    buildLoop();
+
+    /* Lightbox — navegação por índice */
+    const items   = m.items;
+    const lbImg   = lb.querySelector('.lb-img');
+    const lbRoman = lb.querySelector('.lb-roman');
+    const lbTitle = lb.querySelector('.lb-title');
+    const lbTag   = lb.querySelector('.lb-tag');
+    const lbDesc  = lb.querySelector('.lb-desc');
+    let cur = 0;
+    function renderLB() {
+      const w = items[cur];
+      lbImg.src = w.img; lbImg.alt = w.title;
+      lbRoman.textContent = w.roman; lbTitle.textContent = w.title;
+      lbTag.textContent = w.tag; lbDesc.textContent = w.desc;
+    }
+    function openAt(i) {
+      cur = (i % items.length + items.length) % items.length;
+      renderLB(); lb.classList.add('open'); reel.classList.add('is-paused');
+      document.body.style.overflow = 'hidden';
+    }
+    function nav(s) { openAt(cur + s); }
+    function closeLB() { lb.classList.remove('open'); reel.classList.remove('is-paused'); document.body.style.overflow = ''; }
+
+    function onTrackClick(ev) {
+      const frame = ev.target.closest('.reel-frame');
+      if (frame) openAt(parseInt(frame.getAttribute('data-idx'), 10) || 0);
+    }
+    function onKey(ev) {
+      if (!lb.classList.contains('open')) return;
+      if (ev.key === 'Escape') closeLB();
+      else if (ev.key === 'ArrowLeft') nav(-1);
+      else if (ev.key === 'ArrowRight') nav(1);
+    }
+    function onLbClick(ev) { if (ev.target === lb) closeLB(); }
+    const prevBtn = lb.querySelector('.lb-prev'), nextBtn = lb.querySelector('.lb-next'), closeBtn = lb.querySelector('.lb-close');
+    const onPrev = () => nav(-1), onNext = () => nav(1);
+    track.addEventListener('click', onTrackClick);
+    prevBtn.addEventListener('click', onPrev);
+    nextBtn.addEventListener('click', onNext);
+    closeBtn.addEventListener('click', closeLB);
+    lb.addEventListener('click', onLbClick);
+    document.addEventListener('keydown', onKey);
+
+    return () => {
+      window.removeEventListener('resize', relayout);
+      cancelAnimationFrame(raf);
+      track.removeEventListener('click', onTrackClick);
+      prevBtn.removeEventListener('click', onPrev);
+      nextBtn.removeEventListener('click', onNext);
+      closeBtn.removeEventListener('click', closeLB);
+      lb.removeEventListener('click', onLbClick);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [m]);
+
+  const numeral = r => r.replace(/^(Prancha|Plate)\s+/, '');
+
+  return e("section", { className: "minor-works page", "data-page": m.page, id: "minor-works" },
+    e("div", { className: "spread-narrow", style: { maxWidth: "1280px" } },
+      e(Reveal, null,
+        e("div", { className: "heading" },
+          e("span", { className: "num" }, m.label),
+          e("span", { className: "title" }, rich(m.title)),
+          e("span", { className: "roman" }, m.page)))),
+    e("div", { className: "ot-reel", ref: reelRef, role: "group", "aria-label": m.title[0] },
+      e("div", { className: "reel-perf top", "aria-hidden": "true" }),
+      e("div", { className: "reel-viewport" },
+        e("div", { className: "reel-track", ref: trackRef },
+          m.items.map((w, i) => e("figure", { className: "reel-frame", key: i, "data-idx": i },
+            e("div", { className: "f-shot" },
+              e("img", { src: w.img, alt: w.title, loading: "lazy" }),
+              e("span", { className: "f-num" }, numeral(w.roman)),
+              e("figcaption", { className: "f-label" }, w.label, e("small", null, w.labelSub))))))),
+      e("div", { className: "reel-perf bottom", "aria-hidden": "true" })),
+    e("div", { className: "reel-lightbox", ref: lbRef, role: "dialog", "aria-modal": "true", "aria-label": m.title[0] },
+      e("button", { className: "lb-nav lb-prev", type: "button", "aria-label": m.prev }, "‹"),
+      e("button", { className: "lb-nav lb-next", type: "button", "aria-label": m.next }, "›"),
+      e("div", { className: "lb-sheet" },
+        e("div", { className: "lb-stage" }, e("img", { className: "lb-img", src: "", alt: "" })),
+        e("div", { className: "lb-info" },
+          e("button", { className: "lb-close", type: "button", "aria-label": m.close }, "×"),
+          e("span", { className: "lb-roman" }),
+          e("span", { className: "lb-title" }),
+          e("span", { className: "lb-tag" }),
+          e("p",    { className: "lb-desc" })))));
+}
+
+/* ============================================================
+   ProcessDiamond — "Duplo Diamante" gravado (FIG. 1 — METHOD)
+   ------------------------------------------------------------
+   Dois losangos: Problema (Descobrir⇢Definir) e Solução
+   (Desenhar⇢Entregar). Cada metade esquerda = divergência (hachura
+   aberta), cada metade direita = convergência (hachura cruzada).
+   SVG puramente geométrico; todo o texto vive em HTML (i18n + nitidez
+   em qualquer escala). Lobos centrados nos quartos do viewBox p/
+   alinhar com a legenda das 4 fases abaixo.
+   ============================================================ */
+var PP_SVG = '<svg class="pp-svg" viewBox="0 0 800 320" role="img" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">' +
+  '<defs>' +
+    '<pattern id="ppHatchA" patternUnits="userSpaceOnUse" width="9" height="9" patternTransform="rotate(45)">' +
+      '<line class="pp-hatch" x1="0" y1="0" x2="0" y2="9"/>' +
+    '</pattern>' +
+    '<pattern id="ppHatchB" patternUnits="userSpaceOnUse" width="6.5" height="6.5" patternTransform="rotate(45)">' +
+      '<line class="pp-hatch pp-hatch--dense" x1="0" y1="0" x2="0" y2="6.5"/>' +
+      '<line class="pp-hatch pp-hatch--dense" x1="0" y1="0" x2="6.5" y2="0"/>' +
+    '</pattern>' +
+    '<g id="ppFleur">' +
+      '<path class="pp-fleur" d="M0,-9 C2,-3 3,-2 9,0 C3,2 2,3 0,9 C-2,3 -3,2 -9,0 C-3,-2 -2,-3 0,-9 Z"/>' +
+      '<circle class="pp-fleur-dot" cx="0" cy="0" r="1.4"/>' +
+    '</g>' +
+  '</defs>' +
+  /* hachura — divergência (aberta) / convergência (cruzada) */
+  '<g class="pp-fills">' +
+    '<path d="M16,160 L208,28 L208,292 Z" fill="url(#ppHatchA)"/>' +
+    '<path d="M208,28 L400,160 L208,292 Z" fill="url(#ppHatchB)"/>' +
+    '<path d="M400,160 L592,28 L592,292 Z" fill="url(#ppHatchA)"/>' +
+    '<path d="M592,28 L784,160 L592,292 Z" fill="url(#ppHatchB)"/>' +
+  '</g>' +
+  /* eixo central pontilhado */
+  '<line class="pp-axis" x1="8" y1="160" x2="792" y2="160"/>' +
+  /* divisas internas divergir|convergir */
+  '<line class="pp-guide" x1="208" y1="34" x2="208" y2="286"/>' +
+  '<line class="pp-guide" x1="592" y1="34" x2="592" y2="286"/>' +
+  /* contornos dos losangos — gravura em linha dupla */
+  '<g class="pp-dia">' +
+    '<path d="M16,160 L208,28 L400,160 L208,292 Z"/>' +
+    '<path d="M400,160 L592,28 L784,160 L592,292 Z"/>' +
+  '</g>' +
+  '<g class="pp-dia pp-dia--inner" transform="translate(400,160) scale(0.955) translate(-400,-160)">' +
+    '<path d="M16,160 L208,28 L400,160 L208,292 Z"/>' +
+    '<path d="M400,160 L592,28 L784,160 L592,292 Z"/>' +
+  '</g>' +
+  /* setas de fluxo (esq. → dir.) sobre o eixo */
+  '<g class="pp-flow">' +
+    '<path d="M300,154 L312,160 L300,166"/>' +
+    '<path d="M488,154 L500,160 L488,166"/>' +
+    '<path d="M676,154 L688,160 L676,166"/>' +
+    '<path d="M772,154 L784,160 L772,166"/>' +
+  '</g>' +
+  /* fleurons nos três nós do eixo */
+  '<use href="#ppFleur" x="16" y="160"/>' +
+  '<use href="#ppFleur" x="400" y="160"/>' +
+  '<use href="#ppFleur" x="784" y="160"/>' +
+'</svg>';
+
+function ProcessDiamond({ d }) {
+  var sp = d.spaces || [];
+  var flow = d.flow || { diverge: "", converge: "" };
+  return /*#__PURE__*/React.createElement("div", { className: "pp", "data-page": "xiv" },
+    /*#__PURE__*/React.createElement("div", { className: "pp-spaces" },
+      sp.map((s, i) => /*#__PURE__*/React.createElement("div", { className: "pp-space", key: i },
+        /*#__PURE__*/React.createElement("span", { className: "pp-space-label" }, s.label),
+        /*#__PURE__*/React.createElement("span", { className: "pp-space-sub" }, s.sub)))),
+    /*#__PURE__*/React.createElement("div", { className: "pp-stage", dangerouslySetInnerHTML: { __html: PP_SVG } }),
+    /*#__PURE__*/React.createElement("div", { className: "pp-keys" },
+      d.nodes.map((n, i) => /*#__PURE__*/React.createElement("div", { className: "pp-key", key: i },
+        /*#__PURE__*/React.createElement("span", { className: "pp-key-roman" }, n.roman),
+        /*#__PURE__*/React.createElement("span", { className: "pp-key-flow" }, (i % 2 === 0) ? flow.diverge : flow.converge),
+        /*#__PURE__*/React.createElement("h5", null, n.name),
+        /*#__PURE__*/React.createElement("p", null, n.note)))),
+    /*#__PURE__*/React.createElement("p", { className: "pp-loop" }, d.loop));
+}
+
+/* ============================================================
    Method
    ============================================================ */
 function Method({
@@ -1859,22 +2136,7 @@ function Method({
     className: "glyph"
   }, tn.glyph), /*#__PURE__*/React.createElement("div", {
     className: "num"
-  }, tn.num), /*#__PURE__*/React.createElement("h4", null, tn.title), /*#__PURE__*/React.createElement("p", null, tn.desc))))), /*#__PURE__*/React.createElement(Reveal, null, /*#__PURE__*/React.createElement("div", {
-    className: "process-diagram",
-    "data-page": "xiv"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "process-row"
-  }, m.diagram.nodes.map((n, i) => /*#__PURE__*/React.createElement(React.Fragment, {
-    key: i
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "process-node"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "ring"
-  }, n.roman), /*#__PURE__*/React.createElement("h5", null, n.name), /*#__PURE__*/React.createElement("p", null, n.note)), i < m.diagram.nodes.length - 1 && /*#__PURE__*/React.createElement("div", {
-    className: "process-arrow"
-  }, "\u27F6")))), /*#__PURE__*/React.createElement("div", {
-    className: "process-loop"
-  }, m.diagram.loop)))));
+  }, tn.num), /*#__PURE__*/React.createElement("h4", null, tn.title), /*#__PURE__*/React.createElement("p", null, tn.desc))))), /*#__PURE__*/React.createElement(Reveal, null, /*#__PURE__*/React.createElement(ProcessDiamond, { d: m.diagram }))));
 }
 
 /* ============================================================
@@ -2092,12 +2354,45 @@ function StampBadge({ roman, country, postmark }) {
 }
 
 /* ============================================================
+   CV — arquivos por idioma × edição
+   ------------------------------------------------------------
+   Estrutura em CV/<LANG>/<Estilo>/:
+     · Thumbail.jpg                 → pré-visualização (face do cartão)
+     · CV-<LANG>-<Estilo>-Web.pdf   → versão web (abre no clique)
+     · (download paginado entra depois)
+   CV_EN_READY: vire `true` quando os arquivos CV/EN/ subirem; até lá
+   o idioma EN cai nos arquivos PT (evita imagem/link quebrados).
+   ============================================================ */
+const CV_EN_READY = false;
+const CV_THUMBS = {
+  pt: { themed: "CV/PT/Themed/Thumbail.webp", modern: "CV/PT/Modern/Thumbail.jpg" },
+  en: { themed: "CV/EN/Themed/Thumbail.webp", modern: "CV/EN/Modern/Thumbail.jpg" }
+};
+const CV_WEB = {
+  pt: { themed: "CV/PT/Themed/CV-PT-Themed-Web.pdf", modern: "CV/PT/Modern/CV-PT-Modern-Web.pdf" },
+  en: { themed: "CV/EN/Themed/CV-EN-Themed-Web.pdf", modern: "CV/EN/Modern/CV-EN-Modern-Web.pdf" }
+};
+/* Versão de download (paginada). Quando os PDFs finais subirem, vire
+   CV_DOWNLOAD_READY = true — o botão deixa de ser placeholder e baixa o
+   arquivo da edição selecionada. Caminhos esperados abaixo. */
+const CV_DOWNLOAD_READY = false;
+const CV_DOWNLOAD = {
+  pt: { themed: "CV/PT/Themed/CV-PT-Themed.pdf", modern: "CV/PT/Modern/CV-PT-Modern.pdf" },
+  en: { themed: "CV/EN/Themed/CV-EN-Themed.pdf", modern: "CV/EN/Modern/CV-EN-Modern.pdf" }
+};
+function cvAsset(map, lang, variant) {
+  const useLang = (lang === "en" && !CV_EN_READY) ? "pt" : lang;
+  return (map[useLang] || map.pt)[variant];
+}
+
+/* ============================================================
    Apparatus
    ============================================================ */
 function Apparatus({
-  t
+  t, lang
 }) {
   const a = t.apparatus;
+  const [cvVariant, setCvVariant] = useState("modern");
   return /*#__PURE__*/React.createElement("section", {
     className: "apparatus page spread-narrow",
     "data-page": a.page,
@@ -2208,39 +2503,69 @@ function Apparatus({
       React.createElement("div", { className: "cv-slip-copy" },
         a.cvSlip.contextBody.map((paragraph, i) => React.createElement("p", { key: i }, paragraph))
       ),
-      React.createElement("a", {
-      className: "cv-slip ex-libris",
-      href: a.cvSlip.href,
-      download: a.cvSlip.filename,
-      "aria-label": a.cvSlip.aria,
-      "data-cursor-label": t.cursorLabels.takeLeaf,
-      target: "_blank",
-      rel: "noopener"
-    },
-      /* Rosetas gravadas nos 4 cantos da moldura */
-      React.createElement(RosetteCorner, { pos: "tl" }),
-      React.createElement(RosetteCorner, { pos: "tr" }),
-      React.createElement(RosetteCorner, { pos: "bl" }),
-      React.createElement(RosetteCorner, { pos: "br" }),
-      a.cvSlip.stamp && React.createElement(StampBadge, {
-        roman:    a.cvSlip.stamp.roman,
-        country:  a.cvSlip.stamp.country,
-        postmark: a.cvSlip.stamp.postmark
-      }),
-      React.createElement("p", { className: "cv-slip-eyebrow" }, a.cvSlip.eyebrow),
-      React.createElement("h5", { className: "cv-slip-title" },
-        a.cvSlip.titleLead,
-        React.createElement("em", null, a.cvSlip.titleEm)
+      /* ── Controles do CV (à esquerda, sob o argumento): alternador de
+         edição + botão de download. O toggle escolhe qual folha fica à
+         frente na pilha à direita; o download (placeholder até
+         CV_DOWNLOAD_READY) baixa a edição selecionada. ── */
+      React.createElement("div", { className: "cv-controls" },
+        React.createElement("div", { className: "cv-download-row" },
+          React.createElement(
+            CV_DOWNLOAD_READY ? "a" : "button",
+            Object.assign(
+              { className: "cv-download-btn" + (CV_DOWNLOAD_READY ? "" : " is-pending") },
+              CV_DOWNLOAD_READY
+                ? { href: cvAsset(CV_DOWNLOAD, lang, cvVariant), download: "", target: "_blank", rel: "noopener" }
+                : { type: "button", "aria-disabled": "true", disabled: true }
+            ),
+            React.createElement("span", { className: "cv-download-ico", "aria-hidden": "true" }, "↓"),
+            React.createElement("span", { className: "cv-download-label" }, a.cvSlip.download.label),
+            !CV_DOWNLOAD_READY && React.createElement("span", { className: "cv-download-note" }, a.cvSlip.download.note)
+          )
+        )
       ),
-      React.createElement("p", { className: "cv-slip-gloss" }, a.cvSlip.gloss),
-      React.createElement("ul", { className: "cv-slip-meta", "aria-label": "Document details" },
-        a.cvSlip.meta.map((m, i) => React.createElement("li", { key: i }, m))
-      ),
-      React.createElement("span", { className: "cv-slip-print-cta" },
-        a.cvSlip.printCta,
-        React.createElement("span", { className: "cv-slip-print-arrow", "aria-hidden": "true" }, " →")
-      ),
-      a.cvSlip.motto && React.createElement("p", { className: "cv-slip-motto" }, a.cvSlip.motto)
+      /* ── Figura: pilha de folhas (a edição selecionada à frente, com
+         selo; a outra espia atrás). O clique na da frente abre a versão
+         web; o alternador vive nos controles à esquerda. ── */
+      React.createElement("div", { className: "cv-slip-figure" },
+        React.createElement("div", { className: "cv-stack" },
+          ["themed", "modern"].map(v => {
+            const isFront = v === cvVariant;
+            return React.createElement("a", {
+              key: v,
+              className: "cv-thumb-card ex-libris " + (isFront ? "is-front" : "is-back"),
+              href: cvAsset(CV_WEB, lang, v),
+              "aria-label": isFront
+                ? a.cvSlip.aria + " — " + a.cvSlip.editions[v]
+                : a.cvSlip.peek + ": " + a.cvSlip.editions[v],
+              "data-cursor-label": isFront ? t.cursorLabels.takeLeaf : a.cvSlip.peek,
+              target: "_blank",
+              rel: "noopener",
+              /* Clicar na carta de trás não navega: traz a edição à frente
+                 (com animação). A da frente abre a versão web normalmente. */
+              onClick: (e) => {
+                if (!isFront) { e.preventDefault(); setCvVariant(v); }
+              }
+            },
+              React.createElement("img", {
+                className: "cv-thumb-img",
+                src: cvAsset(CV_THUMBS, lang, v),
+                alt: a.cvSlip.aria + " — " + a.cvSlip.editions[v],
+                loading: "lazy",
+                onError: (ev) => {
+                  if (!ev.target.dataset.fb) {
+                    ev.target.dataset.fb = "1";
+                    ev.target.src = CV_THUMBS.pt[v];
+                  }
+                }
+              }),
+              a.cvSlip.stamp && React.createElement(StampBadge, {
+                roman:    a.cvSlip.stamp.roman,
+                country:  a.cvSlip.stamp.country,
+                postmark: a.cvSlip.stamp.postmark
+              })
+            );
+          })
+        )
       )
     )
   )
@@ -2561,7 +2886,7 @@ function App() {
 
   // Scroll-spy: destaca capítulo ativo no TOC
   useEffect(() => {
-    const sectionIds = ['preface', 'works', 'method', 'apparatus', 'contact'];
+    const sectionIds = ['preface', 'works', 'apparatus', 'contact'];
     const io = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) setActiveSectionId('#' + entry.target.id);
@@ -2585,8 +2910,8 @@ function App() {
       e(TOC,            { t, activeSectionId }),
       e(Preface,        { t }),
       e(Works,          { t }),
-      e(Method,         { t }),
-      e(Apparatus,      { t }),
+      e(MinorWorks,     { t }),
+      e(Apparatus,      { t, lang }),
       e(Correspondence, { t }),
       e(Colophon,       { t })
     ),
@@ -2601,3 +2926,4 @@ function App() {
 ReactDOM.createRoot(document.getElementById('root')).render(
   React.createElement(App, null)
 );
+/* fim — quadro lazy-Three suportado (ver home.js / index.html) */

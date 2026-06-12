@@ -34,7 +34,6 @@
 
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(40, vw() / vh(), 0.1, 100);
-    camera.position.set(0, 0, 16);
 
     var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
     // Supersample: a lupa amplia ~2.8×, então renderizamos o canvas com
@@ -105,6 +104,24 @@
       materials.forEach(function (m) { m.color = tintC; });
     }
 
+    // ---- enquadramento da câmera ----------------------------------------
+    // Parado, a pintura preenche ~100% da altura do palco (antes ~83%, dava
+    // sensação de "quadro pequeno"). Mas a 100% a quina mais próxima da
+    // câmera estoura o topo/base ao girar (perspectiva amplia a borda). Por
+    // isso a câmera recua o necessário DURANTE o giro e volta no fim: grande
+    // parado, sem corte na animação.
+    var sc = opts.scale || 1;
+    var halfH = (H * sc) / 2, halfW = (W * sc) / 2;
+    var halfFov = (camera.fov * Math.PI / 180) / 2;
+    var clearance = halfH / Math.tan(halfFov); // distância p/ preencher a altura
+    var baseZ = opts.camZ || clearance + 0.06;  // pequena folga estética
+    // distância mínima para a quina próxima (a halfW de profundidade ao girar)
+    // não ultrapassar o palco; halfW*|sin θ| é o quanto a borda avança em Z.
+    function camZForRot(ry) {
+      return Math.max(baseZ, clearance + halfW * Math.abs(Math.sin(ry)) + 0.06);
+    }
+    camera.position.set(0, 0, camZForRot(painting.rotation.y));
+
     // ---- lupa: cria o overlay circular + listeners (opt-in) ----
     if (opts.loupe) {
       var L = opts.loupeSize || 190;
@@ -143,6 +160,7 @@
       flipT += flipStep;
       var t = Math.min(flipT, 1);
       painting.rotation.y = flipFrom + (flipTo - flipFrom) * ease(t);
+      camera.position.z = camZForRot(painting.rotation.y); // recua no giro, volta no fim
       render();
       if (t < 1) { raf = requestAnimationFrame(tick); } else { flipping = false; raf = null; }
     }

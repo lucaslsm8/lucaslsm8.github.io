@@ -32,6 +32,14 @@
   --cobalt:          #1d3a78;   /* acento secundário */
   --highlighter:     #f5e3a8;   /* marca-texto, seleção */
 
+  /* Airmail / "par avion" — moldura da Correspondência.
+     A borda da carta troca de paleta por idioma:
+     EN → vermelho + azul · PT → verde + amarelo. */
+  --air-red:         #b23a2e;   /* EN — vermelho postal */
+  --air-blue:        #2b4a8c;   /* EN — azul postal */
+  --air-green:       #2f6b45;   /* PT — verde (tom editorial) */
+  --air-gold:        #c79320;   /* PT — amarelo/ouro (tom editorial) */
+
   /* --------------------------------------------------------
      TIPOGRAFIA
      Serif = corpo + display | Mono = metadados, números, captions

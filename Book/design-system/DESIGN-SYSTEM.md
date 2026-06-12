@@ -93,7 +93,7 @@ Escala 4px-base. Tokens `--sp-1` (4) até `--sp-12` (160).
 | Method / Tenets       | `.method` + `.tenets`  | Manifesto + 4 princípios                                    |
 | Process diagram       | `.process-diagram`     | "Plate IV. Fig. 1 — Method" — engraving-style               |
 | Apparatus             | `.apparatus`           | Tools / Languages / Curriculum                              |
-| Correspondence card   | `.corr-card`           | Cartão de contato estilo carta                              |
+| Correspondence card   | `.carta`               | Cartão de contato estilo carta, com **moldura airmail "par avion"** que troca de paleta por idioma: **PT → verde + ouro**, **EN → vermelho + azul** (via `html[lang]`, tokens `--air-green/--air-gold/--air-red/--air-blue`; anel `.carta::after` com listras diagonais + máscara `exclude`) |
 | Colophon              | `.colophon`            | Fechamento do livro                                         |
 | Errata                | `.errata`              | Easter egg (canto inferior direito)                         |
 | Lens / magnifier      | `.lens`                | Lupa que segue o cursor sobre `.plate-image`                |
@@ -181,9 +181,9 @@ Contêineres para apresentar telas/imagens dentro de um case. Todos têm duas va
 | Vídeo (celuloide) | `.mockup-cinema.format-b` | **`.film-strip`** (grid `30px 1fr 30px`): `.film-perfs` (perfurações que correm, anim `film-run`) + `.film-window` com `.film-sheen` (brilho de projeção). Substitui o antigo "quadrado preto". |
 | Glare | `.mockup-screen-glare` | Reflexo que segue o cursor (movido por `initMockupTilt`). |
 
-### 5.6 Vitrine de componentes & specimen (`projects/mockup-showcase.html`)
+### 5.6 Vitrine de componentes & specimen (`projects/projects.html`)
 
-A **vitrine** é o catálogo vivo das peças do DS, cada uma com o HTML pronto para copiar. Reaproveita `catalogue.css` + `case-template.css/.js`.
+A **vitrine** é o catálogo vivo das peças do DS, cada uma com o HTML pronto para copiar. Desde 2026-06-11 vive em `projects/projects.html`, com CSS/JS próprios e autossuficientes (`projects.css` / `projects.js` — união enxuta de `catalogue` + `case-template` + `vitrine`, gerada via PurgeCSS, mais o Parecer do Editor como apêndice). Tokens continuam linkados de `tokens.css`.
 
 | Padrão | Classe / função | Notas |
 |--------|------------------|-------|
