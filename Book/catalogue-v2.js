@@ -1330,6 +1330,17 @@ function Frontispiece({
   }, /*#__PURE__*/React.createElement("div", null, t.meta[0]), /*#__PURE__*/React.createElement("div", null, t.meta[1]), /*#__PURE__*/React.createElement("div", {
     className: "em"
   }, t.meta[2]))), /*#__PURE__*/React.createElement("div", {
+    className: "front-epigraph"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "front-epigraph-rule",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("p", {
+    className: "front-epigraph-text"
+  }, rich(t.epigraph)), /*#__PURE__*/React.createElement("div", {
+    className: "front-epigraph-attr"
+  }, t.epigraphAttr[0], /*#__PURE__*/React.createElement("span", {
+    className: "name"
+  }, t.epigraphAttr[1]))), /*#__PURE__*/React.createElement("div", {
     className: "invitation"
   }, /*#__PURE__*/React.createElement("span", null, t.invite), /*#__PURE__*/React.createElement("span", {
     className: "arrow"
@@ -2875,7 +2886,6 @@ function App() {
     // Wrapper de conteúdo do livro — chrome fixo fica de fora
     e("div", { className: "book-content" },
       e(Frontispiece,   { t }),
-      e(HalfTitle,      { t }),
       e(TOC,            { t, activeSectionId }),
       e(Preface,        { t }),
       e(Works,          { t }),

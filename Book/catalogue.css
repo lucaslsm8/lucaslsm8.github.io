@@ -1749,9 +1749,17 @@ body.candle .pp { background: var(--paper-card); }
 }
 .apparatus-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 64px;
   margin-top: 56px;
+  /* Breakout: instrumentos/idiomas (e a cronologia, abaixo) ganham
+     largura (até 1180px, centrado na viewport), sem mexer no cabeçalho
+     nem na intro, que continuam na medida estreita (880px) do
+     .spread-narrow. Ver .curriculum, que repete o mesmo breakout. */
+  width: min(1180px, calc(100vw - 48px));
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .apparatus h4 {
   font-family: var(--serif);
@@ -1772,31 +1780,72 @@ body.candle .pp { background: var(--paper-card); }
   margin-left: 8px;
 }
 
-.tool-grid {
+/* Instrumentos — pauta de duas colunas (tab. i).
+   Cada categoria é uma "linha de catálogo": rubrica à esquerda
+   (índice mono + nome em Instrument Serif itálico) e as ferramentas
+   empilhadas à direita com filete pontilhado. Ecoa as linhas do CV. */
+.tool-cats {
+  display: block;
+}
+.tool-cat {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 4px 24px;
+  grid-template-columns: 260px 1fr;
+  gap: 48px;
+  padding: 18px 0;
+  border-top: 1px solid var(--hairline);
+  align-items: start;
 }
-.tool-line {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 12px;
-  align-items: baseline;
-  padding: 10px 0;
-  border-bottom: 1px dotted var(--ink-ghost);
+.tool-cat:first-child {
+  border-top: 1px solid var(--ink);
 }
-.tool-line .name {
-  font-family: var(--serif);
-  font-size: 17px;
+.tool-cat__head {
+  display: block;
 }
-.tool-line .meta {
+.tool-cat__index {
+  display: block;
   font-family: var(--mono);
   font-size: 10px;
+  letter-spacing: 0.08em;
   color: var(--ink-faint);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  margin-bottom: 6px;
 }
+.tool-cat__label {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 23px;
+  line-height: 1.05;
+  color: var(--ink);
+}
+.tool-cat__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 40px;
+}
+.tool-cat__item {
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--ink-soft);
+  padding: 6px 0;
+  border-bottom: 1px dotted var(--ink-ghost);
+}
+.tool-cat__item:last-child { border-bottom: none; }
 
+/* Idiomas — três pares em linha (full-width abaixo dos instrumentos) */
+.lang-set {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 56px;
+}
+.lang-set .lang-line {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 12px;
+  border-bottom: none;
+  padding: 0;
+}
 .lang-line {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -1820,6 +1869,13 @@ body.candle .pp { background: var(--paper-card); }
 
 .curriculum {
   margin-top: 80px;
+  /* Mesmo breakout dos instrumentos: a cronologia alarga até 1180px,
+     centrada na viewport (cabeçalho/intro seguem estreitos). Aqui a
+     centralização é por MARGEM negativa, não por transform — o
+     componente Reveal controla o transform na animação de entrada e
+     zeraria o translateX, jogando o bloco para a direita. */
+  width: min(1180px, calc(100vw - 48px));
+  margin-left: calc((100% - min(1180px, calc(100vw - 48px))) / 2);
 }
 .cv-row {
   display: grid;
@@ -3531,11 +3587,12 @@ body.candle .carta .ink-bleed {
      ela. Os cells vazios saem para o fixture virar o único item do grid. */
   .plate-rail__cell { display: none; }
   .plate-rail__fixture { width: 100%; max-width: 340px; }
-  .apparatus-grid { grid-template-columns: 1fr; gap: 48px; }
+  .apparatus-grid { grid-template-columns: 1fr; gap: 48px; width: auto; left: auto; transform: none; }
+  .curriculum { width: auto; margin-left: 0; }
   .tenets { grid-template-columns: repeat(2, 1fr); }
   .tenet:nth-child(2n) { border-right: none; }
   .tenet:nth-child(1), .tenet:nth-child(2) { border-bottom: 1px solid var(--hairline-strong); }
-  .tool-grid { grid-template-columns: 1fr; }
+  .tool-cat { grid-template-columns: 200px 1fr; gap: 28px; }
   .cv-row { grid-template-columns: 120px 1fr; }
   .cv-row .note { grid-column: 1 / -1; }
 }
@@ -3605,6 +3662,12 @@ body.candle .carta .ink-bleed {
   .spread { padding: 0 20px; }
   .spread-narrow { padding-left: 20px; padding-right: 20px; }
   .plate-grid, .plate-rail__grid { padding: 0 20px; }
+
+  /* Instrumentos: rubrica empilhada sobre a lista no telefone */
+  .tool-cat { grid-template-columns: 1fr; gap: 8px; padding: 16px 0; }
+  .tool-cat__list { grid-template-columns: 1fr; }
+  .tool-cat__label { font-size: 21px; }
+  .lang-set { gap: 12px 36px; }
 
   /* Drop cap proporcional */
   .drop-cap { width: 134px; height: 134px; margin-right: 18px; }
