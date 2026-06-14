@@ -11,14 +11,15 @@ const {
    Coordenadas em anos; used by Apparatus visual timeline.
    ============================================================ */
 const CV_TIMELINE = [
-  { start: 2023, end: 2026, current: true },
-  { start: 2019, end: 2023 },
-  { start: 2015, end: 2019 },
-  { start: 2012, end: 2015 }
+  { start: 2024, end: 2026, current: true },
+  { start: 2022, end: 2024 },
+  { start: 2020, end: 2022 },
+  { start: 2019, end: 2020 },
+  { start: 2011, end: 2019 }
 ];
-const CV_FIRST = 2012;
+const CV_FIRST = 2011;
 const CV_LAST  = 2026;
-const CV_SPAN  = CV_LAST - CV_FIRST; // 14 anos
+const CV_SPAN  = CV_LAST - CV_FIRST; // 15 anos
 
 /* ============================================================
    i18n — bilingual content
@@ -316,7 +317,7 @@ const CONTENT = {
       label: "Capítulo III",
       title: ["Aparato técnico"],
       page: "xii",
-      intro: "Instrumentos correntes, idiomas falados, e cronologia de prática.",
+      intro: "Instrumentos correntes e cronologia de prática.",
       tools: {
         label: "Instrumentos",
         sup: "tab. i",
@@ -356,26 +357,81 @@ const CONTENT = {
         label: "Cronologia de prática",
         sup: "tab. iii",
         rows: [{
-          period: "MMXXIII — Hoje",
+          period: "2024 — Hoje",
           role: "Senior Product Designer",
           firm: "GenAI · Systems · UI",
           current: true,
-          note: "Liderando design de POCs e produtos baseados em LLMs; design systems reutilizáveis; dashboards executivos."
+          bullets: [
+            "Design de POCs e produtos baseados em LLMs.",
+            "Design systems reutilizáveis e governança de componentes.",
+            "Dashboards executivos e visualização de dados."
+          ]
         }, {
-          period: "MMXIX — MMXXIII",
-          role: "Senior Product Designer",
-          firm: "Vale · Samarco · Enterprise",
-          note: "Aplicativos mobile de monitoramento, cabines de comando e modernização de sistemas legados."
+          period: "2022 — 2024",
+          role: "Designer de Produto Especialista (UI/UX)",
+          firm: "Accenture · One Studio",
+          bullets: [
+            "Lead designer end-to-end em projetos com LLMs in-house na VIVO.",
+            "Projetos para hospitais e instituições de saúde.",
+            "Colaboração na transmissão da Copa do Mundo com a FIFA.",
+            "Segurança de barragens e minas para a Vale.",
+            "Entrega de protótipos e POCs, nacional e internacionalmente."
+          ]
         }, {
-          period: "MMXV — MMXIX",
-          role: "Product / UX Designer",
-          firm: "Agências · Consultorias",
-          note: "Discovery, pesquisa, journeys e wireframes para clientes diversos. Fundamentos do ofício."
+          period: "2020 — 2022",
+          role: "Designer de Produto Sênior (UI/UX)",
+          firm: "Accenture · Vale Digital Lab",
+          bullets: [
+            "Liderança e gestão do time de design do Digital Lab.",
+            "Sistema de pesquisa apoiado em metodologias de UX.",
+            "Aprimoramento da esteira de entrega de protótipos e POCs.",
+            "Projetos Vale: controle robótico, segurança on-site, prevenção de quarentena, processos financeiros e otimização de rotas."
+          ]
         }, {
-          period: "MMXII — MMXV",
-          role: "Designer de Interfaces",
-          firm: "Início de carreira",
-          note: "Primeiros passos em UI, branding e digital. Formação técnica intensiva."
+          period: "2019 — 2020",
+          role: "Analista de Sistemas Sênior",
+          firm: "Infobase TI",
+          bullets: [
+            "Pesquisa e prototipação de projetos de TI: serviços, portais, apps mobile e desktop.",
+            "Reestruturação da UX do sistema de transição de serviços da Vale.",
+            "Design do portal de acesso da Vale.",
+            "Design system baseado no branding da Vale."
+          ]
+        }, {
+          period: "2011 — 2019",
+          role: "Outras experiências",
+          firm: "Múltiplas empresas",
+          bullets: [
+            "Freelancer — design de arquitetura, cenários e gráfico.",
+            "PTT Eletronuclear — técnico de informática em áreas controladas.",
+            "Interart — modelador 3D e cenógrafo.",
+            "Fidelity — estágio em design gráfico e TI."
+          ]
+        }]
+      },
+      edu: {
+        label: "Formação",
+        sup: "tab. iv",
+        rows: [{
+          period: "2022",
+          kind: "Pós-graduação",
+          course: "User Experience Design and Beyond (UX/UI)",
+          inst: "PUC-RS"
+        }, {
+          period: "2014",
+          kind: "Certificação",
+          course: "Cambridge Advanced English — exame e aulas",
+          inst: "Cambridge Certificate Training Center"
+        }, {
+          period: "2013",
+          kind: "Graduação",
+          course: "3D para Interiores e Cenários · Design Gráfico p/ Marketing Digital",
+          inst: "Universidade Veiga de Almeida"
+        }, {
+          period: "2012",
+          kind: "Graduação",
+          course: "Design Gráfico, Ilustração e Animação",
+          inst: "Universidade Veiga de Almeida"
         }]
       },
       cvSlip: {
@@ -396,6 +452,8 @@ const CONTENT = {
         aria: "Folha avulsa — Curriculum Vitæ de Lucas Schoenherr",
         editions: { themed: "Composição temática", modern: "Composição moderna" },
         peek: "ver esta edição",
+        flipNote: { lead: "clique na folha de trás", tail: "e veja a " },
+        flipEdition: { themed: "edição temática", modern: "edição moderna" },
         download: { label: "Baixar o currículo", note: "em breve" },
         stamp: { roman: "v.", country: "Brasil", postmark: "MMXXVI" }
       }
@@ -757,7 +815,7 @@ const CONTENT = {
       label: "Chapter III",
       title: ["Technical apparatus"],
       page: "xii",
-      intro: "Current instruments, spoken languages, and chronology of practice.",
+      intro: "Current instruments and chronology of practice.",
       tools: {
         label: "Instruments",
         sup: "tab. i",
@@ -797,26 +855,81 @@ const CONTENT = {
         label: "Chronology of practice",
         sup: "tab. iii",
         rows: [{
-          period: "MMXXIII — Today",
+          period: "2024 — Today",
           role: "Senior Product Designer",
           firm: "GenAI · Systems · UI",
           current: true,
-          note: "Leading design of POCs and LLM-based products; reusable design systems; executive dashboards."
+          bullets: [
+            "Design of POCs and LLM-based products.",
+            "Reusable design systems and component governance.",
+            "Executive dashboards and data visualization."
+          ]
         }, {
-          period: "MMXIX — MMXXIII",
-          role: "Senior Product Designer",
-          firm: "Vale · Samarco · Enterprise",
-          note: "Mobile monitoring apps, command centers, and modernization of legacy systems."
+          period: "2022 — 2024",
+          role: "Specialist Product Designer (UI/UX)",
+          firm: "Accenture · One Studio",
+          bullets: [
+            "End-to-end lead designer on projects using in-house LLMs at VIVO.",
+            "Projects for hospitals and healthcare institutions.",
+            "Collaboration on the World Cup broadcast with FIFA.",
+            "Dam and mine safety solutions for Vale.",
+            "Delivery of prototypes and POCs, nationally and internationally."
+          ]
         }, {
-          period: "MMXV — MMXIX",
-          role: "Product / UX Designer",
-          firm: "Agencies · Consulting",
-          note: "Discovery, research, journeys, and wireframes for varied clients. Foundations of the craft."
+          period: "2020 — 2022",
+          role: "Senior Product Designer (UI/UX)",
+          firm: "Accenture · Vale Digital Lab",
+          bullets: [
+            "Leadership and management of the Digital Lab design team.",
+            "Research system grounded in UX methodologies.",
+            "Improvement of the prototype and POC delivery pipeline.",
+            "Vale projects: robotic control, on-site safety, quarantine prevention, financial processes and route optimization."
+          ]
         }, {
-          period: "MMXII — MMXV",
-          role: "Interface Designer",
-          firm: "Early career",
-          note: "First steps in UI, branding, and digital. Intensive technical training."
+          period: "2019 — 2020",
+          role: "Senior Systems Analyst",
+          firm: "Infobase TI",
+          bullets: [
+            "Research and prototyping of IT projects: services, portals, mobile and desktop apps.",
+            "Restructured the UX of Vale's service-transition system.",
+            "Design of Vale's access portal.",
+            "Design system based on Vale's branding."
+          ]
+        }, {
+          period: "2011 — 2019",
+          role: "Earlier experience",
+          firm: "Multiple companies",
+          bullets: [
+            "Freelancer — architecture, set and graphic design.",
+            "PTT Eletronuclear — IT technician in controlled areas.",
+            "Interart — 3D modeler and set designer.",
+            "Fidelity — internship in graphic design and IT."
+          ]
+        }]
+      },
+      edu: {
+        label: "Education",
+        sup: "tab. iv",
+        rows: [{
+          period: "2022",
+          kind: "Postgraduate",
+          course: "User Experience Design and Beyond (UX/UI)",
+          inst: "PUC-RS"
+        }, {
+          period: "2014",
+          kind: "Certificate",
+          course: "Cambridge Advanced English — exam and classes",
+          inst: "Cambridge Certificate Training Center"
+        }, {
+          period: "2013",
+          kind: "Undergraduate",
+          course: "3D for Interiors & Sets · Graphic Design for Digital Marketing",
+          inst: "Universidade Veiga de Almeida"
+        }, {
+          period: "2012",
+          kind: "Undergraduate",
+          course: "Graphic Design, Illustration & Animation",
+          inst: "Universidade Veiga de Almeida"
         }]
       },
       cvSlip: {
@@ -837,6 +950,8 @@ const CONTENT = {
         aria: "Loose leaf — Lucas Schoenherr's Curriculum Vitæ",
         editions: { themed: "Themed setting", modern: "Modern setting" },
         peek: "see this edition",
+        flipNote: { lead: "click the back leaf", tail: "to reveal the " },
+        flipEdition: { themed: "themed edition", modern: "modern edition" },
         download: { label: "Download the curriculum", note: "coming soon" },
         stamp: { roman: "v.", country: "Brazil", postmark: "MMXXVI" }
       }
@@ -1956,12 +2071,6 @@ function MinorWorks({ t }) {
   const numeral = r => r.replace(/^(Prancha|Plate)\s+/, '');
 
   return e("section", { className: "minor-works page", "data-page": m.page, id: "minor-works" },
-    e("div", { className: "spread-narrow", style: { maxWidth: "1280px" } },
-      e(Reveal, null,
-        e("div", { className: "heading" },
-          e("span", { className: "num" }, m.label),
-          e("span", { className: "title" }, rich(m.title)),
-          e("span", { className: "roman" }, m.page)))),
     e("div", { className: "ot-reel", ref: reelRef, role: "group", "aria-label": m.title[0] },
       e("div", { className: "reel-perf top", "aria-hidden": "true" }),
       e("div", { className: "reel-viewport" },
@@ -2346,6 +2455,101 @@ function cvAsset(map, lang, variant) {
 }
 
 /* ============================================================
+   ToolsIndex — Instrumentos como índice tipográfico.
+   Lista alfabética em duas colunas; ao passar o mouse, uma
+   "ficha" (polaroid) abre à direita com o ícone desenhado à
+   mão do programa. Substitui o antigo .tool-cats.
+   Ícones em images/tools/<slug>.webp.
+   ============================================================ */
+const TOOL_ICONS = {
+  "Agile / Scrum": "agile-scrum", "Azure DevOps": "azure-devops", "Claude": "claude",
+  "Claude Design": "claude-design", "Cursor": "cursor", "Figma": "figma", "FigJam": "figjam",
+  "Flowmapp": "flowmapp", "Framer": "framer", "Google Antigravity": "google-antigravity",
+  "Illustrator": "illustrator", "Jira": "jira", "Maze": "maze", "Milanote": "milanote",
+  "Miro": "miro", "Mural": "mural", "Notion": "notion", "Obsidian": "obsidian",
+  "Photoshop": "photoshop", "VS Code": "vscode"
+};
+const TOOL_ORDER = ["Agile / Scrum", "Azure DevOps", "Claude", "Claude Design", "Cursor", "Figma", "FigJam", "Flowmapp", "Framer", "Google Antigravity", "Illustrator", "Jira", "Maze", "Milanote", "Miro", "Mural", "Notion", "Obsidian", "Photoshop", "VS Code"];
+
+function ToolsIndex({ tools }) {
+  const e = React.createElement;
+  const [hovered, setHovered] = useState(null);
+  const [rot, setRot] = useState(7);   // inclinação final aleatória da ficha
+  const popRef = useRef(null);
+  const anchorRef = useRef(null);
+
+  // tilt aleatório: magnitude 4–9°, sinal aleatório (evita o sempre-igual)
+  const randomTilt = () => (4 + Math.random() * 5) * (Math.random() < 0.5 ? -1 : 1);
+
+  // roman e rótulo de cada ferramenta a partir dos grupos (bilíngue, vem do data)
+  const romanOf = {}, labelOf = {};
+  tools.groups.forEach(g => { labelOf[g.roman] = g.label; g.list.forEach(n => { romanOf[n] = g.roman; }); });
+
+  const items = TOOL_ORDER.filter(n => romanOf[n]).map(n => ({
+    name: n, roman: romanOf[n], cat: labelOf[romanOf[n]],
+    icon: "images/tools/" + (TOOL_ICONS[n] || "") + ".webp"
+  }));
+  const half = Math.ceil(items.length / 2);
+  const col1 = items.slice(0, half), col2 = items.slice(half);
+
+  React.useLayoutEffect(() => {
+    const el = popRef.current, a = anchorRef.current;
+    if (!el || !a) return;
+    const w = el.offsetWidth, h = el.offsetHeight, gap = 16, M = 8;
+    let left = a.right + gap;                       // ficha abre à direita do romano
+    if (left + w > window.innerWidth - M) left = a.left - gap - w; // sem espaço → vira p/ a esquerda
+    if (left < M) left = M;
+    let top = (a.top + a.bottom) / 2 - h / 2;       // centrada na altura da linha
+    if (top < M) top = M;
+    if (top + h > window.innerHeight - M) top = window.innerHeight - M - h;
+    el.style.left = left + "px";
+    el.style.top = top + "px";
+  }, [hovered]);
+
+  const renderRow = (it) => e("div", {
+    key: it.name, className: "tools-index__row",
+    onMouseEnter: (ev) => {
+      const r = ev.currentTarget.getBoundingClientRect();
+      anchorRef.current = { left: r.left, right: r.right, top: r.top, bottom: r.bottom };
+      setRot(randomTilt());
+      setHovered(it);
+    }
+  },
+    e("span", { className: "tools-index__name" }, it.name),
+    e("span", { className: "tools-index__leader", "aria-hidden": "true" }),
+    e("span", { className: "tools-index__cat" }, it.roman)
+  );
+
+  const popup = !hovered ? null : ReactDOM.createPortal(
+    e("div", {
+      ref: popRef,
+      style: { position: "fixed", left: -999, top: 0, zIndex: 60, pointerEvents: "none" }
+    },
+      e("div", { key: hovered.name, style: { animation: "idxdrop 320ms var(--ease-out) both", transformOrigin: "50% 50%", "--idx-rot": rot + "deg" } },
+        e("div", { style: { background: "var(--paper-card)", border: "1px solid rgba(26,22,18,0.42)", boxShadow: "0 0 0 1px rgba(26,22,18,0.10), 0 12px 26px rgba(26,22,18,0.26)", padding: "8px 8px 9px", width: 118 } },
+          e("div", { style: { height: 102, display: "flex", alignItems: "center", justifyContent: "center", background: "#efe7d2", border: "1px solid rgba(26,22,18,0.26)", boxShadow: "inset 0 0 0 3px rgba(247,242,227,0.6)", overflow: "hidden" } },
+            e("img", { src: hovered.icon, alt: hovered.name, style: { width: "100%", height: "100%", objectFit: "cover", display: "block" } })
+          ),
+          e("div", { style: { fontFamily: "var(--mono)", fontSize: 9, letterSpacing: "0.04em", color: "var(--ink)", marginTop: 8, textAlign: "center" } }, hovered.name),
+          e("div", { style: { fontFamily: "var(--mono)", fontSize: 8, letterSpacing: "0.05em", color: "var(--ink-faint)", marginTop: 2, textAlign: "center" } }, tools.sup + " \u00b7 " + hovered.cat)
+        )
+      )
+    ),
+    document.body);
+
+  return e("div", { className: "tools-index" },
+    e("div", { className: "tools-index__cols", onMouseLeave: () => setHovered(null) },
+      e("div", null, col1.map(renderRow)),
+      e("div", null, col2.map(renderRow))
+    ),
+    e("div", { className: "tools-index__legend" },
+      tools.groups.map((g, i) => (i ? "  \u00b7  " : "") + g.roman + ". " + g.label).join("")
+    ),
+    popup
+  );
+}
+
+/* ============================================================
    Apparatus
    ============================================================ */
 function Apparatus({
@@ -2377,36 +2581,9 @@ function Apparatus({
     "data-page": "xvii"
   }, /*#__PURE__*/React.createElement(Reveal, null, /*#__PURE__*/React.createElement("h4", null, a.tools.label, /*#__PURE__*/React.createElement("span", {
     className: "sup"
-  }, a.tools.sup)), /*#__PURE__*/React.createElement("div", {
-    className: "tool-cats"
-  }, a.tools.groups.map((g, i) => /*#__PURE__*/React.createElement("div", {
-    className: "tool-cat",
-    key: i
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "tool-cat__head"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "tool-cat__index"
-  }, a.tools.sup + "." + g.roman), /*#__PURE__*/React.createElement("span", {
-    className: "tool-cat__label"
-  }, g.label)), /*#__PURE__*/React.createElement("ul", {
-    className: "tool-cat__list"
-  }, g.list.map((name, j) => /*#__PURE__*/React.createElement("li", {
-    className: "tool-cat__item",
-    key: j
-  }, name))))))), /*#__PURE__*/React.createElement(Reveal, {
-    delay: 1
-  }, /*#__PURE__*/React.createElement("h4", null, a.langs.label, /*#__PURE__*/React.createElement("span", {
-    className: "sup"
-  }, a.langs.sup)), /*#__PURE__*/React.createElement("div", {
-    className: "lang-set"
-  }, a.langs.list.map((l, i) => /*#__PURE__*/React.createElement("div", {
-    className: "lang-line",
-    key: i
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "name"
-  }, l.name), /*#__PURE__*/React.createElement("span", {
-    className: "level"
-  }, l.level)))))),
+  }, a.tools.sup)), /*#__PURE__*/React.createElement(ToolsIndex, {
+    tools: a.tools
+  }))),
   /* ── Curriculum: SIBLING de apparatus-grid (não filha), para ocupar
      a largura inteira do spread-narrow em vez de uma coluna de 1fr/1fr. ── */
   React.createElement(Reveal, {
@@ -2431,11 +2608,11 @@ function Apparatus({
         })
       ),
       React.createElement("div", { className: "cv-ruler" },
-        [CV_FIRST, 2015, 2019, 2023, CV_LAST].map((yr, i) => {
+        [CV_FIRST, 2015, 2019, 2022, CV_LAST].map((yr, i) => {
           const left  = ((yr - CV_FIRST) / CV_SPAN * 100).toFixed(2) + "%";
           const label = yr === CV_LAST
             ? (a.cv.rows[0].period.split("—")[1]?.trim() || String(yr))
-            : ["MMXII","MMXV","MMXIX","MMXXIII"][i];
+            : ["2011","2015","2019","2022"][i];
           return React.createElement("span", {
             key: yr, className: "cv-yr", style: { left }
           }, label);
@@ -2443,7 +2620,7 @@ function Apparatus({
       )
     ),
 
-    /* ── Text rows (unchanged) ── */
+    /* ── Text rows: nota de uma linha OU bullets detalhados ── */
     React.createElement("div", null,
       a.cv.rows.map((row, i) => React.createElement("div", {
         className: "cv-row", key: i
@@ -2453,7 +2630,29 @@ function Apparatus({
           row.role,
           React.createElement("span", { className: `firm${row.current ? " current" : ""}` }, row.firm)
         ),
-        React.createElement("div", { className: "note" }, row.note)
+        React.createElement("div", { className: "note" },
+          row.bullets
+            ? React.createElement("ul", { className: "cv-bullets" },
+                row.bullets.map((b, j) => React.createElement("li", { key: j }, b)))
+            : row.note
+        )
+      ))
+    ),
+
+    /* ── Educação: tabela iv, mesmo grid das faixas de prática ── */
+    a.edu && React.createElement("h4", { className: "cv-edu-head" }, a.edu.label,
+      React.createElement("span", { className: "sup" }, a.edu.sup)
+    ),
+    a.edu && React.createElement("div", { className: "cv-edu" },
+      a.edu.rows.map((row, i) => React.createElement("div", {
+        className: "cv-row cv-row--edu", key: i
+      },
+        React.createElement("div", { className: "period" }, row.period),
+        React.createElement("div", { className: "role" },
+          row.course,
+          React.createElement("span", { className: "firm" }, row.inst)
+        ),
+        React.createElement("div", { className: "note" }, row.kind)
       ))
     )
   ),
@@ -2496,6 +2695,44 @@ function Apparatus({
          selo; a outra espia atrás). O clique na da frente abre a versão
          web; o alternador vive nos controles à esquerda. ── */
       React.createElement("div", { className: "cv-slip-figure" },
+        /* ── Marginalia manuscrita à DIREITA da pilha: a voz do desenhista
+           apontando que a folha de trás é clicável e revela a OUTRA edição.
+           O texto é dinâmico — nomeia a edição que está escondida (a de trás),
+           não a que já está à frente. Decorativa (aria-hidden): o aria-label
+           dos cards já informa o leitor de tela. A seta curva aponta p/ a
+           ponta da folha de trás, que espia no canto superior-direito. ── */
+        (() => {
+          const hidden = cvVariant === "themed" ? "modern" : "themed";
+          return React.createElement("span", { className: "cv-flip-note", "aria-hidden": "true" },
+            React.createElement("svg", {
+              className: "cv-flip-note__arrow",
+              viewBox: "0 0 80 112",
+              fill: "none",
+              xmlns: "http://www.w3.org/2000/svg"
+            },
+              /* curva manuscrita descendo da nota até a ponta da folha de trás */
+              React.createElement("path", {
+                d: "M62 6 C 22 22, 14 56, 36 98",
+                stroke: "currentColor",
+                strokeWidth: "2.6",
+                strokeLinecap: "round"
+              }),
+              /* ponta da flecha apontando para baixo */
+              React.createElement("path", {
+                d: "M20 76 L 37 102 L 56 84",
+                stroke: "currentColor",
+                strokeWidth: "2.6",
+                strokeLinecap: "round",
+                strokeLinejoin: "round"
+              })
+            ),
+            React.createElement("span", { className: "cv-flip-note__line" }, a.cvSlip.flipNote.lead),
+            React.createElement("span", { className: "cv-flip-note__line cv-flip-note__line--tail" },
+              a.cvSlip.flipNote.tail,
+              React.createElement("em", { className: "cv-flip-note__edition" }, a.cvSlip.flipEdition[hidden])
+            )
+          );
+        })(),
         React.createElement("div", { className: "cv-stack" },
           ["themed", "modern"].map(v => {
             const isFront = v === cvVariant;

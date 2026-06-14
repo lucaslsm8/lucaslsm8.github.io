@@ -47,6 +47,7 @@
   --serif:         "EB Garamond", "Adobe Caslon Pro", "Hoefler Text", "Times New Roman", Times, serif;
   --serif-display: "Instrument Serif", "EB Garamond", serif;
   --mono:          "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+  --hand:          "Caveat", "Segoe Script", "Bradley Hand", cursive;  /* voz do desenhista — marginalia manuscrita */
 
   /* Escala tipográfica (referência — usar diretamente em components quando precisar) */
   --fs-caption:  10px;   /* metadados, page counters */

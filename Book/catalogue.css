@@ -1833,6 +1833,68 @@ body.candle .pp { background: var(--paper-card); }
 }
 .tool-cat__item:last-child { border-bottom: none; }
 
+/* ── Tools index — índice tipográfico com ficha (polaroid) no hover.
+   Substitui .tool-cats. Duas colunas; cada linha é nome … numeral
+   romano da categoria; o hover acende a linha e abre a ficha à direita
+   (posicionada via JS em ToolsIndex). ── */
+.tools-index__cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 64px;
+  margin-top: 4px;
+}
+.tools-index__row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--serif);
+  font-size: 17px;
+  color: var(--ink);
+  padding: 9px 12px;
+  margin: 0 -12px;
+  cursor: default;
+  border-radius: 2px;
+  transition: background 160ms var(--ease-out),
+              box-shadow 160ms var(--ease-out),
+              padding-left 160ms var(--ease-out);
+}
+.tools-index__row:hover {
+  background: #efe4c8;
+  box-shadow: inset 3px 0 0 0 var(--oxblood);
+  padding-left: 18px;
+}
+.tools-index__name { white-space: nowrap; }
+.tools-index__leader {
+  flex: 1;
+  border-bottom: 1px dotted var(--ink-ghost);
+  transform: translateY(-3px);
+}
+.tools-index__cat {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--ink-faint);
+}
+.tools-index__legend {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  line-height: 1.9;
+  margin-top: 22px;
+  border-top: 1px solid var(--hairline);
+  padding-top: 14px;
+}
+/* Ficha que "cai" sobre a mesa ao surgir (mesma curva da home) */
+@keyframes idxdrop {
+  0%   { opacity: 0; transform: translateY(-13px) scale(1.07) rotate(calc(var(--idx-rot, 7deg) + 3deg)); }
+  70%  { opacity: 1; transform: translateY(1px)   scale(0.985) rotate(calc(var(--idx-rot, 7deg) - 1deg)); }
+  100% { opacity: 1; transform: translateY(0)     scale(1)     rotate(var(--idx-rot, 7deg)); }
+}
+@media (max-width: 640px) {
+  .tools-index__cols { grid-template-columns: 1fr; gap: 0; }
+}
+
 /* Idiomas — três pares em linha (full-width abaixo dos instrumentos) */
 .lang-set {
   display: flex;
@@ -1916,6 +1978,42 @@ body.candle .pp { background: var(--paper-card); }
   font-size: 14px;
   color: var(--ink-soft);
   line-height: 1.5;
+}
+/* Faixas com bullets alinham pelo topo, não pela baseline. */
+.cv-row:has(.cv-bullets) { align-items: start; }
+.cv-bullets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.cv-bullets li {
+  position: relative;
+  padding-left: 16px;
+  margin-bottom: 7px;
+}
+.cv-bullets li:last-child { margin-bottom: 0; }
+.cv-bullets li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--ink-faint);
+}
+
+/* ── Formação (tab. iv): mesmo grid, cargo vira o curso ── */
+.cv-edu-head {
+  margin-top: 56px;
+}
+.cv-row--edu .role {
+  font-style: normal;
+  font-size: 16px;
+}
+.cv-row--edu .note {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
 }
 
 /* ============================================================
@@ -2657,6 +2755,45 @@ body.candle .ti-stage .cv-slip {
   z-index: 5;
 }
 
+/* ── Marginalia manuscrita à DIREITA / sobre o topo da pilha do CV —
+   voz do desenhista avisando que a folha de trás é clicável e revela a
+   OUTRA edição. Ancorada à direita (cresce p/ a esquerda → nunca estoura
+   a viewport) e assenta no respiro acima da pilha; a seta curva desce
+   até a ponta da folha de trás (que espia no canto superior-direito).
+   Caligráfica (--hand) e em oxblood, no espírito das notas de margem. ── */
+.cv-flip-note {
+  position: absolute;
+  bottom: calc(100% + 8px);    /* fica inteira no respiro creme acima da folha */
+  right: -4px;
+  width: 236px;
+  z-index: 7;
+  font-family: var(--hand);
+  font-weight: 600;
+  font-size: 23px;
+  line-height: 1.06;
+  text-align: right;
+  color: var(--oxblood);
+  transform: rotate(-2deg);
+  pointer-events: none;
+}
+.cv-flip-note__line { display: block; }
+.cv-flip-note__line--tail {
+  font-size: 20px;
+  color: var(--oxblood-deep);
+}
+.cv-flip-note__edition { font-style: normal; }
+.cv-flip-note__arrow {
+  position: absolute;
+  right: 34px;
+  top: calc(100% - 6px);       /* nasce sob a nota e desce até a folha de trás */
+  width: 50px;
+  height: 72px;
+  color: var(--oxblood);
+  /* halo creme: a seta cruza a folha escura do CV — mantém o traço legível
+     tanto no creme quanto sobre a carta escura (e no modo vela) */
+  filter: drop-shadow(0 0 1.6px var(--paper)) drop-shadow(0 0 1.6px var(--paper));
+}
+
 /* Alternador de edição (segmentado) */
 /* Controles do CV à esquerda, sob o texto (hoje só o download; a troca
    de edição mora no medalhão à direita da pilha). */
@@ -2831,6 +2968,26 @@ body.candle .cv-thumb-card.is-back .cv-thumb-img {
     max-width: 360px;
     margin: 32px auto 0;
     justify-content: center;
+  }
+  /* Marginalia NUNCA some (regra 9): vira nota inline acima da pilha,
+     centralizada, com a seta abaixo do texto apontando para as cartas. */
+  .cv-flip-note {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+    margin: 0 auto 4px;
+    text-align: center;
+    transform: rotate(-1deg);
+  }
+  .cv-flip-note__line { order: 1; }
+  .cv-flip-note__line--tail { order: 2; }
+  .cv-flip-note__arrow {
+    position: static;
+    order: 3;
+    margin: 4px auto 0;
+    transform: rotate(86deg);
   }
 }
 @media (prefers-reduced-motion: reduce) {
