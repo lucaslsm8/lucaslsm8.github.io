@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lighthouse App — Monitoramento de Produção · Lucas Schoenherr</title>
+<meta name="description" content="Estudo de caso do Lighthouse App: MVP mobile-first que substituiu a intranet legada do corredor logístico norte da Vale, por Lucas Schoenherr." />
+<!-- Open Graph / social -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Lighthouse App · Lucas Schoenherr" />
+<meta property="og:description" content="MVP mobile-first que levou os dados críticos de produção da Vale para a palma da mão dos gestores." />
+<meta property="og:locale" content="pt_BR" />
+<meta property="og:url" content="https://lucaslsm8.github.io/Book/projects/lighthouse.html" />
+<meta property="og:image" content="https://lucaslsm8.github.io/Book/images/lighthouse/capa.webp" />
+<meta property="og:image:alt" content="Capa do case Lighthouse App" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Lighthouse App · Lucas Schoenherr" />
+<meta name="twitter:description" content="MVP mobile-first que levou os dados críticos de produção da Vale para a palma da mão dos gestores." />
+<meta name="twitter:image" content="https://lucaslsm8.github.io/Book/images/lighthouse/capa.webp" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<!-- Design tokens e estilos da home + específicos do case -->
+<link rel="stylesheet" href="../design-system/tokens.css" />
+<link rel="stylesheet" href="../catalogue.css" />
+<link rel="stylesheet" href="../design-system/case-template.css" />
+</head>
+<body data-lang="pt">
+<!-- Granulação tátil de papel envelhecido -->
+<div class="paper-grain" aria-hidden="true"></div>
+
+<!-- ============================================================
+     CHROME SUPERIOR (CABEÇALHO FIXO)
+     ============================================================ -->
+<header class="chrome-top">
+  <div class="running-head">
+    <div class="scroll-compass-wrapper" aria-hidden="true" title="Bússola de Progresso">
+      <svg class="scroll-compass" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="45" stroke="var(--ink-ghost)" stroke-width="1.5" fill="none" stroke-dasharray="4 4" />
+        <circle cx="50" cy="50" r="30" stroke="var(--hairline-strong)" stroke-width="1" fill="none" />
+        <line x1="50" y1="10" x2="50" y2="90" stroke="var(--ink-soft)" stroke-width="1" />
+        <line x1="10" y1="50" x2="90" y2="50" stroke="var(--ink-soft)" stroke-width="1" />
+        <polygon points="50,20 54,50 50,55 46,50" fill="var(--oxblood)" />
+        <polygon points="50,80 54,50 50,45 46,50" fill="var(--ink-soft)" />
+        <circle cx="50" cy="50" r="4" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5" />
+      </svg>
+    </div>
+    <span>Lucas Schoenherr</span>
+    <span class="sep">·</span>
+    <em><span class="t" lang="pt">Catálogo de Obras</span><span class="t" lang="en">A Catalogue of Works</span></em>
+    <span class="sep">·</span>
+    <span><span class="t" lang="pt">Prancha III — Lighthouse</span><span class="t" lang="en">Plate III — Lighthouse</span></span>
+  </div>
+  <nav class="chrome-actions">
+    <a href="../index.html#works" class="to-catalogue">
+      <em><span class="t" lang="pt">Voltar ao catálogo</span><span class="t" lang="en">Return to catalogue</span></em>
+    </a>
+    <button class="candle-toggle" type="button" aria-pressed="false" title="Modo vela" aria-label="Modo vela">
+      <svg class="candle-icon candle-icon--off" width="22" height="18" viewBox="0 0 24 22" fill="none" aria-hidden="true">
+        <path d="M9 4.6 C 9.6 5.3, 10 5.9, 9 6.6" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" />
+        <rect x="7.2" y="6.6" width="3.6" height="6.4" fill="currentColor" />
+        <path d="M5.6 13 H12.4 L11.2 14.6 H6.8 Z" fill="currentColor" />
+        <rect x="7.4" y="14.6" width="3.2" height="1.6" fill="currentColor" />
+        <ellipse cx="9" cy="17.8" rx="8" ry="1.7" fill="currentColor" />
+        <ellipse cx="9" cy="16.8" rx="6.8" ry="0.7" fill="none" stroke="var(--paper)" stroke-width="0.5" opacity="0.55" />
+        <path d="M16.4 17.4 C 21.4 17.6, 22.8 13.4, 18.6 12.6 C 16.6 12.4, 16.6 14.4, 18.2 14.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <svg class="candle-icon candle-icon--on" width="22" height="18" viewBox="0 0 24 22" fill="none" aria-hidden="true">
+        <path d="M9 0.5 C 7.6 2.2, 7 3.7, 9 5.2 C 11 3.7, 10.4 2.2, 9 0.5 Z" fill="currentColor" opacity="0.9" />
+        <line x1="9" y1="5.2" x2="9" y2="6.6" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" />
+        <rect x="7.2" y="6.6" width="3.6" height="6.4" fill="currentColor" />
+        <path d="M5.6 13 H12.4 L11.2 14.6 H6.8 Z" fill="currentColor" />
+        <rect x="7.4" y="14.6" width="3.2" height="1.6" fill="currentColor" />
+        <ellipse cx="9" cy="17.8" rx="8" ry="1.7" fill="currentColor" />
+        <ellipse cx="9" cy="16.8" rx="6.8" ry="0.7" fill="none" stroke="var(--paper)" stroke-width="0.5" opacity="0.55" />
+        <path d="M16.4 17.4 C 21.4 17.6, 22.8 13.4, 18.6 12.6 C 16.6 12.4, 16.6 14.4, 18.2 14.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+    <div class="lang-toggle" role="group" aria-label="Language / Idioma">
+      <button class="active" type="button" data-lang="pt" aria-pressed="true">PT</button>
+      <span class="pipe">|</span>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </nav>
+</header>
+
+<main class="book">
+
+  <!-- ============================================================
+       0. FOLHA DE ROSTO (HERO CINEMATOGRÁFICA)
+       ============================================================ -->
+  <section class="case-frontispiece case-frontispiece--cinematic" data-folio>
+    <div class="frontispiece-halo" aria-hidden="true"></div>
+    <div class="sig">
+      <span class="t" lang="pt">Volume I · Prancha III · MMXXIII</span>
+      <span class="t" lang="en">Volume I · Plate III · MMXXIII</span>
+    </div>
+
+    <div class="case-num">№ 003</div>
+
+    <h1 class="case-title">
+      <span class="it">Lighthouse</span> <span class="reg">App</span>
+    </h1>
+
+    <div class="case-rule" aria-hidden="true"></div>
+
+    <p class="case-deck">
+      <span class="t" lang="pt"><span class="em">Substituindo a intranet legada do corredor logístico norte da Vale</span> por um MVP mobile-first que colocou os dados críticos de produção na palma da mão dos gestores — não apenas na sala de controle.</span>
+      <span class="t" lang="en"><span class="em">Replacing the legacy intranet of Vale's northern logistics corridor</span> with a mobile-first MVP that put critical production data in managers' hands — not only in the control room.</span>
+    </p>
+
+    <!-- Byline editorial e técnico -->
+    <dl class="case-byline case-byline--inline">
+      <div>
+        <span class="lab"><span class="t" lang="pt">Comissão</span><span class="t" lang="en">Commission</span></span>
+        <span class="val">Vale · Corredor Norte</span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Papel</span><span class="t" lang="en">Role</span></span>
+        <span class="val">Lead Product Designer · Mobile</span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Período</span><span class="t" lang="en">Period</span></span>
+        <span class="val">MMXXIII (~6 meses)</span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Escopo</span><span class="t" lang="en">Scope</span></span>
+        <span class="val">Mobile · Data-viz · Design System</span>
+      </div>
+    </dl>
+
+    <div class="frontispiece-indicator">
+      <span class="t" lang="pt">Gire a folha para iniciar a leitura</span>
+      <span class="t" lang="en">Scroll down to turn the leaf</span>
+      <span class="arrow">↓</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       EPÍGRAFE (INTERLÚDIO DE ABERTURA)
+       ============================================================ -->
+  <section class="case-epigraph" data-folio aria-label="Epigraph">
+    <div class="epigraph-inner reveal">
+      <span class="epigraph-mark" aria-hidden="true">“</span>
+      <blockquote class="epigraph-quote">
+        <span class="t" lang="pt">Um farol não move o navio: apenas torna visível, a tempo, a decisão que o capitão já precisava tomar.</span>
+        <span class="t" lang="en">A lighthouse does not move the ship: it merely makes visible, in time, the decision the captain already had to make.</span>
+      </blockquote>
+      <figcaption class="epigraph-cite">
+        <span class="t" lang="pt">— Princípio de projeto do Lighthouse</span>
+        <span class="t" lang="en">— The Lighthouse design principle</span>
+      </figcaption>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       I. ARGUMENTO & CONTEXTO (O DESAFIO)
+       ============================================================ -->
+  <section class="page case-section argument" data-folio>
+    <div class="spread">
+      <aside class="margin-l">
+        <p class="gloss" data-anchor="arg-p1">
+          <span class="gloss-num">i</span>
+          <span class="t" lang="pt">Os gestores dependiam de uma intranet desatualizada, presa ao desktop e à sala de controle.</span>
+          <span class="t" lang="en">Managers relied on an outdated intranet, chained to the desktop and the control room.</span>
+        </p>
+        <p class="gloss" data-anchor="arg-p2">
+          <span class="gloss-num">ii</span>
+          <span class="t" lang="pt">O grande desafio de design: caber um grande volume de dados complexos numa tela pequena, sem perder clareza.</span>
+          <span class="t" lang="en">The core design challenge: fitting a large volume of complex data on a small screen without losing clarity.</span>
+        </p>
+      </aside>
+
+      <div class="content">
+        <header class="section-head reveal">
+          <span class="roman">I.</span>
+          <span class="name"><span class="t" lang="pt">Argumento &amp; Contexto</span><span class="t" lang="en">Argument &amp; Context</span></span>
+          <span class="gloss"><span class="t" lang="pt">O desafio</span><span class="t" lang="en">The challenge</span></span>
+        </header>
+
+        <div class="preface">
+          <div class="body reveal">
+            <p id="arg-p1">
+              <span class="t" lang="pt">O monitoramento de produção do corredor norte da Vale vivia preso a um sistema legado baseado em intranet: interface desatualizada, falhas de segurança e uma experiência que não acompanhava as demandas da operação.<span class="fn" data-fn="1">1</span> Os gerentes — usuários principais da plataforma — não conseguiam acessar informações críticas em tempo hábil, o que impactava diretamente a velocidade e a qualidade das decisões.</span>
+              <span class="t" lang="en">Production monitoring across Vale's northern corridor was trapped in a legacy intranet system: an outdated interface, security gaps, and an experience that no longer matched the operation's demands.<span class="fn" data-fn="1">1</span> Managers — the platform's primary users — could not reach critical information in time, directly affecting the speed and quality of their decisions.</span>
+            </p>
+            <p id="arg-p2">
+              <span class="t" lang="pt">Iniciamos o projeto com sessões de <em>Design Thinking</em> reunindo stakeholders e usuários-chave. Ficou claro que a solução precisava ser <em>mobile-first</em> e equilibrar a densidade informacional com a usabilidade em telas menores, respeitando diferentes níveis de permissão e perfis de uso. A proposta: um aplicativo que unifica dados de múltiplos corredores numa única interface intuitiva, com visualização em tempo real e notificações personalizáveis.</span>
+              <span class="t" lang="en">We opened the project with <em>Design Thinking</em> sessions bringing together stakeholders and key users. It became clear the solution had to be <em>mobile-first</em> and to balance information density with small-screen usability, respecting different permission levels and user profiles. The proposal: an app unifying data from multiple corridors into a single intuitive interface, with real-time visualization and customizable notifications.</span>
+            </p>
+          </div>
+
+          <ol class="footnotes reveal">
+            <li class="fn-item" data-fn="1">
+              <span class="fn-num">1.</span>
+              <span class="t" lang="pt"><span class="it">O sistema anterior rodava sobre uma intranet corporativa, inacessível em campo e sem responsividade para dispositivos móveis.</span></span>
+              <span class="t" lang="en"><span class="it">The previous system ran on a corporate intranet, inaccessible in the field and with no responsiveness for mobile devices.</span></span>
+            </li>
+          </ol>
+        </div>
+      </div>
+      <aside class="margin-r" aria-hidden="true"></aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       II. MINHA PARTICIPAÇÃO (DRAMATIS PERSONÆ)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">II.</span>
+        <span class="name"><span class="t" lang="pt">Minha Participação</span><span class="t" lang="en">My Role &amp; Crew</span></span>
+        <span class="gloss"><span class="t" lang="pt">Dramatis personæ</span><span class="t" lang="en">Cast &amp; duties</span></span>
+      </header>
+
+      <dl class="dramatis reveal" data-stagger>
+        <div class="dramatis-block">
+          <dt><span class="t" lang="pt">Responsabilidade</span><span class="t" lang="en">Responsibility</span></dt>
+          <dd>
+            Lead Product Designer
+            <span class="role"><span class="t" lang="pt">Discovery, arquitetura da informação, design system mobile e protótipo navegável de ponta a ponta</span><span class="t" lang="en">Discovery, information architecture, the mobile design system, and an end-to-end navigable prototype</span></span>
+          </dd>
+        </div>
+        <div class="dramatis-block">
+          <dt><span class="t" lang="pt">Método</span><span class="t" lang="en">Method</span></dt>
+          <dd>
+            <span class="t" lang="pt">Ágil &amp; Componentização</span><span class="t" lang="en">Agile &amp; Componentization</span>
+            <span class="role"><span class="t" lang="pt">Processo focado em escalabilidade, com ênfase em melhores práticas para interfaces mobile e web</span><span class="t" lang="en">A process focused on scalability, emphasizing best practices for mobile and web interfaces</span></span>
+          </dd>
+        </div>
+        <div class="dramatis-block">
+          <dt><span class="t" lang="pt">Stakeholders</span><span class="t" lang="en">Stakeholders</span></dt>
+          <dd>
+            <span class="t" lang="pt">Operações · TI · Gerência</span><span class="t" lang="en">Operations · IT · Management</span>
+            <span class="role"><span class="t" lang="pt">Reuniões semanais de alinhamento para apresentar avanços, coletar feedback e negociar prazos</span><span class="t" lang="en">Weekly alignment meetings to present progress, gather feedback, and negotiate deadlines</span></span>
+          </dd>
+        </div>
+        <div class="dramatis-block">
+          <dt><span class="t" lang="pt">Objetivo Estratégico</span><span class="t" lang="en">Strategic Goal</span></dt>
+          <dd>
+            <span class="t" lang="pt">Decisão mais ágil</span><span class="t" lang="en">Faster decisions</span>
+            <span class="role"><span class="t" lang="pt">Agilizar a tomada de decisão e criar um canal de comunicação eficiente entre as equipes</span><span class="t" lang="en">Accelerate decision-making and build an efficient communication channel between teams</span></span>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       III. ATOS DO PROCESSO (TIMELINE)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">III.</span>
+        <span class="name"><span class="t" lang="pt">Atos do Processo</span><span class="t" lang="en">Acts of the Process</span></span>
+        <span class="gloss"><span class="t" lang="pt">Cronologia do MVP</span><span class="t" lang="en">MVP timeline</span></span>
+      </header>
+
+      <div class="timeline-container">
+        <ol class="timeline-axis" data-stagger>
+          <li class="timeline-node">
+            <span class="node-date">MMXXIII · Fase I</span>
+            <div class="node-badge">I</div>
+            <div class="node-content">
+              <h3 class="node-title"><span class="t" lang="pt">Design Thinking &amp; Discovery</span><span class="t" lang="en">Design Thinking &amp; Discovery</span></h3>
+              <p><span class="t" lang="pt">Sessões com stakeholders e usuários-chave para mapear as dores do sistema legado e as necessidades reais da operação em campo.</span><span class="t" lang="en">Sessions with stakeholders and key users to map the legacy system's pains and the operation's real field needs.</span></p>
+            </div>
+          </li>
+          <li class="timeline-node">
+            <span class="node-date">MMXXIII · Fase II</span>
+            <div class="node-badge">II</div>
+            <div class="node-content">
+              <h3 class="node-title"><span class="t" lang="pt">Arquitetura &amp; Priorização do MVP</span><span class="t" lang="en">Architecture &amp; MVP Scoping</span></h3>
+              <p><span class="t" lang="pt">Recorte no corredor norte, priorizando o core: dados em tempo real, permissões hierárquicas e comunicação entre equipes.</span><span class="t" lang="en">Scoping down to the northern corridor, prioritizing the core: real-time data, hierarchical permissions, and team communication.</span></p>
+            </div>
+          </li>
+          <li class="timeline-node">
+            <span class="node-date">MMXXIII · Fase III</span>
+            <div class="node-badge">III</div>
+            <div class="node-content">
+              <h3 class="node-title"><span class="t" lang="pt">Design System &amp; Cards</span><span class="t" lang="en">Design System &amp; Cards</span></h3>
+              <p><span class="t" lang="pt">Construção de um sistema robusto com 8 variações de cards de informação e um código de cores de prioridade intuitivo.</span><span class="t" lang="en">Building a robust system with 8 information-card variations and an intuitive priority color code.</span></p>
+            </div>
+          </li>
+          <li class="timeline-node">
+            <span class="node-date">MMXXIII · Fase IV</span>
+            <div class="node-badge">IV</div>
+            <div class="node-content">
+              <h3 class="node-title"><span class="t" lang="pt">Protótipo, Handoff &amp; Entrega</span><span class="t" lang="en">Prototype, Handoff &amp; Delivery</span></h3>
+              <p><span class="t" lang="pt">Protótipo navegável aprovado por unanimidade pelo steering, com documentação e design system encaminhados ao time de desenvolvimento.</span><span class="t" lang="en">A navigable prototype approved unanimously by the steering committee, with documentation and the design system handed to the development team.</span></p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       IV. PESQUISA & REVELAÇÕES (INSIGHTS)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread">
+      <aside class="margin-l">
+        <div class="parchment-stamp" aria-hidden="true">
+          <span class="st-num">INSIGHTS</span>
+        </div>
+      </aside>
+      <div class="content">
+        <header class="section-head reveal">
+          <span class="roman">IV.</span>
+          <span class="name"><span class="t" lang="pt">Pesquisa &amp; Revelações</span><span class="t" lang="en">Discovery &amp; Insights</span></span>
+          <span class="gloss"><span class="t" lang="pt">Achados qualitativos</span><span class="t" lang="en">Qualitative findings</span></span>
+        </header>
+
+        <div class="insights-grid reveal" data-stagger>
+          <div class="insight-card">
+            <span class="card-num">01.</span>
+            <h4 class="card-title"><span class="t" lang="pt">A decisão é móvel</span><span class="t" lang="en">Decisions are mobile</span></h4>
+            <p><span class="t" lang="pt">Os gestores raramente estão sentados à mesa de controle. O dado precisa ir até onde a decisão acontece — no pátio, em trânsito, no celular — e não o contrário.</span><span class="t" lang="en">Managers are rarely seated at the control desk. Data must travel to where the decision happens — in the yard, in transit, on the phone — not the other way around.</span></p>
+          </div>
+          <div class="insight-card">
+            <span class="card-num">02.</span>
+            <h4 class="card-title"><span class="t" lang="pt">Densidade exige hierarquia</span><span class="t" lang="en">Density demands hierarchy</span></h4>
+            <p><span class="t" lang="pt">Cabe muita informação numa tela pequena — desde que o que é crítico salte primeiro. A cor de prioridade e a hierarquia visual fazem o feed ser escaneável em segundos.</span><span class="t" lang="en">A small screen can hold a lot — as long as what is critical surfaces first. Priority color and visual hierarchy make the feed scannable in seconds.</span></p>
+          </div>
+        </div>
+      </div>
+      <aside class="margin-r" aria-hidden="true"></aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       V. COMPARAÇÃO & RESTAURO (BEFORE / AFTER)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">V.</span>
+        <span class="name"><span class="t" lang="pt">Comparação &amp; Restauro</span><span class="t" lang="en">Comparison &amp; Restoration</span></span>
+        <span class="gloss"><span class="t" lang="pt">Intranet &amp; Lighthouse</span><span class="t" lang="en">Intranet &amp; Lighthouse</span></span>
+      </header>
+
+      <div class="comparisons-intro">
+        <p><span class="t" lang="pt">Deslize o selo central de latão para examinar a passagem do legado ao novo: à esquerda, a intranet fragmentada presa ao desktop (em pergaminho cru e ruído de época); à direita, a clareza mobile-first do Lighthouse.</span>
+           <span class="t" lang="en">Slide the central brass seal to examine the move from legacy to new: on the left, the fragmented desktop-bound intranet (in raw parchment and period grain); on the right, the mobile-first clarity of Lighthouse.</span></p>
+      </div>
+
+      <div class="before-after-slider reveal">
+        <!-- Lado After (O Novo — Lighthouse) -->
+        <div class="slider-side slider-after">
+          <div class="slider-content font-serif-display">
+            <span class="p-label font-mono">ANVERSO · LIGHTHOUSE MOBILE</span>
+            <div class="restoration-preview pristine-state">
+              <span class="rest-star font-serif-display">✦</span>
+              <h3><span class="t" lang="pt">Dados em tempo real, na mão</span><span class="t" lang="en">Real-time data, in hand</span></h3>
+              <p class="font-serif"><span class="t" lang="pt">Feed mobile com cards de prioridade e notificações por área, escaneável em segundos.</span><span class="t" lang="en">A mobile feed with priority cards and per-area alerts, scannable in seconds.</span></p>
+            </div>
+          </div>
+        </div>
+        <!-- Lado Before (O Legado Envelhecido) -->
+        <div class="slider-side slider-before">
+          <div class="slider-content font-serif-display">
+            <span class="p-label font-mono">FRAGMENTO · INTRANET LEGADA</span>
+            <div class="restoration-preview aged-legacy-state">
+              <span class="rest-star font-serif-display">⚓</span>
+              <h3><span class="t" lang="pt">Intranet presa ao desktop</span><span class="t" lang="en">Desktop-bound intranet</span></h3>
+              <p class="font-serif"><span class="t" lang="pt">Interface desatualizada, sem mobilidade e com falhas de segurança.</span><span class="t" lang="en">An outdated interface, no mobility, and security gaps.</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="slider-handle">
+          <div class="handle-seal">
+            <span class="seal-glyph">✦</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VI. A SOLUÇÃO & MOLDURAS (MOCKUPS)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread">
+      <aside class="margin-l" aria-hidden="true"></aside>
+      <div class="content">
+        <header class="section-head reveal">
+          <span class="roman">VI.</span>
+          <span class="name"><span class="t" lang="pt">A Solução &amp; Molduras</span><span class="t" lang="en">The Solution &amp; Framing</span></span>
+          <span class="gloss"><span class="t" lang="pt">Telas em moldura</span><span class="t" lang="en">Mounted screens</span></span>
+        </header>
+
+        <div class="showcases-intro">
+          <p><span class="t" lang="pt">A solução foi construída em torno de cards responsivos que apresentam dados em tempo real, organizados por um código de cores de prioridade. Notificações personalizáveis filtram alertas por área — porto, minas, ferrovias. Abaixo, as telas montadas em moldura. <em>Imagens em placeholder até as telas definitivas.</em></span>
+             <span class="t" lang="en">The solution was built around responsive cards presenting real-time data, organized by a priority color code. Customizable notifications filter alerts by area — port, mines, railways. Below, the screens are shown mounted. <em>Placeholder images until the final screens are ready.</em></span></p>
+        </div>
+
+        <div class="showcases-flex reveal">
+          <!-- Moldura Mobile (Formato B — Artesanal/3D) -->
+          <div class="showcase-block">
+            <h5><span class="t" lang="pt">Feed principal — Mobile (Formato B)</span><span class="t" lang="en">Main feed — Mobile (Format B)</span></h5>
+            <div class="mockup-mobile format-b">
+              <div class="mockup-inner-frame">
+                <div class="mockup-speaker"></div>
+                <div class="mockup-body">
+                  <div class="mockup-screen-content">
+                    <div class="mockup-screen-glare"></div>
+                    <div class="screenshot-placeholder">
+                      <span class="placeholder-caption">[ Feed de cards · prioridades ]</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="mockup-home-button"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Moldura Desktop (Formato A — Editorial) — painel da sala de controle -->
+          <div class="showcase-block">
+            <h5><span class="t" lang="pt">Painel de apoio — Desktop (Formato A)</span><span class="t" lang="en">Support panel — Desktop (Format A)</span></h5>
+            <div class="mockup-desktop format-a">
+              <div class="mockup-header">
+                <div class="mockup-dots">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="mockup-address">lighthouse.vale/corredor-norte/painel</div>
+              </div>
+              <div class="mockup-body">
+                <div class="mockup-screen-content">
+                  <div class="mockup-screen-glare"></div>
+                  <div class="screenshot-placeholder">
+                    <span class="placeholder-caption">[ Visão consolidada de produção ]</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="margin-r" aria-hidden="true"></aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VII. SISTEMA DE PRIORIDADES (PIGMENTOS)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">VII.</span>
+        <span class="name"><span class="t" lang="pt">Sistema de Prioridades</span><span class="t" lang="en">Priority System</span></span>
+        <span class="gloss"><span class="t" lang="pt">Pigmentos &amp; status</span><span class="t" lang="en">Pigments &amp; status</span></span>
+      </header>
+
+      <div class="specimen-container reveal">
+        <div class="specimen-column pigment-specimen">
+          <h5><span class="t" lang="pt">Código de Cores de Prioridade</span><span class="t" lang="en">Priority Color Code</span></h5>
+          <div class="pigments-flex">
+            <div class="pigment-swatch" style="background:#3f6f4e;" title="Normal / Verde">
+              <span class="sw-label" style="color: var(--paper)">Verde</span>
+            </div>
+            <div class="pigment-swatch" style="background:#c79a2e;" title="Atenção / Amarelo">
+              <span class="sw-label" style="color:#2a2018">Amarelo</span>
+            </div>
+            <div class="pigment-swatch" style="background:#345b7d;" title="Informativo / Azul">
+              <span class="sw-label" style="color: var(--paper)">Azul</span>
+            </div>
+            <div class="pigment-swatch" style="background:#7a2620;" title="Crítico / Vermelho">
+              <span class="sw-label" style="color: var(--paper)">Vermelho</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="specimen-column font-specimen">
+          <h5><span class="t" lang="pt">Leitura do sistema</span><span class="t" lang="en">Reading the system</span></h5>
+          <div class="sp-row">
+            <span class="sp-tag">Verde</span>
+            <span class="sp-sample font-serif"><span class="t" lang="pt">Operação dentro do esperado</span><span class="t" lang="en">Operation within target</span></span>
+          </div>
+          <div class="sp-row">
+            <span class="sp-tag">Amarelo</span>
+            <span class="sp-sample font-serif"><span class="t" lang="pt">Atenção — exige acompanhamento</span><span class="t" lang="en">Attention — needs watching</span></span>
+          </div>
+          <div class="sp-row">
+            <span class="sp-tag">Azul</span>
+            <span class="sp-sample font-serif"><span class="t" lang="pt">Informativo / contextual</span><span class="t" lang="en">Informational / contextual</span></span>
+          </div>
+          <div class="sp-row">
+            <span class="sp-tag">Vermelho</span>
+            <span class="sp-sample font-serif"><span class="t" lang="pt">Crítico — ação imediata</span><span class="t" lang="en">Critical — immediate action</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       INTERMEZZO (PULL-QUOTE CINEMATOGRÁFICA)
+       ============================================================ -->
+  <section class="case-intermezzo" data-folio aria-label="Intermezzo">
+    <span class="intermezzo-bg l1" data-speed="0.15" aria-hidden="true">⁂</span>
+    <span class="intermezzo-bg l2" data-speed="-0.08" aria-hidden="true">❧</span>
+    <div class="intermezzo-inner reveal">
+      <span class="intermezzo-label">Intermezzo</span>
+      <p class="intermezzo-quote">
+        <span class="t" lang="pt">Modernizar um sistema legado não é repintar a fachada: é decidir, com coragem, o que cabe na palma da mão de quem decide.</span>
+        <span class="t" lang="en">Modernizing a legacy system is not repainting the façade: it is deciding, with courage, what fits in the hand of the one who decides.</span>
+      </p>
+      <span class="intermezzo-asterism" aria-hidden="true">⁂</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VIII. ESBOÇOS & WIREFRAMES (FLIP ANVERSO/VERSO)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread">
+      <aside class="margin-l" aria-hidden="true"></aside>
+      <div class="content">
+        <header class="section-head reveal">
+          <span class="roman">VIII.</span>
+          <span class="name"><span class="t" lang="pt">Esboços &amp; Wireframes</span><span class="t" lang="en">Sketches &amp; Wireframes</span></span>
+          <span class="gloss"><span class="t" lang="pt">Estruturas modulares</span><span class="t" lang="en">Modular skeletons</span></span>
+        </header>
+
+        <div class="wireframes-intro">
+          <p><span class="t" lang="pt">Cada card foi esboçado no grid antes de receber o polimento final. Examine o espécime do card de produção: clique para girar a prancha em 3D e revelar o <em>verso</em> — as linhas-guia e proporções que sustentam o componente.</span>
+             <span class="t" lang="en">Each card was drafted on the grid before final polish. Examine the production-card specimen: click to flip the plate in 3D and reveal the <em>verso</em> — the guides and proportions behind the component.</span></p>
+        </div>
+
+        <div class="plates-3d-grid reveal">
+          <div class="plate-3d-wrapper">
+            <div class="plate-3d-card" tabindex="0" role="button" aria-label="Girar prancha / Flip plate">
+              <div class="plate-3d-side plate-3d-front">
+                <span class="p-label">RECTO · CARD DE PRODUÇÃO</span>
+                <div class="plate-inner-content placeholder-sketch font-design">
+                  <span class="sketch-glyph">✦</span>
+                  <span class="sketch-txt">Card · Corredor Norte</span>
+                </div>
+              </div>
+              <div class="plate-3d-side plate-3d-back">
+                <span class="p-label">VERSO · GRID DO COMPONENTE</span>
+                <div class="plate-inner-content wireframe-grid">
+                  <div class="diagonal-guide"></div>
+                  <span class="sketch-txt">Grid 8px · prioridade</span>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn-flip-trigger">
+              <span class="t" lang="pt">Examine o Verso (Wireframe)</span>
+              <span class="t" lang="en">Examine the Verso (Wireframe)</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <aside class="margin-r" aria-hidden="true"></aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       IX. PRANCHA COM LUNETA (EXAME AMPLIADO)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread">
+      <aside class="margin-l">
+        <p class="gloss" data-anchor="loupe-anchor">
+          <span class="gloss-num">iii</span>
+          <span class="t" lang="pt">Passe o cursor sobre a prancha: a luneta amplia o detalhe do card, como ao examinar uma gravura.</span>
+          <span class="t" lang="en">Hover over the plate: the loupe magnifies the card detail, as when examining an engraving.</span>
+        </p>
+      </aside>
+      <div class="content">
+        <header class="section-head reveal">
+          <span class="roman">IX.</span>
+          <span class="name"><span class="t" lang="pt">Prancha com Luneta</span><span class="t" lang="en">Plate with Loupe</span></span>
+          <span class="gloss"><span class="t" lang="pt">Exame ampliado</span><span class="t" lang="en">Magnified examination</span></span>
+        </header>
+
+        <div class="reveal" id="loupe-anchor">
+          <div class="loupe-demo-plate">
+            <div class="loupe-demo-art">
+              <p class="lda-title">Card · Corredor Norte</p>
+              <p class="lda-line"><span class="t" lang="pt">Detalhe do card de produção — a luneta revela a fineza do dado.</span><span class="t" lang="en">Production-card detail — the loupe reveals the fineness of the data.</span></p>
+              <p class="lda-fine">LIGHTHOUSE · VALE · CORREDOR · NORTE · MMXXIII · PRODUÇÃO · EM · TEMPO · REAL · CARDS · PRIORIDADE · VERDE · AMARELO · AZUL · VERMELHO · NOTIFICAÇÕES · PORTO · MINAS · FERROVIAS · ✦ · ✦ · ✦</p>
+              <p class="lda-fine">i · ii · iii · iv · v · vi · vii · viii · ix · x · xi · xii · 0123456789 · §§ · ‹/› · — · ·</p>
+            </div>
+            <span class="loupe-demo-hint"><span class="t" lang="pt">Passe o cursor</span><span class="t" lang="en">Hover here</span></span>
+            <div class="loupe-demo-lens" aria-hidden="true">
+              <img class="loupe-demo-frame" src="../images/home/Lupa2.webp" alt="" aria-hidden="true" />
+              <div class="loupe-demo-glass"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="margin-r" aria-hidden="true"></aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       X. GALERIA (CARROSSEL — PASTA DE COLECIONADOR)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">X.</span>
+        <span class="name"><span class="t" lang="pt">Galeria de Pranchas</span><span class="t" lang="en">Plate Gallery</span></span>
+        <span class="gloss"><span class="t" lang="pt">Pasta de colecionador</span><span class="t" lang="en">Collector's portfolio</span></span>
+      </header>
+
+      <div class="comparisons-intro">
+        <p><span class="t" lang="pt">Telas complementares do MVP: overview, detalhamentos e materiais de apresentação. <em>Imagens em placeholder até as telas definitivas.</em></span>
+           <span class="t" lang="en">Complementary MVP screens: overview, detail views, and presentation materials. <em>Placeholder images until the final screens are ready.</em></span></p>
+      </div>
+
+      <div class="vitrine-carousel reveal" aria-roledescription="carousel">
+        <div class="carousel-frame">
+          <div class="carousel-viewport">
+            <div class="carousel-track">
+              <div class="carousel-slide is-active">
+                <div class="carousel-plate">
+                  <span class="carousel-plate-corner tl"></span><span class="carousel-plate-corner tr"></span>
+                  <span class="carousel-plate-corner bl"></span><span class="carousel-plate-corner br"></span>
+                  <div class="carousel-plate-cut"><span class="placeholder-caption">[ Overview · feed ]</span></div>
+                  <div class="carousel-plate-cap"><span class="comp-roman">Plate I</span><span class="comp-label"><span class="t" lang="pt">Overview</span><span class="t" lang="en">Overview</span></span></div>
+                </div>
+              </div>
+              <div class="carousel-slide">
+                <div class="carousel-plate">
+                  <span class="carousel-plate-corner tl"></span><span class="carousel-plate-corner tr"></span>
+                  <span class="carousel-plate-corner bl"></span><span class="carousel-plate-corner br"></span>
+                  <div class="carousel-plate-cut"><span class="placeholder-caption">[ Detalhe do card ]</span></div>
+                  <div class="carousel-plate-cap"><span class="comp-roman">Plate II</span><span class="comp-label"><span class="t" lang="pt">Detalhe</span><span class="t" lang="en">Detail</span></span></div>
+                </div>
+              </div>
+              <div class="carousel-slide">
+                <div class="carousel-plate">
+                  <span class="carousel-plate-corner tl"></span><span class="carousel-plate-corner tr"></span>
+                  <span class="carousel-plate-corner bl"></span><span class="carousel-plate-corner br"></span>
+                  <div class="carousel-plate-cut"><span class="placeholder-caption">[ Notificações ]</span></div>
+                  <div class="carousel-plate-cap"><span class="comp-roman">Plate III</span><span class="comp-label"><span class="t" lang="pt">Notificações</span><span class="t" lang="en">Notifications</span></span></div>
+                </div>
+              </div>
+              <div class="carousel-slide">
+                <div class="carousel-plate">
+                  <span class="carousel-plate-corner tl"></span><span class="carousel-plate-corner tr"></span>
+                  <span class="carousel-plate-corner bl"></span><span class="carousel-plate-corner br"></span>
+                  <div class="carousel-plate-cut"><span class="placeholder-caption">[ Componentes do DS ]</span></div>
+                  <div class="carousel-plate-cap"><span class="comp-roman">Plate IV</span><span class="comp-label"><span class="t" lang="pt">Design System</span><span class="t" lang="en">Design System</span></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-nav">
+            <button class="carousel-arrow carousel-prev" type="button" aria-label="Prancha anterior">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12 H19"/><path d="M13 6 L19 12 L13 18"/></svg>
+            </button>
+            <span class="carousel-counter"><span data-carousel-current>I</span><span class="of">/</span><span data-carousel-total>IV</span></span>
+            <button class="carousel-arrow carousel-next" type="button" aria-label="Próxima prancha">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12 H19"/><path d="M13 6 L19 12 L13 18"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="carousel-dots" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       XI. BASTIDORES & CRUX
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">XI.</span>
+        <span class="name"><span class="t" lang="pt">Bastidores &amp; Crux</span><span class="t" lang="en">Behind the Scenes &amp; Crux</span></span>
+        <span class="gloss"><span class="t" lang="pt">A grande barreira</span><span class="t" lang="en">The hard constraint</span></span>
+      </header>
+
+      <div class="crux-alert reveal">
+        <div class="wax-seal-wrapper" aria-hidden="true">
+          <div class="wax-seal">
+            <span class="seal-logo">L.S</span>
+          </div>
+        </div>
+        <div class="crux-content">
+          <h4 class="crux-title"><span class="t" lang="pt">A Crux: densidade sem perder clareza</span><span class="t" lang="en">The Crux: density without losing clarity</span></h4>
+          <p><span class="t" lang="pt">O ponto mais duro foi apresentar um grande volume de dados complexos numa tela pequena, atendendo a diferentes níveis de permissão sem sobrecarregar o gestor. A virada veio da componentização: oito variações de cards reutilizáveis e um código de cores de prioridade deram consistência ao feed e permitiram que o crítico saltasse primeiro. Houve, ainda, o desafio humano — prazos apertados e conflitos de agenda exigiram negociação constante e reuniões semanais de alinhamento para manter o escopo do MVP.</span>
+             <span class="t" lang="en">The hardest part was presenting a large volume of complex data on a small screen, serving different permission levels without overwhelming the manager. The breakthrough came from componentization: eight reusable card variations and a priority color code gave the feed consistency and let the critical surface first. There was also the human challenge — tight deadlines and scheduling conflicts demanded constant negotiation and weekly alignment meetings to hold the MVP's scope.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       XII. INSTRUMENTARIUM
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">XII.</span>
+        <span class="name">Instrumentarium</span>
+        <span class="gloss"><span class="t" lang="pt">Instrumentos &amp; métodos</span><span class="t" lang="en">Tools &amp; methods</span></span>
+      </header>
+
+      <ul class="instruments" data-stagger>
+        <li class="instrument">
+          <span class="inst-glyph font-serif-display" aria-hidden="true">✶</span>
+          <span class="inst-name">Figma</span>
+          <span class="inst-desc"><span class="t" lang="pt">Design system mobile próprio, componentes e protótipo navegável de ponta a ponta</span><span class="t" lang="en">In-house mobile design system, components, and an end-to-end navigable prototype</span></span>
+        </li>
+        <li class="instrument">
+          <span class="inst-glyph font-serif-display" aria-hidden="true">✧</span>
+          <span class="inst-name">Miro</span>
+          <span class="inst-desc"><span class="t" lang="pt">Design Thinking, mapeamento de fluxos e síntese da pesquisa com stakeholders</span><span class="t" lang="en">Design Thinking, flow mapping, and synthesis of stakeholder research</span></span>
+        </li>
+        <li class="instrument">
+          <span class="inst-glyph font-serif-display" aria-hidden="true">⚙</span>
+          <span class="inst-name"><span class="t" lang="pt">Ágil &amp; Scrum</span><span class="t" lang="en">Agile &amp; Scrum</span></span>
+          <span class="inst-desc"><span class="t" lang="pt">Ciclos curtos, reuniões semanais de alinhamento e handoff documentado para o dev</span><span class="t" lang="en">Short cycles, weekly alignment meetings, and a documented handoff to dev</span></span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       XIII. RESULTADOS & IMPACTO (COUNT-UP)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread">
+      <aside class="margin-l" aria-hidden="true"></aside>
+      <div class="content">
+        <header class="section-head reveal">
+          <span class="roman">XIII.</span>
+          <span class="name"><span class="t" lang="pt">Resultados &amp; Impacto</span><span class="t" lang="en">Outcomes &amp; Impact</span></span>
+          <span class="gloss"><span class="t" lang="pt">Entrega do MVP</span><span class="t" lang="en">MVP delivery</span></span>
+        </header>
+
+        <p class="results-intro reveal"><span class="t" lang="pt">A apresentação final do MVP foi recebida com entusiasmo: o protótipo navegável foi aprovado por unanimidade pelo steering de Operações, TI e gerência, e encaminhado ao time de desenvolvimento com documentação e design system completos.</span>
+           <span class="t" lang="en">The final MVP presentation was met with enthusiasm: the navigable prototype was approved unanimously by the steering committee of Operations, IT, and management, and handed to the development team with full documentation and design system.</span></p>
+
+        <aside class="marginalia-stat reveal">
+          <dl>
+            <div>
+              <dt><span class="unit unit-pre">+</span><span class="stat-val" data-count="40">0</span></dt>
+              <dd><span class="t" lang="pt">componentes no design system mobile</span><span class="t" lang="en">components in the mobile design system</span></dd>
+            </div>
+            <div>
+              <dt><span class="unit unit-pre">~</span><span class="stat-val" data-count="200">0</span></dt>
+              <dd><span class="t" lang="pt">gestores potencialmente impactados</span><span class="t" lang="en">managers potentially impacted</span></dd>
+            </div>
+            <div>
+              <dt><span class="stat-val" data-count="2">0</span></dt>
+              <dd><span class="t" lang="pt">plataformas previstas — iOS &amp; Android</span><span class="t" lang="en">planned platforms — iOS &amp; Android</span></dd>
+            </div>
+          </dl>
+        </aside>
+
+        <div class="fiction-note reveal">
+          <span><span class="t" lang="pt">Todos os dados e métricas exibidos nas telas são fictícios, gerados apenas para demonstração, e não refletem informações reais da empresa ou de suas operações. Números de impacto são projeções da fase de MVP.</span><span class="t" lang="en">All data and metrics shown in the screens are fictional, generated for demonstration only, and do not reflect the company's real information or operations. Impact figures are MVP-stage projections.</span></span>
+        </div>
+      </div>
+      <aside class="margin-r" aria-hidden="true"></aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       XIV. ERRATA (APRENDIZADOS)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">XIV.</span>
+        <span class="name">Errata</span>
+        <span class="gloss"><span class="t" lang="pt">Lições e revisões</span><span class="t" lang="en">Lessons &amp; revisions</span></span>
+      </header>
+
+      <ol class="errata-list" data-stagger>
+        <li class="errata-item">
+          <span class="errata-tag"><span class="t" lang="pt">Para a p. 04</span><span class="t" lang="en">For p. 04</span></span>
+          <p class="t" lang="pt">
+            <span class="strike">Onde se imaginou um único card capaz de servir a todos os contextos de produção...</span>
+            — <span class="em">A realidade pediu oito variações modulares, cada uma afinada para um tipo de dado. A componentização foi o que tornou o produto escalável e preparado para outros corredores.</span>
+          </p>
+          <p class="t" lang="en">
+            <span class="strike">Where we imagined a single card able to serve every production context...</span>
+            — <span class="em">Reality demanded eight modular variations, each tuned to a data type. Componentization is what made the product scalable and ready for other corridors.</span>
+          </p>
+        </li>
+        <li class="errata-item">
+          <span class="errata-tag"><span class="t" lang="pt">Para a p. 11</span><span class="t" lang="en">For p. 11</span></span>
+          <p class="t" lang="pt">
+            <span class="strike">Onde se subestimou o custo de prazos apertados e agendas conflitantes...</span>
+            — <span class="em">A gestão de relacionamento e expectativas mostrou-se tão decisiva quanto o design. Reuniões semanais de alinhamento mantiveram o escopo do MVP firme até a entrega.</span>
+          </p>
+          <p class="t" lang="en">
+            <span class="strike">Where we underestimated the cost of tight deadlines and conflicting schedules...</span>
+            — <span class="em">Managing relationships and expectations proved as decisive as design itself. Weekly alignment meetings kept the MVP scope steady through delivery.</span>
+          </p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       COLOPHÃO & EPÍLOGO
+       ============================================================ -->
+  <section class="case-colophon" data-folio>
+    <div class="ornament">✦</div>
+    <p class="case-colophon-body">
+      <span class="t" lang="pt">Esta prancha foi composta pelo autor em <em>MMXXIII</em> para a Vale, no corredor logístico norte. As telas e métricas exibidas são fictícias, servindo como estudo conceitual de modernização de sistema legado e design sistemático mobile, sob os parâmetros de confidencialidade acordados.</span>
+      <span class="t" lang="en">This plate was set by the author in <em>MMXXIII</em> for Vale, in the northern logistics corridor. The screens and figures shown are fictional, serving as a conceptual specimen of legacy-system modernization and mobile systems design, under the agreed confidentiality guidelines.</span>
+    </p>
+    <div class="case-colophon-meta">Plate III · Vol. I · MMXXIII</div>
+  </section>
+
+  <!-- Navegação de Folios (Verso/Recto) -->
+  <nav class="folio-nav" aria-label="Navegação entre cases">
+    <a class="verso" href="./pmo-dashboards.html" rel="prev">
+      <span class="folio-marker"><span class="t" lang="pt">← Prancha II (Anverso)</span><span class="t" lang="en">← Plate II (Anverso)</span></span>
+      <span class="folio-title"><em>PMO Dashboards</em></span>
+    </a>
+    <a class="recto" href="../index.html#works" rel="next">
+      <span class="folio-marker"><span class="t" lang="pt">Catálogo (Recto) →</span><span class="t" lang="en">Catalogue (Recto) →</span></span>
+      <span class="folio-title"><em><span class="t" lang="pt">Catálogo de Obras</span><span class="t" lang="en">A Catalogue of Works</span></em></span>
+    </a>
+  </nav>
+
+</main>
+
+<!-- ============================================================
+     CHROME INFERIOR (CONTADOR DE PÁGINAS)
+     ============================================================ -->
+<footer class="chrome-bot">
+  <div class="page-counter" aria-hidden="true">
+    <span class="num" data-counter-current>—</span>
+    <span class="of">/ <span data-counter-total>—</span></span>
+  </div>
+  <div class="ink-progress" aria-hidden="true"></div>
+  <div class="page-counter">
+    <span class="of"><span class="t" lang="pt">Prancha</span><span class="t" lang="en">Plate</span></span>
+    <span class="num">III</span>
+  </div>
+</footer>
+
+<!-- Interações da página de case -->
+<script src="./case-template.js"></script>
+</body>
+</html>

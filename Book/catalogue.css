@@ -78,31 +78,84 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   letter-spacing: 0.02em;
   text-transform: none;
   color: var(--ink-soft);
+  display: inline-flex;
+  align-items: center;
 }
 .chrome-top .running-head .sep {
   display: inline-block;
   margin: 0 14px;
   color: var(--ink-ghost);
 }
+.chrome-top .running-head-home {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s var(--ease-out);
+}
+.chrome-top .running-head-home:hover,
+.chrome-top .running-head-home:focus-visible {
+  color: var(--ink);
+}
+.chrome-top .running-head-home:focus-visible {
+  outline: 1px solid var(--ink-ghost);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
 .chrome-top .running-head-link {
   color: inherit;
   text-decoration: none;
-  background-image: linear-gradient(currentColor, currentColor);
-  background-repeat: no-repeat;
-  background-position: 0 100%;
-  background-size: 0% 1px;
-  transition: background-size 0.45s var(--ease-out), color 0.3s var(--ease-out);
+  transition: color 0.3s var(--ease-out);
 }
 .chrome-top .running-head-link:hover,
 .chrome-top .running-head-link:focus-visible {
   color: var(--ink);
-  background-size: 100% 1px;
 }
 .chrome-top .running-head-link:focus-visible {
   outline: 1px solid var(--ink-ghost);
   outline-offset: 3px;
   border-radius: 1px;
 }
+/* Mobile/tablet: o chrome fixo ganha um véu de papel para o conteúdo
+   não vazar por baixo dos ícones/idioma ao rolar (no desktop os controles
+   ficam nas bordas e não sobrepõem o texto centralizado). Fade suave,
+   não barra dura; usa var(--paper) p/ acompanhar o modo vela. */
+@media (max-width: 1024px) {
+  .chrome-top {
+    padding-bottom: 26px;
+    background: linear-gradient(
+      to bottom,
+      var(--paper) 0%,
+      var(--paper) 56%,
+      color-mix(in srgb, var(--paper) 55%, transparent) 82%,
+      transparent 100%
+    );
+  }
+}
+
+/* ============================================================
+   BÚSSOLA DE SCROLL — HOME (espelha a do case-template)
+   ============================================================ */
+.home-compass-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+.home-compass {
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+/* Anéis visíveis no papel creme (não usam ink-ghost que some) */
+.home-compass .compass-ring-outer { stroke: var(--ink-faint); }
+.home-compass .compass-ring-inner { stroke: var(--ink-faint); stroke-width: 1.25; }
+.home-compass .compass-cross     { stroke: var(--ink-soft); }
+.home-compass .compass-north     { fill: var(--oxblood); }
+.home-compass .compass-south     { fill: var(--ink-soft); }
+.home-compass .compass-pivot     { fill: var(--paper); stroke: var(--ink); }
 
 .chrome-actions {
   display: flex;
@@ -433,7 +486,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 }
 .title-author {
   font-family: var(--serif-display);
-  font-size: clamp(72px, 13vw, 200px);
+  font-size: clamp(72px, 10vw, 96px);
   font-weight: 400;
   line-height: 0.92;
   letter-spacing: -0.025em;
@@ -755,7 +808,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
    Index of Works — plates
    ============================================================ */
 .plates {
-  padding: 120px 0;
+  padding: 120px 0 48px;
 }
 .plate {
   position: relative;
@@ -954,6 +1007,163 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .plate-quadro-link:hover .plate-quadro-hint { opacity: 0; }
 @media (hover: none), (max-width: 1024px) {
   .plate-quadro-hint { display: none; }
+}
+
+/* ============================================================
+   PLATE — VARIAÇÃO WIDE (tela deitada / landscape)
+   Opt-in por obra: p.format = "wide" (catalogue.js). Luminária
+   centrada sobre a tela; botão circular de virar no canto sup.
+   direito; ficha editorial em 3 faixas (cabeçalho · corpo ·
+   métricas). Reusa .plate-meta/.plate-title/.plate-sub/
+   .plate-desc/.plate-stats/.plate-link. A lupa-pêndulo <Lens/>
+   se prende ao .plate-quadro-stage como nas pranchas retrato.
+   ============================================================ */
+/* sem padding lateral no artigo: o trilho atravessa a página inteira
+   (igual às pranchas retrato); as goteiras ficam nos blocos de conteúdo */
+.plate--wide { padding: 24px 0 96px; }
+
+/* trilho em LARGURA TOTAL (como as outras pranchas); só a luminária
+   é centralizada sobre a tela */
+.plate-rail--wide {
+  margin: 0 0 4px;
+  height: 92px;
+}
+.plate-rail--wide .plate-rail__fixture {
+  margin: 0 auto;
+  width: 46%;
+  max-width: 380px;
+}
+
+/* tela landscape — proporção da arte (1815/867). Centralizada, com
+   goteiras laterais em telas estreitas (min() em vez de padding p/ não
+   quebrar o aspect-ratio nem os filhos absolutos) */
+.plate-quadro--wide {
+  position: relative;
+  width: min(775px, 100% - 48px);
+  margin: 0 auto;
+  aspect-ratio: 1815 / 867;
+}
+.plate--wide .plate-quadro-link {
+  position: absolute;
+  inset: 0;
+  aspect-ratio: auto;          /* anula o 4/5 retrato herdado */
+  z-index: 1;
+}
+.plate--wide .plate-quadro-stage { position: absolute; inset: 0; }
+/* Mobile: a prancha landscape fica curta demais com goteiras largas
+   (ratio ~2.1). Reduz as laterais p/ ganhar presença perto das retrato. */
+@media (max-width: 768px) {
+  .plate-quadro--wide { width: min(775px, 100% - 16px); }
+}
+
+/* botão de virar — disco no canto sup. direito + legenda Verso/Anverso */
+.plate-turn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.plate-turn__disc {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--paper-card);
+  border: 1px solid var(--ink-soft);
+  color: var(--oxblood);
+  box-shadow: 0 2px 6px rgba(20, 16, 12, 0.18),
+              inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  transition: background 0.25s var(--ease-out),
+              color 0.25s var(--ease-out),
+              border-color 0.25s var(--ease-out),
+              transform 0.2s var(--ease-out);
+}
+.plate-turn__disc svg {
+  width: 22px; height: 22px; display: block;
+  transition: transform 0.5s var(--ease-out);
+}
+.plate-turn:hover .plate-turn__disc {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+.plate-turn:active .plate-turn__disc { transform: translateY(1px); }
+.plate-turn.is-flipped .plate-turn__disc svg { transform: rotate(-180deg); }
+.plate-turn:focus-visible { outline: none; }
+.plate-turn:focus-visible .plate-turn__disc {
+  outline: 2px solid var(--oxblood);
+  outline-offset: 3px;
+}
+.plate-turn__cap {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  text-shadow: 0 1px 2px var(--paper);
+}
+
+/* ficha editorial sob a tela — 3 faixas: cabeçalho · corpo · métricas */
+.plate-entry { max-width: 775px; margin: 56px auto 0; }
+.plate-entry__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--hairline-strong);
+}
+.plate-entry__roman {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 10px;
+}
+/* o roman duplicado dentro do .plate-content só serve ao cabeçalho mobile
+   das pranchas retrato; no desktop fica oculto (usa-se o da .plate-meta).
+   Ver o override em @media (max-width: 1024px). */
+.plate-content__roman { display: none; }
+.plate-entry__head .plate-title { margin: 0 0 10px; }
+.plate-entry__head .plate-sub   { margin: 0; }
+.plate-entry__head .plate-link  { margin-top: 0; flex: none; white-space: nowrap; }
+
+.plate-entry__body {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 56px;
+  margin-top: 32px;
+  align-items: start;
+}
+.plate-entry__body .plate-meta { gap: 0; }
+.plate-entry__main { min-width: 0; }
+.plate-entry__main .plate-stats {
+  margin-top: 28px;
+  padding-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 44px;
+}
+.plate-entry__main .plate-stat { flex: none; }
+
+@media (max-width: 768px) {
+  .plate-entry__head { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .plate-entry__head .plate-link { white-space: normal; }
+  .plate-entry__body { grid-template-columns: 1fr; gap: 24px; }
+  /* touch targets ≥44px (regra #9) */
+  .plate-link { min-height: 44px; display: inline-flex; align-items: center; }
+  .plate-flip-btn { min-height: 44px; }
 }
 
 /* Lupa de aumento sobre o quadro 3D — vidro circular que segue o cursor.
@@ -1855,12 +2065,10 @@ body.candle .pp { background: var(--paper-card); }
   cursor: default;
   border-radius: 2px;
   transition: background 160ms var(--ease-out),
-              box-shadow 160ms var(--ease-out),
               padding-left 160ms var(--ease-out);
 }
 .tools-index__row:hover {
-  background: #efe4c8;
-  box-shadow: inset 3px 0 0 0 var(--oxblood);
+  background: var(--highlighter);
   padding-left: 18px;
 }
 .tools-index__name { white-space: nowrap; }
@@ -2750,48 +2958,11 @@ body.candle .ti-stage .cv-slip {
    ══════════════════════════════════════════════════════════════ */
 .cv-slip-figure {
   position: absolute;
-  top: -24px;          /* sobe para o espaço livre acima do quadro (usa o "verde") */
+  top: -24px;
   right: 0;
   z-index: 5;
-}
-
-/* ── Marginalia manuscrita à DIREITA / sobre o topo da pilha do CV —
-   voz do desenhista avisando que a folha de trás é clicável e revela a
-   OUTRA edição. Ancorada à direita (cresce p/ a esquerda → nunca estoura
-   a viewport) e assenta no respiro acima da pilha; a seta curva desce
-   até a ponta da folha de trás (que espia no canto superior-direito).
-   Caligráfica (--hand) e em oxblood, no espírito das notas de margem. ── */
-.cv-flip-note {
-  position: absolute;
-  bottom: calc(100% + 8px);    /* fica inteira no respiro creme acima da folha */
-  right: -4px;
-  width: 236px;
-  z-index: 7;
-  font-family: var(--hand);
-  font-weight: 600;
-  font-size: 23px;
-  line-height: 1.06;
-  text-align: right;
-  color: var(--oxblood);
-  transform: rotate(-2deg);
-  pointer-events: none;
-}
-.cv-flip-note__line { display: block; }
-.cv-flip-note__line--tail {
-  font-size: 20px;
-  color: var(--oxblood-deep);
-}
-.cv-flip-note__edition { font-style: normal; }
-.cv-flip-note__arrow {
-  position: absolute;
-  right: 34px;
-  top: calc(100% - 6px);       /* nasce sob a nota e desce até a folha de trás */
-  width: 50px;
-  height: 72px;
-  color: var(--oxblood);
-  /* halo creme: a seta cruza a folha escura do CV — mantém o traço legível
-     tanto no creme quanto sobre a carta escura (e no modo vela) */
-  filter: drop-shadow(0 0 1.6px var(--paper)) drop-shadow(0 0 1.6px var(--paper));
+  width: 274px;
+  min-height: 430px;
 }
 
 /* Alternador de edição (segmentado) */
@@ -2813,6 +2984,45 @@ body.candle .ti-stage .cv-slip {
   position: relative;
   width: 274px;
   height: 402px;
+}
+/* Nota manuscrita: fica fora da folha, no respiro direito da pilha. */
+.cv-switch-note {
+  position: absolute;
+  top: -12px;
+  left: 300px;
+  width: 156px;
+  z-index: 7;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--hand);
+  font-size: 20px;
+  line-height: 1.05;
+  color: var(--ink-soft);
+  text-align: left;
+  transform: rotate(13deg);
+  pointer-events: none;
+  user-select: none;
+}
+.cv-switch-note span {
+  display: block;
+  width: 82px;
+}
+.cv-switch-note em {
+  color: var(--oxblood);
+  font-style: normal;
+}
+.cv-arrow {
+  display: block;
+  width: 38px;
+  height: auto;
+  flex: 0 0 auto;
+  transform: rotate(-12deg);
+}
+/* Modo vela: troca a seta escura pela versão clara (Arrow_Dark),
+   legível sobre o fundo escuro. O src padrão (Arrow.webp) serve o modo dia. */
+body.candle .cv-arrow {
+  content: url("images/other/Arrow_Dark.webp");
 }
 .cv-thumb-card {
   position: absolute;
@@ -2959,35 +3169,33 @@ body.candle .cv-thumb-card.is-back .cv-thumb-img {
 /* Responsivo: a partir de 768px o ti-stage empilha; a figura deixa de
    ser absoluta e centraliza abaixo do texto. */
 @media (max-width: 1024px) {
-  .cv-slip-figure { right: 24px; }
-}
-@media (max-width: 768px) {
   .cv-slip-figure {
     position: static;
     width: 100%;
-    max-width: 360px;
+    max-width: 280px;
+    min-height: 340px;
     margin: 32px auto 0;
-    justify-content: center;
   }
-  /* Marginalia NUNCA some (regra 9): vira nota inline acima da pilha,
-     centralizada, com a seta abaixo do texto apontando para as cartas. */
-  .cv-flip-note {
+  /* A marginalia rotacionada não cabe no layout empilhado, mas a dica de
+     trocar de edição não pode sumir — vira uma legenda simples e centrada
+     sob a pilha (a troca em si continua sendo o toque na folha de trás). */
+  .cv-switch-note {
     position: static;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    left: auto;
+    top: auto;
     width: auto;
-    margin: 0 auto 4px;
+    transform: none;
+    margin: 40px auto 0;
+    justify-content: center;
     text-align: center;
-    transform: rotate(-1deg);
+    font-size: 17px;
   }
-  .cv-flip-note__line { order: 1; }
-  .cv-flip-note__line--tail { order: 2; }
-  .cv-flip-note__arrow {
-    position: static;
-    order: 3;
-    margin: 4px auto 0;
-    transform: rotate(86deg);
+  .cv-switch-note .cv-arrow { display: none; }
+  .cv-switch-note span:not(.cv-arrow) { width: auto; }
+}
+@media (max-width: 768px) {
+  .cv-slip-figure {
+    justify-content: center;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -3347,6 +3555,11 @@ html[lang="en"] .carta {
   align-items: baseline;
   gap: 10px;
 }
+/* Mobile: email/LinkedIn são alvos de toque — alarga a área p/ ≥44px
+   (padding vertical não desloca o baseline do valor, só amplia o hit). */
+@media (max-width: 768px) {
+  .carta .f-copy { padding: 11px 0; }
+}
 /* Botões internos (email): hover em oxblood */
 .carta button.f-copy:hover .f-val { color: var(--oxblood); }
 /* Links externos (LinkedIn): hover em cobalt — distingue destinos */
@@ -3403,7 +3616,7 @@ html[lang="en"] .carta {
 .carta .pulse {
   width: 7px; height: 7px;
   border-radius: 50%;
-  background: #4a8a3a;
+  background: var(--status-green);
   position: relative;
   flex: none;
 }
@@ -3412,7 +3625,7 @@ html[lang="en"] .carta {
   position: absolute;
   inset: -3px;
   border-radius: 50%;
-  border: 1px solid #4a8a3a;
+  border: 1px solid var(--status-green);
   animation: pulse-ring 2.4s ease-out infinite;
 }
 @keyframes pulse-ring {
@@ -3729,8 +3942,9 @@ body.candle .carta .ink-bleed {
      preservando o tema do livro em telas menores */
   .spread .margin-l,
   .spread .margin-r {
-    border-left: 2px solid var(--oxblood);
-    padding-left: var(--sp-4);
+    border-top: 1px solid var(--oxblood);
+    padding-top: var(--sp-3);
+    padding-left: 0;
     margin: var(--sp-5) 0;
     text-align: left;
     font-size: var(--fs-meta);
@@ -3738,8 +3952,45 @@ body.candle .carta .ink-bleed {
   .spread .margin-l .gloss,
   .spread .margin-r .gloss { font-size: 14px; }
 
+  /* Mobile/telas estreitas: a glosa ² (catálogo raisonné) sai do fluxo —
+     redundante como nota inline, pois o mesmo termo já aparece no rodapé
+     (.footnotes ²), que resolve a referência ² do corpo. A ¹ (local, à
+     esquerda) permanece. No desktop a ² segue na margem direita. */
+  #preface .margin-r { display: none; }
+
   .plate-grid,
   .plate-rail__grid { grid-template-columns: 1fr; gap: 32px; padding: 0 32px; }
+  .plate-grid { gap: 14px; }   /* itens achatados → ritmo vertical menor */
+  /* Achata .plate-meta e .plate-content no grid (display:contents) para que
+     TODOS os elementos da prancha retrato virem itens do grid e possam ser
+     ordenados livremente, reproduzindo a ordem da Plate 1 (wide):
+       luzes → quadro → verso → roman → nome → tags → link → [separador]
+       → informações gerais (metadata) → texto do projeto → métricas.
+     IMPORTANTE: regras que tocam .plate-meta são escopadas a .plate-grid
+     para NÃO afetar a wide (que também usa .plate-meta, dentro de .plate-entry). */
+  .plate-grid > .plate-meta,
+  .plate-grid > .plate-content { display: contents; }
+
+  .plate-grid > .plate-quadro-link { order: 1; }
+  .plate-flip-btn                  { order: 2; justify-self: center; }  /* "ver o verso" centrado, sob o quadro */
+  .plate-content__roman            { display: block; order: 3; margin: 0; }
+  .plate-content > .plate-title    { order: 4; margin: 0; }
+  .plate-content > .plate-sub      { order: 5; margin: 0; }
+  /* link: sem espaço extra acima, e largura do conteúdo (underline curto,
+     como na wide) em vez de esticar a coluna inteira */
+  .plate-content > .plate-link     { order: 6; margin: 0; justify-self: start; }
+  .plate-grid .plate-meta > dl     { order: 7; }   /* informações gerais ANTES do texto */
+  .plate-content > .plate-desc     { order: 8; }
+  .plate-content > .plate-stats    { order: 9; }
+  .plate-grid .plate-meta > .roman { display: none; }  /* roman serif grande não duplica */
+
+  /* Separador depois do "ler a ficha completa" — SÓ na retrato (a wide já
+     tem o seu via .plate-entry__head): hairline acima da metadata. */
+  .plate-grid .plate-meta > dl {
+    border-top: 1px solid var(--hairline-strong);
+    margin-top: 14px;
+    padding-top: 24px;
+  }
   /* Coluna única: a tela passa a ser full-width; o holofote centraliza sobre
      ela. Os cells vazios saem para o fixture virar o único item do grid. */
   .plate-rail__cell { display: none; }
@@ -3750,15 +4001,30 @@ body.candle .carta .ink-bleed {
   .tenet:nth-child(2n) { border-right: none; }
   .tenet:nth-child(1), .tenet:nth-child(2) { border-bottom: 1px solid var(--hairline-strong); }
   .tool-cat { grid-template-columns: 200px 1fr; gap: 28px; }
-  .cv-row { grid-template-columns: 120px 1fr; }
-  .cv-row .note { grid-column: 1 / -1; }
+  /* Cronologia & Formação: cargo/curso + tags à ESQUERDA, data à DIREITA
+     (data alinhada à direita). A nota/bullets ocupa a largura toda abaixo. */
+  .cv-row { grid-template-columns: 1fr auto; }
+  .cv-row .role   { grid-column: 1; grid-row: 1; }
+  .cv-row .period { grid-column: 2; grid-row: 1; text-align: right; }
+  .cv-row .note   { grid-column: 1 / -1; grid-row: 2; }
 }
 
 /* --- ≤768 px : tablet retrato --- */
 @media (max-width: 768px) {
+  /* Touch targets do chrome também em tablet */
+  .lang-toggle button {
+    min-width: 44px; min-height: 44px;
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 10px 12px;
+  }
+  .candle-toggle { min-width: 44px; min-height: 44px; padding: 10px; }
+
   .page { padding: 80px 0; }
   .spread { padding: 0 40px; gap: var(--sp-5); }
   .plate-grid, .plate-rail__grid { padding: 0 40px; }
+  /* prancha wide: a ficha precisa da MESMA goteira das retrato (o trilho/tela
+     atravessa largo, mas o texto não pode colar nas bordas). Espelha o grid. */
+  .plate--wide .plate-entry { padding-left: 40px; padding-right: 40px; }
   /* `.page { padding: 80px 0 }` zera o padding horizontal; o `.spread`
      é resgatado acima, mas o `.spread-narrow` (Sumário, Aparato, Método)
      só ganhava margem lateral em ≤640 — deixando a faixa 641–768px
@@ -3793,8 +4059,11 @@ body.candle .carta .ink-bleed {
   .plate-stats { grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); }
   .plate-stat .val { font-size: 28px; }
 
-  /* Apresentação do colofão fica mais respirável */
-  .colophon { padding: 64px 24px; }
+  /* Colofão (footer) compacto no mobile — menos espaço vertical ocioso.
+     Usa .colophon.page (2 classes) p/ vencer o `.page { padding: 64px 0 }`. */
+  .colophon.page { padding: 36px 24px; }
+  .colophon-ornament { margin-bottom: 14px; font-size: 20px; }
+  .colophon-meta { margin-top: 16px; }
 
   /* Carta de contato */
   .correspondence { padding: 80px 24px 120px; }
@@ -3814,11 +4083,16 @@ body.candle .carta .ink-bleed {
     display: inline-flex; align-items: center; justify-content: center;
     padding: 10px 12px;
   }
+  .candle-toggle {
+    min-width: 44px; min-height: 44px;
+    padding: 10px;
+  }
 
   .page { padding: 64px 0; }
   .spread { padding: 0 20px; }
   .spread-narrow { padding-left: 20px; padding-right: 20px; }
   .plate-grid, .plate-rail__grid { padding: 0 20px; }
+  .plate--wide .plate-entry { padding-left: 20px; padding-right: 20px; }
 
   /* Instrumentos: rubrica empilhada sobre a lista no telefone */
   .tool-cat { grid-template-columns: 1fr; gap: 8px; padding: 16px 0; }
@@ -3858,7 +4132,7 @@ body.candle .carta .ink-bleed {
      lado mantendo a leitura confortável. */
   .plate-stats { grid-template-columns: repeat(3, 1fr); gap: 14px; }
   .plate-stat .val { font-size: 24px; }
-  .plate-stat .lab { font-size: 8.5px; letter-spacing: 0.08em; }
+  .plate-stat .lab { font-size: 10px; letter-spacing: 0.07em; }
 
   /* Carta: mais respiro das bordas da tela e mais padding interno para
      o conteúdo não colar nos cantos/colchetes. */
@@ -4185,13 +4459,13 @@ body.candle .paper-grain {
   /* Stats mantêm a faixa de 3 colunas, com número um pouco menor */
   .plate-stats { grid-template-columns: repeat(3, 1fr); gap: 10px; padding-top: var(--sp-4); }
   .plate-stat .val { font-size: 21px; }
-  .plate-stat .lab { font-size: 8px; letter-spacing: 0.06em; }
+  .plate-stat .lab { font-size: 9.5px; letter-spacing: 0.06em; }
 
   /* Carta: padding lateral interno preservado mesmo em telas estreitas */
   .correspondence { padding: 64px 16px 104px; }
   .carta { padding: 40px 22px 48px; }
 
-  .colophon { padding: 56px 16px; }
+  .colophon.page { padding: 30px 16px; }
 }
 
 /* --- Paisagem em telas baixas (telefone girado): comprime as alturas

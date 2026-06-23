@@ -101,6 +101,8 @@
   --border-ink:        1px solid var(--ink);
   --border-dotted:     1px dotted var(--ink-ghost);
 
+  --status-green: #4a8a3a;
+
   --shadow-soft: 0 4px 12px rgba(26, 22, 18, 0.08);
   --shadow-lens: 0 0 0 1px var(--hairline), 0 16px 40px rgba(26, 22, 18, 0.2);
 

@@ -38,7 +38,10 @@
     var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
     // Supersample: a lupa amplia ~2.8×, então renderizamos o canvas com
     // densidade extra de pixels para que o aumento não fique pixelado.
-    renderer.setPixelRatio(Math.min(Math.max(window.devicePixelRatio || 1, 1) * 2, 3));
+    // opts.maxPixelRatio limita o teto (default 3) — útil quando há várias
+    // telas grandes na mesma página, para não estourar a memória de GPU.
+    var maxPR = opts.maxPixelRatio || 3;
+    renderer.setPixelRatio(Math.min(Math.max(window.devicePixelRatio || 1, 1) * 2, maxPR));
     renderer.setSize(vw(), vh());
     renderer.outputEncoding = THREE.sRGBEncoding;
     container.appendChild(renderer.domElement);
@@ -66,8 +69,10 @@
     var key  = new THREE.DirectionalLight(0xfff4e2, 0.95); key.position.set(5, 8, 10);  scene.add(key);
     var fill = new THREE.DirectionalLight(0xbfd0ff, 0.42); fill.position.set(-6, -3, -8); scene.add(fill);
 
-    // dimensões proporcionais (frente 608x964, espessura 38)
-    var W = 6.08, H = 9.64, D = 0.38;
+    // dimensões proporcionais (frente 608x964, espessura 38).
+    // Customizáveis via opts.w/opts.h/opts.d — ex.: tela landscape
+    // 775x370x38 → { w: 7.75, h: 3.70, d: 0.38 }. Defaults = retrato da home.
+    var W = opts.w || 6.08, H = opts.h || 9.64, D = opts.d || 0.38;
 
     var loader = new THREE.TextureLoader();
     function tex(url, rot) {

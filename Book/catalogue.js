@@ -104,7 +104,9 @@ const CONTENT = {
         ariaVerso:   "Virar a prancha para revelar o wireframe do verso",
         ariaRecto:   "Virar a prancha de volta para a arte final",
         versoLabel:  "Wireframe",
-        versoCaption:"Estado anterior · esboço de composição"
+        versoCaption:"Estado anterior · esboço de composição",
+        turnVerso:   "Verso",
+        turnRecto:   "Anverso"
       },
       plates: [{
         roman: "Plate I",
@@ -146,7 +148,8 @@ const CONTENT = {
         }],
         link: "ler a ficha completa",
         href: "projects/genai.html",
-        imgClass: "plate-img-1"
+        imgClass: "plate-img-1",
+        format: "wide"
       }, {
         roman: "Plate II",
         num: "002",
@@ -441,7 +444,7 @@ const CONTENT = {
         contextLabel: "Argumento · recto",
         contextBody: [
           "Este volume reúne provas críticas do trabalho de Lucas Schoenherr entre MMXII e MMXXVI, organizadas como pranchas de um catálogo de razão. Cada prancha traz o argumento, o elenco, os atos e as erratas — vocabulário emprestado da tradição editorial e ajustado ao ofício do design de produto.",
-          "O leitor encontrará, à direita desta página, uma feuille volante com o currículo do autor, disponível para retirada imediata. As demais pranchas seguem em ordem romana, de I a III."
+          "O leitor encontrará, encartada nesta página, uma feuille volante com o currículo do autor, disponível para retirada imediata. As demais pranchas seguem em ordem romana, de I a III."
         ],
         contextNote: "vide infra",
         gloss: "Currículo do autor, em duas folhas — treze anos de product design, sistemas e interfaces generativas.",
@@ -452,9 +455,8 @@ const CONTENT = {
         aria: "Folha avulsa — Curriculum Vitæ de Lucas Schoenherr",
         editions: { themed: "Composição temática", modern: "Composição moderna" },
         peek: "ver esta edição",
-        flipNote: { lead: "clique na folha de trás", tail: "e veja a " },
-        flipEdition: { themed: "edição temática", modern: "edição moderna" },
         download: { label: "Baixar o currículo", note: "em breve" },
+        switchHint: { prefix: "Mudar para a versão", themed: "temática", modern: "moderna" },
         stamp: { roman: "v.", country: "Brasil", postmark: "MMXXVI" }
       }
     },
@@ -505,8 +507,12 @@ const CONTENT = {
       ornament: "✦",
       body: ["Este volume foi composto em ", {
         em: "EB Garamond"
-      }, " e ", {
+      }, ", ", {
+        em: "Instrument Serif"
+      }, ", ", {
         em: "JetBrains Mono"
+      }, " e ", {
+        em: "Caveat"
       }, " — tipos digitais inspirados em fontes clássicas. Foi desenhado, ", {
         em: "escrito e codificado pelo autor"
       }, ", no Rio de Janeiro, Brasil, no ano da graça de dois mil e vinte e seis."],
@@ -602,7 +608,9 @@ const CONTENT = {
         ariaVerso:   "Turn the plate to reveal the verso wireframe",
         ariaRecto:   "Turn the plate back to the final art",
         versoLabel:  "Wireframe",
-        versoCaption:"Earlier state · compositional sketch"
+        versoCaption:"Earlier state · compositional sketch",
+        turnVerso:   "Verso",
+        turnRecto:   "Recto"
       },
       plates: [{
         roman: "Plate I",
@@ -644,7 +652,8 @@ const CONTENT = {
         }],
         link: "read the full entry",
         href: "projects/genai.html",
-        imgClass: "plate-img-1"
+        imgClass: "plate-img-1",
+        format: "wide"
       }, {
         roman: "Plate II",
         num: "002",
@@ -939,7 +948,7 @@ const CONTENT = {
         contextLabel: "Argument · recto",
         contextBody: [
           "This volume gathers critical proofs of Lucas Schoenherr's work between MMXII and MMXXVI, arranged as plates in a catalogue raisonné. Each plate carries the argument, cast, acts, and errata — a vocabulary borrowed from editorial tradition and adjusted to the craft of product design.",
-          "The reader will find, to the right of this page, a feuille volante with the author's curriculum, available for immediate withdrawal. The remaining plates follow in Roman order, from I to III."
+          "The reader will find, tipped into this page, a feuille volante with the author's curriculum, available for immediate withdrawal. The remaining plates follow in Roman order, from I to III."
         ],
         contextNote: "vide infra",
         gloss: "The author's curriculum, in two leaves — thirteen years of product design, systems, and generative interfaces.",
@@ -950,9 +959,8 @@ const CONTENT = {
         aria: "Loose leaf — Lucas Schoenherr's Curriculum Vitæ",
         editions: { themed: "Themed setting", modern: "Modern setting" },
         peek: "see this edition",
-        flipNote: { lead: "click the back leaf", tail: "to reveal the " },
-        flipEdition: { themed: "themed edition", modern: "modern edition" },
         download: { label: "Download the curriculum", note: "coming soon" },
+        switchHint: { prefix: "Switch to the", themed: "themed edition", modern: "modern edition" },
         stamp: { roman: "v.", country: "Brazil", postmark: "MMXXVI" }
       }
     },
@@ -1003,8 +1011,12 @@ const CONTENT = {
       ornament: "✦",
       body: ["This volume was set in ", {
         em: "EB Garamond"
-      }, " and ", {
+      }, ", ", {
+        em: "Instrument Serif"
+      }, ", ", {
         em: "JetBrains Mono"
+      }, ", and ", {
+        em: "Caveat"
       }, " — digital types inspired by classical faces. It was ", {
         em: "designed, written, and coded by the author"
       }, " in Rio de Janeiro, Brazil, in the year of grace two thousand twenty-six."],
@@ -1325,7 +1337,7 @@ function BottomChrome({ t }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  return React.createElement("div", { className: "chrome-bot" },
+  return React.createElement("footer", { className: "chrome-bot", role: "contentinfo" },
     React.createElement("span", null, "Lucas Schoenherr \xB7 MMXXVI"),
     React.createElement("span", { ref: progRef, className: "ink-progress" }),
     React.createElement("span", { className: "page-counter" },
@@ -1341,9 +1353,26 @@ function BottomChrome({ t }) {
    ============================================================ */
 function TopChrome({ lang, setLang, t, candle, setCandle }) {
   const e = React.createElement;
-  return e("div", { className: "chrome-top" },
+  return e("header", { className: "chrome-top", role: "banner" },
     e("span", { className: "running-head" },
-      "Lucas Schoenherr",
+      e("span", { className: "home-compass-wrapper", "aria-hidden": "true" },
+        e("svg", { className: "home-compass", viewBox: "0 0 100 100" },
+          e("circle", { className: "compass-ring-outer", cx: "50", cy: "50", r: "45", strokeWidth: "1.5", fill: "none", strokeDasharray: "4 4" }),
+          e("circle", { className: "compass-ring-inner", cx: "50", cy: "50", r: "30", fill: "none" }),
+          e("line",   { className: "compass-cross", x1: "50", y1: "10", x2: "50", y2: "90", strokeWidth: "1" }),
+          e("line",   { className: "compass-cross", x1: "10", y1: "50", x2: "90", y2: "50", strokeWidth: "1" }),
+          e("polygon", { className: "compass-north", points: "50,20 54,50 50,55 46,50" }),
+          e("polygon", { className: "compass-south", points: "50,80 54,50 50,45 46,50" }),
+          e("circle", { className: "compass-pivot", cx: "50", cy: "50", r: "4", strokeWidth: "1.5" })
+        )
+      ),
+      e("a", {
+        className: "running-head-home",
+        href: "#",
+        onClick: ev => { ev.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); },
+        title: lang === "pt" ? "Voltar ao Frontispício" : "Back to Frontispiece",
+        "aria-label": lang === "pt" ? "Voltar ao início" : "Back to top"
+      }, "Lucas Schoenherr"),
       e("span", { className: "sep" }, "\xB7"),
       e("a", {
         className: "running-head-link",
@@ -1399,10 +1428,20 @@ function TopChrome({ lang, setLang, t, candle, setCandle }) {
             e('path', { d: 'M16.4 17.4 C 21.4 17.6, 22.8 13.4, 18.6 12.6 C 16.6 12.4, 16.6 14.4, 18.2 14.6', stroke: 'currentColor', strokeWidth: '1.3', strokeLinecap: 'round', strokeLinejoin: 'round' })
           )
       ),
-      e("div", { className: "lang-toggle" },
-        e("button", { className: lang === "pt" ? "active" : "", onClick: () => setLang("pt") }, "PT"),
-        e("span",  { className: "pipe" }, "/"),
-        e("button", { className: lang === "en" ? "active" : "", onClick: () => setLang("en") }, "EN")
+      e("div", { className: "lang-toggle", role: "group", "aria-label": lang === "pt" ? "Seleção de idioma" : "Language selection" },
+        e("button", {
+          className: lang === "pt" ? "active" : "",
+          onClick: () => setLang("pt"),
+          "aria-label": lang === "pt" ? "Idioma: Português (ativo)" : "Mudar para Português",
+          "aria-pressed": lang === "pt"
+        }, "PT"),
+        e("span",  { className: "pipe", "aria-hidden": "true" }, "/"),
+        e("button", {
+          className: lang === "en" ? "active" : "",
+          onClick: () => setLang("en"),
+          "aria-label": lang === "en" ? "Language: English (active)" : "Switch to English",
+          "aria-pressed": lang === "en"
+        }, "EN")
       )
     )
   );
@@ -1769,13 +1808,21 @@ function PlateCard({ p, i, t }) {
   const flipLabel = flipped ? w.flip.toRecto  : w.flip.toVerso;
   const flipAria  = flipped ? w.flip.ariaRecto : w.flip.ariaVerso;
 
-  // Quadro 3D (objeto WebGL) — imagens por prancha (default: tela genérica).
-  // Para arte específica de cada projeto, defina p.quadro = { front, back, side }.
-  const q = p.quadro || {
+  // Formato da prancha: "wide" = tela deitada (landscape); senão, retrato.
+  // Defina p.format = "wide" no dado da obra para usar a variação larga.
+  const isWide = p.format === "wide";
+
+  // Quadro 3D (objeto WebGL) — imagens por prancha (default: tela genérica,
+  // landscape quando wide). Para arte específica: p.quadro = { front, back, side }.
+  const q = p.quadro || (isWide ? {
+    front: "images/home/paint-front-wide.webp",
+    back:  "images/home/paint-back-wide.webp",
+    side:  "images/home/paint-side-wide.webp"
+  } : {
     front: "images/home/paint-front.webp",
     back:  "images/home/paint-back.webp",
     side:  "images/home/paint-side.webp"
-  };
+  });
   const stageRef = useRef(null);
   const instRef  = useRef(null);
 
@@ -1792,11 +1839,17 @@ function PlateCard({ p, i, t }) {
       // não pela lupa lisa embutida — por isso loupe:false aqui.
       // As variações dão um ângulo/tom distinto a cada tela.
       const v = QUADRO_VARIANTS[i] || {};
-      instRef.current = window.mountQuadro(stage, {
+      const mountOpts = {
         front: q.front, back: q.back, side: q.side,
         loupe: false,
         tiltX: v.tiltX, rollZ: v.rollZ, scale: v.scale, tint: v.tint
-      });
+      };
+      if (isWide) {
+        // geometria landscape: 1815 × 867 × 38 → 18.15 × 8.67 × 0.38
+        mountOpts.w = 18.15; mountOpts.h = 8.67; mountOpts.d = 0.38;
+        mountOpts.maxPixelRatio = 2;   // textura grande: poupa memória de GPU
+      }
+      instRef.current = window.mountQuadro(stage, mountOpts);
       if (instRef.current) {
         const fall = stage.querySelector(".plate-quadro-fallimg");
         if (fall) fall.remove();
@@ -1859,9 +1912,92 @@ function PlateCard({ p, i, t }) {
     if (instRef.current && instRef.current.flip) instRef.current.flip();
   };
 
+  const dataPage = i === 1 ? { "data-page": "ix" } : i === 2 ? { "data-page": "xi" } : {};
+
+  // ============================================================
+  // VARIAÇÃO WIDE — tela deitada (landscape). Luminária centrada
+  // sobre a tela; botão circular "Verso" no canto sup. direito;
+  // ficha editorial em 3 faixas (cabeçalho · corpo · métricas).
+  // A lupa-pêndulo <Lens/> se prende ao .plate-quadro-stage como
+  // de costume. Reusa .plate-meta/.plate-title/.plate-desc/.plate-stats.
+  // ============================================================
+  if (isWide) {
+    return e("article", { className: "plate plate--wide", ...dataPage },
+      e(Reveal, { className: "plate-rail plate-rail--wide", as: "div" },
+        e("div", { className: "plate-rail__track", "aria-hidden": "true" }),
+        e("div", { className: "plate-rail__fixture", "aria-hidden": "true" })
+      ),
+      e(Reveal, { className: "plate-wide-body" },
+        // ---- tela landscape + botão de virar ----
+        e("div", { className: "plate-quadro--wide" },
+          e("a", {
+            href: p.href,
+            className: "plate-quadro-link",
+            "data-cursor-label": t.cursorLabels.seePlate,
+            "aria-label": t.cursorLabels.seePlate + " — " + p.roman
+          },
+            e("div", { className: "plate-quadro-stage", ref: stageRef, "aria-hidden": "true" })
+          ),
+          e("button", {
+            type: "button",
+            className: "plate-turn" + (flipped ? " is-flipped" : ""),
+            onClick: onFlip,
+            "aria-pressed": flipped ? "true" : "false",
+            "aria-label": flipAria
+          },
+            e("span", { className: "plate-turn__disc", "aria-hidden": "true" },
+              e("svg", {
+                viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg",
+                fill: "none", stroke: "currentColor", strokeWidth: "1.6",
+                strokeLinecap: "round", strokeLinejoin: "round"
+              },
+                e("path", { d: "M19 12 A7 7 0 1 1 16.5 6.6" }),
+                e("polyline", { points: "16.6 3 16.9 6.9 13 7.2" })
+              )
+            ),
+            e("span", { className: "plate-turn__cap" }, flipped ? w.flip.turnRecto : w.flip.turnVerso)
+          )
+        ),
+        // ---- ficha editorial: cabeçalho · corpo · métricas ----
+        e("div", { className: "plate-entry" },
+          e("div", { className: "plate-entry__head" },
+            e("div", { className: "plate-entry__id" },
+              e("div", { className: "plate-entry__roman" }, p.roman),
+              e("h3", { className: "plate-title" }, rich(p.title)),
+              e("div", { className: "plate-sub" }, p.sub)
+            ),
+            e("a", {
+              href: p.href, className: "plate-link",
+              "data-cursor-label": t.cursorLabels.seePlate
+            }, p.link, " →")
+          ),
+          e("div", { className: "plate-entry__body" },
+            e("div", { className: "plate-meta" },
+              e("dl", null, p.meta.map((m, j) => e(React.Fragment, { key: j },
+                e("dt", null, m.dt),
+                e("dd", null, m.dd)
+              )))
+            ),
+            e("div", { className: "plate-entry__main" },
+              e("div", { className: "plate-desc" }, p.desc.map((para, j) =>
+                e("p", { key: j }, rich(para))
+              )),
+              e("div", { className: "plate-stats" }, p.stats.map((s, j) =>
+                e("div", { className: "plate-stat", key: j },
+                  e("div", { className: "val" }, s.val),
+                  e("div", { className: "lab" }, s.lab)
+                )
+              ))
+            )
+          )
+        )
+      )
+    );
+  }
+
   return e("article", {
     className: "plate",
-    ...(i === 1 ? { "data-page": "ix" } : i === 2 ? { "data-page": "xi" } : {})
+    ...dataPage
   },
     // Trilho de teto (lights-repeat) + holofote de galeria (lights) sobre a
     // tela. Decorativo (aria-hidden); o grid espelha .plate-grid para que o
@@ -1922,6 +2058,10 @@ function PlateCard({ p, i, t }) {
 
       // -------- Coluna conteúdo (direita) --------
       e("div", { className: "plate-content" },
+        // Roman do cabeçalho — só aparece no mobile (reusa o estilo da wide,
+        // .plate-entry__roman). No desktop fica oculto e usa-se o roman grande
+        // da .plate-meta na coluna esquerda. Ver CSS .plate-content__roman.
+        e("div", { className: "plate-entry__roman plate-content__roman" }, p.roman),
         e("h3",  { className: "plate-title" }, rich(p.title)),
         e("div", { className: "plate-sub"   }, p.sub),
         e("div", { className: "plate-desc"  }, p.desc.map((para, j) =>
@@ -2085,7 +2225,7 @@ function MinorWorks({ t }) {
       e("button", { className: "lb-nav lb-prev", type: "button", "aria-label": m.prev }, "‹"),
       e("button", { className: "lb-nav lb-next", type: "button", "aria-label": m.next }, "›"),
       e("div", { className: "lb-sheet" },
-        e("div", { className: "lb-stage" }, e("img", { className: "lb-img", src: "", alt: "" })),
+        e("div", { className: "lb-stage" }, e("img", { className: "lb-img", src: "data:,", alt: "" })),
         e("div", { className: "lb-info" },
           e("button", { className: "lb-close", type: "button", "aria-label": m.close }, "×"),
           e("span", { className: "lb-roman" }),
@@ -2425,29 +2565,30 @@ function StampBadge({ roman, country, postmark }) {
 /* ============================================================
    CV — arquivos por idioma × edição
    ------------------------------------------------------------
-   Estrutura em CV/<LANG>/<Estilo>/:
-     · Thumbail.jpg                 → pré-visualização (face do cartão)
-     · CV-<LANG>-<Estilo>-Web.pdf   → versão web (abre no clique)
-     · (download paginado entra depois)
-   CV_EN_READY: vire `true` quando os arquivos CV/EN/ subirem; até lá
-   o idioma EN cai nos arquivos PT (evita imagem/link quebrados).
+   Estrutura em CV/<LANG>/<Estilo>/ (nomes reais, com espaços):
+     · Thumbail.{jpg,webp}                          → face do cartão (só PT; EN reusa PT)
+     · Lucas Schoenherr - <Estilo> - <LANG> - Web.pdf   → versão web (abre no clique)
+     · Lucas Schoenherr - <Estilo>- <LANG> - Print.pdf  → versão impressão (botão "baixar")
+       (atenção: o "Print" não tem espaço antes do traço de <Estilo>)
+   CV_EN_READY: os 4 PDFs EN já subiram → true. Os thumbnails EN ainda
+   não existem, então o mapa de thumbs aponta EN para os arquivos PT.
    ============================================================ */
-const CV_EN_READY = false;
+const CV_EN_READY = true;
 const CV_THUMBS = {
-  pt: { themed: "CV/PT/Themed/Thumbail.webp", modern: "CV/PT/Modern/Thumbail.jpg" },
-  en: { themed: "CV/EN/Themed/Thumbail.webp", modern: "CV/EN/Modern/Thumbail.jpg" }
+  pt: { themed: "CV/PT/Themed/Thumbail.webp", modern: "CV/PT/Modern/Thumbail.webp" },
+  // EN ainda sem thumbnail próprio → reusa a face PT
+  en: { themed: "CV/PT/Themed/Thumbail.webp", modern: "CV/PT/Modern/Thumbail.webp" }
 };
 const CV_WEB = {
-  pt: { themed: "CV/PT/Themed/CV-PT-Themed-Web.pdf", modern: "CV/PT/Modern/CV-PT-Modern-Web.pdf" },
-  en: { themed: "CV/EN/Themed/CV-EN-Themed-Web.pdf", modern: "CV/EN/Modern/CV-EN-Modern-Web.pdf" }
+  pt: { themed: "CV/PT/Themed/Lucas Schoenherr - Themed - PTBR - Web.pdf", modern: "CV/PT/Modern/Lucas Schoenherr - Modern - PTBR - Web.pdf" },
+  en: { themed: "CV/EN/Themed/Lucas Schoenherr - Themed - EN - Web.pdf", modern: "CV/EN/Modern/Lucas Schoenherr - Modern - EN - Web.pdf" }
 };
-/* Versão de download (paginada). Quando os PDFs finais subirem, vire
-   CV_DOWNLOAD_READY = true — o botão deixa de ser placeholder e baixa o
-   arquivo da edição selecionada. Caminhos esperados abaixo. */
-const CV_DOWNLOAD_READY = false;
+/* Versão de download (impressão). PDFs finais já subiram → READY = true:
+   o botão deixa de ser placeholder e baixa a edição selecionada. */
+const CV_DOWNLOAD_READY = true;
 const CV_DOWNLOAD = {
-  pt: { themed: "CV/PT/Themed/CV-PT-Themed.pdf", modern: "CV/PT/Modern/CV-PT-Modern.pdf" },
-  en: { themed: "CV/EN/Themed/CV-EN-Themed.pdf", modern: "CV/EN/Modern/CV-EN-Modern.pdf" }
+  pt: { themed: "CV/PT/Themed/Lucas Schoenherr - Themed - PTBR - Print.pdf", modern: "CV/PT/Modern/Lucas Schoenherr - Modern- PTBR - Print.pdf" },
+  en: { themed: "CV/EN/Themed/Lucas Schoenherr - Themed - EN - Print.pdf", modern: "CV/EN/Modern/Lucas Schoenherr - Modern- EN - Print.pdf" }
 };
 function cvAsset(map, lang, variant) {
   const useLang = (lang === "en" && !CV_EN_READY) ? "pt" : lang;
@@ -2477,9 +2618,18 @@ function ToolsIndex({ tools }) {
   const [rot, setRot] = useState(7);   // inclinação final aleatória da ficha
   const popRef = useRef(null);
   const anchorRef = useRef(null);
+  const touchedAt = useRef(0);   // timestamp do último toque (suprime mouse simulado)
 
   // tilt aleatório: magnitude 4–9°, sinal aleatório (evita o sempre-igual)
   const randomTilt = () => (4 + Math.random() * 5) * (Math.random() < 0.5 ? -1 : 1);
+
+  // abre a ficha (polaroid) ancorada na linha alvo
+  const showFor = (target, it) => {
+    const r = target.getBoundingClientRect();
+    anchorRef.current = { left: r.left, right: r.right, top: r.top, bottom: r.bottom };
+    setRot(randomTilt());
+    setHovered(it);
+  };
 
   // roman e rótulo de cada ferramenta a partir dos grupos (bilíngue, vem do data)
   const romanOf = {}, labelOf = {};
@@ -2497,7 +2647,9 @@ function ToolsIndex({ tools }) {
     if (!el || !a) return;
     const w = el.offsetWidth, h = el.offsetHeight, gap = 16, M = 8;
     let left = a.right + gap;                       // ficha abre à direita do romano
-    if (left + w > window.innerWidth - M) left = a.left - gap - w; // sem espaço → vira p/ a esquerda
+    // sem espaço à direita (ex.: mobile, lista full-width) → ancora no canto
+    // direito do viewport em vez de virar p/ a esquerda e cobrir a lista
+    if (left + w > window.innerWidth - M) left = window.innerWidth - M - w;
     if (left < M) left = M;
     let top = (a.top + a.bottom) / 2 - h / 2;       // centrada na altura da linha
     if (top < M) top = M;
@@ -2508,12 +2660,17 @@ function ToolsIndex({ tools }) {
 
   const renderRow = (it) => e("div", {
     key: it.name, className: "tools-index__row",
+    // Desktop: hover abre/fecha. Ignora o mouse SIMULADO que o toque dispara.
     onMouseEnter: (ev) => {
-      const r = ev.currentTarget.getBoundingClientRect();
-      anchorRef.current = { left: r.left, right: r.right, top: r.top, bottom: r.bottom };
-      setRot(randomTilt());
-      setHovered(it);
-    }
+      if (Date.now() - touchedAt.current < 700) return;
+      showFor(ev.currentTarget, it);
+    },
+    // Touch: press-and-hold — a ficha aparece enquanto o dedo está na linha
+    // e some quando o usuário solta (touchend) ou rola (touchmove).
+    onTouchStart: (ev) => { touchedAt.current = Date.now(); showFor(ev.currentTarget, it); },
+    onTouchMove:  () => { setHovered(null); },
+    onTouchEnd:   () => { touchedAt.current = Date.now(); setHovered(null); },
+    onTouchCancel:() => { setHovered(null); }
   },
     e("span", { className: "tools-index__name" }, it.name),
     e("span", { className: "tools-index__leader", "aria-hidden": "true" }),
@@ -2696,43 +2853,7 @@ function Apparatus({
          web; o alternador vive nos controles à esquerda. ── */
       React.createElement("div", { className: "cv-slip-figure" },
         /* ── Marginalia manuscrita à DIREITA da pilha: a voz do desenhista
-           apontando que a folha de trás é clicável e revela a OUTRA edição.
-           O texto é dinâmico — nomeia a edição que está escondida (a de trás),
-           não a que já está à frente. Decorativa (aria-hidden): o aria-label
-           dos cards já informa o leitor de tela. A seta curva aponta p/ a
-           ponta da folha de trás, que espia no canto superior-direito. ── */
-        (() => {
-          const hidden = cvVariant === "themed" ? "modern" : "themed";
-          return React.createElement("span", { className: "cv-flip-note", "aria-hidden": "true" },
-            React.createElement("svg", {
-              className: "cv-flip-note__arrow",
-              viewBox: "0 0 80 112",
-              fill: "none",
-              xmlns: "http://www.w3.org/2000/svg"
-            },
-              /* curva manuscrita descendo da nota até a ponta da folha de trás */
-              React.createElement("path", {
-                d: "M62 6 C 22 22, 14 56, 36 98",
-                stroke: "currentColor",
-                strokeWidth: "2.6",
-                strokeLinecap: "round"
-              }),
-              /* ponta da flecha apontando para baixo */
-              React.createElement("path", {
-                d: "M20 76 L 37 102 L 56 84",
-                stroke: "currentColor",
-                strokeWidth: "2.6",
-                strokeLinecap: "round",
-                strokeLinejoin: "round"
-              })
-            ),
-            React.createElement("span", { className: "cv-flip-note__line" }, a.cvSlip.flipNote.lead),
-            React.createElement("span", { className: "cv-flip-note__line cv-flip-note__line--tail" },
-              a.cvSlip.flipNote.tail,
-              React.createElement("em", { className: "cv-flip-note__edition" }, a.cvSlip.flipEdition[hidden])
-            )
-          );
-        })(),
+           apontando que a folha de trás é clicável e revela a OUTRA edição. ── */
         React.createElement("div", { className: "cv-stack" },
           ["themed", "modern"].map(v => {
             const isFront = v === cvVariant;
@@ -2743,7 +2864,6 @@ function Apparatus({
               "aria-label": isFront
                 ? a.cvSlip.aria + " — " + a.cvSlip.editions[v]
                 : a.cvSlip.peek + ": " + a.cvSlip.editions[v],
-              "data-cursor-label": isFront ? t.cursorLabels.takeLeaf : a.cvSlip.peek,
               target: "_blank",
               rel: "noopener",
               /* Clicar na carta de trás não navega: traz a edição à frente
@@ -2771,10 +2891,25 @@ function Apparatus({
               })
             );
           })
+          /* ── Seta manuscrita à direita da pilha, apontando p/ a folha ── */
+        ),
+        React.createElement("div", { className: "cv-switch-note", "aria-hidden": "true" },
+          React.createElement("img", {
+            className: "cv-arrow",
+            src: "images/other/Arrow.webp",
+            alt: "",
+            "aria-hidden": "true",
+            loading: "lazy"
+          }),
+          React.createElement("span", null,
+            a.cvSlip.switchHint.prefix,
+            " ",
+            React.createElement("em", null, a.cvSlip.switchHint[cvVariant === "modern" ? "themed" : "modern"])
+          )
+        )
         )
       )
     )
-  )
   );
 }
 
@@ -2986,7 +3121,7 @@ function Correspondence({ t }) {
         e('span', { className: 'speck s3', 'aria-hidden': 'true' }),
         e('span', { className: 'speck s4', 'aria-hidden': 'true' }),
         e('span', { className: 'speck s5', 'aria-hidden': 'true' }),
-        e('svg', { className: 'seal', viewBox: '0 0 80 80', 'aria-label': 'Selo L.S.' },
+        e('svg', { className: 'seal', viewBox: '0 0 80 80', role: 'img', 'aria-label': 'Selo L.S.' },
           /* Cores usam currentColor para que o selo respeite a paleta
              (oxblood no modo claro, rosa-plum no modo escuro). */
           e('circle', { cx: '40', cy: '40', r: '39', fill: 'currentColor', fillOpacity: '.06' }),
@@ -3090,6 +3225,25 @@ function App() {
     document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
   }, [lang]);
 
+  // Bússola: gira conforme o scroll
+  useEffect(() => {
+    const compass = document.querySelector('.home-compass');
+    if (!compass) return;
+    const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduce) return;
+    let ticking = false;
+    const update = () => {
+      const scrollH = document.documentElement.scrollHeight - window.innerHeight;
+      const ratio = scrollH > 0 ? window.scrollY / scrollH : 0;
+      compass.style.transform = `rotate(${ratio * 360 * 1.5}deg)`;
+      ticking = false;
+    };
+    const onScroll = () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    update();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   // Scroll-spy: destaca capítulo ativo no TOC
   useEffect(() => {
     const sectionIds = ['preface', 'works', 'apparatus', 'contact'];
@@ -3110,7 +3264,7 @@ function App() {
     e(TopChrome, { lang, setLang, t, candle, setCandle }),
 
     // Wrapper de conteúdo do livro — chrome fixo fica de fora
-    e("div", { className: "book-content" },
+    e("main", { className: "book-content" },
       e(Frontispiece,   { t }),
       e(HalfTitle,      { t }),
       e(TOC,            { t, activeSectionId }),

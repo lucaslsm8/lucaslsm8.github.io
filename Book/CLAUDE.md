@@ -37,25 +37,33 @@ Detalhes completos em `memory/project_portfolio_rules.md`.
 ## Mapa de arquivos
 
 ```
-My Portifolio/
+Book/
 ├── CLAUDE.md                    ← este arquivo (consulta rápida)
-├── TODO.md                      ← backlog vivo de melhorias
-├── index.html                   ← home (catalogue raisonné). Tem meta sociais (og:image/twitter)
+├── DESIGN.md                    ← notas de design (princípios visuais)
+├── PRODUCT.md                   ← notas de produto (visão / escopo)
+├── index.html                   ← home (catalogue raisonné). Carrega catalogue.css/js + home.css/js + quadro-3d.js. Meta sociais (og:image/twitter)
 ├── catalogue.css                ← estilos da home (usa tokens)
-├── catalogue.js                 ← React UMD compilado, JS puro
-├── quadro-3d.js                 ← telas 3D (Three.js r128) das pranchas; aceita tiltX/rollZ/scale/tint
+├── catalogue.js                 ← React UMD, JS puro — monta a home em #root. Também guarda os mapas de CV (CV_WEB/CV_DOWNLOAD/CV_THUMBS)
+├── home.css                     ← chrome extra da home (dedicatória, edição de bolso, Index Rerum)
+├── home.js                      ← camada de melhorias da home (Three.js sob demanda, dedicatória ?to=, bolso, Index Rerum ⌘K). JS puro, fora da árvore React; reinjeta ícones via MutationObserver
+├── quadro-3d.js                 ← telas 3D (Three.js r128) das pranchas; aceita tiltX/rollZ/scale/tint + w/h/d/maxPixelRatio (wide)
 ├── favicon.svg                  ← ícone editorial (fica na raiz, por convenção)
 ├── design-system.html           ← página viva do DS (specimen-page.css + design-system-page.js)
 ├── 404.html                     ← erro (Errata · CDIV), física Matter.js — torre de livros 3D
 ├── errata-scene.css             ← CSS do cuboide 3D da 404 (:root local "gilt" intencional)
 ├── errata-physics.js            ← motor físico da 404 (Matter.js + canvas próprio)
-├── tweaks-panel.jsx             ← painel React (dev); HOJE ainda carregado pela 404 via Babel — ver TODO.md
-├── (deploy-to-github.ps1)       ← CITADO mas AUSENTE do repo — recriar ou remover (ver TODO.md)
-├── images/                      ← assets raster por área, em WebP (PNGs da raiz apagados em 2026-06-08)
-│   ├── home/                    ← chrome da home: S, I, Me, cafe, Lupa2, stamp, lights, lights-repeat, paint-front/back/side, Plateia, recto-canvas (.webp)
+├── tweaks-panel.jsx             ← painel React (dev); ainda carregado pela 404 via Babel
+├── CV/                          ← currículos em PDF por idioma × estilo (ver "Currículos (CV)" abaixo)
+│   ├── PT/{Modern,Themed}/      ← Web.pdf (abre no clique) + Print.pdf (botão baixar) + Thumbail.{webp,jpg}
+│   └── EN/{Modern,Themed}/      ← Web.pdf + Print.pdf (sem Thumbail próprio → reusa o PT)
+├── images/                      ← assets raster por área, em WebP (alpha preservado)
+│   ├── home/                    ← chrome da home: S, I, Me, cafe, Lupa2, stamp, lights, lights-repeat, paint-front/back/side(-wide), Plateia, recto-canvas
 │   ├── 404/                     ← table.webp (cena da 404)
 │   ├── genai/                   ← prancha Gen.AI: capa, plates/, wireframes/, subpastas por POC
-│   └── lighthouse/              ← prancha Lighthouse (órfã até a página existir)
+│   ├── lighthouse/              ← prancha Lighthouse (case Plate III)
+│   ├── tools/                   ← 20 ícones de ferramentas (ToolsIndex em catalogue.js: images/tools/<slug>.webp)
+│   ├── other/                   ← misc usados pela home (catalogue.js): Arrow, ai, cracha, data, sirio, valenews
+│   └── services/                ← RESERVADO (ai/ds/ui/ux) — sem uso hoje, p/ futura seção de especialidades
 ├── design-system/
 │   ├── tokens.css               ← FONTE ÚNICA dos tokens (cor, type, espaço, easing)
 │   ├── tokens.studio.json       ← export dos tokens p/ Tokens Studio (Figma)
@@ -66,15 +74,29 @@ My Portifolio/
 └── projects/
     ├── case-template.html       ← página-base de case (bilíngue PT/EN). Meta sociais com [placeholders]
     ├── case-template.js         ← interações compartilhadas (template + vitrine)
-    ├── genai.html               ← 1º case real (Gen.AI). CSS inline próprio; componentes novos (poc-grid, insight-card, learning, principle, outcome, sl-plate-flip, galeria lbg__) — candidatos a portar p/ o template (TODO.md)
-    ├── projects.html            ← PÁGINA DE PROJETOS: Vitrine de Componentes (Formato A/B + "Ver o código") + Parecer do Editor (apêndice). Fusão de vitrine + parecer (2026-06-11)
-    ├── projects.css             ← CSS único da projects.html: união enxuta (PurgeCSS) de catalogue+case-template+vitrine + parecer escopado. Tokens seguem em tokens.css
-    └── projects.js              ← JS único da projects.html: case-template.js + vitrine.js + parecer-do-editor.js (3 IIFEs). catalogue.js dispensado (só montava a home React)
+    ├── genai.html               ← case Gen.AI (Plate I). CSS inline próprio; componentes novos (poc-grid, insight-card, learning, principle, outcome, sl-plate-flip, galeria lbg__) — candidatos a portar p/ o template
+    ├── lighthouse.html          ← case Lighthouse (Plate III · Vale Corredor Norte). Linka tokens + catalogue.css + case-template.css + case-template.js
+    ├── vitrine.html             ← PÁGINA DE PROJETOS ativa: Vitrine de Componentes (Formato A/B + "Ver o código") + Parecer do Editor. Carrega projects.css/js + Swiper (CDN)
+    ├── projects.css             ← CSS único da vitrine.html: união enxuta (PurgeCSS) de catalogue+case-template+vitrine + parecer escopado. Tokens seguem em tokens.css
+    ├── projects.js              ← JS único da vitrine.html: case-template.js + vitrine.js + parecer-do-editor.js (3 IIFEs)
+    └── tools/                    ← RESERVADO (duplicata parcial de images/tools) — sem uso hoje
 ```
 
-**Assets:** imagens vivem em `images/<área>/` (`home/`, `404/`, `genai/`, `lighthouse/`) em **WebP** (alpha preservado), exceto o `favicon.svg` (raiz). Referências relativas: `images/home/arquivo.webp` na raiz, `../images/...` em `projects/`. **Atenção a maiúsculas** — GitHub Pages é case-sensitive (`Lupa2.webp` ≠ `lupa2.webp`).
+**Assets:** imagens vivem em `images/<área>/` (`home/`, `404/`, `genai/`, `lighthouse/`, `tools/`, `other/`, `services/`) em **WebP** (alpha preservado), exceto o `favicon.svg` (raiz). Os currículos ficam em `CV/<LANG>/<Estilo>/` em **PDF**. Referências relativas: `images/home/arquivo.webp` na raiz, `../images/...` em `projects/`. **Atenção a maiúsculas e espaços** — GitHub Pages é case-sensitive (`Lupa2.webp` ≠ `lupa2.webp`) e os PDFs de CV têm espaços no nome (o browser codifica; manter o nome exato).
 
 **Regra de ouro:** ao mudar cor, tipo ou escala, editar **`design-system/tokens.css`** e atualizar a tabela correspondente em `DESIGN-SYSTEM.md`. Nunca redeclarar `:root` em outro CSS.
+
+---
+
+## Currículos (CV)
+
+Mapas em **`catalogue.js`** (constantes `CV_THUMBS`, `CV_WEB`, `CV_DOWNLOAD` + helper `cvAsset`), exibidos no Ex Libris da home. Eixos: **idioma** (PT/EN) × **estilo** (Modern/Themed) × **uso** (Web/Print).
+
+- **Clique na imagem do CV** → abre a versão **Web** (`...- <Estilo> - <LANG> - Web.pdf`) em nova aba.
+- **Botão "baixar o currículo"** → baixa a versão **Print** (`...- <Estilo>- <LANG> - Print.pdf`; repare: no Print não há espaço antes do traço do estilo).
+- **Toggle PT/EN** troca todos os caminhos. `CV_EN_READY = true` (4 PDFs EN no ar); `CV_DOWNLOAD_READY = true` (Print no ar — o botão é `<a download>`, não mais placeholder).
+- **Thumbnails:** só PT tem (`Thumbail.webp`/`.jpg`); EN reusa a face PT (o mapa `CV_THUMBS.en` aponta p/ `CV/PT/...`). Se gerar thumbnails EN, trocar as duas linhas `en:`.
+- A borda branca que aparece ao abrir um PDF está **dentro do arquivo** (MediaBox > arte), não vem do site.
 
 ---
 
@@ -90,6 +112,12 @@ My Portifolio/
 
 - **Vitrines unificadas (2026-06-01):** havia duas vitrines de assets — `mockup-showcase.html` (componentes A/B com código) e `specimen.html` (Vitrina Arcana). Fundidas numa só, `projects/vitrine.html`, com base no mockup-showcase. As seções únicas do specimen (Materiais & Pigmentos, Marginalia, Cronologia, Fragmenta) foram absorvidas como XVII–XX, cada uma com gaveta de código. **`mockup-showcase.html`, `specimen.html`, `specimen.js` e `specimen.css` foram apagados.** Navegação nova: índice lateral fixo (`.index-rail`) com scroll-spy, em `vitrine.css`/`vitrine.js`. (Não absorvidos do specimen, por decisão de escopo/responsividade: Atelier de posição absoluta, Vitrinarium de ícones SVG, Tabula Rerum — substituída pelo índice lateral.)
 - **Página de projetos consolidada (2026-06-11):** a Vitrine e o Parecer do Editor viraram um trio único — `projects/projects.html` + `projects.css` + `projects.js`. Apagados: `vitrine.html`, `vitrine.js`, `design-system/vitrine.css`, `parecer-do-editor.{html,css,js}`. O `projects.css` é a união **enxuta** (PurgeCSS) de `catalogue.css` + `case-template.css` + `vitrine.css` (só as regras usadas; ~282 KB → ~150 KB) + o CSS do parecer escopado sob `.memo` (reset universal removido, `body`→`.memo`, `code`→`.memo code`). **Tokens continuam em `tokens.css` (link, fonte única — nunca duplicar `:root`).** O `projects.js` concatena `case-template.js` + `vitrine.js` + `parecer-do-editor.js` (3 IIFEs independentes); `catalogue.js` foi dispensado (só montava a home React em `#root`, ausente aqui — removê-lo também eliminou um erro latente de console). Swiper segue via CDN. Validado em jsdom: 0 erros, índice lateral, lang-toggle, 19 specimens de código, carrossel e demos do parecer inicializam. Limpeza junto: apagados os legados `mockup-showcase.html`, `specimen.html`, `specimen.js`, `design-system/specimen.css` e o órfão `errata-scene.js`. Link de `case-template.html` reapontado p/ `projects.html`.
+- **Correção — página de projetos voltou a `vitrine.html` (2026-06-22):** ao contrário do que dizia a decisão de 2026-06-11, a página de projetos ativa hoje é **`projects/vitrine.html`** (e não `projects.html`, que foi removido). Ela continua carregando `projects.css` + `projects.js` (o trio enxuto descrito acima segue válido — só o nome do HTML mudou). `case-template.html` aponta p/ `./case-template.html` no chrome.
+- **Limpeza & organização (2026-06-22):**
+  - **CVs ligados** aos PDFs reais em `CV/<LANG>/<Estilo>/` (ver seção "Currículos (CV)"). `CV_EN_READY` e `CV_DOWNLOAD_READY` viraram `true`.
+  - **WebP:** `CV/PT/Modern/Thumbail.jpg` (671 KB → 122 KB) e `images/other/Arrow.png` (→ 1 KB, alpha preservado) convertidos; refs atualizadas em `catalogue.js`. **Zero rasters não-webp** no projeto agora.
+  - **Apagados (órfãos, não carregados por nenhuma página):** `catalogue-v2.css` + `catalogue-v2.js` (camada "V2" nunca ligada ao index, com dados de CV obsoletos); `projects/Aparato e Cronologia - *.dc.html` (×2) + `projects/support.js` + `projects/.rows.png` (artefatos do editor "design canvas", exploração da seção Aparato — não shipados); `quadro-wide-test.html` (sandbox da variação wide, já portada).
+  - **Mantidos como RESERVADOS** (escolha do Lucas): `images/services/` (ai/ds/ui/ux) e `projects/tools/` (duplicata parcial de `images/tools/`) — sem uso hoje.
 - Tema "Noir Cinematográfico" foi **descartado** em 2026-05-13. Apagado da pasta.
 - JSX foi **eliminado**. JS puro com `React.createElement` quando precisar de React.
 - Estrutura de pastas: raiz simples + `design-system/` + `projects/`. Sem subpastas por feature.
@@ -98,6 +126,7 @@ My Portifolio/
 - **Efeito de flip 3D na troca PT/EN foi removido** em 2026-05-18 — troca instantânea.
 - **Wax seal "Finis" e filigrana sob luz de vela foram removidos** em 2026-05-18 — não passaram no teste estético.
 - **Foldable plate (orelha dobrada em hover)** foi **substituído por flip 3D com botão temático** em 2026-05-18. O hover colidia com a lupa.
+- **Case Lighthouse criado (2026-06-14):** `projects/lighthouse.html` montado a partir do `case-template.html` com conteúdo real (fonte: `../lighthouse-app.html`) e fatos canônicos da home (Plate III / № 003 / Vale Corredor Norte / MMXXIII / Lead PD Mobile). Linka `tokens.css` + `catalogue.css` + `case-template.css` + `case-template.js`. **Imagens em placeholder** (telas antigas eram do CV velho) — todos os mockups/galeria usam `.screenshot-placeholder`/`.carousel-plate-cut`; único `<img>` real é o aro da luneta `images/home/Lupa2.webp`. Componentes da vitrine reaproveitados: before/after (intranet→mobile), molduras desktop/mobile, luneta, carrossel pasta-de-colecionador, flip 3D recto/verso, count-up. Seção própria "Sistema de Prioridades" usa `.pigment-swatch` p/ o código de cores (verde/amarelo/azul/vermelho). 18 folios, 0 erros de console, i18n PT/EN e count-up validados no preview. Pendente: trocar placeholders pelas telas reais; criar Plate II (`pmo-dashboards.html`, já linkada no verso).
 
 ---
 
@@ -167,6 +196,14 @@ Avaliação no navegador (Playwright headless) revelou problemas que só aparece
 - **Placard de interação:** `.plate-quadro-hint` sob cada tela ("✦ lupa amplia · vire para o verso" / EN), some no hover, oculto em mobile. i18n em `works.quadroHint`. *(Lucas pode pedir p/ remover.)*
 - **Coerência "tela de pintura":** microcópia ajustada — `works.intro` (telas montadas, examinar/virar), `cursorLabels.seePlate` → "abrir a ficha"/"open the entry"; comentários do código atualizados.
 
+### Variação de prancha WIDE — tela deitada (2026-06-18, feedback do Lucas)
+- **Nova variação por obra na home.** Cada prancha pode ser **retrato** (padrão) ou **wide** (landscape). Opt-in: `p.format = "wide"` no dado da obra (`CONTENT.pt/en.works.plates[i]`, em ambos os idiomas). Hoje a **Plate I (Gen.AI)** está marcada como wide (demonstração) — mover/copiar o flag para escolher outra.
+- **`quadro-3d.js`:** agora aceita dimensões custom `w`/`h`/`d` (default = retrato 6.08×9.64×0.38) e `maxPixelRatio` (teto de supersample p/ poupar GPU com texturas grandes). Wide usa `18.15×8.67×0.38` (arte 1815×867×38).
+- **Arte landscape:** `images/home/paint-{front,back,side}-wide.webp` (feitas pelo Lucas; PNGs convertidas p/ WebP, nomes normalizados lowercase). O default de `PlateCard` escolhe a arte wide quando `isWide`.
+- **Layout wide (`PlateCard` branch + CSS `.plate--wide` em `catalogue.css`):** luminária **centrada** sobre a tela (`.plate-rail--wide`, sem grid 3-col); botão **circular de virar** no canto sup. direito (`.plate-turn` + legenda Verso/Anverso via `flip.turnVerso`/`turnRecto`); ficha editorial em **3 faixas** — cabeçalho (romano + título + byline · ação "ler a ficha completa" ancorada à direita), corpo (ficha técnica `.plate-meta` | descrição), e **métricas agrupadas** (flex) na coluna direita sob a descrição. Reusa `.plate-title/.plate-sub/.plate-desc/.plate-stats/.plate-link`. Lupa-pêndulo `Lens` se prende ao `.plate-quadro-stage` como nas retrato.
+- **Protótipo:** o sandbox `quadro-wide-test.html` (raiz, noindex) onde a variação foi desenhada **foi removido em 2026-06-22** após a variação ser portada p/ a home.
+- *Atenção:* validar mudanças em janela anônima/cache off — o navegador segura `catalogue.js`/`.css` em cache agressivo no dev (GitHub Pages serve fresco no deploy).
+
 ### Otimização de imagens + reorganização de assets (2026-06-08)
 - **Todos os PNGs decorativos da raiz de `images/` viraram WebP** (transparência preservada — café, lupa, capitulares etc. mantêm alpha). `images/` caiu de ~21 MB → 5,5 MB.
-- **Assets reorganizados em subpastas:** `images/home/` (chrome da home: S, I, Me, cafe, Lupa2, stamp, lights, lights-repeat, paint-front/back/side, Plateia, recto-canvas) e `images/404/` (table). `genai/` e `lighthouse/` inalterados. Referências atualizadas em `catalogue.css`, `catalogue.js`, `quadro-3d.js`, `er
+- **Assets reorganizados em subpastas:** `images/home/` (chrome da home: S, I, Me, cafe, Lupa2, stamp, lights, lights-repeat, paint-front/back/side, Plateia, recto-canvas) e `images/404/` (table). `genai/` e `lighthouse/` inalterados. Referências atualizadas em `catalogue.css`, `catalogue.js`, `quadro-3d.js`, `errata-physics.js` e nas páginas de `projects/`.

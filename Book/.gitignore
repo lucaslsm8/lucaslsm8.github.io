@@ -1,0 +1,4 @@
+# Tooling / agent scaffolding — não faz parte do site publicado
+.agents/
+.claude/
+.impeccable/
