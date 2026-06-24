@@ -607,7 +607,17 @@
 
 /* --- ≤768 px : tablet retrato --- */
 @media (max-width: 768px) {
-  .case-frontispiece { padding: 120px 24px 64px; min-height: 80vh; }
+  /* Frontispício: o miolo centralizado (deck longo + ficha) transbordava
+     a min-height e colidia com .sig (absolute top) e o indicador (absolute
+     bottom). Em telas estreitas tudo passa a fluir no grid, sem sobreposição. */
+  .case-frontispiece { padding: 96px 24px 56px; min-height: auto; row-gap: var(--sp-5); }
+  .case-frontispiece .sig,
+  .case-frontispiece .frontispiece-indicator {
+    position: static;
+    inset: auto;
+    transform: none;
+  }
+  .case-frontispiece .frontispiece-indicator { margin-top: var(--sp-4); }
   .case-section { padding: var(--sp-10) 0; }
   .case-section .section-head { gap: var(--sp-4); margin-bottom: var(--sp-7); }
   .marginalia-stat dl { grid-template-columns: repeat(2, 1fr); gap: var(--sp-6) var(--sp-5); }
@@ -624,8 +634,13 @@
 /* --- ≤640 px : mobile grande --- */
 @media (max-width: 640px) {
   .case-section { padding: var(--sp-9) 0; }
-  .case-section .section-head { flex-wrap: wrap; gap: var(--sp-3); }
-  .case-section .section-head .name { font-size: 40px; }
+  /* Cabeçalho de seção: em telas estreitas o numeral romano (min-width 4em)
+     empurrava o título grande para a direita, desalinhado do corpo. Aqui o
+     romano vira rótulo na 1ª linha e o título ocupa a linha cheia, alinhado
+     à margem esquerda como o restante do texto. */
+  .case-section .section-head { flex-wrap: wrap; gap: var(--sp-2) var(--sp-3); }
+  .case-section .section-head .roman { min-width: 0; width: 100%; }
+  .case-section .section-head .name { font-size: 40px; width: 100%; }
   .case-section .section-head .gloss { margin-left: 0; width: 100%; }
 
   .marginalia-stat { padding: var(--sp-5) var(--sp-4); }
@@ -650,7 +665,7 @@
 
 /* --- ≤380 px : mobile pequeno --- */
 @media (max-width: 380px) {
-  .case-frontispiece { padding: 96px 16px 48px; min-height: 72vh; }
+  .case-frontispiece { padding: 88px 16px 44px; min-height: auto; }
   .case-frontispiece .case-num { font-size: 22px; }
   .case-title { font-size: 44px; line-height: 0.95; }
 
@@ -1010,6 +1025,9 @@ body.candle .case-intermezzo { box-shadow: inset 0 0 0 1px rgba(243, 234, 208, 0
 @media (prefers-reduced-motion: reduce) {
   [data-stagger] > * { opacity: 1 !important; transform: none !important; }
   .case-plate { transform: none !important; }
+  /* Animações contínuas do frontispício cinematográfico: paradas. */
+  .frontispiece-halo { animation: none !important; }
+  .frontispiece-indicator .arrow { animation: none !important; }
 }
 
 /* Impressão: garante que filhos de [data-stagger] apareçam (paridade
@@ -5103,3 +5121,256 @@ body.candle .candle-icon--on { display: block; }
   @media (prefers-reduced-motion: reduce) {
     .sl-hero img, .sl-thumb img, .poc-entry, .sl-hero, .sl-thumb { transition: none !important; }
   }
+
+/* ════════════════════════════════════════════════════════════
+   CHROME DE CASE — paridade com a home (case-chrome.js)
+   Nome clicável (→ catálogo), Index Rerum (luneta · ⌘K) e
+   Edição de bolso (livreto). Portado de home.css; mesmos tokens,
+   mesmas classes .ed-* para herdar comportamento e modo vela.
+   ════════════════════════════════════════════════════════════ */
+
+/* ─── Nome no running-head como link para a home ─────────────── */
+.running-head .running-head-home {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.running-head .running-head-home:hover,
+.running-head .running-head-home:focus-visible { color: var(--oxblood); border-bottom-color: var(--oxblood); }
+.running-head .running-head-home:focus { outline: none; }
+
+/* ─── Ícones do chrome (luneta · bolso) ──────────────────────── */
+.ed-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-faint);
+  padding: 4px 8px;
+  border: none;
+  background: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: color 0.3s, transform 0.3s;
+}
+.ed-icon:hover,
+.ed-icon:focus-visible { color: var(--oxblood); }
+.ed-icon:focus-visible { outline: 2px solid var(--oxblood); outline-offset: 2px; }
+.ed-icon svg { display: block; }
+@media (max-width: 768px) {
+  .ed-icon { min-width: 44px; min-height: 44px; }
+}
+
+/* ─── Edição de bolso ────────────────────────────────────────── */
+.ed-pocket {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-5);
+  background: rgba(26, 22, 18, 0.45);
+  animation: ed-fade-in 0.25s ease;
+}
+@keyframes ed-fade-in { from { opacity: 0; } }
+.ed-pocket-card {
+  width: min(620px, 100%);
+  max-height: 86vh;
+  overflow-y: auto;
+  background: var(--paper-card);
+  color: var(--ink);
+  border: var(--border-hair-strong);
+  box-shadow: var(--shadow-lens);
+  padding: var(--sp-6) var(--sp-7);
+  font-family: var(--serif);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  transform: rotate(-0.4deg);
+}
+.ed-pocket-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+  padding-bottom: var(--sp-3);
+  margin-bottom: var(--sp-5);
+  border-bottom: var(--border-hair-strong);
+}
+.ed-pocket-label {
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--oxblood);
+}
+.ed-pocket-gloss { font-style: italic; font-size: var(--fs-meta); color: var(--ink-faint); }
+.ed-pocket-close {
+  margin-left: auto;
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: none;
+  color: var(--ink-faint);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+}
+.ed-pocket-close:hover { color: var(--oxblood); }
+.ed-pocket-name {
+  font-family: var(--serif-display);
+  font-weight: 400;
+  font-size: var(--fs-h3);
+  line-height: var(--lh-tight);
+}
+.ed-pocket-line { margin-top: var(--sp-2); font-size: var(--fs-meta); color: var(--ink-soft); }
+.ed-pocket-h {
+  margin-top: var(--sp-5);
+  margin-bottom: var(--sp-3);
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: var(--fs-caption);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.ed-pocket-works { list-style: none; margin: 0; padding: 0; }
+.ed-pocket-works li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-3);
+  padding: var(--sp-3) 0;
+  border-bottom: var(--border-dotted);
+}
+.ed-pw-roman { font-family: var(--mono); font-size: var(--fs-small); color: var(--oxblood); min-width: 26px; }
+.ed-pw-body { flex: 1; }
+.ed-pw-title { display: block; font-size: var(--fs-body); }
+.ed-pw-desc  { display: block; font-size: var(--fs-meta); color: var(--ink-soft); }
+.ed-pw-key {
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.06em;
+  color: var(--oxblood);
+  white-space: nowrap;
+}
+.ed-pocket-contact a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--ink-ghost);
+}
+.ed-pocket-contact a:hover { color: var(--oxblood); border-bottom-color: var(--oxblood); }
+.ed-pocket-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+  margin-top: var(--sp-6);
+  padding-top: var(--sp-4);
+  border-top: var(--border-hair);
+}
+.ed-pocket-print,
+.ed-pocket-full {
+  min-height: 44px;
+  padding: var(--sp-2) var(--sp-3);
+  border: none;
+  background: none;
+  font-family: var(--mono);
+  font-size: var(--fs-small);
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  cursor: pointer;
+  border-bottom: 1px dotted var(--ink-ghost);
+}
+.ed-pocket-print:hover,
+.ed-pocket-full:hover { color: var(--oxblood); border-bottom-color: var(--oxblood); }
+@media (max-width: 768px) {
+  .ed-pocket-card { padding: var(--sp-5); transform: none; }
+}
+
+/* ─── Index Rerum (⌘K / clique na luneta) ────────────────────── */
+.ed-index {
+  position: fixed;
+  inset: 0;
+  z-index: 9100;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 14vh var(--sp-5) var(--sp-5);
+  background: rgba(26, 22, 18, 0.45);
+  animation: ed-fade-in 0.2s ease;
+}
+.ed-index-panel {
+  width: min(560px, 100%);
+  background: var(--paper-card);
+  border: var(--border-hair-strong);
+  box-shadow: var(--shadow-lens);
+  padding: var(--sp-5) var(--sp-6);
+}
+.ed-index-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+.ed-index-title { font-family: var(--serif-display); font-style: italic; font-size: var(--fs-h4); color: var(--ink); }
+.ed-index-hint { font-family: var(--mono); font-size: var(--fs-caption); letter-spacing: 0.08em; color: var(--ink-faint); }
+.ed-index-input {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--sp-2) var(--sp-3);
+  font-family: var(--mono);
+  font-size: var(--fs-meta);
+  color: var(--ink);
+  background: var(--paper);
+  border: var(--border-hair-strong);
+  border-radius: var(--radius-sm);
+}
+.ed-index-input:focus { outline: 2px solid var(--oxblood); outline-offset: 1px; }
+.ed-index-list { list-style: none; margin: var(--sp-4) 0 0; padding: 0; max-height: 46vh; overflow-y: auto; }
+.ed-ix-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-2);
+  font-size: var(--fs-meta);
+  border-bottom: var(--border-hair);
+  cursor: pointer;
+}
+.ed-ix-row.sel { background: var(--highlighter); }
+body.candle .ed-ix-row.sel { background: var(--paper-deep); }
+.ed-ix-term { font-style: italic; color: var(--ink); }
+.ed-ix-leader { flex: 1; border-bottom: 1px dotted var(--ink-ghost); transform: translateY(-4px); }
+.ed-ix-loc {
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.08em;
+  color: var(--oxblood);
+  white-space: nowrap;
+}
+.ed-ix-empty { padding: var(--sp-4); text-align: center; font-style: italic; color: var(--ink-faint); }
+
+/* ─── Impressão da lauda de bolso ────────────────────────────── */
+@media print {
+  body.ed-pocket-open .chrome-top,
+  body.ed-pocket-open .book,
+  body.ed-pocket-open .folio-nav,
+  body.ed-pocket-open .ed-icon {
+    display: none !important;
+  }
+  body.ed-pocket-open .ed-pocket {
+    position: static;
+    background: none;
+    padding: 0;
+    animation: none;
+  }
+  body.ed-pocket-open .ed-pocket-card {
+    box-shadow: none;
+    border: 1pt solid #1a1612;
+    transform: none;
+    max-height: none;
+    overflow: visible;
+    width: 100%;
+  }
+  body.ed-pocket-open .ed-pocket-close,
+  body.ed-pocket-open .ed-pocket-foot { display: none !important; }
+}
