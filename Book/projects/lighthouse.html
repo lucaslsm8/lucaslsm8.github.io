@@ -20,7 +20,7 @@
 <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 
 <!-- Design tokens e estilos da home + específicos do case -->
 <link rel="stylesheet" href="../design-system/tokens.css" />
@@ -109,6 +109,40 @@
     font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--ink-faint);
   }
 
+  /* ---------- Walkthrough em aparelhos de alta resolução (molduras PNG) ----------
+     As telas do coverflow trazem moldura de device com cantos transparentes;
+     drop-shadow segue a silhueta. Usadas anotadas, como passeio explicado. */
+  .lh-screenrow {
+    display: flex; gap: var(--sp-5); margin-top: var(--sp-5); padding: var(--sp-2) 2px var(--sp-4);
+    overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: thin;
+    scrollbar-color: var(--ink-ghost) transparent;
+  }
+  .lh-screenfig {
+    flex: 0 0 auto; width: 196px; scroll-snap-align: start; margin: 0; text-align: center;
+    cursor: zoom-in; text-decoration: none;
+  }
+  .lh-screenfig img {
+    width: 100%; height: auto; display: block;
+    filter: drop-shadow(0 16px 26px rgba(26,22,18,.26));
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+  .lh-screenfig:hover img { transform: translateY(-6px); }
+  .lh-screenfig .cap {
+    display: block; margin-top: var(--sp-3); font-family: var(--mono); font-size: 10px;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); line-height: 1.5;
+  }
+  .lh-screenfig .cap b {
+    display: block; font-family: var(--serif); font-style: italic; font-size: 15px;
+    text-transform: none; letter-spacing: 0; color: var(--ink); margin-bottom: 3px;
+  }
+  .lh-screenrow__cap, .lh-dataviz__cap {
+    margin-top: 2px; text-align: center; font-family: var(--mono); font-size: 11px;
+    letter-spacing: .04em; color: var(--ink-faint);
+  }
+  /* Pares de leitura de dados (Seção V) — variações de gráfico reais */
+  .lh-dataviz-extra { display: flex; gap: var(--sp-6); flex-wrap: wrap; justify-content: center; margin-top: var(--sp-5); }
+  .lh-dataviz-extra .lh-screenfig { width: 212px; }
+
   /* ---------- Carrossel coverflow (Swiper Element · portado do app antigo) ----------
      <swiper-container> isola os estilos internos no shadow DOM; só os
      slots (swiper-slide) são estilizáveis daqui. Nav/paginação herdam
@@ -144,6 +178,21 @@
   .coverflow-inner .lh-carousel-cap { margin-top: var(--sp-3); padding: 0 var(--sp-5); }
   @media (max-width: 640px) { .lh-coverflow swiper-slide { width: 208px; } }
 
+  /* ---------- Cantos da arte embutida (app moderno) ----------
+     As telas/cards do app trazem cantos arredondados na própria arte
+     (os pixels do canto são transparentes). O keyline e a moldura da
+     galeria precisam seguir essa curva, senão o traço corta reto sobre
+     o canto. --art-r guarda o raio como par H%/V% (relativo a largura /
+     altura), o que mantém o canto CIRCULAR e o faz ESCALAR junto da
+     imagem em qualquer tamanho — miniatura na página ou ampliada no
+     lightbox. Valores medidos do alfa de cada arte (raio nativo ÷ lado). */
+  img[src*="/overview"]       { --art-r: 2.38% / 4.75%; }
+  img[src*="workflow-"]       { --art-r: 2.66% / 6.57%; }
+  img[src$="components.webp"] { --art-r: 2.73% / 6.76%; }
+  img[src$="porto.webp"]      { --art-r: 0.57% / 3.56%; }
+  img[src*="/card-"]          { --art-r: 1.04% / 1.75%; }
+  img[src*="/coverflow/"]     { --art-r: 4.59% / 2.12%; }
+
   /* ---------- Prancha larga única (board de componentes, sitemaps) ---------- */
   .lh-plate {
     display: block; position: relative; cursor: zoom-in; padding: 12px; margin-top: var(--sp-5);
@@ -151,7 +200,7 @@
     box-shadow: var(--shadow-soft);
     transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
   }
-  .lh-plate img { width: 100%; height: auto; display: block; border: 1px solid rgba(122,38,32,.22); border-radius: 2px; }
+  .lh-plate img { width: 100%; height: auto; display: block; border: 1px solid rgba(122,38,32,.22); border-radius: var(--art-r, 2px); }
   .lh-plate:hover { transform: translateY(-3px); box-shadow: var(--shadow-lens); }
   .lh-plate__cap {
     display: flex; align-items: center; gap: 9px; margin-top: 10px; padding: 0 2px;
@@ -174,7 +223,7 @@
     transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
   }
   .lh-pri:hover { transform: translateY(-3px); box-shadow: var(--shadow-lens); }
-  .lh-pri img { width: 100%; height: auto; display: block; border: 1px solid var(--hairline); border-radius: var(--radius-sm); }
+  .lh-pri img { width: 100%; height: auto; display: block; border: 1px solid var(--hairline); border-radius: var(--art-r, var(--radius-sm)); }
   .lh-pri__head { display: flex; align-items: baseline; gap: var(--sp-3); }
   .lh-pri__tag {
     font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
@@ -203,7 +252,7 @@
   }
   .lh-flow__row { display: flex; overflow: hidden; }
   .lh-flow__track {
-    display: flex; flex-shrink: 0; width: max-content;
+    display: flex; flex-shrink: 0; width: max-content; align-items: flex-start;
     animation: lh-flow-loop var(--lh-flow-dur, 42s) linear infinite;
     animation-direction: var(--lh-flow-dir, normal);
   }
@@ -216,6 +265,11 @@
   }
   .lh-flow__card img { height: 100%; width: auto; display: block; border-radius: 2px; }
   .lh-flow__card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lens); }
+  /* Cards ao vivo nas faixas — um tamanho por linha (grande, médio, compacto) */
+  .lh-flow__live { flex: 0 0 auto; width: 246px; margin-right: var(--sp-5); }
+  .lh-flow__live .lh-card { width: 100%; transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); }
+  .lh-flow__live:hover .lh-card { transform: translateY(-4px); box-shadow: var(--shadow-lens); }
+  @media (max-width: 640px) { .lh-flow__live { width: 212px; } }
   /* Bordas esmaecidas no papel — fundem com o fundo nos dois temas */
   .lh-flow::before, .lh-flow::after {
     content: ''; position: absolute; top: 0; bottom: 0; z-index: 2; pointer-events: none;
@@ -229,6 +283,44 @@
     .lh-flow__track { animation: none; transform: none; }
   }
 
+  /* ============================================================
+     Cards do app em fluxo — recriação 1:1 dos componentes do Figma
+     (Card=UltraSmall / Compact / Small, nas 4 cores de status). Layout
+     nativo de 386px posicionado em pixels exatos do Figma; o wrapper
+     escala o conjunto para a faixa editorial. Tipografia Roboto, barra
+     lateral de 6px, ícone bússola (explore) e bookmark, como no produto.
+     ============================================================ */
+  .fig-card { position: relative; width: 386px; transform-origin: top left;
+    font-family: "Roboto", -apple-system, "Segoe UI", Arial, sans-serif; }
+  .fig-card * { box-sizing: border-box; }
+  .fig-card__bg  { position: absolute; inset: 0; border-radius: 8px; background: #fff; box-shadow: 0 2px 48px rgba(0,0,0,.06); }
+  .fig-card__bar { position: absolute; left: 0; top: 0; width: 6px; height: 100%; border-radius: 8px 0 0 8px; background: var(--c); }
+  .fig-card__name { position: absolute; left: 46px; top: 11px; font-weight: 700; font-size: 16px; letter-spacing: 1px; color: #393939; white-space: nowrap; line-height: 1; }
+  .fig-card__sub  { position: absolute; left: 25px; top: 35px; font-weight: 300; font-size: 14px; letter-spacing: 1px; color: #393939; white-space: nowrap; line-height: 1; }
+  .fig-card__foot { position: absolute; font-weight: 500; font-size: 10px; letter-spacing: 1px; color: #6f6f6f; white-space: nowrap; line-height: 1; }
+  .fig-ic { position: absolute; display: block; }
+  .fig-ic--explore { left: 23px; top: 10px; width: 20px; height: 20px; }
+  .fig-ic--bm { left: 359px; top: 12px; width: 14px; height: 16px; }
+  .fig-ic--ch { left: 295px; top: 13px; width: 16px; height: 14px; }
+  .fig-ic--gr { left: 327px; top: 13px; width: 14px; height: 14px; }
+  .fig-chart { position: absolute; display: block; }
+  .fig-met__k { position: absolute; font-weight: 500; font-size: 12px; letter-spacing: 1px; color: #6f6f6f; white-space: nowrap; line-height: 1; }
+  .fig-met__v { position: absolute; font-weight: 500; font-size: 20px; letter-spacing: 1px; white-space: nowrap; line-height: 1; opacity: .92; }
+  .fig-side__k { position: absolute; left: 268px; font-weight: 500; font-size: 12px; letter-spacing: 1px; color: #8b8d93; white-space: nowrap; line-height: 1; }
+  .fig-side__v { position: absolute; left: 268px; font-weight: 500; font-size: 14px; letter-spacing: 1px; color: #47494e; white-space: nowrap; line-height: 1; }
+  .fig-us__k { position: absolute; left: 254px; top: 11px; font-weight: 500; font-size: 12px; letter-spacing: 1px; color: #6f6f6f; white-space: nowrap; line-height: 1; }
+  .fig-us__v { position: absolute; left: 254px; top: 26px; font-weight: 500; font-size: 32px; letter-spacing: 1px; color: var(--c); white-space: nowrap; line-height: 1; }
+
+  /* Wrapper que escala o card nativo (386px) para a faixa */
+  .fig-wrap { flex: 0 0 auto; margin-right: var(--sp-5); overflow: visible;
+    transition: transform var(--dur-base) var(--ease-out); }
+  .fig-wrap > .fig-card, .fig-wrap > .fig-img { transform: scale(var(--fig-scale, .62)); transform-origin: top left; }
+  .fig-wrap:hover { transform: translateY(-5px); }
+  .fig-wrap:hover > .fig-card .fig-card__bg { box-shadow: var(--shadow-lens); }
+  .fig-img { display: block; width: 386px; height: auto; border-radius: 8px;
+    filter: drop-shadow(0 2px 10px rgba(0,0,0,.06)); transition: filter var(--dur-base) var(--ease-out); }
+  .fig-wrap:hover > .fig-img { filter: drop-shadow(0 12px 22px rgba(0,0,0,.16)); }
+
   /* ---------- Resultados: expansões futuras ---------- */
   .lh-future {
     margin-top: var(--sp-5); padding: var(--sp-5); border: var(--border-dotted);
@@ -238,6 +330,317 @@
   .lh-future__list { list-style: none; margin: var(--sp-3) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--sp-3) var(--sp-5); }
   .lh-future__list li { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--ink); display: inline-flex; align-items: baseline; gap: 8px; }
   .lh-future__list li::before { content: '→'; color: var(--oxblood); font-style: normal; }
+
+  /* ============================================================
+     PALETA DO PRODUTO (Vale · Lighthouse) — os pigmentos reais do app,
+     lidos do arquivo Figma. Vivem só nesta prancha, usados nas peças
+     que recriam a interface (cards, telas, sistema de prioridade).
+     Verde-Vale é o anil da marca; os quatro status formam o código.
+     ============================================================ */
+  .lh-spread {
+    --vale:        #008f83;   /* verde-Vale — marca / status normal */
+    --vale-deep:   #007e7a;
+    --pri-green:   #69be28;   /* dentro do esperado — verde da marca */
+    --pri-yellow:  #e5b22d;   /* atenção */
+    --pri-blue:    #1d78c8;   /* informativo / S&EO */
+    --pri-red:     #b40a36;   /* crítico / real acm. */
+    --app-ink:     #393939;   /* texto forte do app */
+    --app-soft:    #6f6f6f;   /* texto fraco do app */
+    --app-line:    #e4e4e4;   /* divisores do app */
+    --app-surface: #ffffff;
+    --app-bg:      #f3f6f8;
+  }
+
+  /* ---------- Anatomia do Card: recriação fiel + ao vivo ----------
+     O card de produção redesenhado em HTML/SVG (não uma captura), para
+     dissecar a hierarquia: cabeçalho, métricas, gráfico e rodapé. O
+     seletor de status troca o pigmento de prioridade em tempo real. */
+  .lh-anatomy { margin-top: var(--sp-5); }
+  .lh-anatomy__grid {
+    display: grid; grid-template-columns: 386px minmax(0, 1fr);
+    gap: clamp(28px, 4vw, 56px); align-items: start;
+  }
+  @media (max-width: 720px) { .lh-anatomy__grid { grid-template-columns: 1fr; gap: var(--sp-6); } }
+
+  /* Maquineta — o "device" que segura o card */
+  .lh-device {
+    position: relative; padding: 18px; border-radius: 28px;
+    background: linear-gradient(160deg, var(--vale), var(--vale-deep));
+    box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,.18);
+  }
+  .lh-device__bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 2px 8px 12px; color: rgba(255,255,255,.92);
+    font-family: var(--mono); font-size: 11px; letter-spacing: .02em;
+  }
+  .lh-device__bar .dots { display: flex; gap: 4px; }
+  .lh-device__bar .dots i { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,.7); }
+
+  /* Moldura neutra do app — substitui o antigo "device" verde */
+  .lh-cardframe { background: transparent; padding: 0; box-shadow: none; }
+
+  /* O card propriamente dito */
+  .lh-card {
+    position: relative; overflow: hidden;
+    background: var(--app-surface); border-radius: 12px;
+    border-left: 5px solid var(--card-c, var(--pri-green));
+    box-shadow: 0 8px 24px rgba(53,59,70,.18), 0 1px 0 rgba(53,59,70,.06);
+    padding: 16px 16px 12px; transition: border-color var(--dur-base) var(--ease-out);
+  }
+  .lh-card__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+  .lh-card__corridor { display: flex; align-items: center; gap: 7px; }
+  .lh-card__corridor .glyph { width: 19px; height: 19px; flex-shrink: 0; display: block; }
+  .lh-card__corridor .glyph img { width: 100%; height: 100%; display: block; }
+  .lh-card__corridor b {
+    font-family: "Roboto", var(--mono); font-weight: 700; font-size: 14.5px;
+    letter-spacing: .03em; color: var(--app-ink);
+  }
+  .lh-card__icons { display: flex; gap: 9px; color: var(--app-soft); font-size: 13px; }
+  .lh-card__sub {
+    margin: 5px 0 16px; font-family: "Roboto", var(--mono); font-size: 12.5px;
+    letter-spacing: .03em; color: var(--app-soft); text-transform: uppercase;
+  }
+  .lh-card__metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 8px; }
+  .lh-metric { display: flex; flex-direction: column; gap: 1px; }
+  .lh-metric span {
+    font-family: "Roboto", var(--mono); font-size: 10px; letter-spacing: .02em; color: var(--app-soft);
+  }
+  .lh-metric b {
+    font-family: "Roboto", var(--mono); font-weight: 500; font-size: 19px; line-height: 1.1;
+    color: var(--app-ink); font-variant-numeric: tabular-nums;
+  }
+  .lh-metric b.is-blue  { color: var(--pri-blue); }
+  .lh-metric b.is-red   { color: var(--pri-red); }
+  .lh-metric b.is-status { color: var(--card-c, var(--pri-green)); transition: color var(--dur-base) var(--ease-out); }
+
+  .lh-card__chart { position: relative; margin-top: 12px; height: 96px; }
+  .lh-card__chart svg { display: block; width: 100%; height: 100%; }
+  .lh-area { stroke: none; transition: fill var(--dur-base) var(--ease-out); }
+  .lh-area--status { fill: var(--card-c, var(--pri-green)); fill-opacity: .14; }
+  .lh-area--blue { fill: var(--pri-blue); fill-opacity: .10; }
+  .lh-line { fill: none; stroke-width: 2.5; vector-effect: non-scaling-stroke; transition: stroke var(--dur-base) var(--ease-out); }
+  .lh-line--status { stroke: var(--card-c, var(--pri-green)); }
+  .lh-line--blue { stroke: var(--pri-blue); }
+  .lh-card__chartgrid { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; pointer-events: none; }
+  .lh-card__chartgrid i { height: 1px; background: var(--app-line); opacity: .7; }
+  .lh-card__foot {
+    margin-top: 8px; text-align: center; font-family: "Roboto", var(--mono);
+    font-size: 10px; color: var(--app-soft); letter-spacing: .01em;
+  }
+
+  /* Cabeçalho — ícones agora são botões interativos */
+  .lh-card__icons { display: flex; align-items: center; gap: 4px; }
+  .lh-ic {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 27px; height: 27px; padding: 0; border: 0; border-radius: 7px;
+    background: transparent; color: var(--app-soft); cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
+  .lh-ic:hover { background: rgba(53,59,70,.07); color: var(--app-ink); }
+  .lh-ic:focus-visible { outline: 2px solid var(--vale); outline-offset: 1px; }
+  .lh-ic svg { display: block; }
+  .lh-ic img { width: 16px; height: 16px; object-fit: contain; display: block; }
+  #lhChartBtn { color: var(--app-soft); }
+  .lh-card[data-chart="area"] #lhChartBtn .ic-area,
+  .lh-card[data-chart="bars"] #lhChartBtn .ic-bars { display: none; }
+  .lh-card[data-metrics="full"] #lhExpandBtn { background: rgba(53,59,70,.09); color: var(--app-ink); }
+  #lhBookmarkBtn .bm-on { display: none; }
+  .lh-card.is-saved #lhBookmarkBtn .bm-off { display: none; }
+  .lh-card.is-saved #lhBookmarkBtn .bm-on { display: block; }
+  .lh-card.is-saved #lhBookmarkBtn { color: var(--app-ink); }
+
+  /* Métricas extras — colapsáveis (3 ↔ 8) */
+  .lh-metric--extra { display: none; }
+  .lh-card[data-metrics="full"] .lh-metric--extra { display: flex; }
+
+  /* Gráfico — área × barras compartilham o mesmo bloco */
+  .lh-card__chart {
+    position: relative; margin-top: 14px; height: auto;
+    display: grid; grid-template-columns: 0 1fr; grid-template-rows: 1fr auto;
+    column-gap: 0; row-gap: 5px;
+  }
+  .lh-card[data-chart="bars"] .lh-card__chart { grid-template-columns: 22px 1fr; column-gap: 7px; }
+  .lh-yaxis, .lh-xaxis {
+    font-family: "Roboto", var(--mono); font-size: 9.5px; color: var(--app-soft);
+    font-variant-numeric: tabular-nums; letter-spacing: .01em;
+  }
+  .lh-yaxis { grid-area: 1 / 1; display: none; flex-direction: column; justify-content: space-between; align-items: flex-end; text-align: right; padding: 1px 0; }
+  .lh-xaxis { grid-area: 2 / 2; display: none; justify-content: space-between; padding: 0 2px; }
+  .lh-card[data-chart="bars"] .lh-yaxis,
+  .lh-card[data-chart="bars"] .lh-xaxis { display: flex; }
+  .lh-plot { grid-area: 1 / 2; position: relative; height: 110px; }
+  .lh-card[data-chart="bars"] .lh-plot { height: 150px; }
+
+  .lh-card[data-chart="bars"] .lh-card__chartgrid { display: none; }
+  .lh-bars { position: absolute; inset: 0; display: none; gap: 6px; align-items: stretch; }
+  .lh-card[data-chart="bars"] .lh-bars { display: flex; }
+  .lh-bars span { flex: 1; border-radius: 4px 4px 0 0; background: rgba(0,143,131,.10); transition: background var(--dur-fast) var(--ease-out); }
+  .lh-bars span.is-hi { background: rgba(0,143,131,.26); }
+
+  .lh-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .lh-card[data-chart="bars"] .lh-svg--area { display: none; }
+  .lh-card[data-chart="area"] .lh-svg--bars { display: none; }
+  .lh-svg--bars .lh-line--blue { stroke-width: 2; }
+
+  .lh-mark {
+    position: absolute; width: 11px; height: 11px; border-radius: 50%;
+    background: var(--pri-blue); border: 2.5px solid var(--app-surface);
+    box-shadow: 0 1px 4px rgba(29,120,200,.45); transform: translate(-50%, -50%);
+    display: none; pointer-events: none; z-index: 2;
+  }
+  .lh-tip {
+    position: absolute; display: none; transform: translate(-12%, calc(-100% - 4px));
+    background: var(--app-surface); border: 1px solid var(--app-line); border-radius: 9px;
+    box-shadow: 0 6px 16px rgba(53,59,70,.18); padding: 5px 11px; z-index: 3;
+    font-family: "Roboto", var(--mono); font-weight: 600; font-size: 16px;
+    color: var(--app-ink); white-space: nowrap; pointer-events: none; font-variant-numeric: tabular-nums;
+  }
+  .lh-tip i { font-style: normal; font-weight: 400; font-size: 11px; color: var(--app-soft); margin-left: 3px; }
+  .lh-tip::after { display: none; }
+  .lh-card[data-chart="bars"] .lh-mark,
+  .lh-card[data-chart="bars"] .lh-tip { display: block; }
+
+  /* ---------- Três tamanhos do card — vitrine ao vivo ----------
+     O mesmo componente em três densidades: grande (gráfico + 3 métricas),
+     médio (gráfico ao lado de 2 métricas) e compacto (1 valor, sem gráfico).
+     Reusa o vocabulário .lh-card; cada tamanho herda --card-c. */
+  .lh-sizes { margin-top: var(--sp-4); }
+  .lh-sizes__row {
+    display: flex; gap: clamp(16px, 2.6vw, 34px); align-items: start;
+    overflow-x: auto; scroll-snap-type: x proximity;
+    padding: 4px 2px 14px; margin: 0 -2px;
+    scrollbar-width: thin; scrollbar-color: var(--hairline-strong) transparent;
+    -webkit-overflow-scrolling: touch;
+  }
+  .lh-sizes__row::-webkit-scrollbar { height: 7px; }
+  .lh-sizes__row::-webkit-scrollbar-thumb { background: var(--hairline-strong); border-radius: 4px; }
+  .lh-size {
+    flex: 0 0 290px; scroll-snap-align: start;
+    display: flex; flex-direction: column; gap: 11px; min-width: 0;
+  }
+  .lh-size__tag { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .lh-size__tag .lt {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--oxblood); flex-shrink: 0;
+  }
+  .lh-size__tag b { font-family: var(--serif); font-size: 16px; color: var(--ink); letter-spacing: 0; }
+  .lh-size__tag .dim {
+    margin-left: auto; font-family: var(--mono); font-size: 9.5px; letter-spacing: .04em;
+    color: var(--ink-faint); white-space: nowrap;
+  }
+  .lh-size .lh-card { transition: transform .45s var(--ease-out), box-shadow .45s var(--ease-out); }
+  .lh-size:hover .lh-card { transform: translateY(-5px); box-shadow: 0 16px 36px rgba(53,59,70,.24); }
+  /* Médio — gráfico ao lado de duas métricas em número cheio */
+  .lh-card--md .lh-card__split { display: flex; gap: 14px; align-items: center; margin-top: 12px; }
+  .lh-card--md .lh-card__split .lh-card__chart { flex: 1 1 auto; min-width: 0; margin-top: 0; height: 74px; }
+  .lh-card--md .lh-card__sidemetrics { display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; align-items: flex-end; text-align: right; }
+  .lh-card--md .lh-card__sidemetrics .lh-metric { align-items: flex-end; }
+  .lh-card--md .lh-card__sidemetrics .lh-metric b { font-size: 14px; font-weight: 400; }
+  /* Compacto — título à esquerda, valor único à direita, sem gráfico */
+  .lh-card--sm .lh-card__sm-grid { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; }
+  .lh-card--sm .lh-card__sub { margin-bottom: 0; }
+  .lh-card--sm .lh-card__sm-metric { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; text-align: right; flex-shrink: 0; }
+  .lh-card--sm .lh-card__sm-top { display: flex; align-items: center; gap: 8px; }
+  .lh-card--sm .lh-card__sm-top .k { font-family: "Roboto", var(--mono); font-size: 11px; letter-spacing: .02em; color: var(--app-soft); }
+  .lh-card--sm .lh-card__sm-top .bm { color: var(--app-soft); font-size: 13px; line-height: 1; }
+  .lh-card--sm .lh-card__sm-metric .v { font-family: "Roboto", var(--mono); font-weight: 500; font-size: 30px; line-height: 1.05; color: var(--card-c, var(--pri-green)); font-variant-numeric: tabular-nums; transition: color var(--dur-base) var(--ease-out); }
+  .lh-card--sm .lh-card__foot { text-align: left; margin-top: 14px; }
+
+  /* Seletor de status — troca o pigmento de prioridade ao vivo */
+  .lh-statusbar { display: flex; gap: 8px; margin: var(--sp-4) 0 0; flex-wrap: wrap; }
+  .lh-statusbar button {
+    display: inline-flex; align-items: center; gap: 7px; cursor: pointer;
+    padding: 7px 12px; border-radius: var(--radius-pill);
+    background: var(--paper-card); border: 1px solid var(--hairline-strong);
+    font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--ink-soft);
+    transition: border-color var(--dur-fast), color var(--dur-fast), background var(--dur-fast);
+  }
+  .lh-statusbar button .sw { width: 10px; height: 10px; border-radius: 50%; background: var(--sw); flex-shrink: 0; }
+  .lh-statusbar button:hover { color: var(--ink); }
+  .lh-statusbar button.is-active { border-color: var(--sw); color: var(--ink); background: var(--paper); }
+
+  /* Anotações da anatomia — legenda das partes (lado direito) */
+  .lh-parts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .lh-parts li {
+    display: grid; grid-template-columns: 2.4em 1fr; gap: 10px; align-items: baseline;
+    padding: 13px 0; border-bottom: 1px solid var(--hairline);
+  }
+  .lh-parts li:first-child { padding-top: 0; }
+  .lh-parts .pn {
+    font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--oxblood);
+  }
+  .lh-parts .pt { font-family: var(--serif); font-size: 15px; line-height: var(--lh-loose); color: var(--ink-soft); }
+  .lh-parts .pt b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Subcabeçalho interno + trilho de decisões de design ---------- */
+  .lh-subhead {
+    display: flex; align-items: baseline; gap: 12px; margin: var(--sp-7) 0 var(--sp-4);
+    font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--oxblood);
+  }
+  .lh-subhead::after { content: ''; flex: 1; height: 1px; background: var(--hairline); }
+
+  .lh-decisions { list-style: none; margin: var(--sp-5) 0 0; padding: 0; display: grid; gap: 0; border-top: var(--border-hair); }
+  .lh-decision {
+    display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: var(--sp-5);
+    padding: var(--sp-4) 0; border-bottom: 1px solid var(--hairline); align-items: baseline;
+  }
+  .lh-decision__cue {
+    font-family: var(--serif-display); font-style: italic; font-size: 15px; color: var(--ink-faint);
+  }
+  .lh-decision__cue .tag {
+    display: block; font-family: var(--mono); font-style: normal; font-size: 10px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--oxblood); margin-bottom: 4px;
+  }
+  .lh-decision__cue b { color: var(--ink); font-style: normal; font-family: var(--serif); font-weight: 600; }
+  .lh-decision__do { font-family: var(--serif); font-size: 16px; line-height: var(--lh-loose); color: var(--ink-soft); }
+  .lh-decision__do b { color: var(--ink); font-weight: 600; }
+  @media (max-width: 640px) { .lh-decision { grid-template-columns: 1fr; gap: var(--sp-2); } }
+
+  /* ---------- A solução em fluxo: trilho de passos (a jornada do gestor) ---------- */
+  .lh-steps { list-style: none; margin: var(--sp-5) 0 0; padding: 0; display: grid; gap: var(--sp-3); counter-reset: step; }
+  .lh-step {
+    display: grid; grid-template-columns: 40px 1fr; gap: var(--sp-4); align-items: baseline;
+    padding: var(--sp-3) 0; border-bottom: 1px solid var(--hairline); counter-increment: step;
+  }
+  .lh-step::before {
+    content: counter(step, decimal-leading-zero); font-family: var(--mono); font-size: 12px;
+    color: var(--vale); font-weight: 600; letter-spacing: .02em;
+  }
+  .lh-step__t { font-family: var(--serif); font-size: 17px; color: var(--ink); }
+  .lh-step__t .scr { font-family: var(--mono); font-size: 10px; color: var(--ink-faint); letter-spacing: .08em; text-transform: uppercase; margin-left: 8px; }
+  .lh-step__d { display: block; margin-top: 2px; font-family: var(--serif); font-size: 15px; line-height: var(--lh-loose); color: var(--ink-soft); }
+
+  /* ---------- Sistema do design system: placar de escala real ---------- */
+  .lh-libstat { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-4); margin-top: var(--sp-5); }
+  .lh-libstat__cell {
+    padding: var(--sp-4); background: var(--paper-card);
+    border: 1px solid var(--hairline); border-top: 2px solid var(--oxblood);
+    border-radius: var(--radius-sm);
+  }
+  .lh-libstat__n {
+    font-family: var(--serif-display); font-size: 40px; line-height: 1; color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .lh-libstat__n .u { font-size: 20px; color: var(--oxblood); font-style: italic; }
+  .lh-libstat__l {
+    display: block; margin-top: 7px; font-family: var(--mono); font-size: 10px;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); line-height: 1.4;
+  }
+  @media (max-width: 720px) { .lh-libstat { grid-template-columns: 1fr 1fr; } }
+
+  /* Lista de famílias de componentes */
+  .lh-families { margin-top: var(--sp-5); border-top: var(--border-hair); }
+  .lh-family {
+    display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: var(--sp-4);
+    padding: var(--sp-3) 0; border-bottom: 1px solid var(--hairline);
+  }
+  .lh-family__name { font-family: var(--serif); font-size: 17px; color: var(--ink); }
+  .lh-family__name .role {
+    display: block; font-family: var(--serif); font-style: italic; font-size: 13px;
+    color: var(--ink-faint); margin-top: 1px;
+  }
+  .lh-family__n { font-family: var(--mono); font-size: 13px; color: var(--oxblood); white-space: nowrap; }
 
   /* ============================================================
      Lightbox (recolorido p/ tema livro) — partilhado com o JS
@@ -251,7 +654,24 @@
   .lbg__stage { flex: 1 1 auto; position: relative; display: flex; align-items: center; justify-content: center; min-width: 0; cursor: default; max-width: calc(100% - 180px); }
   .lbg__viewer { display: flex; flex-direction: column; align-items: center; justify-content: center; max-width: 100%; max-height: 100%; gap: var(--sp-3); }
   .lbg__viewer img { max-width: 100%; max-height: calc(100vh - 9rem); width: auto; height: auto; object-fit: contain;
-    border-radius: var(--radius-sm); box-shadow: 0 30px 80px -20px rgba(0,0,0,.7), 0 0 0 1px var(--highlighter); animation: lbg-zoom .3s var(--ease-out); cursor: default; }
+    border-radius: var(--art-r, var(--radius-sm)); box-shadow: 0 30px 80px -20px rgba(0,0,0,.7), 0 0 0 1px var(--highlighter); animation: lbg-zoom .3s var(--ease-out); cursor: default; }
+  /* Zoom 1:1 — pranchas grandes (board do DS, sitemap, fluxos) trazem 2,6–4,3×
+     mais resolução do que cabe na tela; aqui revelamos a nativa. O viewer vira
+     área rolável com a imagem em tamanho original e o cursor varre a prancha
+     (scroll proporcional). Telas pequenas (overviews 800px) não ativam — não há
+     detalhe escondido. Toque: rola/arrasta nativamente. */
+  .lbg__viewer.is-zoomable img { cursor: zoom-in; }
+  .lbg__viewer.is-zoomed { width: 100%; height: 100%; overflow: auto; cursor: zoom-out;
+    align-items: flex-start; justify-content: flex-start; scrollbar-width: thin; scrollbar-color: rgba(245,227,168,.4) transparent; }
+  .lbg__viewer.is-zoomed::-webkit-scrollbar { width: 8px; height: 8px; }
+  .lbg__viewer.is-zoomed::-webkit-scrollbar-thumb { background: rgba(245,227,168,.4); border-radius: 4px; }
+  .lbg__viewer.is-zoomed img { max-width: none; max-height: none; object-fit: none;
+    border-radius: 0; box-shadow: none; animation: none; cursor: zoom-out; }
+  .lbg__viewer.is-zoomed .lbg__caption { display: none; }
+  .lbg__zoomhint { display: none; align-items: center; gap: 5px; font-family: var(--mono); font-size: 11px;
+    letter-spacing: .04em; padding: 3px 10px; border-radius: var(--radius-pill);
+    background: rgba(245,227,168,.18); border: 1px solid var(--highlighter); color: var(--paper); white-space: nowrap; }
+  .lbg__viewer.is-zoomable .lbg__zoomhint { display: inline-flex; }
   .lbg__caption { display: flex; align-items: center; justify-content: center; gap: var(--sp-3); color: var(--paper);
     font-family: var(--mono); font-size: 13px; text-align: center; max-width: 80%; cursor: default; }
   .lbg__caption__text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
@@ -291,6 +711,94 @@
   @media (prefers-reduced-motion: reduce) {
     .lh-plate, .lh-pri { transition: none !important; }
     .lbg-overlay, .lbg__viewer img, .lbg__viewer.is-swapping img { animation: none !important; }
+  }
+
+  /* ============================================================
+     DOSSIÊ — sumário lateral fixo + lombada de leitura à direita.
+     A partir da Seção II, o case passa a ser lido como um volume
+     encadernado: à esquerda, a ficha técnica e o Índice do Dossiê
+     (capítulo corrente em oxblood); à direita, a lombada que rola.
+     ============================================================ */
+  .lh-dossier {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    gap: clamp(36px, 5vw, 76px);
+    max-width: 1200px; margin: var(--sp-6) auto 0; padding: 0 var(--sp-6);
+    align-items: start;
+  }
+  /* O catálogo aplica `overflow-x: hidden` no <body>, o que o transforma num
+     container de rolagem (overflow-y vira `auto`) e quebra o position:sticky
+     do índice — por isso o menu rolava junto com a página. Trocando para
+     `clip` (igual ao <html>), o full-bleed continua contido, mas o <body>
+     deixa de ser container de scroll e o sumário volta a fixar. */
+  body { overflow-x: clip; }
+
+  .lh-dossier__rail {
+    position: sticky; top: 88px; align-self: start;
+    padding-right: var(--sp-3);
+  }
+  .lh-dossier__meta {
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4) var(--sp-4);
+    padding-bottom: var(--sp-5); margin-bottom: var(--sp-5); border-bottom: var(--border-hair);
+  }
+  .lh-dossier__meta div { display: flex; flex-direction: column; gap: 3px; }
+  .lh-dossier__meta .k { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-faint); }
+  .lh-dossier__meta .v { font-family: var(--serif); font-size: 15px; line-height: 1.3; color: var(--ink); }
+  .lh-dossier__nav-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--oxblood); margin: 0 0 var(--sp-2);
+  }
+  .lh-dossier__nav { display: flex; flex-direction: column; }
+  .lh-dossier__link {
+    position: relative; display: grid; grid-template-columns: 2.2em 1fr; align-items: baseline; gap: 6px;
+    padding: 7px 0 7px 12px; border: 0; border-bottom: 1px solid var(--hairline);
+    background: none; text-align: left; cursor: pointer; width: 100%;
+    color: var(--ink-soft); transition: color var(--dur-fast, .2s) ease, padding var(--dur-fast, .2s) ease;
+  }
+  .lh-dossier__link::before {
+    content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+    width: 2px; height: 0; background: var(--oxblood); transition: height var(--dur-base, .3s) var(--ease-out, ease);
+  }
+  .lh-dossier__link:hover { color: var(--ink); }
+  .lh-dossier__link .lk-roman { font-family: var(--serif-display); font-style: italic; font-size: 14px; color: var(--ink-faint); }
+  .lh-dossier__link .lk-name { font-family: var(--serif); font-size: 15px; line-height: 1.25; }
+  .lh-dossier__link.is-active { color: var(--oxblood); }
+  .lh-dossier__link.is-active::before { height: 60%; }
+  .lh-dossier__link.is-active .lk-roman { color: var(--oxblood); }
+  .lh-dossier__link.is-active .lk-name { font-weight: 600; }
+
+  /* Lombada: cada seção vira um bloco de leitura simples (não uma página cheia) */
+  .lh-dossier__spine { min-width: 0; }
+  .lh-dossier__spine .case-section,
+  .lh-dossier__spine .case-section.page {
+    display: block; min-height: 0; padding: var(--sp-7) 0; scroll-margin-top: 96px;
+  }
+  .lh-dossier__spine > .case-section:first-child { padding-top: 0; }
+  .lh-dossier__spine .case-section + .case-section { border-top: var(--border-hair); }
+  .lh-dossier__spine .spread,
+  .lh-dossier__spine .spread-narrow { display: block; max-width: none; margin: 0; padding: 0; }
+  /* As colunas de marginália dão lugar ao índice lateral */
+  .lh-dossier__spine .margin-l,
+  .lh-dossier__spine .margin-r { display: none; }
+
+  /* Componentes "full-bleed" (100vw) recuavam para fora da coluna e colidiam
+     com o sumário: dentro da lombada eles voltam à largura da própria coluna. */
+  .lh-dossier__spine .coverflow-inner,
+  .lh-dossier__spine .book-swiper-wrap--cinema,
+  .lh-dossier__spine .case-intermezzo {
+    width: 100%; max-width: 100%; margin-left: 0; margin-right: 0;
+  }
+  .lh-dossier__spine .case-intermezzo { padding-left: 0; padding-right: 0; }
+
+  @media (max-width: 900px) {
+    .lh-dossier { grid-template-columns: 1fr; gap: var(--sp-4); padding: 0 var(--sp-4); margin-top: var(--sp-4); }
+    .lh-dossier__rail {
+      position: static; max-height: none; overflow: visible; padding: var(--sp-4);
+      margin-bottom: var(--sp-2); background: var(--paper-shade);
+      border: var(--border-hair); border-radius: var(--radius-sm);
+    }
+    .lh-dossier__nav { display: flex; flex-flow: row wrap; gap: 4px 16px; }
+    .lh-dossier__link { width: auto; padding: 5px 0 5px 10px; border-bottom: 0; }
   }
 </style>
 </head>
@@ -479,8 +987,8 @@
     <div class="spread">
       <header class="section-head reveal">
         <span class="roman">I.</span>
-        <span class="name"><span class="t" lang="pt">Argumento &amp; Contexto</span><span class="t" lang="en">Argument &amp; Context</span></span>
-        <span class="gloss"><span class="t" lang="pt">O desafio</span><span class="t" lang="en">The challenge</span></span>
+        <span class="name"><span class="t" lang="pt">Overview</span><span class="t" lang="en">Overview</span></span>
+        <span class="gloss"><span class="t" lang="pt">Visão geral do projeto &amp; do meu papel</span><span class="t" lang="en">A project &amp; role overview</span></span>
       </header>
       <aside class="margin-l" aria-hidden="true"></aside>
 
@@ -488,16 +996,16 @@
         <div class="preface">
           <div class="body reveal">
             <p id="arg-lead">
-              <span class="t" lang="pt">O <em>Lighthouse</em> é um aplicativo mobile desenvolvido para a Vale que revoluciona o monitoramento de produção em tempo real. Oferece visualização de dados dinâmicos, sistema de notificações personalizáveis e comunicação eficiente entre equipes, permitindo tomadas de decisão ágeis e precisas. Uma solução <em>mobile-first</em> desenvolvida como MVP para modernizar o sistema legado e otimizar a gestão operacional.</span>
-              <span class="t" lang="en"><em>Lighthouse</em> is a mobile application built for Vale that transforms real-time production monitoring. It offers dynamic data visualization, a customizable notification system, and efficient communication between teams, enabling fast and precise decision-making. A <em>mobile-first</em> solution developed as an MVP to modernize the legacy system and optimize operational management.</span>
+              <span class="t" lang="pt">O <em>Lighthouse</em> representa uma transformação significativa na forma como a Vale monitora e gerencia sua produção. Nascido da necessidade de modernizar um sistema legado, o projeto foi concebido para substituir uma solução baseada em intranet<span class="fn" data-fn="1">1</span> que já não atendia às demandas de segurança e usabilidade da empresa.</span>
+              <span class="t" lang="en"><em>Lighthouse</em> represents a significant transformation in how Vale monitors and manages its production. Born from the need to modernize a legacy system, the project was conceived to replace an intranet-based solution<span class="fn" data-fn="1">1</span> that no longer met the company's security and usability demands.</span>
             </p>
             <p id="arg-p1">
-              <span class="t" lang="pt">O monitoramento de produção do corredor norte da Vale vivia preso a um sistema legado baseado em intranet: interface desatualizada, falhas de segurança e uma experiência que não acompanhava as demandas da operação.<span class="fn" data-fn="1">1</span> Os gerentes — usuários principais da plataforma — não conseguiam acessar informações críticas em tempo hábil, o que impactava diretamente a velocidade e a qualidade das decisões.</span>
-              <span class="t" lang="en">Production monitoring across Vale's northern corridor was trapped in a legacy intranet system: an outdated interface, security gaps, and an experience that no longer matched the operation's demands.<span class="fn" data-fn="1">1</span> Managers — the platform's primary users — could not reach critical information in time, directly affecting the speed and quality of their decisions.</span>
+              <span class="t" lang="pt">Como <em>Lead Product Designer</em>, liderei o desenvolvimento de uma solução <em>mobile-first</em> que unifica dados críticos de múltiplos corredores em uma única interface intuitiva. O aplicativo foi estruturado para atender dois objetivos principais: agilizar a tomada de decisão dos stakeholders através de visualizações de dados em tempo real, e criar um canal de comunicação eficiente entre as equipes através de um sistema de notificações personalizáveis.</span>
+              <span class="t" lang="en">As <em>Lead Product Designer</em>, I led the development of a <em>mobile-first</em> solution that unifies critical data from multiple corridors into a single, intuitive interface. The app was structured around two main goals: speeding up stakeholder decision-making through real-time data visualizations, and creating an efficient communication channel between teams through a customizable notification system.</span>
             </p>
             <p id="arg-p2">
-              <span class="t" lang="pt">Iniciamos o projeto com sessões de <em>Design Thinking</em> reunindo stakeholders e usuários-chave. Ficou claro que a solução precisava ser <em>mobile-first</em> e equilibrar a densidade informacional com a usabilidade em telas menores, respeitando diferentes níveis de permissão e perfis de uso. A proposta: um aplicativo que unifica dados de múltiplos corredores numa única interface intuitiva, com visualização em tempo real e notificações personalizáveis.</span>
-              <span class="t" lang="en">We opened the project with <em>Design Thinking</em> sessions bringing together stakeholders and key users. It became clear the solution had to be <em>mobile-first</em> and to balance information density with small-screen usability, respecting different permission levels and user profiles. The proposal: an app unifying data from multiple corridors into a single intuitive interface, with real-time visualization and customizable notifications.</span>
+              <span class="t" lang="pt">Adotamos uma abordagem <em>MVP</em> focada inicialmente no corredor norte, priorizando funcionalidades core como visualização de dados em tempo real, sistema de permissões hierárquicas e comunicação entre equipes. Esta estratégia nos permitiu validar rapidamente o conceito e estabelecer as bases para uma futura expansão, incluindo recursos adicionais como geolocalização, upload de imagens e mapas interativos.</span>
+              <span class="t" lang="en">We adopted an <em>MVP</em> approach focused initially on the northern corridor, prioritizing core features such as real-time data visualization, a hierarchical permission system, and team communication. This strategy let us validate the concept quickly and lay the groundwork for future expansion, including added capabilities like geolocation, image upload, and interactive maps.</span>
             </p>
           </div>
 
@@ -513,17 +1021,27 @@
       <aside class="margin-r">
         <p class="gloss" data-anchor="arg-p1">
           <span class="gloss-num">i</span>
-          <span class="t" lang="pt">Os gestores dependiam de uma intranet desatualizada, presa ao desktop e à sala de controle.</span>
-          <span class="t" lang="en">Managers relied on an outdated intranet, chained to the desktop and the control room.</span>
+          <span class="t" lang="pt">Dois objetivos: agilizar a decisão com dados em tempo real e abrir um canal de comunicação entre as equipes.</span>
+          <span class="t" lang="en">Two goals: speed up decisions with real-time data, and open a communication channel between teams.</span>
         </p>
         <p class="gloss" data-anchor="arg-p2">
           <span class="gloss-num">ii</span>
-          <span class="t" lang="pt">O grande desafio de design: caber um grande volume de dados complexos numa tela pequena, sem perder clareza.</span>
-          <span class="t" lang="en">The core design challenge: fitting a large volume of complex data on a small screen without losing clarity.</span>
+          <span class="t" lang="pt">MVP no corredor norte para validar o conceito e preparar a expansão futura.</span>
+          <span class="t" lang="en">An MVP on the northern corridor to validate the concept and set up future expansion.</span>
         </p>
       </aside>
     </div>
   </section>
+
+  <!-- ============================================================
+       DOSSIÊ — sumário lateral + lombada de leitura (Seções II→XIV)
+       ============================================================ -->
+  <div class="lh-dossier">
+    <aside class="lh-dossier__rail" aria-label="Índice">
+      <p class="lh-dossier__nav-label"><span class="t" lang="pt">Índice do Dossiê</span><span class="t" lang="en">Dossier Index</span></p>
+      <nav class="lh-dossier__nav" aria-label="Índice das seções"></nav>
+    </aside>
+    <div class="lh-dossier__spine lh-spread">
 
   <!-- ============================================================
        II. MINHA PARTICIPAÇÃO (DRAMATIS PERSONÆ)
@@ -535,6 +1053,8 @@
         <span class="name"><span class="t" lang="pt">Minha Participação</span><span class="t" lang="en">My Role</span></span>
         <span class="gloss"><span class="t" lang="pt">Dramatis personæ</span><span class="t" lang="en">Cast &amp; duties</span></span>
       </header>
+
+      <p class="results-intro reveal"><span class="t" lang="pt">Conduzi o projeto com metodologia ágil e foco em escalabilidade — componentização e melhores práticas para mobile e web — entregando um produto robusto e preparado para crescer. Tão decisiva quanto o design foi a gestão de expectativas: reuniões semanais de alinhamento com Operações, TI e gerência para apresentar avanços, coletar feedback e negociar prazos, mantendo o escopo do MVP firme até a entrega.</span><span class="t" lang="en">I led the project with an agile methodology and a focus on scalability — componentization and best practices for mobile and web — delivering a robust product ready to grow. As decisive as the design was managing expectations: weekly alignment meetings with Operations, IT and management to present progress, gather feedback and negotiate deadlines, holding the MVP scope steady through delivery.</span></p>
 
       <ol class="bill-roles reveal" data-stagger>
         <li class="bill-role">
@@ -562,23 +1082,21 @@
   </section>
 
   <!-- ============================================================
-       III. O DESAFIO (3 ACHADOS / INSIGHTS)
+       III. PROCESSO & DECISÕES (DISCOVERY → INSIGHTS → DECISÕES → TIMELINE)
        ============================================================ -->
   <section class="page case-section" data-folio>
-    <div class="spread">
-      <aside class="margin-l">
-        <div class="parchment-stamp" aria-hidden="true">
-          <span class="st-num">INSIGHTS</span>
-        </div>
-      </aside>
-      <div class="content">
-        <header class="section-head reveal">
-          <span class="roman">III.</span>
-          <span class="name"><span class="t" lang="pt">Pesquisa &amp; Revelações</span><span class="t" lang="en">Discovery &amp; Insights</span></span>
-          <span class="gloss"><span class="t" lang="pt">Achados qualitativos</span><span class="t" lang="en">Qualitative findings</span></span>
-        </header>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">III.</span>
+        <span class="name"><span class="t" lang="pt">Processo &amp; Decisões</span><span class="t" lang="en">Process &amp; Decisions</span></span>
+        <span class="gloss"><span class="t" lang="pt">Do Design Thinking ao handoff</span><span class="t" lang="en">From Design Thinking to handoff</span></span>
+      </header>
 
-        <div class="insights-grid reveal" data-stagger>
+      <p class="results-intro reveal"><span class="t" lang="pt">O projeto começou com sessões de <em>Design Thinking</em> reunindo stakeholders e usuários-chave — Operações, TI e gerência — para mapear as dores do legado e as necessidades reais em campo. Cada achado da pesquisa virou uma decisão de design concreta, e essas decisões guiaram o recorte do MVP no corredor norte.</span><span class="t" lang="en">The project opened with <em>Design Thinking</em> sessions bringing together stakeholders and key users — Operations, IT and management — to map the legacy pains and real field needs. Each research finding became a concrete design decision, and those decisions guided the MVP's scoping to the northern corridor.</span></p>
+
+      <div class="lh-subhead reveal"><span class="t" lang="pt">O que a pesquisa revelou</span><span class="t" lang="en">What discovery revealed</span></div>
+
+      <div class="insights-grid reveal" data-stagger>
           <div class="insight-card">
             <span class="card-num">01.</span>
             <h4 class="card-title"><span class="t" lang="pt">A decisão é móvel</span><span class="t" lang="en">Decisions are mobile</span></h4>
@@ -595,21 +1113,25 @@
             <p><span class="t" lang="pt">Diferentes níveis de permissão e perfis de uso pedem o mesmo sistema, lido de formas diferentes. A componentização permitiu adaptar a densidade sem fragmentar a interface.</span><span class="t" lang="en">Different permission levels and user profiles call for one system, read in different ways. Componentization let us adapt the density without fragmenting the interface.</span></p>
           </div>
         </div>
-      </div>
-      <aside class="margin-r" aria-hidden="true"></aside>
-    </div>
-  </section>
 
-  <!-- ============================================================
-       IV. ATOS DO PROCESSO (TIMELINE)
-       ============================================================ -->
-  <section class="page case-section" data-folio>
-    <div class="spread-narrow">
-      <header class="section-head reveal">
-        <span class="roman">IV.</span>
-        <span class="name"><span class="t" lang="pt">Atos do Processo</span><span class="t" lang="en">Acts of the Process</span></span>
-        <span class="gloss"><span class="t" lang="pt">Cronologia do MVP</span><span class="t" lang="en">MVP timeline</span></span>
-      </header>
+        <div class="lh-subhead reveal"><span class="t" lang="pt">Das revelações às decisões</span><span class="t" lang="en">From findings to decisions</span></div>
+
+        <ol class="lh-decisions reveal" data-stagger>
+          <li class="lh-decision">
+            <span class="lh-decision__cue"><span class="tag"><span class="t" lang="pt">A decisão é móvel</span><span class="t" lang="en">Decisions are mobile</span></span><b>Mobile-first, sem concessão</b></span>
+            <span class="lh-decision__do"><span class="t" lang="pt">A tela de <b>414&nbsp;px</b> virou o palco principal; o painel web ficou como apoio de configuração. O dado vai até o gestor — no pátio ou em trânsito —, não o contrário.</span><span class="t" lang="en">The <b>414&nbsp;px</b> screen became the main stage; the web panel stayed as a configuration aid. Data travels to the manager — in the yard or in transit — not the other way around.</span></span>
+          </li>
+          <li class="lh-decision">
+            <span class="lh-decision__cue"><span class="tag"><span class="t" lang="pt">Densidade exige hierarquia</span><span class="t" lang="en">Density demands hierarchy</span></span><b>O card como átomo</b></span>
+            <span class="lh-decision__do"><span class="t" lang="pt">Um único componente de card, em variações de densidade, organiza o feed. O crítico salta primeiro; o detalhe se revela sob demanda — do feed ao <em>Detalhamento</em>.</span><span class="t" lang="en">A single card component, in density variations, organizes the feed. The critical surfaces first; detail is revealed on demand — from the feed to the <em>Detail</em> view.</span></span>
+          </li>
+          <li class="lh-decision">
+            <span class="lh-decision__cue"><span class="tag"><span class="t" lang="pt">Cada perfil, sua visão</span><span class="t" lang="en">Each profile, its view</span></span><b>Código de cor &amp; componentização</b></span>
+            <span class="lh-decision__do"><span class="t" lang="pt">Uma faixa de prioridade por cor dá leitura instantânea de status, e a componentização adapta a densidade a cada nível de permissão sem fragmentar a interface.</span><span class="t" lang="en">A priority color stripe gives instant status reading, and componentization adapts density to each permission level without fragmenting the interface.</span></span>
+          </li>
+        </ol>
+
+        <div class="lh-subhead reveal"><span class="t" lang="pt">Cronologia do MVP</span><span class="t" lang="en">MVP timeline</span></div>
 
       <div class="timeline-container">
         <ol class="timeline-axis" data-stagger>
@@ -651,62 +1173,43 @@
   </section>
 
   <!-- ============================================================
-       V. COMPARAÇÃO & RESTAURO (BEFORE / AFTER — CONCEITUAL)
+       IV. ARQUITETURA DA INFORMAÇÃO (SITEMAPS MOBILE + WEB)
        ============================================================ -->
   <section class="page case-section" data-folio>
     <div class="spread-narrow">
       <header class="section-head reveal">
-        <span class="roman">V.</span>
-        <span class="name"><span class="t" lang="pt">Comparação &amp; Restauro</span><span class="t" lang="en">Comparison &amp; Restoration</span></span>
-        <span class="gloss"><span class="t" lang="pt">Intranet &amp; Lighthouse</span><span class="t" lang="en">Intranet &amp; Lighthouse</span></span>
+        <span class="roman">IV.</span>
+        <span class="name"><span class="t" lang="pt">Arquitetura da Informação</span><span class="t" lang="en">Information Architecture</span></span>
+        <span class="gloss"><span class="t" lang="pt">Dois mapas de navegação</span><span class="t" lang="en">Two navigation maps</span></span>
       </header>
 
       <div class="comparisons-intro">
-        <p><span class="t" lang="pt">Deslize o selo central de latão para examinar a passagem do legado ao novo: à esquerda, a intranet fragmentada presa ao desktop (em pergaminho cru e ruído de época); à direita, a clareza mobile-first do Lighthouse.</span>
-           <span class="t" lang="en">Slide the central brass seal to examine the move from legacy to new: on the left, the fragmented desktop-bound intranet (in raw parchment and period grain); on the right, the mobile-first clarity of Lighthouse.</span></p>
+        <p><span class="t" lang="pt">Antes de qualquer tela polida, a navegação. Dois mapas guiaram o recorte do MVP: o app mobile do gestor em campo e o painel web de apoio para a configuração de dados. Toque para examinar cada mapa.</span>
+           <span class="t" lang="en">Before any polished screen, the navigation. Two maps guided the MVP scoping: the manager's mobile app in the field and the supporting web panel for data configuration. Tap to examine each map.</span></p>
       </div>
 
-      <div class="before-after-slider reveal">
-        <!-- Lado After (O Novo — Lighthouse) -->
-        <div class="slider-side slider-after">
-          <div class="slider-content font-serif-display">
-            <span class="p-label font-mono">ANVERSO · LIGHTHOUSE MOBILE</span>
-            <div class="restoration-preview pristine-state">
-              <span class="rest-star font-serif-display">✦</span>
-              <h3><span class="t" lang="pt">Dados em tempo real, na mão</span><span class="t" lang="en">Real-time data, in hand</span></h3>
-              <p class="font-serif"><span class="t" lang="pt">Feed mobile com cards de prioridade e notificações por área, escaneável em segundos.</span><span class="t" lang="en">A mobile feed with priority cards and per-area alerts, scannable in seconds.</span></p>
-            </div>
-          </div>
-        </div>
-        <!-- Lado Before (O Legado Envelhecido) -->
-        <div class="slider-side slider-before">
-          <div class="slider-content font-serif-display">
-            <span class="p-label font-mono">FRAGMENTO · INTRANET LEGADA</span>
-            <div class="restoration-preview aged-legacy-state">
-              <span class="rest-star font-serif-display">⚓</span>
-              <h3><span class="t" lang="pt">Intranet presa ao desktop</span><span class="t" lang="en">Desktop-bound intranet</span></h3>
-              <p class="font-serif"><span class="t" lang="pt">Interface desatualizada, sem mobilidade e com falhas de segurança.</span><span class="t" lang="en">An outdated interface, no mobility, and security gaps.</span></p>
-            </div>
-          </div>
-        </div>
-        <div class="slider-handle">
-          <div class="handle-seal">
-            <span class="seal-glyph">✦</span>
-          </div>
-        </div>
+      <div class="sl-gallery lh-ia-pair reveal">
+        <a class="lh-plate lightboxgallery-link" href="../images/lighthouse/workflow-asis.webp" aria-label="Mapa de navegação do aplicativo mobile — splash, login, home, menu, notificações e perfil">
+          <img src="../images/lighthouse/workflow-asis.webp" alt="Mapa de navegação mobile do Lighthouse" loading="lazy" />
+          <span class="lh-plate__cap"><span class="t" lang="pt">App mobile — fluxo do gestor</span><span class="t" lang="en">Mobile app — manager flow</span></span>
+        </a>
+        <a class="lh-plate lightboxgallery-link" href="../images/lighthouse/workflow-tobe.webp" aria-label="Mapa de navegação do painel web — header, painel de controle, arquivos, validação e chat">
+          <img src="../images/lighthouse/workflow-tobe.webp" alt="Mapa de navegação web do Lighthouse" loading="lazy" />
+          <span class="lh-plate__cap"><span class="t" lang="pt">Painel web — apoio &amp; configuração</span><span class="t" lang="en">Web panel — support &amp; setup</span></span>
+        </a>
       </div>
     </div>
   </section>
 
   <!-- ============================================================
-       VI. A SOLUÇÃO EM FLUXO (TELAS REAIS — LIGHTBOX)
+       V. A SOLUÇÃO EM FLUXO (TELAS REAIS — LIGHTBOX)
        ============================================================ -->
   <section class="page case-section" data-folio>
     <div class="spread-narrow">
       <header class="section-head reveal">
-        <span class="roman">VI.</span>
+        <span class="roman">V.</span>
         <span class="name"><span class="t" lang="pt">A Solução em Fluxo</span><span class="t" lang="en">The Solution in Flow</span></span>
-        <span class="gloss"><span class="t" lang="pt">Do splash à publicação</span><span class="t" lang="en">From splash to publish</span></span>
+        <span class="gloss"><span class="t" lang="pt">A jornada do gestor, tela a tela</span><span class="t" lang="en">The manager's journey, screen by screen</span></span>
       </header>
 
       <article class="spotlight reveal">
@@ -717,33 +1220,93 @@
           <p><span class="t" lang="pt">As notificações personalizáveis filtram alertas por área — <span class="em">porto, minas, ferrovias</span> — e permitem publicar avisos para as equipes certas. Percorra o carrossel abaixo para examinar as telas do MVP, uma a uma.</span><span class="t" lang="en">Customizable notifications filter alerts by area — <span class="em">port, mines, railways</span> — and let users publish notices to the right teams. Browse the carousel below to examine the MVP screens, one by one.</span></p>
         </div>
 
-        <!-- Carrossel Horizontal · Pranchas — coverflow das telas reais do MVP -->
-        <div class="lh-screens-carousel reveal">
-          <div class="book-swiper-wrap book-swiper-wrap--cinema book-swiper-wrap--plates">
-            <div class="book-swiper swiper">
-              <div class="swiper-wrapper">
-                <div class="swiper-slide"><div class="strip-plate lh-screen" style="width:188px;height:384px;overflow:hidden;border-radius:var(--radius-plate,4px);"><img src="../images/lighthouse/screens/screen-01.webp" alt="Lighthouse — tela de abertura (splash) do app" loading="lazy" /></div></div>
-                <div class="swiper-slide"><div class="strip-plate lh-screen" style="width:188px;height:384px;overflow:hidden;border-radius:var(--radius-plate,4px);"><img src="../images/lighthouse/screens/screen-02.webp" alt="Lighthouse — tela de login" loading="lazy" /></div></div>
-                <div class="swiper-slide"><div class="strip-plate lh-screen" style="width:188px;height:384px;overflow:hidden;border-radius:var(--radius-plate,4px);"><img src="../images/lighthouse/screens/screen-03.webp" alt="Lighthouse — feed principal com cards de indicadores" loading="lazy" /></div></div>
-                <div class="swiper-slide"><div class="strip-plate lh-screen" style="width:188px;height:384px;overflow:hidden;border-radius:var(--radius-plate,4px);"><img src="../images/lighthouse/screens/screen-04.webp" alt="Lighthouse — detalhamento do indicador" loading="lazy" /></div></div>
-                <div class="swiper-slide"><div class="strip-plate lh-screen" style="width:188px;height:384px;overflow:hidden;border-radius:var(--radius-plate,4px);"><img src="../images/lighthouse/screens/screen-05.webp" alt="Lighthouse — central de notificações" loading="lazy" /></div></div>
-                <div class="swiper-slide"><div class="strip-plate lh-screen" style="width:188px;height:384px;overflow:hidden;border-radius:var(--radius-plate,4px);"><img src="../images/lighthouse/screens/screen-06.webp" alt="Lighthouse — criação de nova notificação" loading="lazy" /></div></div>
-                <div class="swiper-slide"><div class="strip-plate lh-screen" style="width:188px;height:384px;overflow:hidden;border-radius:var(--radius-plate,4px);"><img src="../images/lighthouse/screens/screen-07.webp" alt="Lighthouse — notificação publicada com sucesso" loading="lazy" /></div></div>
-                <div class="swiper-slide"><div class="strip-plate lh-screen" style="width:188px;height:384px;overflow:hidden;border-radius:var(--radius-plate,4px);"><img src="../images/lighthouse/screens/screen-08.webp" alt="Lighthouse — configurações" loading="lazy" /></div></div>
-              </div>
-              <div class="swiper-button-prev"></div>
-              <div class="swiper-button-next"></div>
-              <div class="swiper-pagination"></div>
-            </div>
-          </div>
-          <p class="lh-carousel-cap"><span class="t" lang="pt">Arraste, use as setas ou o teclado ←/→ para percorrer as telas do MVP.</span><span class="t" lang="en">Drag, use the arrows or the ←/→ keys to browse the MVP screens.</span></p>
+        <ol class="lh-steps reveal" data-stagger>
+          <li class="lh-step">
+            <span class="lh-step__t"><span class="t" lang="pt">Abertura</span><span class="t" lang="en">Splash</span><span class="scr">Start</span><span class="lh-step__d"><span class="t" lang="pt">A marca <em>Vale · Aplicativo de Produção</em> abre o app e prepara a sessão.</span><span class="t" lang="en">The <em>Vale · Production App</em> brand opens the app and warms up the session.</span></span></span>
+          </li>
+          <li class="lh-step">
+            <span class="lh-step__t"><span class="t" lang="pt">Login &amp; biometria</span><span class="t" lang="en">Login &amp; biometrics</span><span class="scr">Login · Touch&nbsp;ID</span><span class="lh-step__d"><span class="t" lang="pt">Entrada por credencial ou digital — acesso rápido em campo, com segurança que a intranet não tinha.</span><span class="t" lang="en">Credential or fingerprint entry — fast field access, with the security the intranet lacked.</span></span></span>
+          </li>
+          <li class="lh-step">
+            <span class="lh-step__t"><span class="t" lang="pt">Feed Principal</span><span class="t" lang="en">Main feed</span><span class="scr">Principal</span><span class="lh-step__d"><span class="t" lang="pt">Cards de prioridade por corredor, com busca e perfil. O crítico salta primeiro.</span><span class="t" lang="en">Priority cards per corridor, with search and profile. The critical surfaces first.</span></span></span>
+          </li>
+          <li class="lh-step">
+            <span class="lh-step__t"><span class="t" lang="pt">Detalhamento</span><span class="t" lang="en">Detail view</span><span class="scr">Detalhamento</span><span class="lh-step__d"><span class="t" lang="pt">Métricas completas — Orçamento, S&amp;EO, Projeção, Real Acm., Delta — e o gráfico de área, filtráveis por período.</span><span class="t" lang="en">Full metrics — Budget, S&amp;OP, Projection, Real Acc., Delta — and the area chart, filterable by period.</span></span></span>
+          </li>
+          <li class="lh-step">
+            <span class="lh-step__t"><span class="t" lang="pt">Notificações</span><span class="t" lang="en">Notifications</span><span class="scr">Notificações</span><span class="lh-step__d"><span class="t" lang="pt">Central de alertas por área — porto, minas, ferrovias — e publicação de avisos para as equipes certas.</span><span class="t" lang="en">Alert center by area — port, mines, railways — and publishing notices to the right teams.</span></span></span>
+          </li>
+          <li class="lh-step">
+            <span class="lh-step__t"><span class="t" lang="pt">Configurações</span><span class="t" lang="en">Settings</span><span class="scr">Configurações</span><span class="lh-step__d"><span class="t" lang="pt">Perfil, preferências de notificação e níveis de permissão por usuário.</span><span class="t" lang="en">Profile, notification preferences and per-user permission levels.</span></span></span>
+          </li>
+        </ol>
+
+        <!-- Storyboard completo — os 5 quadros anotados da jornada -->
+        <div class="lh-subhead reveal"><span class="t" lang="pt">O fluxo completo, em storyboard</span><span class="t" lang="en">The full flow, as a storyboard</span></div>
+        <p class="comparisons-intro reveal" style="margin-top:0;"><span class="t" lang="pt">Cinco quadros anotados percorrem a jornada do gestor de ponta a ponta — da abertura do app à publicação de avisos e às configurações. Cada seta marca um toque. Toque em qualquer quadro para ampliar.</span><span class="t" lang="en">Five annotated boards walk the manager's journey end to end — from opening the app to publishing notices and settings. Each arrow marks a tap. Tap any board to enlarge.</span></p>
+        <div class="lh-platewrap">
+        <a class="lh-plate lightboxgallery-link reveal" href="../images/lighthouse/overview1.webp" aria-label="Storyboard 1 — abertura, login e feed principal">
+          <img src="../images/lighthouse/overview1.webp" alt="Lighthouse — abertura, login e feed principal" loading="lazy" />
+          <span class="lh-plate__cap"><span class="t" lang="pt">1 · Abertura, login &amp; feed principal</span><span class="t" lang="en">1 · Splash, login &amp; main feed</span></span>
+        </a>
+        </div>
+        <div class="lh-platewrap">
+        <a class="lh-plate lightboxgallery-link reveal" href="../images/lighthouse/overview2.webp" aria-label="Storyboard 2 — do feed ao detalhamento">
+          <img src="../images/lighthouse/overview2.webp" alt="Lighthouse — do feed ao detalhamento do indicador" loading="lazy" />
+          <span class="lh-plate__cap"><span class="t" lang="pt">2 · Do feed ao detalhamento</span><span class="t" lang="en">2 · From feed to detail</span></span>
+        </a>
+        </div>
+        <div class="lh-platewrap">
+        <a class="lh-plate lightboxgallery-link reveal" href="../images/lighthouse/overview3.webp" aria-label="Storyboard 3 — detalhamento, aderência e notificações">
+          <img src="../images/lighthouse/overview3.webp" alt="Lighthouse — detalhamento, aderência e central de notificações" loading="lazy" />
+          <span class="lh-plate__cap"><span class="t" lang="pt">3 · Detalhamento, aderência &amp; notificações</span><span class="t" lang="en">3 · Detail, adherence &amp; notifications</span></span>
+        </a>
+        </div>
+        <div class="lh-platewrap">
+        <a class="lh-plate lightboxgallery-link reveal" href="../images/lighthouse/overview4.webp" aria-label="Storyboard 4 — central de notificações e nova publicação">
+          <img src="../images/lighthouse/overview4.webp" alt="Lighthouse — central de notificações e formulário de nova notificação" loading="lazy" />
+          <span class="lh-plate__cap"><span class="t" lang="pt">4 · Notificações &amp; nova publicação</span><span class="t" lang="en">4 · Notifications &amp; new post</span></span>
+        </a>
+        </div>
+        <div class="lh-platewrap">
+        <a class="lh-plate lightboxgallery-link reveal" href="../images/lighthouse/overview5.webp" aria-label="Storyboard 5 — publicação e configurações">
+          <img src="../images/lighthouse/overview5.webp" alt="Lighthouse — confirmação de publicação, erro e configurações" loading="lazy" />
+          <span class="lh-plate__cap"><span class="t" lang="pt">5 · Publicação &amp; configurações</span><span class="t" lang="en">5 · Publishing &amp; settings</span></span>
+        </a>
         </div>
 
-        <!-- Mapa completo do protótipo navegável (abre em lightbox) -->
+        <!-- Walkthrough anotado em alta resolução — a jornada explicada, tela a tela -->
+        <div class="lh-screenrow reveal">
+          <a class="lh-screenfig lightboxgallery-link" href="../images/lighthouse/coverflow/03.webp" aria-label="Login & biometria — entrada por digital, acesso rápido em campo">
+            <img src="../images/lighthouse/coverflow/03.webp" alt="Lighthouse — entrada por biometria" loading="lazy" />
+            <span class="cap"><b><span class="t" lang="pt">Login &amp; biometria</span><span class="t" lang="en">Login &amp; biometrics</span></b><span class="t" lang="pt">Entrada por digital</span><span class="t" lang="en">Fingerprint entry</span></span>
+          </a>
+          <a class="lh-screenfig lightboxgallery-link" href="../images/lighthouse/coverflow/06.webp" aria-label="Feed Principal — cards de prioridade por corredor">
+            <img src="../images/lighthouse/coverflow/06.webp" alt="Lighthouse — feed principal com cards de prioridade" loading="lazy" />
+            <span class="cap"><b><span class="t" lang="pt">Feed Principal</span><span class="t" lang="en">Main feed</span></b><span class="t" lang="pt">Cards de prioridade</span><span class="t" lang="en">Priority cards</span></span>
+          </a>
+          <a class="lh-screenfig lightboxgallery-link" href="../images/lighthouse/coverflow/07.webp" aria-label="Detalhamento — métricas completas, tabela e gráfico">
+            <img src="../images/lighthouse/coverflow/07.webp" alt="Lighthouse — detalhamento com tabela e gráfico" loading="lazy" />
+            <span class="cap"><b><span class="t" lang="pt">Detalhamento</span><span class="t" lang="en">Detail view</span></b><span class="t" lang="pt">Métricas + tabela</span><span class="t" lang="en">Metrics + table</span></span>
+          </a>
+          <a class="lh-screenfig lightboxgallery-link" href="../images/lighthouse/coverflow/11.webp" aria-label="Notificações — central de alertas por área, com código de cor">
+            <img src="../images/lighthouse/coverflow/11.webp" alt="Lighthouse — central de notificações por área" loading="lazy" />
+            <span class="cap"><b><span class="t" lang="pt">Notificações</span><span class="t" lang="en">Notifications</span></b><span class="t" lang="pt">Alertas por área</span><span class="t" lang="en">Per-area alerts</span></span>
+          </a>
+          <a class="lh-screenfig lightboxgallery-link" href="../images/lighthouse/coverflow/09.webp" aria-label="Compartilhar & exportar — hyperlink, e-mail ou imagem">
+            <img src="../images/lighthouse/coverflow/09.webp" alt="Lighthouse — compartilhar e exportar o detalhamento" loading="lazy" />
+            <span class="cap"><b><span class="t" lang="pt">Compartilhar</span><span class="t" lang="en">Share</span></b><span class="t" lang="pt">Hyperlink, e-mail, imagem</span><span class="t" lang="en">Hyperlink, e-mail, image</span></span>
+          </a>
+        </div>
+        <p class="lh-screenrow__cap reveal"><span class="t" lang="pt">Telas reais do MVP, em alta resolução — deslize na horizontal; toque para ampliar.</span><span class="t" lang="en">Real MVP screens, high-resolution — scroll horizontally; tap to enlarge.</span></p>
+
+        <!-- Mapa completo do protótipo navegável (abre em lightbox, isolado) -->
+        <div class="lh-platewrap">
         <a class="lh-plate lightboxgallery-link reveal" href="../images/lighthouse/porto.webp" aria-label="Mapa completo do protótipo navegável — todas as telas conectadas">
           <img src="../images/lighthouse/porto.webp" alt="Lighthouse — mapa completo do protótipo navegável" loading="lazy" />
           <span class="lh-plate__cap"><span class="t" lang="pt">Mapa do protótipo navegável — fluxo completo (toque para ampliar)</span><span class="t" lang="en">Navigable prototype map — full flow (tap to enlarge)</span></span>
         </a>
+        </div>
 
         <div class="fiction-note reveal">
           <span><span class="t" lang="pt">Todos os dados e métricas exibidos nas telas são fictícios, gerados apenas para demonstração, e não refletem informações reais da empresa ou de suas operações.</span><span class="t" lang="en">All data and metrics shown in the screens are fictional, generated for demonstration only, and do not reflect the company's real information or operations.</span></span>
@@ -753,7 +1316,144 @@
   </section>
 
   <!-- ============================================================
-       VII. SISTEMA DE PRIORIDADES (4 CARDS REAIS)
+       V. DADOS EM TEMPO REAL — ANATOMIA DO CARD (RECRIAÇÃO AO VIVO)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">VI.</span>
+        <span class="name"><span class="t" lang="pt">Dados em Tempo Real</span><span class="t" lang="en">Real-Time Data</span></span>
+        <span class="gloss"><span class="t" lang="pt">Anatomia do card de produção</span><span class="t" lang="en">Anatomy of the production card</span></span>
+      </header>
+
+      <div class="comparisons-intro">
+        <p><span class="t" lang="pt">O card de produção é onde a densidade encontra a clareza. Abaixo, ele foi <em>redesenhado em HTML ao vivo</em> — não é uma captura — e está <em>interativo</em>: alterne o gráfico entre área e barras, expanda de 3 para 8 indicadores, passe o cursor sobre as colunas para ler o valor (489&nbsp;kt), salve o card e troque o status para ver o pigmento de prioridade reagir em tempo real.</span>
+           <span class="t" lang="en">The production card is where density meets clarity. Below, it is <em>rebuilt live in HTML</em> — not a screenshot — and it is <em>interactive</em>: switch the chart between area and bars, expand from 3 to 8 metrics, hover the columns to read the value (489&nbsp;kt), bookmark the card, and change the status to watch the priority pigment react in real time.</span></p>
+      </div>
+
+      <div class="lh-anatomy reveal">
+        <div class="lh-anatomy__grid">
+          <div>
+            <div class="lh-cardframe">
+              <article class="lh-card" id="lhLiveCard" data-chart="area" data-metrics="min" style="--card-c: var(--pri-green);">
+                <div class="lh-card__head">
+                  <div class="lh-card__corridor">
+                    <span class="glyph" aria-hidden="true"><img src="../images/lighthouse/explore.png" alt="" /></span>
+                    <b>CORREDOR NORTE</b>
+                  </div>
+                  <div class="lh-card__icons">
+                    <button type="button" class="lh-ic" id="lhChartBtn" title="Alternar gráfico (área / barras)" aria-label="Alternar tipo de gráfico">
+                      <img class="ic-area" src="../images/lighthouse/ic-line.png" alt="" />
+                      <img class="ic-bars" src="../images/lighthouse/ic-bars.png" alt="" />
+                    </button>
+                    <button type="button" class="lh-ic" id="lhExpandBtn" title="Expandir indicadores" aria-label="Expandir indicadores" aria-pressed="false">
+                      <img src="../images/lighthouse/ic-image.png" alt="" />
+                    </button>
+                    <button type="button" class="lh-ic" id="lhBookmarkBtn" title="Salvar card" aria-label="Salvar card" aria-pressed="false">
+                      <svg class="bm-off" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h12v18l-6-4.2L6 21z"/></svg>
+                      <svg class="bm-on" viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M6 3h12v18l-6-4.2L6 21z"/></svg>
+                    </button>
+                  </div>
+                </div>
+                <p class="lh-card__sub">Movimentação Total (kt)</p>
+                <div class="lh-card__metrics">
+                  <div class="lh-metric"><span>Orçamento</span><b>289</b></div>
+                  <div class="lh-metric"><span>S&amp;EO</span><b class="is-blue">289</b></div>
+                  <div class="lh-metric"><span>Projeção</span><b>289</b></div>
+                  <div class="lh-metric lh-metric--extra"><span>Orç. Acm.</span><b>289</b></div>
+                  <div class="lh-metric lh-metric--extra"><span>S&amp;EO Acm.</span><b class="is-status">289</b></div>
+                  <div class="lh-metric lh-metric--extra"><span>Real Acm.</span><b class="is-red">289</b></div>
+                  <div class="lh-metric lh-metric--extra"><span>Delta Proj.</span><b>289</b></div>
+                  <div class="lh-metric lh-metric--extra"><span>Delta Acm.</span><b>289</b></div>
+                </div>
+                <div class="lh-card__chart">
+                  <div class="lh-yaxis" aria-hidden="true"><span>500</span><span>250</span><span>0</span></div>
+                  <div class="lh-plot">
+                    <div class="lh-card__chartgrid" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+                    <div class="lh-bars" aria-hidden="true">
+                      <span data-v="300" data-top="61"></span>
+                      <span data-v="430" data-top="44"></span>
+                      <span class="is-hi" data-v="489" data-top="39"></span>
+                      <span data-v="330" data-top="52"></span>
+                      <span data-v="300" data-top="61"></span>
+                      <span data-v="180" data-top="83"></span>
+                      <span data-v="270" data-top="69"></span>
+                      <span data-v="230" data-top="77"></span>
+                    </div>
+                    <svg class="lh-svg lh-svg--area" viewBox="0 0 320 96" preserveAspectRatio="none" aria-hidden="true">
+                      <path class="lh-area lh-area--status" d="M0,60 C36,38 60,34 96,52 C132,70 150,78 188,58 C226,38 260,30 320,40 L320,96 L0,96 Z"></path>
+                      <path class="lh-area lh-area--blue" d="M0,80 C40,74 64,56 96,50 C128,44 156,40 192,56 C232,74 268,84 320,66 L320,96 L0,96 Z"></path>
+                      <path class="lh-line lh-line--status" d="M0,60 C36,38 60,34 96,52 C132,70 150,78 188,58 C226,38 260,30 320,40"></path>
+                      <path class="lh-line lh-line--blue" d="M0,80 C40,74 64,56 96,50 C128,44 156,40 192,56 C232,74 268,84 320,66"></path>
+                    </svg>
+                    <svg class="lh-svg lh-svg--bars" viewBox="0 0 320 150" preserveAspectRatio="none" aria-hidden="true">
+                      <path class="lh-line lh-line--blue" d="M0,96 C8,94 13,93 19,92 C36,89 48,74 60,66 C76,55 88,55 100,58 C114,62 128,72 140,78 C156,85 166,88 180,92 C196,97 206,124 221,124 C238,124 250,106 261,104 C278,101 290,110 301,116 C308,118 314,119 320,120"></path>
+                    </svg>
+                    <div class="lh-mark" aria-hidden="true"></div>
+                    <div class="lh-tip" aria-hidden="true">489<i>kt</i></div>
+                  </div>
+                  <div class="lh-xaxis" aria-hidden="true"><span>0</span><span>4</span><span>8</span><span>12</span><span>18</span><span>24</span><span>32</span><span>64</span></div>
+                </div>
+                <p class="lh-card__foot">Dados atualizado em 22/02/2023 às 12:30</p>
+              </article>
+            </div>
+
+            <div class="lh-statusbar reveal" role="group" aria-label="Trocar status de prioridade do card">
+              <button type="button" class="is-active" data-card-c="var(--pri-green)" style="--sw: var(--pri-green);"><span class="sw"></span><span class="t" lang="pt">Normal</span><span class="t" lang="en">Normal</span></button>
+              <button type="button" data-card-c="var(--pri-yellow)" style="--sw: var(--pri-yellow);"><span class="sw"></span><span class="t" lang="pt">Atenção</span><span class="t" lang="en">Attention</span></button>
+              <button type="button" data-card-c="var(--pri-blue)" style="--sw: var(--pri-blue);"><span class="sw"></span><span class="t" lang="pt">Informativo</span><span class="t" lang="en">Info</span></button>
+              <button type="button" data-card-c="var(--pri-red)" style="--sw: var(--pri-red);"><span class="sw"></span><span class="t" lang="pt">Crítico</span><span class="t" lang="en">Critical</span></button>
+            </div>
+          </div>
+
+          <ol class="lh-parts reveal" data-stagger>
+            <li>
+              <span class="pn">i</span>
+              <span class="pt"><b>Cabeçalho.</b> <span class="t" lang="pt">Identifica o corredor e o indicador — <em>Corredor Norte · Movimentação Total (kt)</em> — com atalhos que <em>alternam o gráfico</em>, <em>expandem os indicadores</em> e <em>salvam</em> o card.</span><span class="t" lang="en">Identifies the corridor and the indicator — <em>Northern Corridor · Total Movement (kt)</em> — with shortcuts that <em>switch the chart</em>, <em>expand the metrics</em> and <em>bookmark</em> the card.</span></span>
+            </li>
+            <li>
+              <span class="pn">ii</span>
+              <span class="pt"><b><span class="t" lang="pt">Faixa de prioridade.</span><span class="t" lang="en">Priority stripe.</span></b> <span class="t" lang="pt">A barra lateral colorida diz, num relance, o quanto aquele número exige do gestor — de "dentro do esperado" a "ação imediata".</span><span class="t" lang="en">The colored side bar says, at a glance, how much that number demands — from "within target" to "immediate action".</span></span>
+            </li>
+            <li>
+              <span class="pn">iii</span>
+              <span class="pt"><b><span class="t" lang="pt">Métricas.</span><span class="t" lang="en">Metrics.</span></b> <span class="t" lang="pt">Orçamento, S&amp;EO e Projeção; depois acumulados (Real Acm.) e deltas. A cor codifica o sinal: <em>azul</em> S&amp;EO, <em>vermelho</em> realizado.</span><span class="t" lang="en">Budget, S&amp;OP and Projection; then accumulated (Real Acc.) and deltas. Color encodes the signal: <em>blue</em> S&amp;OP, <em>red</em> actuals.</span></span>
+            </li>
+            <li>
+              <span class="pn">iv</span>
+              <span class="pt"><b><span class="t" lang="pt">Gráfico de área.</span><span class="t" lang="en">Area chart.</span></b> <span class="t" lang="pt">Duas curvas — realizado × projeção — tornam a tendência legível sem ler um único número.</span><span class="t" lang="en">Two curves — actual × projection — make the trend legible without reading a single number.</span></span>
+            </li>
+            <li>
+              <span class="pn">v</span>
+              <span class="pt"><b><span class="t" lang="pt">Carimbo de atualização.</span><span class="t" lang="en">Update stamp.</span></b> <span class="t" lang="pt">A data e a hora do último dado fecham o card — a promessa do "tempo real" tornada visível.</span><span class="t" lang="en">The timestamp of the last data closes the card — the "real-time" promise made visible.</span></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="lh-subhead reveal"><span class="t" lang="pt">Outras leituras do mesmo dado</span><span class="t" lang="en">Other readings of the same data</span></div>
+        <p class="comparisons-intro reveal" style="margin-top:0;"><span class="t" lang="pt">O gráfico de área é só uma das leituras. O mesmo indicador aparece como barras com leitura por toque (489&nbsp;kt) e ganha filtros de aderência — <em>abaixo</em>, <em>aderente</em>, <em>acima</em> da meta — direto no detalhamento.</span><span class="t" lang="en">The area chart is just one reading. The same indicator appears as bars with touch-readout (489&nbsp;kt) and gains adherence filters — <em>below</em>, <em>on-target</em>, <em>above</em> — right in the detail view.</span></p>
+        <div class="lh-dataviz-extra reveal">
+          <a class="lh-screenfig lightboxgallery-link" href="../images/lighthouse/coverflow/08.webp" aria-label="Gráfico de barras com leitura por toque — 489 kt">
+            <img src="../images/lighthouse/coverflow/08.webp" alt="Lighthouse — detalhamento em gráfico de barras com tooltip de 489 kt" loading="lazy" />
+            <span class="cap"><b><span class="t" lang="pt">Barras &amp; toque</span><span class="t" lang="en">Bars &amp; tap</span></b><span class="t" lang="pt">Leitura pontual — 489 kt</span><span class="t" lang="en">Point readout — 489 kt</span></span>
+          </a>
+          <a class="lh-screenfig lightboxgallery-link" href="../images/lighthouse/coverflow/10.webp" aria-label="Filtros de aderência — abaixo, aderente e acima da meta">
+            <img src="../images/lighthouse/coverflow/10.webp" alt="Lighthouse — detalhamento com filtros de aderência (abaixo, aderente, acima)" loading="lazy" />
+            <span class="cap"><b><span class="t" lang="pt">Filtros de aderência</span><span class="t" lang="en">Adherence filters</span></b><span class="t" lang="pt">Abaixo · aderente · acima</span><span class="t" lang="en">Below · on-target · above</span></span>
+          </a>
+        </div>
+
+
+
+        <div class="fiction-note reveal">
+          <span><span class="t" lang="pt">Os valores (289) são fictícios, gerados apenas para demonstração, e não refletem dados reais da empresa.</span><span class="t" lang="en">The values (289) are fictional, generated for demonstration only, and do not reflect the company's real data.</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VI. SISTEMA DE PRIORIDADES (4 CARDS REAIS)
        ============================================================ -->
   <section class="page case-section" data-folio>
     <div class="spread-narrow">
@@ -791,61 +1491,15 @@
         </div>
       </div>
 
-      <!-- Mostruário em fluxo: o sistema de cards em movimento (loop infinito).
-           Duas faixas em direções opostas; cada faixa repete a sequência duas
-           vezes para o loop fechar sem emenda. Imagens decorativas (alt=""):
-           as 4 variações já estão descritas nos cards acima. -->
+      <!-- Variações de card em fluxo — três faixas por tamanho:
+           grande (cima), médio (meio), compacto (baixo). Cada faixa repete a
+           sequência de cores 2× para o loop fechar sem emenda. Decorativo. -->
       <div class="lh-flow reveal">
         <span class="lh-flow__label"><span class="t" lang="pt">As variações de card em fluxo</span><span class="t" lang="en">The card variations in flow</span></span>
-        <div class="lh-flow__row">
-          <div class="lh-flow__track" style="--lh-flow-dur:42s; --lh-flow-dir:normal;">
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-g.webp" alt="" loading="lazy" /></div>
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-y.webp" alt="" loading="lazy" /></div>
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-b.webp" alt="" loading="lazy" /></div>
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-r.webp" alt="" loading="lazy" /></div>
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-b.webp" alt="" loading="lazy" /></div>
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-y.webp" alt="" loading="lazy" /></div>
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-g.webp" alt="" loading="lazy" /></div>
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-y.webp" alt="" loading="lazy" /></div>
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-b.webp" alt="" loading="lazy" /></div>
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-r.webp" alt="" loading="lazy" /></div>
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-b.webp" alt="" loading="lazy" /></div>
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-y.webp" alt="" loading="lazy" /></div>
-          </div>
-        </div>
-        <div class="lh-flow__row">
-          <div class="lh-flow__track" style="--lh-flow-dur:48s; --lh-flow-dir:reverse;">
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-r.webp" alt="" loading="lazy" /></div>
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-b.webp" alt="" loading="lazy" /></div>
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-y.webp" alt="" loading="lazy" /></div>
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-g.webp" alt="" loading="lazy" /></div>
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-y.webp" alt="" loading="lazy" /></div>
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-b.webp" alt="" loading="lazy" /></div>
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-r.webp" alt="" loading="lazy" /></div>
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-b.webp" alt="" loading="lazy" /></div>
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-y.webp" alt="" loading="lazy" /></div>
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-g.webp" alt="" loading="lazy" /></div>
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-y.webp" alt="" loading="lazy" /></div>
-            <div class="lh-flow__card"><img src="../images/lighthouse/card-b.webp" alt="" loading="lazy" /></div>
-          </div>
-        </div>
+        <div class="lh-flow__row"><div class="lh-flow__track" style="--lh-flow-dur:64s; --lh-flow-dir:normal;"><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardg.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardy.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardb.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardr.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardg.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardy.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardb.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardr.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardg.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardy.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardb.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardr.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardg.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardy.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardb.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardr.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardg.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardy.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardb.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardr.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardg.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardy.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardb.webp" alt="" width="386" height="229"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:142px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/Cardr.webp" alt="" width="386" height="229"></div></div></div>
+        <div class="lh-flow__row"><div class="lh-flow__track" style="--lh-flow-dur:58s; --lh-flow-dir:reverse;"><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compactg.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compacty.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compactb.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compactr.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compactg.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compacty.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compactb.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compactr.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compactg.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compacty.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compactb.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compactr.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compactg.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compacty.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compactb.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compactr.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compactg.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compacty.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compactb.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compactr.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compactg.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compacty.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compactb.webp" alt="" width="386" height="172"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:107px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/compactr.webp" alt="" width="386" height="172"></div></div></div>
+        <div class="lh-flow__row"><div class="lh-flow__track" style="--lh-flow-dur:50s; --lh-flow-dir:normal;"><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultrag.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultray.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultrab.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultragr.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultrag.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultray.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultrab.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultragr.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultrag.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultray.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultrab.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultragr.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultrag.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultray.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultrab.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultragr.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultrag.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultray.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultrab.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultragr.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultrag.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultray.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultrab.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultragr.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultrag.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultray.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultrab.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultragr.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultrag.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultray.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultrab.webp" alt="" width="386" height="85"></div><div class="fig-wrap" style="--fig-scale:.62;width:239px;height:53px" aria-hidden="true"><img class="fig-img" src="../images/lighthouse/cards/ultragr.webp" alt="" width="386" height="85"></div></div></div>
       </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       INTERMEZZO (PULL-QUOTE CINEMATOGRÁFICA)
-       ============================================================ -->
-  <section class="case-intermezzo" data-folio aria-label="Intermezzo">
-    <span class="intermezzo-bg l1" data-speed="0.15" aria-hidden="true">⁂</span>
-    <span class="intermezzo-bg l2" data-speed="-0.08" aria-hidden="true">❧</span>
-    <div class="intermezzo-inner reveal">
-      <span class="intermezzo-label">Intermezzo</span>
-      <p class="intermezzo-quote">
-        <span class="t" lang="pt">Modernizar um sistema legado não é repintar a fachada: é decidir, com coragem, o que cabe na palma da mão de quem decide.</span>
-        <span class="t" lang="en">Modernizing a legacy system is not repainting the façade: it is deciding, with courage, what fits in the hand of the one who decides.</span>
-      </p>
-      <span class="intermezzo-asterism" aria-hidden="true">⁂</span>
     </div>
   </section>
 
@@ -856,14 +1510,46 @@
     <div class="spread-narrow">
       <header class="section-head reveal">
         <span class="roman">VIII.</span>
-        <span class="name"><span class="t" lang="pt">Design System &amp; Componentes</span><span class="t" lang="en">Design System &amp; Components</span></span>
-        <span class="gloss"><span class="t" lang="pt">A biblioteca mobile</span><span class="t" lang="en">The mobile library</span></span>
+        <span class="name"><span class="t" lang="pt">Design System &amp; Componentização</span><span class="t" lang="en">Design System &amp; Componentization</span></span>
+        <span class="gloss"><span class="t" lang="pt">A biblioteca mobile, em escala</span><span class="t" lang="en">The mobile library, at scale</span></span>
       </header>
 
       <p class="results-intro reveal">
-        <span class="t" lang="pt">O coração do MVP é a biblioteca: estilos, ícones, gráficos, estados e <span class="em">8 variações de card</span> que tornaram o produto escalável e preparado para outros corredores. A componentização garantiu consistência entre telas, perfis de permissão e contextos de dado — e foi o que permitiu construir um protótipo de ponta a ponta com um só designer.</span>
-        <span class="t" lang="en">The heart of the MVP is the library: styles, icons, charts, states and <span class="em">8 card variations</span> that made the product scalable and ready for other corridors. Componentization kept consistency across screens, permission profiles and data contexts — and is what made it possible to build an end-to-end prototype with a single designer.</span>
+        <span class="t" lang="pt">O coração do MVP é a biblioteca. O card tem <span class="em">8 formatos de densidade</span>, multiplicados pelo código de cor — mas a biblioteca completa vai muito além: passa de <span class="em">170 componentes</span>, com gráficos, tabelas, formulários e ícones, cada um com seus estados. Foi essa componentização que deu consistência entre telas, perfis de permissão e contextos de dado — e o que permitiu construir um protótipo de ponta a ponta com um só designer.</span>
+        <span class="t" lang="en">The heart of the MVP is the library. The card has <span class="em">8 density formats</span>, multiplied by the color code — but the full library goes far beyond: over <span class="em">170 components</span>, with charts, tables, forms and icons, each with its states. This componentization gave consistency across screens, permission profiles and data contexts — and is what made it possible to build an end-to-end prototype with a single designer.</span>
       </p>
+
+      <div class="lh-libstat reveal" data-stagger>
+        <div class="lh-libstat__cell">
+          <div class="lh-libstat__n"><span class="u">+</span>170</div>
+          <span class="lh-libstat__l"><span class="t" lang="pt">Componentes na biblioteca</span><span class="t" lang="en">Components in the library</span></span>
+        </div>
+        <div class="lh-libstat__cell">
+          <div class="lh-libstat__n"><span class="u">+</span>50</div>
+          <span class="lh-libstat__l"><span class="t" lang="pt">Variações de card</span><span class="t" lang="en">Card variations</span></span>
+        </div>
+        <div class="lh-libstat__cell">
+          <div class="lh-libstat__n">14</div>
+          <span class="lh-libstat__l"><span class="t" lang="pt">Tipos de gráfico</span><span class="t" lang="en">Chart types</span></span>
+        </div>
+        <div class="lh-libstat__cell">
+          <div class="lh-libstat__n"><span class="u">+</span>600</div>
+          <span class="lh-libstat__l"><span class="t" lang="pt">Estados de input</span><span class="t" lang="en">Input states</span></span>
+        </div>
+      </div>
+
+      <div class="lh-subhead reveal"><span class="t" lang="pt">As famílias de componentes</span><span class="t" lang="en">The component families</span></div>
+      <div class="lh-families reveal" data-stagger>
+        <div class="lh-family"><span class="lh-family__name">Card<span class="role"><span class="t" lang="pt">feed &amp; detalhamento, em 8 densidades</span><span class="t" lang="en">feed &amp; detail, in 8 densities</span></span></span><span class="lh-family__n">50+</span></div>
+        <div class="lh-family"><span class="lh-family__name">Detailed Card<span class="role"><span class="t" lang="pt">métricas completas + acumulados</span><span class="t" lang="en">full metrics + accumulated</span></span></span><span class="lh-family__n">5</span></div>
+        <div class="lh-family"><span class="lh-family__name">Chart<span class="role"><span class="t" lang="pt">área, barras, pizza, donut</span><span class="t" lang="en">area, bars, pie, donut</span></span></span><span class="lh-family__n">14</span></div>
+        <div class="lh-family"><span class="lh-family__name">TableCell<span class="role"><span class="t" lang="pt">tabelas SN / SS / SL / Total</span><span class="t" lang="en">SN / SS / SL / Total tables</span></span></span><span class="lh-family__n">82</span></div>
+        <div class="lh-family"><span class="lh-family__name">Text Input<span class="role"><span class="t" lang="pt">formulários &amp; busca, todos os estados</span><span class="t" lang="en">forms &amp; search, every state</span></span></span><span class="lh-family__n">600+</span></div>
+        <div class="lh-family"><span class="lh-family__name">Button<span class="role"><span class="t" lang="pt">primário, secundário, forma &amp; estado</span><span class="t" lang="en">primary, secondary, shape &amp; state</span></span></span><span class="lh-family__n">470+</span></div>
+        <div class="lh-family"><span class="lh-family__name">Tabs &amp; Navbar<span class="role"><span class="t" lang="pt">navegação do MVP</span><span class="t" lang="en">MVP navigation</span></span></span><span class="lh-family__n">168</span></div>
+        <div class="lh-family"><span class="lh-family__name"><span class="t" lang="pt">Ícones</span><span class="t" lang="en">Icons</span><span class="role"><span class="t" lang="pt">set Material custom, 5 estilos cada</span><span class="t" lang="en">custom Material set, 5 styles each</span></span></span><span class="lh-family__n">~33</span></div>
+        <div class="lh-family"><span class="lh-family__name">Notification &amp; Comentários<span class="role"><span class="t" lang="pt">alertas por área e respostas</span><span class="t" lang="en">per-area alerts and replies</span></span></span><span class="lh-family__n">18</span></div>
+      </div>
 
       <a class="lh-plate lightboxgallery-link reveal" href="../images/lighthouse/components.webp" aria-label="Board do design system — estilos, componentes, gráficos e estados do Lighthouse">
         <img src="../images/lighthouse/components.webp" alt="Board do design system do Lighthouse — estilos, componentes, gráficos e estados" loading="lazy" />
@@ -873,80 +1559,12 @@
   </section>
 
   <!-- ============================================================
-       IX. ARQUITETURA DA INFORMAÇÃO (SITEMAPS MOBILE + WEB)
+       IX. BASTIDORES & CRUX
        ============================================================ -->
   <section class="page case-section" data-folio>
     <div class="spread-narrow">
       <header class="section-head reveal">
         <span class="roman">IX.</span>
-        <span class="name"><span class="t" lang="pt">Arquitetura da Informação</span><span class="t" lang="en">Information Architecture</span></span>
-        <span class="gloss"><span class="t" lang="pt">Dois mapas de navegação</span><span class="t" lang="en">Two navigation maps</span></span>
-      </header>
-
-      <div class="comparisons-intro">
-        <p><span class="t" lang="pt">Antes de qualquer tela polida, a navegação. Dois mapas guiaram o recorte do MVP: o app mobile do gestor em campo e o painel web de apoio para a configuração de dados. Toque para examinar cada mapa.</span>
-           <span class="t" lang="en">Before any polished screen, the navigation. Two maps guided the MVP scoping: the manager's mobile app in the field and the supporting web panel for data configuration. Tap to examine each map.</span></p>
-      </div>
-
-      <div class="sl-gallery lh-ia-pair reveal">
-        <a class="lh-plate lightboxgallery-link" href="../images/lighthouse/workflow-asis.webp" aria-label="Mapa de navegação do aplicativo mobile — splash, login, home, menu, notificações e perfil">
-          <img src="../images/lighthouse/workflow-asis.webp" alt="Mapa de navegação mobile do Lighthouse" loading="lazy" />
-          <span class="lh-plate__cap"><span class="t" lang="pt">App mobile — fluxo do gestor</span><span class="t" lang="en">Mobile app — manager flow</span></span>
-        </a>
-        <a class="lh-plate lightboxgallery-link" href="../images/lighthouse/workflow-tobe.webp" aria-label="Mapa de navegação do painel web — header, painel de controle, arquivos, validação e chat">
-          <img src="../images/lighthouse/workflow-tobe.webp" alt="Mapa de navegação web do Lighthouse" loading="lazy" />
-          <span class="lh-plate__cap"><span class="t" lang="pt">Painel web — apoio &amp; configuração</span><span class="t" lang="en">Web panel — support &amp; setup</span></span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       X. PRANCHA COM LUNETA (EXAME AMPLIADO)
-       ============================================================ -->
-  <section class="page case-section" data-folio>
-    <div class="spread">
-      <aside class="margin-l">
-        <p class="gloss" data-anchor="loupe-anchor">
-          <span class="gloss-num">iii</span>
-          <span class="t" lang="pt">Passe o cursor sobre a prancha: a luneta amplia o detalhe do card, como ao examinar uma gravura.</span>
-          <span class="t" lang="en">Hover over the plate: the loupe magnifies the card detail, as when examining an engraving.</span>
-        </p>
-      </aside>
-      <div class="content">
-        <header class="section-head reveal">
-          <span class="roman">X.</span>
-          <span class="name"><span class="t" lang="pt">Prancha com Luneta</span><span class="t" lang="en">Plate with Loupe</span></span>
-          <span class="gloss"><span class="t" lang="pt">Exame ampliado</span><span class="t" lang="en">Magnified examination</span></span>
-        </header>
-
-        <div class="reveal" id="loupe-anchor">
-          <div class="loupe-demo-plate">
-            <div class="loupe-demo-art">
-              <p class="lda-title">Card · Corredor Norte</p>
-              <p class="lda-line"><span class="t" lang="pt">Detalhe do card de produção — a luneta revela a fineza do dado.</span><span class="t" lang="en">Production-card detail — the loupe reveals the fineness of the data.</span></p>
-              <p class="lda-fine">LIGHTHOUSE · VALE · CORREDOR · NORTE · MMXXIII · PRODUÇÃO · EM · TEMPO · REAL · CARDS · PRIORIDADE · VERDE · AMARELO · AZUL · VERMELHO · NOTIFICAÇÕES · PORTO · MINAS · FERROVIAS · ✦ · ✦ · ✦</p>
-              <p class="lda-fine">i · ii · iii · iv · v · vi · vii · viii · ix · x · xi · xii · 0123456789 · §§ · ‹/› · — · ·</p>
-            </div>
-            <span class="loupe-demo-hint"><span class="t" lang="pt">Passe o cursor</span><span class="t" lang="en">Hover here</span></span>
-            <div class="loupe-demo-lens" aria-hidden="true">
-              <img class="loupe-demo-frame" src="../images/home/Lupa2.webp" alt="" aria-hidden="true" />
-              <div class="loupe-demo-glass"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <aside class="margin-r" aria-hidden="true"></aside>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       XI. BASTIDORES & CRUX
-       ============================================================ -->
-  <section class="page case-section" data-folio>
-    <div class="spread-narrow">
-      <header class="section-head reveal">
-        <span class="roman">XI.</span>
         <span class="name"><span class="t" lang="pt">Bastidores &amp; Crux</span><span class="t" lang="en">Behind the Scenes &amp; Crux</span></span>
         <span class="gloss"><span class="t" lang="pt">A grande barreira</span><span class="t" lang="en">The hard constraint</span></span>
       </header>
@@ -963,20 +1581,8 @@
              <span class="t" lang="en">The hardest part was presenting a large volume of complex data on a small screen, serving different permission levels without overwhelming the manager. The breakthrough came from componentization: eight reusable card variations and a priority color code gave the feed consistency and let the critical surface first. There was also the human challenge — tight deadlines and scheduling conflicts demanded constant negotiation and weekly alignment meetings to hold the MVP's scope.</span></p>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ============================================================
-       XII. INSTRUMENTARIUM
-       ============================================================ -->
-  <section class="page case-section" data-folio>
-    <div class="spread-narrow">
-      <header class="section-head reveal">
-        <span class="roman">XII.</span>
-        <span class="name">Instrumentarium</span>
-        <span class="gloss"><span class="t" lang="pt">Instrumentos &amp; métodos</span><span class="t" lang="en">Tools &amp; methods</span></span>
-      </header>
-
+      <div class="lh-subhead reveal"><span class="t" lang="pt">Instrumentos &amp; métodos</span><span class="t" lang="en">Tools &amp; methods</span></div>
       <ul class="instruments" data-stagger>
         <li class="instrument">
           <span class="inst-glyph font-serif-display" aria-hidden="true">✶</span>
@@ -1005,7 +1611,7 @@
       <aside class="margin-l" aria-hidden="true"></aside>
       <div class="content">
         <header class="section-head reveal">
-          <span class="roman">XIII.</span>
+          <span class="roman">X.</span>
           <span class="name"><span class="t" lang="pt">Resultados &amp; Impacto</span><span class="t" lang="en">Outcomes &amp; Impact</span></span>
           <span class="gloss"><span class="t" lang="pt">Entrega do MVP</span><span class="t" lang="en">MVP delivery</span></span>
         </header>
@@ -1020,8 +1626,8 @@
               <dd><span class="t" lang="pt">variações de card no design system</span><span class="t" lang="en">card variations in the design system</span></dd>
             </div>
             <div>
-              <dt><span class="unit unit-pre">+</span><span class="stat-val" data-count="40">0</span></dt>
-              <dd><span class="t" lang="pt">componentes no design system mobile</span><span class="t" lang="en">components in the mobile design system</span></dd>
+              <dt><span class="unit unit-pre">+</span><span class="stat-val" data-count="170">0</span></dt>
+              <dd><span class="t" lang="pt">componentes na biblioteca mobile</span><span class="t" lang="en">components in the mobile library</span></dd>
             </div>
             <div>
               <dt><span class="unit unit-pre">~</span><span class="stat-val" data-count="200">0</span></dt>
@@ -1058,7 +1664,7 @@
   <section class="page case-section" data-folio>
     <div class="spread-narrow">
       <header class="section-head reveal">
-        <span class="roman">XIV.</span>
+        <span class="roman">XI.</span>
         <span class="name">Errata</span>
         <span class="gloss"><span class="t" lang="pt">Lições e revisões</span><span class="t" lang="en">Lessons &amp; revisions</span></span>
       </header>
@@ -1089,6 +1695,9 @@
       </ol>
     </div>
   </section>
+
+    </div><!-- /.lh-dossier__spine -->
+  </div><!-- /.lh-dossier -->
 
   <!-- ============================================================
        COLOPHÃO & EPÍLOGO
@@ -1161,7 +1770,9 @@
       var img = link.querySelector('img');
       var cap = link.querySelector('.lh-strip__cap, .lh-plate__cap, .sl-hero__cap');
       var caption = capText(cap, lang) || (link.getAttribute('aria-label') || '') || (img && img.getAttribute('alt')) || '';
-      return { href: link.getAttribute('href'), caption: caption, thumb: img ? img.src : link.getAttribute('href') };
+      // raio do canto da arte (par H%/V%) p/ a moldura seguir a curva no lightbox
+      var artR = img ? getComputedStyle(img).getPropertyValue('--art-r').trim() : '';
+      return { href: link.getAttribute('href'), caption: caption, thumb: img ? img.src : link.getAttribute('href'), artR: artR };
     });
     return { items: items, startIndex: Math.max(0, links.indexOf(clicked)) };
   }
@@ -1185,7 +1796,8 @@
         '<div class="lbg__viewer">' +
           '<img src="' + esc(items[current].href) + '" alt="">' +
           '<div class="lbg__caption"><span class="lbg__caption__text">' + esc(items[current].caption) + '</span>' +
-          (multi ? '<span class="lbg__counter">' + (current + 1) + ' / ' + items.length + '</span>' : '') + '</div>' +
+          (multi ? '<span class="lbg__counter">' + (current + 1) + ' / ' + items.length + '</span>' : '') +
+          '<span class="lbg__zoomhint" aria-hidden="true">&#8853; 100%</span></div>' +
         '</div>' +
         (multi ? '<button class="lbg__nav lbg__nav--next" data-action="next" aria-label="Next">&#8250;</button>' : '') +
       '</div>';
@@ -1194,16 +1806,46 @@
 
     var viewer = overlay.querySelector('.lbg__viewer');
     var imgEl = viewer.querySelector('img');
+    function applyArtR(i) { imgEl.style.setProperty('--art-r', items[i].artR || ''); }
+    applyArtR(current);
     var capEl = overlay.querySelector('.lbg__caption__text');
     var cntEl = overlay.querySelector('.lbg__counter');
     var thumbs = Array.prototype.slice.call(overlay.querySelectorAll('.lbg__thumb'));
+
+    // ----- Zoom 1:1 (revela a resolução nativa das pranchas grandes) -----
+    var zoomFactor = 1;
+    function updateZoomable() {
+      if (!imgEl.naturalWidth) return;
+      var fit = imgEl.offsetWidth || imgEl.getBoundingClientRect().width; // largura de layout (ignora a transform do swap)
+      zoomFactor = imgEl.naturalWidth / Math.max(1, fit);
+      viewer.classList.toggle('is-zoomable', zoomFactor > 1.15);
+    }
+    function panTo(e) {
+      var r = viewer.getBoundingClientRect();
+      var fx = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+      var fy = Math.min(1, Math.max(0, (e.clientY - r.top) / r.height));
+      viewer.scrollLeft = fx * (viewer.scrollWidth - viewer.clientWidth);
+      viewer.scrollTop = fy * (viewer.scrollHeight - viewer.clientHeight);
+    }
+    function enterZoom(e) { imgEl.style.width = imgEl.naturalWidth + 'px'; imgEl.style.height = 'auto'; viewer.classList.add('is-zoomed'); panTo(e); }
+    function exitZoom() { viewer.classList.remove('is-zoomed'); imgEl.style.width = ''; imgEl.style.height = ''; }
+    imgEl.addEventListener('click', function (e) {
+      if (viewer.classList.contains('is-zoomed')) { e.stopPropagation(); exitZoom(); return; }
+      if (viewer.classList.contains('is-zoomable')) { e.stopPropagation(); enterZoom(e); }
+    });
+    viewer.addEventListener('mousemove', function (e) { if (viewer.classList.contains('is-zoomed')) panTo(e); });
+    imgEl.addEventListener('load', updateZoomable);
+    if (imgEl.complete && imgEl.naturalWidth) updateZoomable();
 
     function goTo(i) {
       var n = ((i % items.length) + items.length) % items.length;
       if (n === current) return;
       current = n;
+      exitZoom();
+      viewer.classList.remove('is-zoomable');
       viewer.classList.remove('is-swapping'); void viewer.offsetWidth;
       imgEl.src = items[current].href;
+      applyArtR(current);
       capEl.textContent = items[current].caption;
       if (cntEl) cntEl.textContent = (current + 1) + ' / ' + items.length;
       viewer.classList.add('is-swapping');
@@ -1242,6 +1884,130 @@
       open(gallery, link);
     });
   });
+})();
+</script>
+
+<!-- Anatomia do Card: troca o pigmento de prioridade do card ao vivo -->
+<script>
+(function () {
+  var card = document.getElementById('lhLiveCard');
+  var bar = document.querySelector('.lh-statusbar');
+  if (!card || !bar) return;
+  var btns = Array.prototype.slice.call(bar.querySelectorAll('button'));
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      card.style.setProperty('--card-c', b.getAttribute('data-card-c'));
+      btns.forEach(function (x) { x.classList.toggle('is-active', x === b); });
+    });
+  });
+
+  // Tooltip de leitura nas colunas (modo barras)
+  var plot = card.querySelector('.lh-plot');
+  var tip = card.querySelector('.lh-tip');
+  var mark = card.querySelector('.lh-mark');
+  var cols = Array.prototype.slice.call(card.querySelectorAll('.lh-bars span'));
+  var defCol = card.querySelector('.lh-bars span.is-hi') || cols[0];
+  function placeReadout(el) {
+    if (!el || !tip || !mark || !plot) return;
+    tip.firstChild.nodeValue = el.getAttribute('data-v');
+    var pr = plot.getBoundingClientRect();
+    if (!pr.width) return;
+    var r = el.getBoundingClientRect();
+    var left = (r.left + r.width / 2 - pr.left) / pr.width * 100;
+    var top = parseFloat(el.getAttribute('data-top'));
+    tip.style.left = left + '%'; tip.style.top = top + '%';
+    mark.style.left = left + '%'; mark.style.top = top + '%';
+  }
+  cols.forEach(function (c) {
+    c.addEventListener('pointerenter', function () {
+      cols.forEach(function (x) { x.classList.toggle('is-hi', x === c); });
+      placeReadout(c);
+    });
+  });
+  if (plot) plot.addEventListener('pointerleave', function () {
+    cols.forEach(function (x) { x.classList.toggle('is-hi', x === defCol); });
+    placeReadout(defCol);
+  });
+
+  // Alternar gráfico: área ↔ barras
+  var chartBtn = document.getElementById('lhChartBtn');
+  if (chartBtn) chartBtn.addEventListener('click', function () {
+    var next = card.getAttribute('data-chart') === 'bars' ? 'area' : 'bars';
+    card.setAttribute('data-chart', next);
+    if (next === 'bars') requestAnimationFrame(function () { placeReadout(card.querySelector('.lh-bars span.is-hi') || defCol); });
+  });
+
+  // Expandir / recolher indicadores (3 ↔ 8)
+  var expandBtn = document.getElementById('lhExpandBtn');
+  if (expandBtn) expandBtn.addEventListener('click', function () {
+    var full = card.getAttribute('data-metrics') === 'full';
+    card.setAttribute('data-metrics', full ? 'min' : 'full');
+    expandBtn.setAttribute('aria-pressed', String(!full));
+  });
+
+  // Salvar (bookmark) com estado ativo
+  var bmBtn = document.getElementById('lhBookmarkBtn');
+  if (bmBtn) bmBtn.addEventListener('click', function () {
+    var on = card.classList.toggle('is-saved');
+    bmBtn.setAttribute('aria-pressed', String(on));
+  });
+})();
+</script>
+
+<!-- Dossiê: monta o Índice lateral a partir dos cabeçalhos das seções e
+     sincroniza o capítulo corrente conforme a lombada rola. -->
+<script>
+(function () {
+  var dossier = document.querySelector('.lh-dossier');
+  if (!dossier) return;
+  var nav = dossier.querySelector('.lh-dossier__nav');
+  var spine = dossier.querySelector('.lh-dossier__spine');
+  if (!nav || !spine) return;
+  var sections = Array.prototype.slice.call(spine.querySelectorAll('.case-section'));
+  var links = [];
+  sections.forEach(function (sec, i) {
+    var head = sec.querySelector('.section-head');
+    if (!head) return;
+    if (!sec.id) sec.id = 'ch-' + (i + 1);
+    var roman = head.querySelector('.roman');
+    var name = head.querySelector('.name');
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'lh-dossier__link';
+    var r = document.createElement('span'); r.className = 'lk-roman';
+    r.textContent = roman ? roman.textContent.replace(/\.$/, '') : String(i + 1);
+    var n = document.createElement('span'); n.className = 'lk-name';
+    if (name) n.innerHTML = name.innerHTML; else n.textContent = 'Capítulo';
+    btn.appendChild(r); btn.appendChild(n);
+    btn.addEventListener('click', function () {
+      var top = sec.getBoundingClientRect().top + window.pageYOffset - 88;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    });
+    nav.appendChild(btn);
+    links.push({ btn: btn, sec: sec });
+  });
+  // Capítulo corrente = última seção cujo topo já cruzou a linha de leitura
+  // (logo abaixo do cabeçalho fixo). Critério único → sem flicker / bold quebrado.
+  var rail = dossier.querySelector('.lh-dossier__rail');
+  var LINE = 150;
+  var activeIdx = -1;
+  function update() {
+    if (!links.length) return;
+    var idx = 0;
+    for (var i = 0; i < links.length; i++) {
+      if (links[i].sec.getBoundingClientRect().top - LINE <= 0) idx = i; else break;
+    }
+    if (idx === activeIdx) return;
+    activeIdx = idx;
+    links.forEach(function (l, k) { l.btn.classList.toggle('is-active', k === idx); });
+  }
+  var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(function () { update(); ticking = false; });
+  }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
 })();
 </script>
 </body>
