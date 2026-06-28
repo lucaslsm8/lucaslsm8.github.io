@@ -229,7 +229,12 @@ const CONTENT = {
         }],
         link: "ler a ficha completa",
         href: "projects/lighthouse.html",
-        imgClass: "plate-img-3"
+        imgClass: "plate-img-3",
+        quadro: {
+          front: "images/lighthouse/paint-front.webp",
+          back:  "images/lighthouse/paint-back.webp",
+          side:  "images/home/paint-side.webp"
+        }
       }]
     },
     method: {
@@ -733,7 +738,12 @@ const CONTENT = {
         }],
         link: "read the full entry",
         href: "projects/lighthouse.html",
-        imgClass: "plate-img-3"
+        imgClass: "plate-img-3",
+        quadro: {
+          front: "images/lighthouse/paint-front.webp",
+          back:  "images/lighthouse/paint-back.webp",
+          side:  "images/home/paint-side.webp"
+        }
       }]
     },
     method: {

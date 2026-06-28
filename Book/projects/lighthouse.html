@@ -677,12 +677,15 @@
   .lbg__caption__text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
   .lbg__counter { font-family: var(--mono); font-size: 11px; letter-spacing: .04em; padding: 3px 10px; border-radius: var(--radius-pill);
     background: rgba(245,227,168,.18); border: 1px solid var(--highlighter); color: var(--paper); white-space: nowrap; }
-  .lbg__nav { position: absolute; top: 50%; transform: translateY(-50%); width: 50px; height: 50px; display: inline-flex; align-items: center; justify-content: center;
+  .lbg__nav { position: absolute; top: 50%; transform: translateY(-50%); width: 50px; height: 50px; padding: 0; display: inline-flex; align-items: center; justify-content: center;
     border-radius: 50%; background: rgba(241,236,224,.12); border: 1px solid rgba(241,236,224,.3); backdrop-filter: blur(6px);
-    color: var(--paper); font-size: 1.6rem; line-height: 1; cursor: pointer; z-index: 2; user-select: none;
+    color: var(--paper); cursor: pointer; z-index: 2; user-select: none;
     transition: background var(--dur-fast), transform var(--dur-fast); }
   .lbg__nav:hover { background: var(--oxblood); border-color: var(--oxblood); transform: translateY(-50%) scale(1.06); }
   .lbg__nav--prev { left: -.25rem; } .lbg__nav--next { right: -.25rem; }
+  /* SVG de traço centrado de forma exata (sem métricas de fonte) */
+  .lbg__nav svg, .lbg__tool svg { width: 22px; height: 22px; display: block; fill: none;
+    stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
   .lbg__sidebar { flex: 0 0 150px; order: -1; display: flex; flex-direction: column; gap: var(--sp-3); overflow-y: auto; overflow-x: hidden;
     padding: 4px; scrollbar-width: thin; scrollbar-color: rgba(245,227,168,.4) transparent; cursor: default; }
   .lbg__sidebar::-webkit-scrollbar { width: 6px; } .lbg__sidebar::-webkit-scrollbar-thumb { background: rgba(245,227,168,.35); border-radius: 3px; }
@@ -692,10 +695,22 @@
   .lbg__thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
   .lbg__thumb:hover { opacity: 1; border-color: rgba(245,227,168,.5); }
   .lbg__thumb.is-active { opacity: 1; border-color: var(--highlighter); box-shadow: 0 0 0 1px var(--highlighter); }
-  .lbg__close { position: absolute; top: var(--sp-4); right: var(--sp-5); width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center;
-    border-radius: 50%; background: rgba(241,236,224,.12); border: 1px solid rgba(241,236,224,.3); color: var(--paper); font-size: 1.5rem; line-height: 1; cursor: pointer; z-index: 3; user-select: none;
-    transition: background var(--dur-fast), transform var(--dur-fast); }
-  .lbg__close:hover { background: var(--oxblood); transform: rotate(90deg); }
+  /* Barra de ferramentas (zoom · tela cheia · compartilhar · fechar) — paridade
+     com o sistema antigo, recolorida p/ o tema livro */
+  .lbg__toolbar { position: absolute; top: var(--sp-4); right: var(--sp-5); display: flex; gap: 8px; z-index: 5; }
+  .lbg__tool { width: 40px; height: 40px; padding: 0; display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 11px; background: rgba(241,236,224,.12); border: 1px solid rgba(241,236,224,.3); backdrop-filter: blur(6px);
+    color: var(--paper); cursor: pointer; user-select: none; transition: background var(--dur-fast), border-color var(--dur-fast), transform var(--dur-fast), opacity var(--dur-fast); }
+  .lbg__tool svg { width: 20px; height: 20px; }
+  .lbg__tool:hover { background: var(--oxblood); border-color: var(--oxblood); transform: translateY(-1px); }
+  .lbg__tool--close:hover { background: var(--paper); border-color: var(--paper); color: var(--ink); transform: translateY(-1px); }
+  .lbg__tool.is-disabled { opacity: .32; pointer-events: none; }
+  /* Aviso efêmero do "compartilhar" (link copiado) */
+  .lbg__toast { position: absolute; left: 50%; bottom: var(--sp-6); transform: translate(-50%, 8px);
+    background: var(--ink); color: var(--paper); border: 1px solid var(--highlighter); border-radius: var(--radius-pill);
+    font-family: var(--mono); font-size: 12px; letter-spacing: .03em; padding: 7px 16px; white-space: nowrap;
+    opacity: 0; pointer-events: none; z-index: 6; transition: opacity var(--dur-base), transform var(--dur-base); }
+  .lbg__toast.is-on { opacity: 1; transform: translate(-50%, 0); }
   .lbg__viewer.is-swapping img { animation: lbg-swap .25s ease; }
   @keyframes lbg-fade { from { opacity: 0; } to { opacity: 1; } }
   @keyframes lbg-zoom { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: scale(1); } }
@@ -1338,16 +1353,16 @@
               <article class="lh-card" id="lhLiveCard" data-chart="area" data-metrics="min" style="--card-c: var(--pri-green);">
                 <div class="lh-card__head">
                   <div class="lh-card__corridor">
-                    <span class="glyph" aria-hidden="true"><img src="../images/lighthouse/explore.png" alt="" /></span>
+                    <span class="glyph" aria-hidden="true"><img src="../images/lighthouse/explore.webp" alt="" /></span>
                     <b>CORREDOR NORTE</b>
                   </div>
                   <div class="lh-card__icons">
                     <button type="button" class="lh-ic" id="lhChartBtn" title="Alternar gráfico (área / barras)" aria-label="Alternar tipo de gráfico">
-                      <img class="ic-area" src="../images/lighthouse/ic-line.png" alt="" />
-                      <img class="ic-bars" src="../images/lighthouse/ic-bars.png" alt="" />
+                      <img class="ic-area" src="../images/lighthouse/ic-line.webp" alt="" />
+                      <img class="ic-bars" src="../images/lighthouse/ic-bars.webp" alt="" />
                     </button>
                     <button type="button" class="lh-ic" id="lhExpandBtn" title="Expandir indicadores" aria-label="Expandir indicadores" aria-pressed="false">
-                      <img src="../images/lighthouse/ic-image.png" alt="" />
+                      <img src="../images/lighthouse/ic-image.webp" alt="" />
                     </button>
                     <button type="button" class="lh-ic" id="lhBookmarkBtn" title="Salvar card" aria-label="Salvar card" aria-pressed="false">
                       <svg class="bm-off" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h12v18l-6-4.2L6 21z"/></svg>
@@ -1696,6 +1711,35 @@
     </div>
   </section>
 
+  <!-- ============================================================
+       XII. GALERIA (PRANCHAS ADICIONAIS — MVP & MOCKUP)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">XII.</span>
+        <span class="name">Galeria</span>
+        <span class="gloss"><span class="t" lang="pt">Pranchas adicionais</span><span class="t" lang="en">Additional plates</span></span>
+      </header>
+
+      <p class="results-intro reveal">
+        <span class="t" lang="pt">Materiais complementares que não pertencem ao fluxo principal, mas ampliam a leitura do processo: o recorte do <span class="em">escopo do MVP</span> — o que entrou e o que ficou de fora — e o <span class="em">mockup de apresentação</span> do aplicativo. Toque para examinar ampliado; o índice à esquerda navega entre as pranchas.</span>
+        <span class="t" lang="en">Complementary materials that sit outside the main flow but broaden the read of the process: the <span class="em">MVP scope</span> cut — what made it in and what stayed out — and the app's <span class="em">presentation mockup</span>. Tap to examine enlarged; the index on the left moves between plates.</span>
+      </p>
+
+      <div class="sl-gallery reveal">
+        <a class="lh-plate lightboxgallery-link" href="../images/lighthouse/gallery/mvp-screens.webp" aria-label="Definição de escopo do MVP — sete telas marcadas com o que entrou e o que ficou de fora">
+          <img src="../images/lighthouse/gallery/mvp-screens.webp" alt="Lighthouse — definição de escopo do MVP, telas marcadas NOT MVP" loading="lazy" />
+          <span class="lh-plate__cap"><span class="t" lang="pt">Escopo do MVP — o corte do que entra e do que fica de fora</span><span class="t" lang="en">MVP scope — the cut of what's in and what's out</span></span>
+        </a>
+        <a class="lh-plate lightboxgallery-link" href="../images/lighthouse/gallery/mockup-trio.webp" aria-label="Mockup de apresentação do aplicativo — login, feed principal e detalhamento em três aparelhos">
+          <img src="../images/lighthouse/gallery/mockup-trio.webp" alt="Lighthouse — mockup de apresentação em três aparelhos: login, feed e detalhamento" loading="lazy" />
+          <span class="lh-plate__cap"><span class="t" lang="pt">Mockup de apresentação — login, feed &amp; detalhamento</span><span class="t" lang="en">Presentation mockup — login, feed &amp; detail</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
     </div><!-- /.lh-dossier__spine -->
   </div><!-- /.lh-dossier -->
 
@@ -1778,9 +1822,26 @@
   }
   function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 
+  // Ícones SVG (traço) — sempre opticamente centrados no botão, ao contrário dos
+  // glifos de texto (‹ › ×), cujas métricas de fonte os deixavam tortos no círculo.
+  var SVG = {
+    prev: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 4 7 12l8 8"/></svg>',
+    next: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 4l8 8-8 8"/></svg>',
+    close: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 5l14 14M19 5 5 19"/></svg>',
+    zoomIn: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M21 21l-5.4-5.4M10.5 7.5v6M7.5 10.5h6"/></svg>',
+    zoomOut: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M21 21l-5.4-5.4M7.5 10.5h6"/></svg>',
+    fsEnter: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 4H4v4M16 4h4v4M20 16v4h-4M8 20H4v-4"/></svg>',
+    fsExit: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 8h4V4M20 8h-4V4M16 20v-4h4M8 20v-4H4"/></svg>',
+    share: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 13.3l7.4 4.4M15.7 6.3l-7.4 4.4"/></svg>'
+  };
+
   function open(gallery, clicked) {
     var data = collect(gallery, clicked);
     var items = data.items; if (!items.length) return;
+    var lang = document.body.getAttribute('data-lang') || 'pt';
+    var T = lang === 'en'
+      ? { zoomIn: 'Zoom in', zoomOut: 'Zoom out', fsEnter: 'Fullscreen', fsExit: 'Exit fullscreen', share: 'Share', close: 'Close (Esc)', copied: 'Link copied' }
+      : { zoomIn: 'Ampliar', zoomOut: 'Reduzir', fsEnter: 'Tela cheia', fsExit: 'Sair da tela cheia', share: 'Compartilhar', close: 'Fechar (Esc)', copied: 'Link copiado' };
     var current = data.startIndex;
     var overlay = document.createElement('div');
     overlay.className = 'lbg-overlay';
@@ -1788,18 +1849,25 @@
     var sidebar = multi ? '<div class="lbg__sidebar">' + items.map(function (it, i) {
       return '<button class="lbg__thumb' + (i === current ? ' is-active' : '') + '" data-index="' + i + '" type="button"><img src="' + esc(it.thumb) + '" alt=""></button>';
     }).join('') + '</div>' : '';
+    var toolbar =
+      '<div class="lbg__toolbar">' +
+        '<button class="lbg__tool lbg__tool--zoom" data-action="zoom" type="button" aria-label="' + T.zoomIn + '" title="' + T.zoomIn + '">' + SVG.zoomIn + '</button>' +
+        '<button class="lbg__tool lbg__tool--fs" data-action="fullscreen" type="button" aria-label="' + T.fsEnter + '" title="' + T.fsEnter + '">' + SVG.fsEnter + '</button>' +
+        '<button class="lbg__tool lbg__tool--share" data-action="share" type="button" aria-label="' + T.share + '" title="' + T.share + '">' + SVG.share + '</button>' +
+        '<button class="lbg__tool lbg__tool--close" data-action="close" type="button" aria-label="' + T.close + '" title="' + T.close + '">' + SVG.close + '</button>' +
+      '</div>';
     overlay.innerHTML =
-      '<button class="lbg__close" data-action="close" aria-label="Close">&times;</button>' +
+      toolbar +
       sidebar +
       '<div class="lbg__stage">' +
-        (multi ? '<button class="lbg__nav lbg__nav--prev" data-action="prev" aria-label="Previous">&#8249;</button>' : '') +
+        (multi ? '<button class="lbg__nav lbg__nav--prev" data-action="prev" aria-label="Previous">' + SVG.prev + '</button>' : '') +
         '<div class="lbg__viewer">' +
           '<img src="' + esc(items[current].href) + '" alt="">' +
           '<div class="lbg__caption"><span class="lbg__caption__text">' + esc(items[current].caption) + '</span>' +
           (multi ? '<span class="lbg__counter">' + (current + 1) + ' / ' + items.length + '</span>' : '') +
           '<span class="lbg__zoomhint" aria-hidden="true">&#8853; 100%</span></div>' +
         '</div>' +
-        (multi ? '<button class="lbg__nav lbg__nav--next" data-action="next" aria-label="Next">&#8250;</button>' : '') +
+        (multi ? '<button class="lbg__nav lbg__nav--next" data-action="next" aria-label="Next">' + SVG.next + '</button>' : '') +
       '</div>';
     document.body.appendChild(overlay);
     document.body.style.overflow = 'hidden';
@@ -1812,37 +1880,96 @@
     var cntEl = overlay.querySelector('.lbg__counter');
     var thumbs = Array.prototype.slice.call(overlay.querySelectorAll('.lbg__thumb'));
 
+    var zoomBtn = overlay.querySelector('.lbg__tool--zoom');
+    var fsBtn = overlay.querySelector('.lbg__tool--fs');
+
     // ----- Zoom 1:1 (revela a resolução nativa das pranchas grandes) -----
     var zoomFactor = 1;
+    function updateZoomBtn() {
+      if (!zoomBtn) return;
+      var zoomed = viewer.classList.contains('is-zoomed');
+      var able = viewer.classList.contains('is-zoomable');
+      zoomBtn.classList.toggle('is-disabled', !able && !zoomed);
+      zoomBtn.innerHTML = zoomed ? SVG.zoomOut : SVG.zoomIn;
+      zoomBtn.setAttribute('aria-label', zoomed ? T.zoomOut : T.zoomIn);
+      zoomBtn.title = zoomed ? T.zoomOut : T.zoomIn;
+    }
     function updateZoomable() {
       if (!imgEl.naturalWidth) return;
       var fit = imgEl.offsetWidth || imgEl.getBoundingClientRect().width; // largura de layout (ignora a transform do swap)
       zoomFactor = imgEl.naturalWidth / Math.max(1, fit);
       viewer.classList.toggle('is-zoomable', zoomFactor > 1.15);
+      updateZoomBtn();
     }
-    function panTo(e) {
-      var r = viewer.getBoundingClientRect();
-      var fx = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
-      var fy = Math.min(1, Math.max(0, (e.clientY - r.top) / r.height));
+    function panToFraction(fx, fy) {
       viewer.scrollLeft = fx * (viewer.scrollWidth - viewer.clientWidth);
       viewer.scrollTop = fy * (viewer.scrollHeight - viewer.clientHeight);
     }
-    function enterZoom(e) { imgEl.style.width = imgEl.naturalWidth + 'px'; imgEl.style.height = 'auto'; viewer.classList.add('is-zoomed'); panTo(e); }
-    function exitZoom() { viewer.classList.remove('is-zoomed'); imgEl.style.width = ''; imgEl.style.height = ''; }
+    function panTo(e) {
+      var r = viewer.getBoundingClientRect();
+      panToFraction(Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)),
+                    Math.min(1, Math.max(0, (e.clientY - r.top) / r.height)));
+    }
+    function enterZoom(fx, fy) {
+      imgEl.style.width = imgEl.naturalWidth + 'px'; imgEl.style.height = 'auto';
+      viewer.classList.add('is-zoomed');
+      panToFraction(fx == null ? 0.5 : fx, fy == null ? 0.5 : fy);
+      updateZoomBtn();
+    }
+    function exitZoom() { viewer.classList.remove('is-zoomed'); imgEl.style.width = ''; imgEl.style.height = ''; updateZoomBtn(); }
+    function toggleZoom() {
+      if (viewer.classList.contains('is-zoomed')) exitZoom();
+      else if (viewer.classList.contains('is-zoomable')) enterZoom(0.5, 0.5);
+    }
     imgEl.addEventListener('click', function (e) {
       if (viewer.classList.contains('is-zoomed')) { e.stopPropagation(); exitZoom(); return; }
-      if (viewer.classList.contains('is-zoomable')) { e.stopPropagation(); enterZoom(e); }
+      if (viewer.classList.contains('is-zoomable')) {
+        e.stopPropagation();
+        var r = viewer.getBoundingClientRect();
+        enterZoom(Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)),
+                  Math.min(1, Math.max(0, (e.clientY - r.top) / r.height)));
+      }
     });
     viewer.addEventListener('mousemove', function (e) { if (viewer.classList.contains('is-zoomed')) panTo(e); });
     imgEl.addEventListener('load', updateZoomable);
     if (imgEl.complete && imgEl.naturalWidth) updateZoomable();
+
+    // ----- Tela cheia (fullscreen nativo do overlay) -----
+    function isFs() { return document.fullscreenElement === overlay; }
+    function updateFsBtn() {
+      if (!fsBtn) return;
+      var on = isFs();
+      fsBtn.innerHTML = on ? SVG.fsExit : SVG.fsEnter;
+      fsBtn.setAttribute('aria-label', on ? T.fsExit : T.fsEnter);
+      fsBtn.title = on ? T.fsExit : T.fsEnter;
+    }
+    function toggleFs() {
+      if (isFs()) { if (document.exitFullscreen) document.exitFullscreen(); }
+      else if (overlay.requestFullscreen) overlay.requestFullscreen().catch(function () {});
+    }
+    document.addEventListener('fullscreenchange', updateFsBtn);
+
+    // ----- Compartilhar (Web Share API, com fallback p/ copiar o link) -----
+    function toast(msg) {
+      var t = overlay.querySelector('.lbg__toast');
+      if (!t) { t = document.createElement('div'); t.className = 'lbg__toast'; overlay.appendChild(t); }
+      t.textContent = msg; t.classList.add('is-on');
+      clearTimeout(t._t); t._t = setTimeout(function () { t.classList.remove('is-on'); }, 1900);
+    }
+    function share() {
+      var url; try { url = new URL(items[current].href, location.href).href; } catch (e) { url = items[current].href; }
+      var title = items[current].caption || document.title;
+      if (navigator.share) { navigator.share({ title: title, url: url }).catch(function () {}); }
+      else if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(url).then(function () { toast(T.copied); }).catch(function () { toast(url); }); }
+      else { toast(url); }
+    }
 
     function goTo(i) {
       var n = ((i % items.length) + items.length) % items.length;
       if (n === current) return;
       current = n;
       exitZoom();
-      viewer.classList.remove('is-zoomable');
+      viewer.classList.remove('is-zoomable'); updateZoomBtn();
       viewer.classList.remove('is-swapping'); void viewer.offsetWidth;
       imgEl.src = items[current].href;
       applyArtR(current);
@@ -1853,21 +1980,35 @@
       if (thumbs[current] && thumbs[current].scrollIntoView) thumbs[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
     }
     function close() {
+      if (isFs() && document.exitFullscreen) document.exitFullscreen().catch(function () {});
+      document.removeEventListener('fullscreenchange', updateFsBtn);
       if (overlay.parentNode) document.body.removeChild(overlay);
       document.body.style.overflow = '';
       document.removeEventListener('keydown', onKey);
     }
     function onKey(e) {
-      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      if (e.key === 'Escape') { e.preventDefault(); if (isFs()) { document.exitFullscreen(); } else close(); }
       else if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); }
       else if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(current - 1); }
+      else if (e.key === 'f' || e.key === 'F') { e.preventDefault(); toggleFs(); }
+      else if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggleZoom(); }
     }
     overlay.addEventListener('click', function (e) {
       var action = e.target.closest('[data-action]');
-      if (action) { e.stopPropagation(); var a = action.getAttribute('data-action'); if (a === 'prev') goTo(current - 1); else if (a === 'next') goTo(current + 1); else close(); return; }
+      if (action) {
+        e.stopPropagation();
+        var a = action.getAttribute('data-action');
+        if (a === 'prev') goTo(current - 1);
+        else if (a === 'next') goTo(current + 1);
+        else if (a === 'zoom') toggleZoom();
+        else if (a === 'fullscreen') toggleFs();
+        else if (a === 'share') share();
+        else close();
+        return;
+      }
       var thumb = e.target.closest('.lbg__thumb');
       if (thumb) { e.stopPropagation(); goTo(parseInt(thumb.dataset.index, 10)); return; }
-      if (e.target.closest('.lbg__viewer, .lbg__sidebar, .lbg__caption, .lbg__nav, .lbg__close')) return;
+      if (e.target.closest('.lbg__viewer, .lbg__sidebar, .lbg__caption, .lbg__nav, .lbg__toolbar')) return;
       close();
     });
     var sx = 0, sy = 0, ta = false;

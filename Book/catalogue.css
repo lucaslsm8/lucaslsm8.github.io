@@ -835,7 +835,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   margin: 0 auto;
   padding: 0 64px;
   display: grid;
-  grid-template-columns: 200px 1fr 1fr;
+  grid-template-columns: 200px 1.15fr 1fr;
   gap: 48px;
   align-items: start;
 }
@@ -869,7 +869,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   margin: 0 auto;
   padding: 0 64px;
   display: grid;
-  grid-template-columns: 200px 1fr 1fr;
+  grid-template-columns: 200px 1.15fr 1fr;
   gap: 48px;
   align-items: start;
 }
@@ -918,7 +918,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 
 .plate-image {
   position: relative;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 608 / 964;
   background: var(--ink);
   overflow: hidden;
   border: 1px solid var(--ink);
@@ -963,7 +963,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .plate-quadro-link {
   display: block;
   position: relative;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 608 / 964;
   text-decoration: none;
   color: inherit;
 }
