@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dashboards PMO — Samarco · Lucas Schoenherr</title>
+<meta name="description" content="Estudo de caso da cabine de comando executiva do PMO Estratégico da Samarco: a Mandala Estratégica e +60 componentes de data-viz que substituíram 20+ planilhas, por Lucas Schoenherr." />
+<!-- Open Graph / social -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Dashboards PMO · Samarco — Lucas Schoenherr" />
+<meta property="og:description" content="Cabine de comando executiva do PMO Estratégico: a Mandala como única fonte da verdade, unificando Finanças, Riscos, Sustentabilidade e Operações." />
+<meta property="og:locale" content="pt_BR" />
+<meta property="og:url" content="https://lucaslsm8.github.io/Book/projects/pmo-dashboards.html" />
+<meta property="og:image" content="https://lucaslsm8.github.io/Book/images/samarco/capa.webp" />
+<meta property="og:image:alt" content="Cabine de comando executiva do PMO Estratégico da Samarco" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Dashboards PMO · Samarco — Lucas Schoenherr" />
+<meta name="twitter:description" content="Cabine de comando executiva do PMO Estratégico da Samarco: a Mandala como única fonte da verdade." />
+<meta name="twitter:image" content="https://lucaslsm8.github.io/Book/images/samarco/capa.webp" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<!-- Design tokens e estilos da home + específicos do case -->
+<link rel="stylesheet" href="../design-system/tokens.css" />
+<link rel="stylesheet" href="../catalogue.css" />
+<link rel="stylesheet" href="../design-system/case-template.css" />
+
+<!-- ============================================================
+     Estilos exclusivos da prancha "Dashboards PMO · Samarco".
+     Escritos sobre os tokens editoriais (paper / ink / oxblood /
+     cobalt / gilt). Componentes próprios desta prancha: a cabine de
+     comando (pmo-plate), a faixa de indicadores-chave (pmo-kpis), a
+     leitura dos 6 eixos da Mandala (pmo-axes) e a galeria de
+     indicadores reais agrupada por eixo (pmo-grid · pmo-shot).
+     ============================================================ -->
+<style>
+  .case-colophon + .folio-nav { margin-top: 0; }
+  .argument .spread .margin-r { text-align: left; }
+  .argument .spread .margin-l:empty { border: 0; margin: 0; padding: 0; }
+  @media (min-width: 1025px) {
+    .argument .spread > .section-head {
+      grid-column: 1 / -1;
+      margin-left: calc(140px + 48px);
+      margin-right: calc(140px + 48px);
+    }
+  }
+
+  /* ---------- Cabine de comando: prancha escura em moldura (tipped-in) ---------- */
+  .pmo-plate {
+    display: block; position: relative; cursor: zoom-in;
+    padding: 12px; margin-top: var(--sp-5);
+    background: #0e1726; border: 1px solid var(--oxblood); border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-soft);
+    transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+  }
+  .pmo-plate:hover { transform: translateY(-3px); box-shadow: var(--shadow-lens); }
+  .pmo-plate img { width: 100%; height: auto; display: block; border-radius: 3px; }
+  .pmo-plate__cap {
+    display: flex; align-items: center; gap: 9px; margin-top: 10px; padding: 0 2px;
+    color: var(--ink-soft); font-family: var(--mono); font-size: 11px; letter-spacing: .04em;
+  }
+  .pmo-plate__cap::before { content: '✦'; color: var(--oxblood); font-size: 13px; line-height: 1; }
+  body.candle .pmo-plate { box-shadow: 0 18px 40px rgba(0,0,0,.5); }
+
+  /* ---------- Faixa de indicadores-chave (eco da cabine) ---------- */
+  .pmo-kpis {
+    list-style: none; margin: var(--sp-6) 0 0; padding: 0;
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    border-top: 1px solid var(--hairline-strong);
+  }
+  .pmo-kpi { padding: var(--sp-4) var(--sp-4) var(--sp-4) 0; border-bottom: 1px solid var(--hairline); }
+  .pmo-kpi + .pmo-kpi { padding-left: var(--sp-4); border-left: 1px solid var(--hairline); }
+  .pmo-kpi__lab {
+    display: block; font-family: var(--mono); font-size: 10px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--ink-faint); margin-bottom: 8px;
+  }
+  .pmo-kpi__val {
+    display: block; font-family: var(--serif-display); font-size: clamp(28px, 4vw, 42px);
+    line-height: 1; color: var(--ink);
+  }
+  .pmo-kpi__note {
+    display: block; margin-top: 8px; font-family: var(--serif); font-style: italic;
+    font-size: var(--fs-meta); line-height: var(--lh-snug);
+  }
+  .pmo-kpi__note.ok   { color: #1f7a4d; }
+  .pmo-kpi__note.warn { color: #b07d12; }
+  .pmo-kpi__note.crit { color: var(--oxblood); }
+  body.candle .pmo-kpi__note.ok { color: #6fd49a; }
+  @media (max-width: 900px) { .pmo-kpis { grid-template-columns: repeat(2, 1fr); } .pmo-kpi:nth-child(odd){ border-left: none; padding-left: 0; } .pmo-kpi:nth-child(even){ border-left: 1px solid var(--hairline); padding-left: var(--sp-4); } }
+  @media (max-width: 520px) { .pmo-kpis { grid-template-columns: 1fr; } .pmo-kpi, .pmo-kpi + .pmo-kpi { border-left: none; padding-left: 0; } }
+
+  /* ---------- A Mandala: hub dos 6 pilares (reprodução fiel, paleta real) ---------- */
+  .pmo-mandala {
+    margin-top: var(--sp-5); display: grid; grid-template-columns: minmax(0, 1.1fr) 1fr;
+    gap: var(--sp-6); align-items: center;
+  }
+  .pmo-mandala__wheel {
+    position: relative; width: 100%; max-width: 480px; margin: 0 auto; aspect-ratio: 1 / 1;
+    background: rgb(0,65,112); border: 1px solid var(--oxblood); border-radius: 16px;
+    box-shadow: var(--shadow-soft);
+  }
+  body.candle .pmo-mandala__wheel { box-shadow: 0 18px 40px rgba(0,0,0,.5); }
+  .pmo-mandala__ring {
+    position: absolute; left: 50%; top: 50%; width: 64%; height: 64%;
+    transform: translate(-50%, -50%); border-radius: 50%;
+    border: 5px solid rgb(149,193,31); box-shadow: 0 0 24px rgba(91,197,242,.18) inset;
+  }
+  .pmo-mandala__center {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: 21%; height: 21%; border-radius: 50%; background: #fff;
+    display: flex; align-items: center; justify-content: center; color: rgb(0,65,112);
+    box-shadow: 0 4px 14px rgba(0,0,0,.3);
+  }
+  .pmo-mandala__swirl { width: 62%; height: 62%; }
+  .pmo-mandala__node {
+    position: absolute; transform: translate(-50%, -50%);
+    width: 19%; height: 19%; display: flex; align-items: center; justify-content: center;
+  }
+  .pmo-mandala__disc {
+    position: relative; width: 100%; height: 100%; border-radius: 50%; background: #fff;
+    border: 2.5px solid rgb(149,193,31); color: rgb(91,197,242);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,.28);
+  }
+  .pmo-mandala__ico { width: 58%; height: 58%; }
+  .pmo-mandala__num {
+    position: absolute; right: -4px; bottom: -4px; width: 18px; height: 18px; border-radius: 50%;
+    background: rgb(0,65,112); color: #fff; border: 1px solid rgb(149,193,31);
+    font-family: var(--mono); font-size: 10px; line-height: 16px; text-align: center; font-weight: 600;
+  }
+  .pmo-mandala__legend { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--hairline-strong); }
+  .pmo-mandala__leg {
+    display: flex; align-items: baseline; gap: var(--sp-3);
+    padding: var(--sp-3) 0; border-bottom: 1px solid var(--hairline);
+  }
+  .pmo-mandala__leg-n {
+    flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+    background: rgb(149,193,31); color: #fff; align-self: center;
+    font-family: var(--mono); font-size: 12px; font-weight: 600; line-height: 26px; text-align: center;
+  }
+  .pmo-mandala__leg-name { font-family: var(--serif); font-size: var(--fs-h4); line-height: var(--lh-snug); color: var(--ink); }
+  @media (max-width: 820px) { .pmo-mandala { grid-template-columns: 1fr; } }
+
+  /* ---------- Galeria de indicadores reais, agrupada por eixo ---------- */
+  .pmo-group-head {
+    display: flex; align-items: baseline; gap: var(--sp-3); margin-top: var(--sp-7);
+    padding-bottom: 10px; border-bottom: 1px solid var(--hairline);
+  }
+  .pmo-group-head__roman { font-family: var(--serif-display); font-style: italic; font-size: var(--fs-h3); color: var(--oxblood); }
+  .pmo-group-head__name { font-family: var(--serif); font-size: var(--fs-h4); color: var(--ink); }
+  .pmo-group-head__gloss { margin-left: auto; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint); }
+  .pmo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-5); margin-top: var(--sp-5); }
+  .pmo-shot { margin: 0; }
+  .pmo-shot--wide { grid-column: 1 / -1; }
+  .pmo-shot a {
+    display: block; padding: 10px; cursor: zoom-in; text-decoration: none;
+    background: #fff; border: 1px solid var(--hairline-strong); border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-soft);
+    transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+  }
+  .pmo-shot a:hover { transform: translateY(-3px); box-shadow: var(--shadow-lens); }
+  .pmo-shot img { width: 100%; height: auto; display: block; border-radius: 2px; }
+  .pmo-shot figcaption {
+    margin-top: 10px; padding: 0 2px; color: var(--ink-soft);
+    font-family: var(--serif); font-size: 14px; line-height: var(--lh-snug);
+  }
+  .pmo-shot figcaption b { font-family: var(--serif-display); font-style: italic; font-weight: 400; color: var(--ink); }
+  body.candle .pmo-shot a { background: #f4efe4; }
+  @media (max-width: 760px) { .pmo-grid { grid-template-columns: 1fr; } .pmo-shot--wide { grid-column: auto; } }
+
+  /* ---------- Nota editorial antes da galeria ---------- */
+  .pmo-lead { margin-top: var(--sp-4); }
+  .pmo-lead p { font-family: var(--serif); font-size: 17px; line-height: var(--lh-loose); color: var(--ink-soft); }
+  .pmo-lead p + p { margin-top: var(--sp-3); }
+  .pmo-lead .em { color: var(--ink); font-weight: 600; }
+</style>
+</head>
+<body data-lang="pt">
+<!-- Granulação tátil de papel envelhecido -->
+<div class="paper-grain" aria-hidden="true"></div>
+
+<!-- ============================================================
+     CHROME SUPERIOR (CABEÇALHO FIXO)
+     ============================================================ -->
+<header class="chrome-top">
+  <div class="running-head">
+    <div class="scroll-compass-wrapper" aria-hidden="true" title="Bússola de Progresso">
+      <svg class="scroll-compass" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="45" stroke="var(--ink-ghost)" stroke-width="1.5" fill="none" stroke-dasharray="4 4" />
+        <circle cx="50" cy="50" r="30" stroke="var(--hairline-strong)" stroke-width="1" fill="none" />
+        <line x1="50" y1="10" x2="50" y2="90" stroke="var(--ink-soft)" stroke-width="1" />
+        <line x1="10" y1="50" x2="90" y2="50" stroke="var(--ink-soft)" stroke-width="1" />
+        <polygon points="50,20 54,50 50,55 46,50" fill="var(--oxblood)" />
+        <polygon points="50,80 54,50 50,45 46,50" fill="var(--ink-soft)" />
+        <circle cx="50" cy="50" r="4" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5" />
+      </svg>
+    </div>
+    <a href="../index.html" class="running-head-home"><span>Lucas Schoenherr</span></a>
+    <span class="sep">·</span>
+    <em><span class="t" lang="pt">Catálogo de Obras</span><span class="t" lang="en">A Catalogue of Works</span></em>
+    <span class="sep">·</span>
+    <span><span class="t" lang="pt">Prancha II — Dashboards PMO</span><span class="t" lang="en">Plate II — PMO Dashboards</span></span>
+  </div>
+  <nav class="chrome-actions">
+    <a href="../index.html" class="to-catalogue">
+      <em><span class="t" lang="pt">Voltar ao catálogo</span><span class="t" lang="en">Return to catalogue</span></em>
+    </a>
+    <button class="candle-toggle" type="button" aria-pressed="false" title="Modo vela" aria-label="Modo vela">
+      <svg class="candle-icon candle-icon--off" width="22" height="18" viewBox="0 0 24 22" fill="none" aria-hidden="true">
+        <path d="M9 4.6 C 9.6 5.3, 10 5.9, 9 6.6" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" />
+        <rect x="7.2" y="6.6" width="3.6" height="6.4" fill="currentColor" />
+        <path d="M5.6 13 H12.4 L11.2 14.6 H6.8 Z" fill="currentColor" />
+        <rect x="7.4" y="14.6" width="3.2" height="1.6" fill="currentColor" />
+        <ellipse cx="9" cy="17.8" rx="8" ry="1.7" fill="currentColor" />
+        <ellipse cx="9" cy="16.8" rx="6.8" ry="0.7" fill="none" stroke="var(--paper)" stroke-width="0.5" opacity="0.55" />
+        <path d="M16.4 17.4 C 21.4 17.6, 22.8 13.4, 18.6 12.6 C 16.6 12.4, 16.6 14.4, 18.2 14.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <svg class="candle-icon candle-icon--on" width="22" height="18" viewBox="0 0 24 22" fill="none" aria-hidden="true">
+        <path d="M9 0.5 C 7.6 2.2, 7 3.7, 9 5.2 C 11 3.7, 10.4 2.2, 9 0.5 Z" fill="currentColor" opacity="0.9" />
+        <line x1="9" y1="5.2" x2="9" y2="6.6" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" />
+        <rect x="7.2" y="6.6" width="3.6" height="6.4" fill="currentColor" />
+        <path d="M5.6 13 H12.4 L11.2 14.6 H6.8 Z" fill="currentColor" />
+        <rect x="7.4" y="14.6" width="3.2" height="1.6" fill="currentColor" />
+        <ellipse cx="9" cy="17.8" rx="8" ry="1.7" fill="currentColor" />
+        <ellipse cx="9" cy="16.8" rx="6.8" ry="0.7" fill="none" stroke="var(--paper)" stroke-width="0.5" opacity="0.55" />
+        <path d="M16.4 17.4 C 21.4 17.6, 22.8 13.4, 18.6 12.6 C 16.6 12.4, 16.6 14.4, 18.2 14.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+    <div class="lang-toggle" role="group" aria-label="Language / Idioma">
+      <button class="active" type="button" data-lang="pt" aria-pressed="true">PT</button>
+      <span class="pipe">|</span>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </nav>
+</header>
+
+<main class="book">
+
+  <!-- ============================================================
+       0. FOLHA DE ROSTO (FRONTISPÍCIO)
+       ============================================================ -->
+  <section class="case-frontispiece case-frontispiece--cinematic" data-folio>
+    <div class="frontispiece-halo" aria-hidden="true"></div>
+    <div class="sig">
+      <span class="t" lang="pt">Volume I · Prancha II · MMXXV</span>
+      <span class="t" lang="en">Volume I · Plate II · MMXXV</span>
+    </div>
+
+    <div class="case-num">№ 002</div>
+
+    <h1 class="case-title">
+      <span class="it">Dashboards</span> <span class="reg">PMO</span>
+    </h1>
+
+    <div class="case-rule" aria-hidden="true"></div>
+
+    <p class="case-deck">
+      <span class="t" lang="pt"><span class="em">A cabine de comando do PMO Estratégico da Samarco</span> — com a Mandala Estratégica no coração: uma única fonte da verdade que conecta os seis eixos da companhia e faz o anormal gritar sem sobrecarregar.</span>
+      <span class="t" lang="en"><span class="em">Samarco's Strategic PMO command center</span> — with the Strategic Mandala at its heart: a single source of truth connecting the company's six axes, where the abnormal screams without overwhelming.</span>
+    </p>
+
+    <dl class="case-byline case-byline--inline">
+      <div>
+        <span class="lab"><span class="t" lang="pt">Comissão</span><span class="t" lang="en">Commission</span></span>
+        <span class="val">Samarco · PMO Estratégico</span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Papel</span><span class="t" lang="en">Role</span></span>
+        <span class="val">Senior Product Designer · End-to-end</span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Período</span><span class="t" lang="en">Period</span></span>
+        <span class="val">MMXXV (~4 <span class="t" lang="pt">meses</span><span class="t" lang="en">months</span>)</span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Escopo</span><span class="t" lang="en">Scope</span></span>
+        <span class="val">Data-viz · Design System · Executive UX</span>
+      </div>
+    </dl>
+
+    <div class="frontispiece-indicator">
+      <span class="t" lang="pt">Gire a folha para iniciar a leitura</span>
+      <span class="t" lang="en">Scroll down to turn the leaf</span>
+      <span class="arrow">↓</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       I. ARGUMENTO & CONTEXTO
+       ============================================================ -->
+  <section class="page case-section argument" data-folio>
+    <div class="spread">
+      <aside class="margin-l">
+        <p class="gloss" data-anchor="arg-p1">
+          <span class="gloss-num">i</span>
+          <span class="t" lang="pt">Mais de vinte planilhas, reconciliadas à mão, competiam pela versão correta de um mesmo número.</span>
+          <span class="t" lang="en">Twenty-plus spreadsheets, reconciled by hand, competed over the correct version of the same number.</span>
+        </p>
+        <p class="gloss" data-anchor="arg-p2">
+          <span class="gloss-num">ii</span>
+          <span class="t" lang="pt">Finanças, Riscos, Sustentabilidade e Operações falavam, cada um, uma língua visual diferente.</span>
+          <span class="t" lang="en">Finance, Risk, Sustainability and Operations each spoke a different visual language.</span>
+        </p>
+      </aside>
+
+      <div class="content">
+        <header class="section-head reveal">
+          <span class="roman">I.</span>
+          <span class="name"><span class="t" lang="pt">Argumento &amp; Contexto</span><span class="t" lang="en">Argument &amp; Context</span></span>
+          <span class="gloss"><span class="t" lang="pt">O cenário</span><span class="t" lang="en">The setting</span></span>
+        </header>
+
+        <div class="preface">
+          <div class="body reveal">
+            <p id="arg-p1">
+              <span class="t" lang="pt">O PMO Estratégico da Samarco precisava governar um portfólio que cruza CAPEX, riscos corporativos, metas ESG e produção — mas a leitura executiva vivia espalhada em mais de vinte planilhas reconciliadas manualmente.<span class="fn" data-fn="1">1</span> Cada diretoria mantinha o seu próprio relatório, com a sua própria paleta, escala e definição de &ldquo;no alvo&rdquo;. O custo não era só o retrabalho: era a hesitação diante de números que não concordavam entre si.</span>
+              <span class="t" lang="en">Samarco's Strategic PMO had to govern a portfolio spanning CAPEX, corporate risk, ESG targets and production — yet the executive read lived scattered across twenty-plus manually reconciled spreadsheets.<span class="fn" data-fn="1">1</span> Each directorate kept its own report, with its own palette, scale and definition of &ldquo;on target.&rdquo; The cost wasn't only the rework: it was the hesitation before numbers that disagreed with one another.</span>
+            </p>
+            <p id="arg-p2">
+              <span class="t" lang="pt">A encomenda foi desenhar a cabine de comando do PMO: uma interface onde o <em>anormal grita sem sobrecarregar</em> — e onde, pela primeira vez, Finanças, Riscos, Sustentabilidade e Operações compartilham a mesma gramática visual. No centro, a <strong>Mandala Estratégica</strong>: a leitura única que conecta os seis eixos da estratégia e funciona como a fonte da verdade de toda a companhia.</span>
+              <span class="t" lang="en">The brief was to design the PMO's command cabin: an interface where the <em>abnormal screams without overwhelming</em> — and where, for the first time, Finance, Risk, Sustainability and Operations share one visual grammar. At the center, the <strong>Strategic Mandala</strong>: the single read that connects the six strategic axes and acts as the whole company's source of truth.</span>
+            </p>
+          </div>
+
+          <ol class="footnotes reveal">
+            <li class="fn-item" data-fn="1">
+              <span class="fn-num">1.</span>
+              <span class="t" lang="pt"><span class="it">Os números deste estudo são ilustrativos e foram tratados sob os parâmetros de confidencialidade acordados — ver Colophão.</span></span>
+              <span class="t" lang="en"><span class="it">Figures in this study are illustrative and handled under the agreed confidentiality terms — see the Colophon.</span></span>
+            </li>
+          </ol>
+        </div>
+      </div>
+      <aside class="margin-r" aria-hidden="true"></aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       II. A CABINE DE COMANDO (HERO PLATE)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">II.</span>
+        <span class="name"><span class="t" lang="pt">A Cabine de Comando</span><span class="t" lang="en">The Command Cabin</span></span>
+        <span class="gloss"><span class="t" lang="pt">Visão de uma tela</span><span class="t" lang="en">One-screen view</span></span>
+      </header>
+
+      <div class="pmo-lead reveal">
+        <p><span class="t" lang="pt">A tela principal de <span class="em">Programas Estratégicos</span> responde à pergunta que o comitê faz toda semana: <span class="em">onde estamos e o que exige decisão?</span> No topo, cinco indicadores-chave; abaixo, o portfólio de CAPEX, o mapa de riscos e os seis eixos da Mandala — lado a lado, na mesma régua.</span>
+           <span class="t" lang="en">The main <span class="em">Programas Estratégicos</span> screen answers the question the committee asks every week: <span class="em">where do we stand, and what needs a decision?</span> Up top, five headline indicators; below, the CAPEX portfolio, the risk map and the six Mandala axes — side by side, on the same ruler.</span></p>
+      </div>
+
+      <a class="pmo-plate reveal lightboxgallery-link" href="../images/samarco/capa.webp" aria-label="Cabine de comando do PMO Estratégico — visão executiva / PMO command cabin — executive overview">
+        <img src="../images/samarco/capa.webp" alt="Cabine de comando do PMO Estratégico da Samarco: indicadores-chave, portfólio de CAPEX, mapa de riscos e eixos da Mandala" loading="lazy" />
+        <span class="pmo-plate__cap"><span class="t" lang="pt">Programas Estratégicos · Maio/2023 · atualizado em 28/06 · cabine executiva</span><span class="t" lang="en">Programas Estratégicos · May/2023 · updated 28/06 · executive cabin</span></span>
+      </a>
+
+      <!-- Navegação real do produto (reprodução fiel) -->
+      <div class="reveal" style="margin-top: var(--sp-5);">
+        <div style="display:flex; flex-wrap:wrap; align-items:center; gap:var(--sp-4); padding-bottom:10px; border-bottom:1px solid var(--hairline-strong);">
+          <span style="font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--oxblood);"><span class="t" lang="pt">Navegação do produto</span><span class="t" lang="en">Product navigation</span></span>
+          <span style="margin-left:auto; font-family:var(--mono); font-size:11px; color:var(--ink-faint);"><span class="t" lang="pt">Período: Maio / 2023 · atualizado em 28/06</span><span class="t" lang="en">Period: May / 2023 · updated 28/06</span></span>
+        </div>
+        <nav style="display:flex; flex-wrap:wrap; gap:var(--sp-5); margin-top:var(--sp-3); font-family:var(--serif); font-size:16px;" aria-label="Programas Estratégicos — abas">
+          <span style="color:var(--ink); font-weight:600; border-bottom:2px solid var(--oxblood); padding-bottom:4px;">Programas Estratégicos</span>
+          <span style="color:var(--ink-soft);">Estratégia</span>
+          <span style="color:var(--ink-soft);">Principais marcos</span>
+          <span style="color:var(--ink-soft);">Status projetos</span>
+          <span style="color:var(--ink-soft);">Riscos</span>
+          <span style="color:var(--ink-soft);">Conformidade</span>
+        </nav>
+      </div>
+
+      <!-- Indicadores-chave (eco da cabine) -->
+      <ul class="pmo-kpis reveal" data-stagger>
+        <li class="pmo-kpi">
+          <span class="pmo-kpi__lab"><span class="t" lang="pt">CAPEX executado</span><span class="t" lang="en">CAPEX executed</span></span>
+          <span class="pmo-kpi__val">R$ 842 M</span>
+          <span class="pmo-kpi__note ok">▲ 6,2% <span class="t" lang="pt">vs. plano</span><span class="t" lang="en">vs. plan</span></span>
+        </li>
+        <li class="pmo-kpi">
+          <span class="pmo-kpi__lab"><span class="t" lang="pt">Projetos em risco</span><span class="t" lang="en">Projects at risk</span></span>
+          <span class="pmo-kpi__val">7 / 34</span>
+          <span class="pmo-kpi__note crit"><span class="t" lang="pt">Crítico · decisão de comitê</span><span class="t" lang="en">Critical · committee call</span></span>
+        </li>
+        <li class="pmo-kpi">
+          <span class="pmo-kpi__lab"><span class="t" lang="pt">OKRs no alvo</span><span class="t" lang="en">OKRs on target</span></span>
+          <span class="pmo-kpi__val">82%</span>
+          <span class="pmo-kpi__note warn"><span class="t" lang="pt">Atenção · meta Q2</span><span class="t" lang="en">Watch · Q2 goal</span></span>
+        </li>
+        <li class="pmo-kpi">
+          <span class="pmo-kpi__lab"><span class="t" lang="pt">Ações ESG no prazo</span><span class="t" lang="en">ESG actions on time</span></span>
+          <span class="pmo-kpi__val">94%</span>
+          <span class="pmo-kpi__note ok">▲ +3pp <span class="t" lang="pt">no trimestre</span><span class="t" lang="en">in quarter</span></span>
+        </li>
+        <li class="pmo-kpi">
+          <span class="pmo-kpi__lab"><span class="t" lang="pt">Indicadores</span><span class="t" lang="en">Indicators</span></span>
+          <span class="pmo-kpi__val">+30</span>
+          <span class="pmo-kpi__note"><span class="t" lang="pt">6 famílias · sync BI</span><span class="t" lang="en">6 families · BI sync</span></span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       III. A MANDALA ESTRATÉGICA (OS 6 EIXOS)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">III.</span>
+        <span class="name"><span class="t" lang="pt">A Mandala Estratégica</span><span class="t" lang="en">The Strategic Mandala</span></span>
+        <span class="gloss"><span class="t" lang="pt">Os seis eixos</span><span class="t" lang="en">The six axes</span></span>
+      </header>
+
+      <div class="pmo-lead reveal">
+        <p><span class="t" lang="pt">A estratégia da Samarco se organiza em <span class="em">seis pilares</span>. A Mandala é o coração do painel: o hub que reúne os seis e abre, com um toque, o conjunto de indicadores de cada um — uma só fonte da verdade para Finanças, Riscos, Sustentabilidade e Operações.</span>
+           <span class="t" lang="en">Samarco's strategy is organized into <span class="em">six pillars</span>. The Mandala is the panel's heart: the hub that gathers all six and opens, with one tap, each pillar's set of indicators — one source of truth for Finance, Risk, Sustainability and Operations.</span></p>
+      </div>
+
+      <div class="pmo-mandala reveal">
+        <div class="pmo-mandala__wheel">
+          <div class="pmo-mandala__ring" aria-hidden="true"></div>
+          <div class="pmo-mandala__center"><svg class="pmo-mandala__swirl" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M 15.936 13 C 15.936 14.621 14.621 15.935 13 15.935 C 11.379 15.935 10.065 14.621 10.065 13 C 10.065 11.379 11.379 10.064 13 10.064 C 14.621 10.064 15.936 11.379 15.936 13 Z M 14.936 13 C 14.936 14.069 14.069 14.935 13 14.935 C 11.931 14.935 11.065 14.069 11.065 13 C 11.065 11.931 11.931 11.064 13 11.064 C 14.069 11.064 14.936 11.931 14.936 13 Z" fill="currentColor" fill-rule="evenodd" transform="matrix(1 0 0 1 3 3)"/><path d="M 13 17.613 C 15.548 17.613 17.613 15.548 17.613 13 C 17.613 10.452 15.548 8.387 13 8.387 C 10.452 8.387 8.387 10.452 8.387 13 C 8.387 15.548 10.452 17.613 13 17.613 Z M 13 16.613 C 14.995 16.613 16.613 14.995 16.613 13 C 16.613 11.005 14.995 9.387 13 9.387 C 11.005 9.387 9.387 11.005 9.387 13 C 9.387 14.995 11.005 16.613 13 16.613 Z" fill="currentColor" fill-rule="evenodd" transform="matrix(1 0 0 1 3 3)"/><path d="M 13 26 C 20.18 26 26 20.18 26 13 C 26 5.82 20.18 0 13 0 C 5.82 0 0 5.82 0 13 C 0 20.18 5.82 26 13 26 Z M 13 25 C 19.627 25 25 19.627 25 13 C 25 6.373 19.627 1 13 1 C 6.373 1 1 6.373 1 13 C 1 19.627 6.373 25 13 25 Z" fill="currentColor" fill-rule="evenodd" transform="matrix(1 0 0 1 3 3)"/><path d="M 12.581 25.987 C 12.388 25.996 12.195 26 12 26 C 11.86 26 11.72 25.998 11.581 25.993 L 11.581 26 L 12.581 26 L 12.581 25.987 Z" fill="currentColor" fill-rule="nonzero" transform="matrix(1 0 0 1 4 3)"/><path d="M 12.581 24.986 C 12.388 24.995 12.195 25 12 25 C 11.86 25 11.72 24.998 11.581 24.993 L 11.581 17.613 L 12.581 17.613 L 12.581 24.986 Z" fill="currentColor" fill-rule="nonzero" transform="matrix(1 0 0 1 4 3)"/><path d="M 20.483 21.488 C 20.247 21.724 20.001 21.95 19.746 22.165 L 14.474 16.894 C 14.759 16.713 15.022 16.501 15.259 16.264 L 20.483 21.488 Z" fill="currentColor" fill-rule="nonzero" transform="matrix(1 0 0 1 4 3)"/><path d="M 23.986 12.419 C 23.995 12.612 24 12.805 24 13 C 24 13.14 23.998 13.28 23.993 13.419 L 16.613 13.419 L 16.613 12.419 L 23.986 12.419 Z" fill="currentColor" fill-rule="nonzero" transform="matrix(1 0 0 1 4 3)"/><path d="M 19.973 4.032 C 20.222 4.253 20.462 4.485 20.692 4.727 L 15.465 9.954 C 15.244 9.703 14.996 9.477 14.726 9.279 L 19.973 4.032 Z" fill="currentColor" fill-rule="nonzero" transform="matrix(1 0 0 1 4 3)"/><path d="M 12.581 1.014 L 12.581 8.387 L 12.035 8.387 C 12.024 8.387 12.012 8.387 12 8.387 C 11.988 8.387 11.976 8.387 11.965 8.387 L 11.581 8.387 L 11.581 1.007 C 11.72 1.002 11.86 1 12 1 C 12.195 1 12.388 1.005 12.581 1.014 Z" fill="currentColor" fill-rule="nonzero" transform="matrix(1 0 0 1 4 3)"/><path d="M 12.581 0.013 C 12.388 0.004 12.195 0 12 0 L 12.581 0 L 12.581 0.013 Z" fill="currentColor" fill-rule="nonzero" transform="matrix(1 0 0 1 4 3)"/><path d="M 2.835 5.254 C 3.05 4.999 3.276 4.753 3.512 4.517 L 8.736 9.741 C 8.499 9.978 8.287 10.241 8.106 10.525 L 2.835 5.254 Z" fill="currentColor" fill-rule="nonzero" transform="matrix(1 0 0 1 4 3)"/><path d="M 0.007 13.419 C 0.002 13.28 0 13.14 0 13 C 0 12.805 0.005 12.612 0.014 12.419 L 7.387 12.419 L 7.387 12.979 C 7.387 12.986 7.387 12.993 7.387 13 C 7.387 13.007 7.387 13.014 7.387 13.021 L 7.387 13.419 L 0.007 13.419 Z" fill="currentColor" fill-rule="nonzero" transform="matrix(1 0 0 1 4 3)"/><path d="M 3.727 21.692 C 3.485 21.462 3.253 21.222 3.032 20.973 L 8.279 15.726 C 8.477 15.996 8.704 16.244 8.954 16.465 L 3.727 21.692 Z" fill="currentColor" fill-rule="nonzero" transform="matrix(1 0 0 1 4 3)"/><path d="M 11.581 0.007 C 11.72 0.002 11.86 0 12 0 L 11.581 0 L 11.581 0.007 Z" fill="currentColor" fill-rule="nonzero" transform="matrix(1 0 0 1 4 3)"/></svg></div>
+        <div class="pmo-mandala__node" style="left:30.50%;top:16.23%;"><span class="pmo-mandala__disc"><svg class="pmo-mandala__ico" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M 16.327 0.25 C 16.465 0.011 16.771 -0.071 17.01 0.067 C 19.084 1.264 20.726 3.088 21.7 5.275 C 22.674 7.463 22.93 9.903 22.432 12.246 C 22.375 12.516 22.109 12.688 21.839 12.631 C 21.569 12.573 21.397 12.308 21.454 12.038 C 21.908 9.902 21.674 7.677 20.786 5.682 C 19.898 3.687 18.401 2.025 16.51 0.933 C 16.271 0.795 16.189 0.489 16.327 0.25 Z" fill="currentColor" fill-rule="nonzero" transform="matrix(1 0 0 1 4.574 6.554)"/><path d="M 6.02 0.43 C 6.166 0.664 6.095 0.973 5.861 1.119 C 4.009 2.276 2.571 3.99 1.753 6.014 C 0.935 8.039 0.779 10.271 1.307 12.389 C 1.374 12.657 1.211 12.929 0.943 12.995 C 0.675 13.062 0.404 12.899 0.337 12.631 C -0.242 10.308 -0.071 7.86 0.826 5.64 C 1.723 3.419 3.3 1.54 5.331 0.271 C 5.565 0.125 5.873 0.196 6.02 0.43 Z" fill="currentColor" fill-rule="nonzero" transform="matrix(1 0 0 1 4.574 6.554)"/><path d="M 15.219 20.544 C 15.478 20.449 15.612 20.162 15.517 19.903 C 15.423 19.643 15.136 19.51 14.876 19.604 C 12.633 20.421 10.176 20.436 7.922 19.646 C 7.662 19.555 7.376 19.692 7.285 19.953 C 7.194 20.214 7.331 20.499 7.592 20.59 C 10.063 21.456 12.758 21.439 15.219 20.544 Z" fill="currentColor" fill-rule="nonzero" transform="matrix(1 0 0 1 4.574 6.554)"/><path d="M 8.512 1 C 8.512 0.448 8.96 0 9.512 0 L 15.317 0 C 15.869 0 16.317 0.448 16.317 1 L 16.317 3.336 C 16.317 3.648 16.174 3.927 15.95 4.11 L 15.95 4.674 C 15.95 5.246 16.059 5.814 16.271 6.345 L 16.423 6.725 C 16.683 7.375 16.817 8.068 16.817 8.768 L 16.817 11.6 L 17.098 11.506 C 17.996 11.207 18.986 11.44 19.656 12.11 L 20.952 13.406 C 21.627 14.081 21.945 15.035 21.81 15.981 C 21.744 16.444 21.839 16.916 22.08 17.316 L 22.268 17.63 C 22.644 17.44 23.114 17.501 23.428 17.815 L 25.08 19.467 C 25.47 19.858 25.47 20.491 25.08 20.881 L 20.975 24.986 C 20.585 25.376 19.952 25.376 19.561 24.986 L 17.909 23.334 C 17.688 23.113 17.593 22.815 17.621 22.527 L 17.223 22.128 C 16.818 21.724 16.34 21.4 15.813 21.174 L 15.437 21.013 C 14.794 20.737 14.209 20.342 13.715 19.847 L 12.995 19.128 C 12.745 19.405 12.383 19.579 11.981 19.579 C 11.963 19.579 11.945 19.578 11.927 19.578 L 11.658 19.847 C 11.163 20.342 10.579 20.737 9.936 21.013 L 9.559 21.174 C 9.033 21.4 8.555 21.724 8.15 22.128 L 7.751 22.527 C 7.78 22.815 7.684 23.113 7.464 23.334 L 5.812 24.986 C 5.421 25.376 4.788 25.376 4.398 24.986 L 0.293 20.881 C -0.098 20.491 -0.098 19.858 0.293 19.467 L 1.945 17.815 C 2.259 17.501 2.729 17.44 3.105 17.63 L 3.293 17.316 C 3.534 16.916 3.629 16.444 3.563 15.981 C 3.427 15.035 3.746 14.081 4.421 13.406 L 5.717 12.11 C 6.205 11.621 6.865 11.365 7.534 11.378 C 7.285 10.985 7.145 10.522 7.145 10.038 L 7.145 8.205 C 7.145 7.25 7.595 6.35 8.359 5.777 C 8.733 5.497 8.999 5.096 9.112 4.642 L 9.201 4.287 C 8.801 4.156 8.512 3.78 8.512 3.336 L 8.512 1 Z M 9.512 1 L 15.317 1 L 15.317 3.336 L 9.512 3.336 L 9.512 1 Z M 13.97 18.688 L 14.422 19.14 C 14.827 19.545 15.305 19.868 15.831 20.094 L 16.207 20.255 C 16.85 20.531 17.435 20.927 17.93 21.421 L 18.169 21.66 L 21.513 18.316 L 21.222 17.831 C 20.864 17.233 20.722 16.53 20.82 15.84 C 20.911 15.206 20.698 14.566 20.244 14.113 L 18.949 12.817 C 18.573 12.441 18.028 12.294 17.517 12.424 L 18.782 13.689 L 18.075 14.396 L 16.817 13.138 L 16.817 15.61 C 16.817 16.365 16.205 16.977 15.45 16.977 C 15.322 16.977 15.199 16.959 15.082 16.927 L 15.082 17.344 C 15.082 18.012 14.603 18.568 13.97 18.688 Z M 10.682 18.64 C 10.742 18.822 10.839 18.987 10.965 19.126 L 10.951 19.14 C 10.546 19.545 10.068 19.868 9.542 20.094 L 9.165 20.255 C 8.522 20.531 7.938 20.927 7.443 21.421 L 7.204 21.66 L 3.86 18.316 L 4.15 17.831 C 4.509 17.233 4.651 16.53 4.553 15.84 C 4.462 15.206 4.675 14.566 5.128 14.113 L 6.424 12.817 C 6.8 12.441 7.345 12.294 7.855 12.424 L 6.591 13.689 L 7.298 14.396 L 8.879 12.815 L 8.879 17.344 C 8.879 18.099 9.491 18.711 10.246 18.711 C 10.399 18.711 10.545 18.686 10.682 18.64 Z M 15.082 10.406 L 14.082 10.406 L 14.082 15.61 L 14.082 15.619 L 14.082 17.344 C 14.082 17.547 13.918 17.711 13.715 17.711 C 13.512 17.711 13.348 17.547 13.348 17.344 L 13.348 10.406 L 12.348 10.406 L 12.348 18.211 C 12.348 18.414 12.183 18.579 11.981 18.579 C 11.778 18.579 11.613 18.414 11.613 18.211 L 11.613 17.354 L 11.613 17.344 L 11.613 10.407 L 10.613 10.406 L 10.613 17.349 C 10.611 17.55 10.447 17.711 10.246 17.711 C 10.043 17.711 9.879 17.547 9.879 17.344 L 9.879 12.153 C 9.879 12.145 9.879 12.137 9.879 12.129 L 9.879 9.539 L 8.879 9.539 L 8.879 11.328 C 8.426 11.059 8.145 10.57 8.145 10.038 L 8.145 8.205 C 8.145 7.565 8.446 6.961 8.959 6.577 C 9.517 6.159 9.913 5.561 10.083 4.885 L 10.22 4.336 L 14.95 4.336 L 14.95 4.674 C 14.95 5.374 15.083 6.067 15.343 6.716 L 15.495 7.096 C 15.707 7.628 15.817 8.195 15.817 8.768 L 15.817 15.61 C 15.817 15.812 15.652 15.977 15.45 15.977 C 15.248 15.977 15.085 15.815 15.082 15.615 L 15.082 10.406 Z M 1 20.174 L 5.105 24.279 L 6.756 22.627 L 2.652 18.522 L 1 20.174 Z M 20.268 24.279 L 24.373 20.174 L 22.721 18.522 L 18.616 22.627 L 20.268 24.279 Z" fill="currentColor" fill-rule="evenodd" transform="matrix(1 0 0 1 3.500 3)"/></svg></span><span class="pmo-mandala__num">1</span></div>
+        <div class="pmo-mandala__node" style="left:69.50%;top:16.23%;"><span class="pmo-mandala__disc"><svg class="pmo-mandala__ico" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M 1.495 10.64 C 2.012 11.36 2.408 12.159 2.666 13.005 C 2.439 13.249 2.338 13.601 2.431 13.947 L 2.478 14.12 C 2.621 14.654 3.169 14.97 3.702 14.827 L 8.087 13.653 C 8.62 13.51 8.937 12.961 8.794 12.428 L 8.747 12.254 C 8.649 11.887 8.358 11.622 8.012 11.54 L 8.029 10.527 C 8.04 9.835 7.765 9.169 7.267 8.688 L 4.712 6.216 C 4.326 5.842 3.781 5.726 3.295 5.872 L 3.276 1.631 C 3.273 0.824 2.682 0.141 1.885 0.019 C 0.88 -0.134 -0.021 0.656 0 1.672 L 0.117 7.306 C 0.137 8.257 0.445 9.179 1 9.951 L 1.495 10.64 Z M 2.276 1.636 C 2.275 1.321 2.045 1.055 1.734 1.008 C 1.343 0.948 0.992 1.256 1 1.652 L 1.117 7.285 C 1.133 8.034 1.375 8.76 1.812 9.368 L 2.307 10.057 C 2.865 10.833 3.297 11.692 3.588 12.602 L 7.009 11.685 L 7.029 10.51 C 7.036 10.095 6.87 9.695 6.572 9.407 L 4.017 6.935 C 3.852 6.775 3.593 6.769 3.421 6.92 C 3.232 7.086 3.22 7.376 3.395 7.557 L 4.792 9.002 C 4.984 9.2 4.979 9.517 4.78 9.709 C 4.582 9.901 4.265 9.895 4.073 9.697 L 2.676 8.252 C 2.279 7.841 2.176 7.257 2.358 6.756 C 2.32 6.686 2.298 6.606 2.298 6.52 L 2.276 1.636 Z M 7.782 12.513 L 7.828 12.687 L 3.444 13.862 L 3.397 13.688 L 7.782 12.513 Z" fill="currentColor" fill-rule="evenodd" transform="matrix(1 0 0 1 5.612 11.681)"/><path d="M 12.148 11.54 L 12.131 10.527 C 12.12 9.835 12.395 9.169 12.892 8.688 L 15.447 6.216 C 15.834 5.842 16.379 5.726 16.865 5.872 L 16.884 1.631 C 16.887 0.824 17.477 0.141 18.275 0.019 C 19.28 -0.134 20.18 0.656 20.159 1.672 L 20.042 7.306 C 20.023 8.257 19.715 9.179 19.16 9.951 L 18.665 10.64 C 18.148 11.36 17.752 12.159 17.494 13.005 C 17.721 13.249 17.821 13.601 17.729 13.947 L 17.682 14.12 C 17.539 14.654 16.991 14.97 16.457 14.827 L 12.073 13.653 C 11.539 13.51 11.223 12.961 11.366 12.428 L 11.412 12.254 C 11.511 11.887 11.802 11.622 12.148 11.54 Z M 13.131 10.51 C 13.124 10.095 13.289 9.695 13.588 9.407 L 16.143 6.935 C 16.307 6.775 16.567 6.769 16.739 6.92 C 16.928 7.086 16.939 7.376 16.765 7.557 L 15.368 9.002 C 15.176 9.2 15.181 9.517 15.379 9.709 C 15.578 9.901 15.895 9.895 16.086 9.697 L 17.484 8.252 C 17.881 7.841 17.984 7.257 17.801 6.756 C 17.84 6.686 17.861 6.606 17.862 6.52 L 17.884 1.636 C 17.885 1.321 18.115 1.055 18.426 1.008 C 18.817 0.948 19.168 1.256 19.16 1.652 L 19.043 7.285 C 19.027 8.034 18.785 8.76 18.348 9.368 L 17.853 10.057 C 17.295 10.833 16.863 11.692 16.572 12.602 L 13.151 11.685 L 13.131 10.51 Z M 12.332 12.687 L 12.378 12.513 L 16.763 13.688 L 16.716 13.862 L 12.332 12.687 Z" fill="currentColor" fill-rule="evenodd" transform="matrix(1 0 0 1 5.612 11.681)"/><path d="M 2.649 0.027 C 3.888 0.122 5.479 0.507 6.688 1.716 C 7.879 2.907 8.345 4.989 6.873 6.594 C 7.255 7.498 7.531 8.475 7.732 9.412 C 7.806 9.758 7.871 10.101 7.926 10.435 L 7.946 10.37 C 8.196 9.548 8.546 8.67 9.037 7.833 C 8.501 7.101 8.285 6.27 8.415 5.432 C 8.568 4.443 9.191 3.519 10.175 2.781 C 11.195 2.016 12.58 1.733 13.65 1.628 C 14.195 1.575 14.679 1.566 15.028 1.57 C 15.202 1.573 15.344 1.578 15.442 1.583 C 15.492 1.586 15.53 1.588 15.557 1.59 L 15.589 1.592 L 15.598 1.593 L 15.601 1.593 L 15.602 1.593 L 15.561 2.092 L 16.051 1.994 L 16.051 1.995 L 16.052 1.999 L 16.054 2.009 L 16.061 2.046 C 16.066 2.077 16.074 2.121 16.082 2.177 C 16.099 2.29 16.12 2.45 16.138 2.648 C 16.174 3.043 16.198 3.594 16.15 4.219 C 16.055 5.457 15.67 7.048 14.461 8.258 C 13.313 9.406 11.335 9.881 9.756 8.592 C 9.389 9.265 9.112 9.973 8.902 10.661 C 8.596 11.669 8.442 12.614 8.365 13.307 C 8.326 13.653 8.307 13.935 8.298 14.129 C 8.293 14.226 8.29 14.301 8.289 14.351 C 8.289 14.376 8.288 14.394 8.288 14.406 L 8.288 14.419 L 8.288 14.421 C 8.288 14.697 8.064 14.921 7.788 14.921 C 7.512 14.921 7.288 14.697 7.288 14.421 L 7.288 14.416 L 7.288 14.398 C 7.288 14.381 7.288 14.356 7.287 14.323 C 7.286 14.256 7.284 14.156 7.28 14.029 C 7.272 13.774 7.255 13.406 7.221 12.96 C 7.154 12.066 7.021 10.864 6.754 9.622 C 6.583 8.824 6.36 8.019 6.069 7.274 C 5.386 7.711 4.627 7.881 3.863 7.762 C 2.873 7.609 1.95 6.986 1.212 6.002 C 0.447 4.982 0.163 3.597 0.059 2.527 C 0.005 1.982 -0.003 1.498 0.001 1.149 C 0.003 0.975 0.009 0.833 0.014 0.735 C 0.016 0.685 0.019 0.646 0.021 0.619 L 0.023 0.588 L 0.024 0.579 L 0.024 0.576 L 0.024 0.575 L 0.522 0.616 L 0.425 0.126 L 0.426 0.126 L 0.429 0.125 L 0.44 0.123 L 0.477 0.116 C 0.508 0.111 0.552 0.103 0.608 0.095 C 0.72 0.078 0.881 0.057 1.079 0.039 C 1.474 0.003 2.025 -0.021 2.649 0.027 Z M 10.29 7.733 C 11.419 8.733 12.862 8.442 13.754 7.551 C 14.724 6.58 15.067 5.265 15.153 4.142 C 15.196 3.586 15.174 3.092 15.142 2.739 C 15.137 2.679 15.131 2.623 15.125 2.572 C 15.09 2.571 15.054 2.571 15.015 2.57 C 14.694 2.566 14.247 2.574 13.747 2.623 C 12.728 2.723 11.57 2.985 10.775 3.581 C 9.942 4.206 9.506 4.917 9.403 5.585 C 9.335 6.027 9.406 6.482 9.642 6.925 C 10.388 5.94 11.374 5.075 12.677 4.516 C 12.931 4.407 13.225 4.525 13.334 4.779 C 13.443 5.033 13.325 5.327 13.071 5.435 C 11.87 5.95 10.967 6.776 10.29 7.733 Z M 5.981 2.423 C 6.798 3.24 7.111 4.52 6.387 5.598 L 6.385 5.593 C 5.738 4.444 4.838 3.465 3.587 3.048 C 3.325 2.961 3.042 3.103 2.954 3.364 C 2.867 3.626 3.009 3.91 3.271 3.997 C 4.199 4.306 4.934 5.054 5.513 6.084 C 5.562 6.17 5.609 6.258 5.655 6.347 C 5.121 6.732 4.558 6.858 4.016 6.774 C 3.348 6.67 2.636 6.235 2.012 5.402 C 1.415 4.606 1.154 3.449 1.054 2.429 C 1.005 1.93 0.997 1.483 1.001 1.162 C 1.001 1.123 1.002 1.086 1.003 1.052 C 1.054 1.046 1.11 1.04 1.169 1.035 C 1.523 1.003 2.017 0.981 2.573 1.024 C 3.696 1.11 5.011 1.453 5.981 2.423 Z" fill="currentColor" fill-rule="evenodd" transform="matrix(1 0 0 1 7.424 3.971)"/><path d="M 0.425 0.126 C 0.425 0.126 0.424 0.126 0.522 0.616 C 0.024 0.575 0.024 0.575 0.024 0.575 C 0.042 0.353 0.206 0.17 0.425 0.126 Z" fill="currentColor" fill-rule="nonzero" transform="matrix(1 0 0 1 7.424 3.971)"/><path d="M 16.051 1.994 C 16.051 1.994 16.051 1.993 15.561 2.092 C 15.602 1.593 15.602 1.593 15.602 1.593 C 15.824 1.612 16.007 1.775 16.051 1.994 Z" fill="currentColor" fill-rule="nonzero" transform="matrix(1 0 0 1 7.424 3.971)"/></svg></span><span class="pmo-mandala__num">2</span></div>
+        <div class="pmo-mandala__node" style="left:89.00%;top:50.00%;"><span class="pmo-mandala__disc"><svg class="pmo-mandala__ico" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M 12.876 1 C 12.876 0.448 13.324 0 13.876 0 L 14.332 0 C 14.885 0 15.332 0.448 15.332 1 L 15.332 7.188 C 15.332 7.74 14.885 8.188 14.332 8.188 L 13.876 8.188 C 13.324 8.188 12.876 7.74 12.876 7.188 L 12.876 1 Z M 13.876 1 L 14.332 1 L 14.332 7.188 L 13.876 7.188 L 13.876 1 Z" fill="currentColor" fill-rule="evenodd" transform="matrix(1 0 0 1 5.224 9.094)"/><path d="M 10.601 1.637 C 10.049 1.637 9.601 2.085 9.601 2.637 L 9.601 7.188 C 9.601 7.74 10.049 8.188 10.601 8.188 L 11.057 8.188 C 11.61 8.188 12.057 7.74 12.057 7.188 L 12.057 2.637 C 12.057 2.085 11.61 1.637 11.057 1.637 L 10.601 1.637 Z M 11.057 2.637 L 10.601 2.637 L 10.601 7.188 L 11.057 7.188 L 11.057 2.637 Z" fill="currentColor" fill-rule="evenodd" transform="matrix(1 0 0 1 5.224 9.094)"/><path d="M 6.326 4.275 C 6.326 3.723 6.773 3.275 7.326 3.275 L 7.782 3.275 C 8.334 3.275 8.782 3.723 8.782 4.275 L 8.782 7.188 C 8.782 7.74 8.334 8.188 7.782 8.188 L 7.326 8.188 C 6.773 8.188 6.326 7.74 6.326 7.188 L 6.326 4.275 Z M 7.326 4.275 L 7.782 4.275 L 7.782 7.188 L 7.326 7.188 L 7.326 4.275 Z" fill="currentColor" fill-rule="evenodd" transform="matrix(1 0 0 1 5.224 9.094)"/><path d="M 6.727 16.222 C 5.754 16.125 4.772 16.184 3.818 16.396 C 3.757 16.772 3.482 17.097 3.089 17.202 L 2.649 17.32 C 2.115 17.463 1.567 17.147 1.424 16.613 L 0.034 11.427 C -0.109 10.894 0.208 10.345 0.741 10.202 L 1.182 10.084 C 1.593 9.974 2.012 10.136 2.249 10.46 L 3.277 9.843 C 3.871 9.487 4.585 9.393 5.251 9.583 L 9.209 10.714 C 9.797 10.882 10.214 11.37 10.316 11.941 L 14.541 9.526 C 15.303 9.091 16.269 9.275 16.818 9.96 C 17.509 10.824 17.254 12.103 16.285 12.636 L 10.721 15.696 C 9.793 16.206 8.732 16.423 7.679 16.318 L 6.727 16.222 Z M 15.037 10.394 C 15.372 10.203 15.796 10.284 16.037 10.585 C 16.34 10.964 16.228 11.525 15.803 11.76 L 10.239 14.82 C 9.488 15.232 8.63 15.408 7.778 15.322 L 6.827 15.227 C 5.762 15.121 4.689 15.183 3.644 15.41 L 2.578 11.429 L 3.792 10.701 C 4.148 10.487 4.577 10.43 4.976 10.545 L 8.934 11.675 C 9.214 11.755 9.386 12.037 9.328 12.323 C 9.266 12.636 8.954 12.833 8.645 12.755 L 6.447 12.206 C 6.179 12.139 5.908 12.302 5.841 12.57 C 5.774 12.838 5.937 13.109 6.205 13.176 L 8.402 13.726 C 9.013 13.878 9.626 13.648 9.995 13.191 C 10.084 13.194 10.175 13.173 10.258 13.125 L 15.037 10.394 Z M 1.441 11.05 L 1 11.168 L 2.39 16.354 L 2.831 16.236 L 1.441 11.05 Z" fill="currentColor" fill-rule="evenodd" transform="matrix(1 0 0 1 5.224 9.094)"/><path d="M 16.794 1.203 C 14.747 0.796 12.625 1.005 10.697 1.803 C 8.768 2.602 7.12 3.955 5.961 5.69 C 5.041 7.067 4.461 8.636 4.261 10.268 L 6.51 8.018 C 6.706 7.823 7.022 7.823 7.218 8.018 C 7.413 8.213 7.413 8.53 7.218 8.725 L 4.036 11.907 C 3.84 12.102 3.524 12.102 3.328 11.907 L 0.146 8.725 C -0.049 8.53 -0.049 8.213 0.146 8.018 C 0.342 7.823 0.658 7.823 0.854 8.018 L 3.239 10.404 C 3.427 8.525 4.074 6.714 5.129 5.135 C 6.399 3.235 8.203 1.754 10.314 0.879 C 12.425 0.005 14.748 -0.224 16.989 0.222 C 19.231 0.668 21.289 1.768 22.905 3.384 C 24.521 5 25.621 7.058 26.067 9.3 C 26.513 11.541 26.284 13.864 25.41 15.975 C 24.535 18.086 23.054 19.89 21.154 21.16 C 19.254 22.429 17.021 23.107 14.736 23.107 C 14.459 23.107 14.236 22.883 14.236 22.607 C 14.236 22.331 14.459 22.107 14.736 22.107 C 16.823 22.107 18.863 21.488 20.599 20.328 C 22.334 19.169 23.687 17.521 24.486 15.592 C 25.284 13.664 25.493 11.542 25.086 9.495 C 24.679 7.447 23.674 5.567 22.198 4.091 C 20.722 2.615 18.842 1.61 16.794 1.203 Z" fill="currentColor" fill-rule="evenodd" transform="matrix(1 0 0 1 2.137 4.500)"/></svg></span><span class="pmo-mandala__num">3</span></div>
+        <div class="pmo-mandala__node" style="left:69.50%;top:83.77%;"><span class="pmo-mandala__disc"><svg class="pmo-mandala__ico" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M 7.529 0.27 C 7.881 0.112 8.256 0 8.613 0 C 9.008 0 9.494 0.1 9.994 0.241 C 10.502 0.384 11.061 0.58 11.614 0.795 C 12.719 1.224 13.829 1.738 14.516 2.081 C 14.763 2.205 14.863 2.505 14.74 2.752 C 14.616 2.999 14.316 3.099 14.069 2.976 C 13.404 2.643 12.323 2.143 11.252 1.727 C 10.716 1.519 10.19 1.335 9.723 1.203 C 9.247 1.069 8.867 1 8.613 1 C 8.452 1 8.224 1.054 7.937 1.183 C 7.656 1.308 7.348 1.492 7.035 1.717 C 6.366 2.198 5.722 2.834 5.32 3.399 C 5.116 3.684 4.995 3.922 4.949 4.092 C 4.93 4.162 4.927 4.201 4.928 4.221 C 5.199 4.48 5.52 4.54 5.817 4.474 C 6.137 4.403 6.412 4.189 6.543 3.927 C 6.641 3.732 6.813 3.615 6.93 3.549 C 7.062 3.475 7.209 3.419 7.35 3.377 C 7.63 3.294 7.951 3.245 8.208 3.245 C 8.335 3.245 8.455 3.29 8.508 3.311 C 8.584 3.34 8.669 3.379 8.757 3.422 C 8.936 3.511 9.16 3.635 9.412 3.784 C 9.919 4.082 10.563 4.495 11.23 4.957 C 11.898 5.419 12.595 5.935 13.205 6.441 C 13.651 6.811 14.065 7.188 14.388 7.543 L 15.232 6.98 C 15.462 6.827 15.772 6.889 15.925 7.119 C 16.079 7.349 16.017 7.659 15.787 7.812 L 14.928 8.385 C 14.962 8.637 14.899 8.924 14.74 9.242 C 14.501 9.72 14.113 9.949 13.729 10.01 C 13.692 10.016 13.655 10.02 13.617 10.023 C 13.551 10.19 13.447 10.331 13.35 10.44 C 13.095 10.728 12.733 10.966 12.488 11.089 C 12.147 11.259 11.829 11.272 11.551 11.192 C 11.437 11.47 11.217 11.724 10.865 11.9 C 10.3 12.183 9.799 12.177 9.443 12.04 C 8.813 12.387 8.079 12.352 7.373 12.141 C 6.556 11.896 5.68 11.392 4.829 10.798 C 3.612 9.95 2.356 8.854 1.307 7.94 C 0.894 7.579 0.513 7.247 0.18 6.969 C -0.032 6.792 -0.061 6.477 0.116 6.265 C 0.293 6.053 0.608 6.024 0.82 6.201 C 1.186 6.506 1.588 6.856 2.014 7.228 C 3.05 8.132 4.231 9.163 5.4 9.978 C 6.222 10.551 6.995 10.984 7.66 11.183 C 7.989 11.281 8.269 11.317 8.507 11.295 L 6.407 9.389 C 6.202 9.204 6.187 8.887 6.372 8.683 C 6.558 8.478 6.874 8.463 7.079 8.649 L 9.761 11.083 C 9.767 11.088 9.772 11.094 9.778 11.099 C 9.774 11.095 9.772 11.093 9.772 11.093 C 9.774 11.09 9.973 11.228 10.418 11.006 C 10.516 10.956 10.567 10.906 10.594 10.869 C 10.622 10.831 10.637 10.79 10.645 10.744 C 10.656 10.675 10.647 10.6 10.63 10.539 L 8.293 8.592 C 8.081 8.415 8.052 8.1 8.229 7.887 C 8.406 7.675 8.721 7.647 8.933 7.823 L 11.367 9.852 C 11.379 9.861 11.39 9.872 11.401 9.882 C 11.42 9.902 11.438 9.92 11.456 9.938 C 11.587 10.069 11.672 10.155 11.771 10.207 C 11.816 10.231 11.85 10.239 11.879 10.239 C 11.908 10.24 11.959 10.235 12.041 10.194 C 12.207 10.111 12.454 9.943 12.602 9.776 C 12.625 9.751 12.642 9.729 12.654 9.712 C 12.281 9.354 11.728 8.939 11.15 8.529 C 10.915 8.363 10.674 8.196 10.443 8.036 C 10.092 7.793 9.767 7.568 9.53 7.391 C 9.309 7.225 9.265 6.911 9.43 6.691 C 9.596 6.47 9.909 6.425 10.13 6.591 C 10.356 6.76 10.65 6.963 10.984 7.194 C 11.216 7.355 11.468 7.529 11.728 7.713 C 12.31 8.126 12.926 8.584 13.363 9.006 C 13.377 9.01 13.394 9.015 13.413 9.018 C 13.465 9.028 13.52 9.03 13.573 9.022 C 13.623 9.014 13.668 8.997 13.708 8.968 C 13.748 8.94 13.798 8.89 13.845 8.795 C 13.905 8.675 13.926 8.598 13.933 8.555 C 13.919 8.54 13.905 8.524 13.892 8.508 C 13.625 8.15 13.154 7.699 12.566 7.211 C 11.984 6.728 11.312 6.23 10.661 5.779 C 10.01 5.328 9.387 4.929 8.904 4.645 C 8.662 4.502 8.462 4.392 8.314 4.319 C 8.243 4.283 8.19 4.26 8.156 4.246 C 8.009 4.253 7.811 4.284 7.635 4.336 C 7.538 4.365 7.465 4.395 7.42 4.42 C 7.417 4.422 7.414 4.424 7.411 4.425 C 7.13 4.948 6.609 5.323 6.034 5.45 C 5.426 5.586 4.74 5.447 4.203 4.91 C 3.879 4.586 3.896 4.151 3.984 3.828 C 4.075 3.496 4.271 3.148 4.505 2.818 C 4.743 2.485 5.044 2.14 5.378 1.811 L 2.123 1.811 C 1.847 1.811 1.623 1.587 1.623 1.311 C 1.623 1.035 1.847 0.811 2.123 0.811 L 6.584 0.811 C 6.895 0.597 7.216 0.41 7.529 0.27 Z M 7.39 4.44 C 7.39 4.44 7.391 4.439 7.394 4.437 C 7.391 4.439 7.39 4.44 7.39 4.44 Z M 8.123 4.235 C 8.123 4.235 8.125 4.235 8.129 4.237 C 8.125 4.236 8.123 4.235 8.123 4.235 Z M 13.936 8.515 C 13.936 8.513 13.936 8.513 13.936 8.513 Z M 4.931 4.236 C 4.931 4.236 4.93 4.234 4.929 4.229 C 4.931 4.233 4.931 4.236 4.931 4.236 Z" fill="currentColor" fill-rule="evenodd" transform="matrix(1 0 0 1 8.245 11.720)"/><path d="M 0.582 0.007 C 0.437 -0.017 0.289 0.023 0.177 0.118 C 0.065 0.213 0 0.353 0 0.5 L 0 8.208 C 0 8.484 0.224 8.708 0.5 8.708 L 3.34 8.708 C 3.561 8.708 3.757 8.561 3.819 8.349 L 5.529 2.535 C 5.783 1.672 5.225 0.781 4.337 0.633 L 0.582 0.007 Z M 1 7.708 L 1 1.09 L 4.172 1.619 C 4.468 1.668 4.654 1.965 4.57 2.253 L 2.966 7.708 L 1 7.708 Z" fill="currentColor" fill-rule="evenodd" transform="matrix(1 0 0 1 5 10.908)"/><path d="M 21.918 0.413 C 22.063 0.388 22.211 0.429 22.323 0.524 C 22.435 0.619 22.5 0.759 22.5 0.906 L 22.5 8.613 C 22.5 8.889 22.276 9.113 22 9.113 L 19.16 9.113 C 18.939 9.113 18.743 8.967 18.681 8.754 L 16.971 2.941 C 16.717 2.078 17.275 1.186 18.163 1.038 L 21.918 0.413 Z M 21.5 8.113 L 21.5 1.496 L 18.328 2.025 C 18.032 2.074 17.846 2.371 17.93 2.659 L 19.534 8.113 L 21.5 8.113 Z" fill="currentColor" fill-rule="evenodd" transform="matrix(1 0 0 1 5 10.908)"/></svg></span><span class="pmo-mandala__num">4</span></div>
+        <div class="pmo-mandala__node" style="left:30.50%;top:83.77%;"><span class="pmo-mandala__disc"><svg class="pmo-mandala__ico" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M 1 0.5 C 1 0.224 0.776 0 0.5 0 C 0.224 0 0 0.224 0 0.5 L 0 1.909 C 0 2.124 0.138 2.315 0.342 2.383 L 3.375 3.394 L 1.945 6.253 C 1.849 6.446 1.887 6.678 2.039 6.83 L 4.031 8.823 C 4.183 8.975 4.415 9.013 4.608 8.916 L 7.467 7.487 L 8.478 10.519 C 8.546 10.723 8.737 10.861 8.952 10.861 L 11.77 10.861 C 11.985 10.861 12.176 10.723 12.244 10.519 L 13.255 7.487 L 16.114 8.916 C 16.307 9.013 16.539 8.975 16.692 8.823 L 18.684 6.83 C 18.836 6.678 18.873 6.446 18.777 6.253 L 17.348 3.394 L 20.38 2.383 C 20.585 2.315 20.722 2.124 20.722 1.909 L 20.722 0.5 C 20.722 0.224 20.498 0 20.222 0 C 19.946 0 19.722 0.224 19.722 0.5 L 19.722 1.548 L 16.79 2.526 C 16.648 2.573 16.534 2.682 16.481 2.822 C 16.434 2.945 16.384 3.066 16.331 3.184 C 16.269 3.321 16.272 3.479 16.339 3.613 L 17.722 6.378 L 16.239 7.861 L 13.474 6.478 C 13.34 6.411 13.183 6.408 13.046 6.469 C 12.927 6.523 12.806 6.573 12.684 6.619 C 12.544 6.673 12.435 6.786 12.387 6.929 L 11.41 9.861 L 9.313 9.861 L 8.335 6.929 C 8.288 6.786 8.179 6.673 8.038 6.62 C 7.916 6.573 7.796 6.523 7.676 6.469 C 7.539 6.408 7.382 6.411 7.248 6.478 L 4.483 7.861 L 3.001 6.378 L 4.383 3.613 C 4.45 3.479 4.453 3.321 4.392 3.184 C 4.338 3.066 4.288 2.945 4.241 2.822 C 4.188 2.682 4.075 2.573 3.932 2.526 L 1 1.548 L 1 0.5 Z" fill="currentColor" fill-rule="nonzero" transform="matrix(1 0 0 1 5.639 18.695)"/><path d="M 6.635 0.5 C 6.635 0.224 6.411 0 6.135 0 C 5.859 0 5.635 0.224 5.635 0.5 C 5.635 3.11 7.751 5.226 10.361 5.226 C 12.971 5.226 15.087 3.11 15.087 0.5 C 15.087 0.224 14.864 0 14.587 0 C 14.311 0 14.087 0.224 14.087 0.5 C 14.087 2.558 12.419 4.226 10.361 4.226 C 8.303 4.226 6.635 2.558 6.635 0.5 Z" fill="currentColor" fill-rule="nonzero" transform="matrix(1 0 0 1 5.639 18.695)"/><path d="M 8.934 1.712 C 8.804 0.808 9.506 0 10.418 0 L 13.121 0 C 14.034 0 14.735 0.808 14.606 1.712 L 14.592 1.815 C 14.64 1.815 14.69 1.823 14.739 1.839 C 18.194 2.936 20.722 5.919 20.722 9.478 L 20.722 11.944 L 21.739 11.944 C 22.734 11.944 23.54 12.75 23.54 13.744 C 23.54 14.739 22.734 15.545 21.739 15.545 L 1.8 15.545 C 0.806 15.545 0 14.739 0 13.744 C 0 12.75 0.806 11.944 1.8 11.944 L 2.818 11.944 L 2.818 9.478 C 2.818 5.919 5.346 2.936 8.801 1.839 C 8.85 1.823 8.9 1.815 8.948 1.815 L 8.934 1.712 Z M 9.088 2.796 C 5.986 3.788 3.818 6.429 3.818 9.478 L 3.818 11.944 L 19.722 11.944 L 19.722 9.478 C 19.722 6.429 17.554 3.788 14.451 2.796 L 13.517 9.336 C 13.478 9.61 13.225 9.799 12.951 9.76 C 12.678 9.721 12.488 9.468 12.527 9.195 L 13.616 1.571 C 13.659 1.269 13.426 1 13.121 1 L 10.418 1 C 10.114 1 9.88 1.269 9.924 1.571 L 11.013 9.195 C 11.052 9.468 10.862 9.721 10.588 9.76 C 10.315 9.799 10.062 9.61 10.023 9.336 L 9.088 2.796 Z M 22.54 13.744 C 22.54 13.302 22.181 12.944 21.739 12.944 L 1.8 12.944 C 1.358 12.944 1 13.302 1 13.744 C 1 14.186 1.358 14.545 1.8 14.545 L 21.739 14.545 C 22.181 14.545 22.54 14.186 22.54 13.744 Z" fill="currentColor" fill-rule="evenodd" transform="matrix(1 0 0 1 4.230 2.500)"/></svg></span><span class="pmo-mandala__num">5</span></div>
+        <div class="pmo-mandala__node" style="left:11.00%;top:50.00%;"><span class="pmo-mandala__disc"><svg class="pmo-mandala__ico" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M 2.159 1.247 C 2.88 0.853 3.768 0.936 4.404 1.456 L 4.546 1.572 C 5.576 2.415 7.057 2.415 8.087 1.572 C 8.748 1.031 9.7 1.031 10.362 1.572 C 11.392 2.415 12.873 2.415 13.903 1.572 L 14.044 1.456 C 14.68 0.936 15.568 0.853 16.29 1.247 L 17.709 2.021 C 17.951 2.153 18.255 2.064 18.387 1.821 C 18.52 1.579 18.43 1.275 18.188 1.143 L 16.769 0.369 C 15.69 -0.22 14.362 -0.096 13.411 0.683 L 13.27 0.798 C 12.608 1.339 11.657 1.339 10.995 0.798 C 9.965 -0.045 8.484 -0.045 7.454 0.798 C 6.792 1.339 5.84 1.339 5.179 0.798 L 5.037 0.683 C 4.086 -0.096 2.759 -0.22 1.68 0.369 L 0.261 1.143 C 0.018 1.275 -0.071 1.579 0.061 1.821 C 0.193 2.064 0.497 2.153 0.74 2.021 L 2.159 1.247 Z" fill="currentColor" fill-rule="nonzero" transform="matrix(1 0 0 1 6.776 23.246)"/><path d="M 2.159 3.626 C 2.88 3.232 3.768 3.315 4.404 3.836 L 4.546 3.951 C 5.576 4.794 7.057 4.794 8.087 3.951 C 8.748 3.41 9.7 3.41 10.362 3.951 C 11.392 4.794 12.873 4.794 13.903 3.951 L 14.044 3.836 C 14.68 3.315 15.568 3.232 16.29 3.626 L 17.709 4.4 C 17.951 4.532 18.255 4.443 18.387 4.2 C 18.52 3.958 18.43 3.654 18.188 3.522 L 16.769 2.748 C 15.69 2.16 14.362 2.284 13.411 3.062 L 13.27 3.178 C 12.608 3.719 11.657 3.719 10.995 3.178 C 9.965 2.335 8.484 2.335 7.454 3.178 C 6.792 3.719 5.84 3.719 5.179 3.178 L 5.037 3.062 C 4.086 2.284 2.759 2.16 1.68 2.748 L 0.261 3.522 C 0.018 3.654 -0.071 3.958 0.061 4.2 C 0.193 4.443 0.497 4.532 0.74 4.4 L 2.159 3.626 Z" fill="currentColor" fill-rule="nonzero" transform="matrix(1 0 0 1 6.776 23.246)"/><path d="M 1.825 2.859 L 1.979 1.73 C 2.115 0.739 2.961 0 3.961 0 L 13.159 0 C 14.159 0 15.006 0.739 15.141 1.73 L 15.295 2.859 C 15.364 2.945 15.405 3.054 15.405 3.172 C 15.405 3.242 15.391 3.309 15.365 3.37 L 17.107 16.148 C 17.17 16.609 16.633 16.906 16.276 16.608 C 15.556 16.008 14.469 16.192 13.987 16.996 L 13.881 17.172 C 13.778 17.344 13.593 17.448 13.394 17.448 L 9.57 17.448 C 9.435 17.448 9.308 17.381 9.233 17.268 C 8.913 16.788 8.207 16.788 7.887 17.268 C 7.812 17.381 7.686 17.448 7.551 17.448 L 3.702 17.448 C 3.515 17.448 3.339 17.36 3.227 17.211 L 3.179 17.146 C 2.638 16.426 1.629 16.253 0.88 16.752 C 0.474 17.023 -0.06 16.688 0.006 16.205 L 1.756 3.37 C 1.73 3.309 1.715 3.243 1.715 3.172 C 1.715 3.054 1.757 2.945 1.825 2.859 Z M 1.102 15.564 C 1.779 15.377 2.501 15.464 3.112 15.796 L 3.703 6.342 C 3.758 5.452 4.496 4.759 5.388 4.759 C 6.279 4.759 7.017 5.452 7.073 6.342 L 7.685 16.132 C 8.226 15.833 8.894 15.833 9.436 16.132 L 10.047 6.342 C 10.103 5.452 10.841 4.759 11.733 4.759 C 12.624 4.759 13.362 5.452 13.418 6.342 L 13.997 15.613 C 14.593 15.257 15.317 15.158 15.989 15.349 L 14.397 3.672 L 2.724 3.672 L 1.102 15.564 Z M 14.26 2.672 L 14.15 1.865 C 14.083 1.369 13.659 1 13.159 1 L 3.961 1 C 3.461 1 3.038 1.369 2.97 1.865 L 2.86 2.672 L 14.26 2.672 Z M 6.703 16.448 L 6.075 6.404 C 6.052 6.041 5.751 5.759 5.388 5.759 C 5.024 5.759 4.723 6.041 4.701 6.404 L 4.073 16.448 L 6.703 16.448 Z M 13.047 16.448 L 12.42 6.404 C 12.397 6.041 12.096 5.759 11.733 5.759 C 11.369 5.759 11.068 6.041 11.046 6.404 L 10.418 16.448 L 13.047 16.448 Z" fill="currentColor" fill-rule="evenodd" transform="matrix(1 0 0 1 7.440 5)"/></svg></span><span class="pmo-mandala__num">6</span></div>
+        </div>
+        <ol class="pmo-mandala__legend">
+        <li class="pmo-mandala__leg"><span class="pmo-mandala__leg-n">1</span><span class="pmo-mandala__leg-name"><span class="t" lang="pt">Cultura e Desenvolvimento Organizacional</span><span class="t" lang="en">Culture & Organizational Development</span></span></li>
+        <li class="pmo-mandala__leg"><span class="pmo-mandala__leg-n">2</span><span class="pmo-mandala__leg-name"><span class="t" lang="pt">Sustentabilidade</span><span class="t" lang="en">Sustainability</span></span></li>
+        <li class="pmo-mandala__leg"><span class="pmo-mandala__leg-n">3</span><span class="pmo-mandala__leg-name"><span class="t" lang="pt">Retomada do Crescimento</span><span class="t" lang="en">Growth Recovery</span></span></li>
+        <li class="pmo-mandala__leg"><span class="pmo-mandala__leg-n">4</span><span class="pmo-mandala__leg-name"><span class="t" lang="pt">Novos Negócios</span><span class="t" lang="en">New Business</span></span></li>
+        <li class="pmo-mandala__leg"><span class="pmo-mandala__leg-n">5</span><span class="pmo-mandala__leg-name"><span class="t" lang="pt">Modelo Operacional</span><span class="t" lang="en">Operating Model</span></span></li>
+        <li class="pmo-mandala__leg"><span class="pmo-mandala__leg-n">6</span><span class="pmo-mandala__leg-name"><span class="t" lang="pt">Reserva, Rejeitos e Estéril</span><span class="t" lang="en">Reserves, Tailings & Sterile</span></span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PRINCÍPIOS DE DATA-VIZ (INTERMEZZO + PRINCÍPIOS)
+       ============================================================ -->
+  <section class="case-intermezzo" data-folio aria-label="Intermezzo">
+    <span class="intermezzo-bg l1" data-speed="0.15" aria-hidden="true">⁂</span>
+    <span class="intermezzo-bg l2" data-speed="-0.08" aria-hidden="true">❧</span>
+    <div class="intermezzo-inner reveal">
+      <span class="intermezzo-label">Intermezzo</span>
+      <p class="intermezzo-quote">
+        <span class="t" lang="pt">Um bom painel executivo não mostra tudo. Ele esconde o normal e deixa o excepcional sem onde se esconder.</span>
+        <span class="t" lang="en">A good executive panel doesn't show everything. It hides the normal and leaves the exceptional nowhere to hide.</span>
+      </p>
+      <span class="intermezzo-asterism" aria-hidden="true">⁂</span>
+    </div>
+  </section>
+
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">IV.</span>
+        <span class="name"><span class="t" lang="pt">Princípios de Leitura</span><span class="t" lang="en">Reading Principles</span></span>
+        <span class="gloss"><span class="t" lang="pt">Como o painel decide</span><span class="t" lang="en">How the panel decides</span></span>
+      </header>
+
+      <div class="principles reveal" data-stagger>
+        <div class="principle">
+          <span class="principle__num-big" aria-hidden="true">1</span>
+          <span class="principle__num">01</span>
+          <h3 class="principle__title"><span class="t" lang="pt">O anormal grita</span><span class="t" lang="en">The abnormal screams</span></h3>
+          <span class="principle__tag"><span class="t" lang="pt">Cor é semântica, não decoração.</span><span class="t" lang="en">Color is meaning, not decoration.</span></span>
+          <p class="principle__body"><span class="t" lang="pt">O painel é calmo por padrão. A cor só aparece para marcar desvio — verde, âmbar, vermelho — então o olhar vai direto ao que exige decisão, sem caça ao tesouro.</span><span class="t" lang="en">The panel is calm by default. Color appears only to flag deviation — green, amber, red — so the eye goes straight to what needs a decision, no treasure hunt.</span></p>
+        </div>
+        <div class="principle">
+          <span class="principle__num-big" aria-hidden="true">2</span>
+          <span class="principle__num">02</span>
+          <h3 class="principle__title"><span class="t" lang="pt">Uma régua só</span><span class="t" lang="en">One ruler</span></h3>
+          <span class="principle__tag"><span class="t" lang="pt">Mesma gramática para 6 eixos.</span><span class="t" lang="en">One grammar for 6 axes.</span></span>
+          <p class="principle__body"><span class="t" lang="pt">Escalas, rótulos, status e tipografia são compartilhados. O painel de Finanças e o de Sustentabilidade se leem com o mesmo esforço — a comparação fica honesta.</span><span class="t" lang="en">Scales, labels, status and type are shared. The Finance panel and the Sustainability panel read with the same effort — comparison stays honest.</span></p>
+        </div>
+        <div class="principle">
+          <span class="principle__num-big" aria-hidden="true">3</span>
+          <span class="principle__num">03</span>
+          <h3 class="principle__title"><span class="t" lang="pt">Do voo de pássaro ao detalhe</span><span class="t" lang="en">From bird's-eye to detail</span></h3>
+          <span class="principle__tag"><span class="t" lang="pt">Cabine → eixo → indicador.</span><span class="t" lang="en">Cabin → axis → indicator.</span></span>
+          <p class="principle__body"><span class="t" lang="pt">A cabine dá o panorama; cada eixo abre na sua família de indicadores; cada indicador carrega a fonte. Profundidade sob demanda, nunca por padrão.</span><span class="t" lang="en">The cabin gives the overview; each axis opens into its family of indicators; each indicator carries its source. Depth on demand, never by default.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       V. O ATLAS DE INDICADORES (GALERIA REAL · 4 EIXOS)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">V.</span>
+        <span class="name"><span class="t" lang="pt">O Atlas de Indicadores</span><span class="t" lang="en">The Atlas of Indicators</span></span>
+        <span class="gloss"><span class="t" lang="pt">+30 painéis, 6 famílias</span><span class="t" lang="en">+30 panels, 6 families</span></span>
+      </header>
+
+      <div class="pmo-lead reveal">
+        <p><span class="t" lang="pt">Abaixo da cabine vive o atlas: dezenas de painéis que descem ao detalhe de cada eixo. Reunimos uma seleção, agrupada por tema. <span class="em">Toque em qualquer prancha</span> para examiná-la ampliada.</span>
+           <span class="t" lang="en">Below the cabin lives the atlas: dozens of panels drilling into each axis. Here is a curated selection, grouped by theme. <span class="em">Tap any plate</span> to examine it enlarged.</span></p>
+      </div>
+
+      <!-- Grupo A — Sustentabilidade & Clima -->
+      <div class="pmo-group-head reveal">
+        <span class="pmo-group-head__roman">i</span>
+        <span class="pmo-group-head__name"><span class="t" lang="pt">Sustentabilidade &amp; Clima</span><span class="t" lang="en">Sustainability &amp; Climate</span></span>
+        <span class="pmo-group-head__gloss">RAG · 2023–2050</span>
+      </div>
+      <div class="sl-gallery pmo-grid reveal">
+        <figure class="pmo-shot pmo-shot--wide">
+          <a class="lightboxgallery-link" href="../images/samarco/indicators/descarbonizacao.webp" aria-label="Ações de descarbonização — cronograma de programas por trimestre, com comentários e observações">
+            <img src="../images/samarco/indicators/descarbonizacao.webp" alt="Painel de ações de descarbonização: cronograma PBR/PNO/PTA por trimestre" loading="lazy" />
+          </a>
+          <figcaption><b><span class="t" lang="pt">Ações de descarbonização</span><span class="t" lang="en">Decarbonization actions</span></b> — <span class="t" lang="pt">cronograma de programas (PBR · PNO · PTA) com status, comentários e premissas.</span><span class="t" lang="en">program timeline (PBR · PNO · PTA) with status, comments and assumptions.</span></figcaption>
+        </figure>
+        <figure class="pmo-shot">
+          <a class="lightboxgallery-link" href="../images/samarco/indicators/emissoes-gee.webp" aria-label="Emissões de GEE — escopos 1 e 2, cenários de redução até 2050">
+            <img src="../images/samarco/indicators/emissoes-gee.webp" alt="Gráfico de emissões de GEE escopos 1 e 2 com cenários de redução" loading="lazy" />
+          </a>
+          <figcaption><b><span class="t" lang="pt">Emissões de GEE</span><span class="t" lang="en">GHG emissions</span></b> — <span class="t" lang="pt">escopos 1 e 2, cenário BAU vs. descarbonização (−30%).</span><span class="t" lang="en">scopes 1 &amp; 2, BAU vs. decarbonization scenario (−30%).</span></figcaption>
+        </figure>
+        <figure class="pmo-shot">
+          <a class="lightboxgallery-link" href="../images/samarco/indicators/recuperacao-ambiental.webp" aria-label="Recuperação de área — percentual recuperado vs. meta">
+            <img src="../images/samarco/indicators/recuperacao-ambiental.webp" alt="Indicador de recuperação de área ambiental" loading="lazy" />
+          </a>
+          <figcaption><b><span class="t" lang="pt">Recuperação de área</span><span class="t" lang="en">Land recovery</span></b> — <span class="t" lang="pt">hectares recuperados sobre a meta, com progresso YTD.</span><span class="t" lang="en">hectares recovered against target, with YTD progress.</span></figcaption>
+        </figure>
+        <figure class="pmo-shot pmo-shot--wide">
+          <a class="lightboxgallery-link" href="../images/samarco/indicators/recuperacao-nascentes.webp" aria-label="Recuperação de nascentes — evolução do programa">
+            <img src="../images/samarco/indicators/recuperacao-nascentes.webp" alt="Painel de recuperação de nascentes" loading="lazy" />
+          </a>
+          <figcaption><b><span class="t" lang="pt">Recuperação de nascentes</span><span class="t" lang="en">Spring recovery</span></b> — <span class="t" lang="pt">evolução do programa de nascentes na bacia.</span><span class="t" lang="en">progress of the basin's spring-recovery program.</span></figcaption>
+        </figure>
+      </div>
+
+      <!-- Grupo B — Risco & Conformidade -->
+      <div class="pmo-group-head reveal">
+        <span class="pmo-group-head__roman">ii</span>
+        <span class="pmo-group-head__name"><span class="t" lang="pt">Risco &amp; Conformidade</span><span class="t" lang="en">Risk &amp; Compliance</span></span>
+        <span class="pmo-group-head__gloss">SST · GRC</span>
+      </div>
+      <div class="sl-gallery pmo-grid reveal">
+        <figure class="pmo-shot pmo-shot--wide">
+          <a class="lightboxgallery-link" href="../images/samarco/indicators/nivel-risco-global.webp" aria-label="Nível de risco global — série mensal">
+            <img src="../images/samarco/indicators/nivel-risco-global.webp" alt="Série temporal do nível de risco global" loading="lazy" />
+          </a>
+          <figcaption><b><span class="t" lang="pt">Nível de risco global</span><span class="t" lang="en">Global risk level</span></b> — <span class="t" lang="pt">série mensal do índice agregado de risco corporativo.</span><span class="t" lang="en">monthly series of the aggregate corporate-risk index.</span></figcaption>
+        </figure>
+        <figure class="pmo-shot pmo-shot--wide">
+          <a class="lightboxgallery-link" href="../images/samarco/indicators/conformidade-sst.webp" aria-label="Status dos programas estratégicos — conformidade SST, denúncias, ações críticas">
+            <img src="../images/samarco/indicators/conformidade-sst.webp" alt="Painel de conformidade SST e programas estratégicos" loading="lazy" />
+          </a>
+          <figcaption><b><span class="t" lang="pt">Conformidade &amp; SST</span><span class="t" lang="en">Compliance &amp; H&amp;S</span></b> — <span class="t" lang="pt">controles testados, denúncias tratadas e ações críticas concluídas.</span><span class="t" lang="en">controls tested, reports handled and critical actions closed.</span></figcaption>
+        </figure>
+        <figure class="pmo-shot">
+          <a class="lightboxgallery-link" href="../images/samarco/indicators/conhecimentos-criticos.webp" aria-label="Conhecimentos críticos — mapa de competências">
+            <img src="../images/samarco/indicators/conhecimentos-criticos.webp" alt="Indicador de conhecimentos críticos" loading="lazy" />
+          </a>
+          <figcaption><b><span class="t" lang="pt">Conhecimentos críticos</span><span class="t" lang="en">Critical knowledge</span></b> — <span class="t" lang="pt">cobertura de competências essenciais e risco de sucessão.</span><span class="t" lang="en">coverage of essential skills and succession risk.</span></figcaption>
+        </figure>
+      </div>
+
+      <!-- Grupo C — Operação & Rejeitos -->
+      <div class="pmo-group-head reveal">
+        <span class="pmo-group-head__roman">iii</span>
+        <span class="pmo-group-head__name"><span class="t" lang="pt">Operação &amp; Rejeitos</span><span class="t" lang="en">Operations &amp; Tailings</span></span>
+        <span class="pmo-group-head__gloss"><span class="t" lang="pt">Produção</span><span class="t" lang="en">Production</span></span>
+      </div>
+      <div class="sl-gallery pmo-grid reveal">
+        <figure class="pmo-shot pmo-shot--wide">
+          <a class="lightboxgallery-link" href="../images/samarco/indicators/capacidade-rejeitos.webp" aria-label="Disposição de rejeitos — projeção anual de capacidade vs. projetado">
+            <img src="../images/samarco/indicators/capacidade-rejeitos.webp" alt="Projeção de capacidade de disposição de rejeitos até 2041" loading="lazy" />
+          </a>
+          <figcaption><b><span class="t" lang="pt">Disposição de rejeitos</span><span class="t" lang="en">Tailings disposal</span></b> — <span class="t" lang="pt">capacidade vs. projetado por estrutura, com marcos de entrada.</span><span class="t" lang="en">capacity vs. projected by structure, with entry milestones.</span></figcaption>
+        </figure>
+        <figure class="pmo-shot pmo-shot--wide">
+          <a class="lightboxgallery-link" href="../images/samarco/indicators/comparacao-planos.webp" aria-label="Comparação dos planos — cenários de produção por processo e ano">
+            <img src="../images/samarco/indicators/comparacao-planos.webp" alt="Comparação de planos de produção (BP, PBR, PNO, PTA)" loading="lazy" />
+          </a>
+          <figcaption><b><span class="t" lang="pt">Comparação dos planos</span><span class="t" lang="en">Plan comparison</span></b> — <span class="t" lang="pt">BP · PBR · PNO · PTA confrontados por processo, indicador e ano.</span><span class="t" lang="en">BP · PBR · PNO · PTA cross-compared by process, metric and year.</span></figcaption>
+        </figure>
+        <figure class="pmo-shot">
+          <a class="lightboxgallery-link" href="../images/samarco/indicators/minerio-marginal.webp" aria-label="Minério marginal — volume e aproveitamento">
+            <img src="../images/samarco/indicators/minerio-marginal.webp" alt="Indicador de minério marginal" loading="lazy" />
+          </a>
+          <figcaption><b><span class="t" lang="pt">Minério marginal</span><span class="t" lang="en">Marginal ore</span></b> — <span class="t" lang="pt">volume e aproveitamento do minério de baixo teor.</span><span class="t" lang="en">volume and use of low-grade ore.</span></figcaption>
+        </figure>
+      </div>
+
+      <!-- Grupo D — Reputação & Pessoas -->
+      <div class="pmo-group-head reveal">
+        <span class="pmo-group-head__roman">iv</span>
+        <span class="pmo-group-head__name"><span class="t" lang="pt">Reputação &amp; Pessoas</span><span class="t" lang="en">Reputation &amp; People</span></span>
+        <span class="pmo-group-head__gloss"><span class="t" lang="pt">Social</span><span class="t" lang="en">Social</span></span>
+      </div>
+      <div class="sl-gallery pmo-grid reveal">
+        <figure class="pmo-shot pmo-shot--wide">
+          <a class="lightboxgallery-link" href="../images/samarco/indicators/reputacao-global.webp" aria-label="Índice de reputação — panorama global por dimensão">
+            <img src="../images/samarco/indicators/reputacao-global.webp" alt="Índice de reputação — panorama global" loading="lazy" />
+          </a>
+          <figcaption><b><span class="t" lang="pt">Índice de reputação</span><span class="t" lang="en">Reputation index</span></b> — <span class="t" lang="pt">índice geral e por dimensão (desempenho, ambiente, governança, operações).</span><span class="t" lang="en">overall index and by dimension (performance, workplace, governance, operations).</span></figcaption>
+        </figure>
+        <figure class="pmo-shot pmo-shot--wide">
+          <a class="lightboxgallery-link" href="../images/samarco/indicators/central-relacionamento.webp" aria-label="Central de relacionamento — manifestações registradas e tempo de resposta">
+            <img src="../images/samarco/indicators/central-relacionamento.webp" alt="Painel da central de relacionamento" loading="lazy" />
+          </a>
+          <figcaption><b><span class="t" lang="pt">Central de relacionamento</span><span class="t" lang="en">Relationship center</span></b> — <span class="t" lang="pt">manifestações registradas, natureza e tempo médio de resposta.</span><span class="t" lang="en">recorded contacts, their nature and average response time.</span></figcaption>
+        </figure>
+        <figure class="pmo-shot">
+          <a class="lightboxgallery-link" href="../images/samarco/indicators/piis-investimento-social.webp" aria-label="PIIS — investimento social">
+            <img src="../images/samarco/indicators/piis-investimento-social.webp" alt="Indicador de investimento social (PIIS)" loading="lazy" />
+          </a>
+          <figcaption><b><span class="t" lang="pt">Investimento social (PIIS)</span><span class="t" lang="en">Social investment (PIIS)</span></b> — <span class="t" lang="pt">execução do programa integrado de investimento social.</span><span class="t" lang="en">execution of the integrated social-investment program.</span></figcaption>
+        </figure>
+        <figure class="pmo-shot">
+          <a class="lightboxgallery-link" href="../images/samarco/indicators/fortalecimento-economico.webp" aria-label="Fortalecimento econômico — geração de renda local">
+            <img src="../images/samarco/indicators/fortalecimento-economico.webp" alt="Indicador de fortalecimento econômico" loading="lazy" />
+          </a>
+          <figcaption><b><span class="t" lang="pt">Fortalecimento econômico</span><span class="t" lang="en">Economic strengthening</span></b> — <span class="t" lang="pt">geração de renda e desenvolvimento econômico regional.</span><span class="t" lang="en">income generation and regional economic development.</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VI. ESPÉCIME VISUAL & SISTEMA DE DATA-VIZ
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">VI.</span>
+        <span class="name"><span class="t" lang="pt">Espécime &amp; Sistema</span><span class="t" lang="en">Specimen &amp; System</span></span>
+        <span class="gloss"><span class="t" lang="pt">+60 componentes de data-viz</span><span class="t" lang="en">+60 data-viz components</span></span>
+      </header>
+
+      <div class="pmo-lead reveal">
+        <p><span class="t" lang="pt">Para que +30 painéis se lessem como um só produto, eles foram montados a partir de um único sistema: <span class="em">mais de sessenta componentes de data-viz</span> — cartões de KPI, séries, barras de progresso, mapas de calor, status RAG — com tokens compartilhados de cor, escala e tipografia.</span>
+           <span class="t" lang="en">For +30 panels to read as one product, they were built from a single system: <span class="em">more than sixty data-viz components</span> — KPI cards, series, progress bars, heatmaps, RAG status — with shared tokens for color, scale and type.</span></p>
+      </div>
+
+      <div class="specimen-container reveal">
+        <div class="specimen-column pigment-specimen">
+          <h5><span class="t" lang="pt">Código de status (RAG)</span><span class="t" lang="en">Status code (RAG)</span></h5>
+          <div class="pigments-flex">
+            <div class="pigment-swatch" style="background:#2f9e63;"><span class="sw-label" style="color:#fff">Normal</span></div>
+            <div class="pigment-swatch" style="background:#d6a312;"><span class="sw-label">Alerta</span></div>
+            <div class="pigment-swatch" style="background:var(--oxblood);"><span class="sw-label" style="color:var(--paper)">Crítico</span></div>
+            <div class="pigment-swatch" style="background:var(--cobalt);"><span class="sw-label" style="color:var(--paper)">Dado</span></div>
+            <div class="pigment-swatch" style="background:var(--ink-ghost);"><span class="sw-label"><span class="t" lang="pt">S/ dado</span><span class="t" lang="en">No data</span></span></div>
+          </div>
+        </div>
+
+        <div class="specimen-column font-specimen">
+          <h5><span class="t" lang="pt">Tipografia do painel</span><span class="t" lang="en">Panel typography</span></h5>
+          <div class="sp-row">
+            <span class="sp-tag">Números</span>
+            <span class="sp-sample font-serif-display">R$ 842 M · 7/34 · 94%</span>
+          </div>
+          <div class="sp-row">
+            <span class="sp-tag">Rótulos</span>
+            <span class="sp-sample font-mono">CAPEX EXECUTADO · YTD 2025</span>
+          </div>
+          <div class="sp-row">
+            <span class="sp-tag"><span class="t" lang="pt">Leitura</span><span class="t" lang="en">Reading</span></span>
+            <span class="sp-sample font-serif">Eixos &amp; comentários do comitê</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vocabulário de formas: amplitude do sistema (5 formas distintas, dados reais) -->
+      <div class="pmo-group-head reveal" style="margin-top: var(--sp-7);">
+        <span class="pmo-group-head__roman">✦</span>
+        <span class="pmo-group-head__name"><span class="t" lang="pt">Vocabulário de formas</span><span class="t" lang="en">A vocabulary of forms</span></span>
+        <span class="pmo-group-head__gloss"><span class="t" lang="pt">Uma régua, muitos gráficos</span><span class="t" lang="en">One ruler, many charts</span></span>
+      </div>
+      <div class="pmo-lead reveal">
+        <p><span class="t" lang="pt">A mesma gramática serve formas muito distintas — do mapa ao medidor — sempre na mesma régua de cor, escala e tipografia. Uma amostra do repertório:</span>
+           <span class="t" lang="en">The same grammar serves very distinct forms — from map to gauge — always on one ruler of color, scale and type. A sample of the repertoire:</span></p>
+      </div>
+      <div class="sl-gallery pmo-grid reveal">
+        <figure class="pmo-shot pmo-shot--wide">
+          <a class="lightboxgallery-link" href="../images/samarco/forms/mapa-piis.webp" aria-label="Mapa coroplético — Índice de Ambiência Social × Investimento (PIIS) por localidade">
+            <img src="../images/samarco/forms/mapa-piis.webp" alt="Mapa coroplético do índice de ambiência social por localidade" loading="lazy" />
+          </a>
+          <figcaption><b><span class="t" lang="pt">Mapa coroplético</span><span class="t" lang="en">Choropleth map</span></b> — <span class="t" lang="pt">Ambiência Social × Investimento (PIIS) por localidade, em cinco faixas.</span><span class="t" lang="en">Social Climate × Investment (PIIS) by locality, in five bands.</span></figcaption>
+        </figure>
+        <figure class="pmo-shot">
+          <a class="lightboxgallery-link" href="../images/samarco/forms/benchmark-agua.webp" aria-label="Benchmark — taxa de recirculação de água vs. pares do setor">
+            <img src="../images/samarco/forms/benchmark-agua.webp" alt="Benchmark de taxa de recirculação de água contra pares" loading="lazy" />
+          </a>
+          <figcaption><b><span class="t" lang="pt">Benchmark</span><span class="t" lang="en">Benchmark</span></b> — <span class="t" lang="pt">recirculação de água vs. pares do setor (Vale, AngloAmerican, Usiminas).</span><span class="t" lang="en">water recirculation vs. industry peers (Vale, AngloAmerican, Usiminas).</span></figcaption>
+        </figure>
+        <figure class="pmo-shot">
+          <a class="lightboxgallery-link" href="../images/samarco/forms/piis-avanco.webp" aria-label="Barras empilhadas — avanço financeiro do PIIS por natureza">
+            <img src="../images/samarco/forms/piis-avanco.webp" alt="Barras empilhadas do avanço financeiro do PIIS" loading="lazy" />
+          </a>
+          <figcaption><b><span class="t" lang="pt">Barras empilhadas</span><span class="t" lang="en">Stacked bars</span></b> — <span class="t" lang="pt">avanço financeiro do PIIS por natureza (contribuição, patrocínio, doação…).</span><span class="t" lang="en">PIIS financial progress by type (contribution, sponsorship, donation…).</span></figcaption>
+        </figure>
+        <figure class="pmo-shot">
+          <a class="lightboxgallery-link" href="../images/samarco/forms/donut-mulheres.webp" aria-label="Rosca — representatividade total de mulheres por cargo">
+            <img src="../images/samarco/forms/donut-mulheres.webp" alt="Gráfico de rosca da representatividade de mulheres por cargo" loading="lazy" />
+          </a>
+          <figcaption><b><span class="t" lang="pt">Rosca</span><span class="t" lang="en">Donut</span></b> — <span class="t" lang="pt">representatividade total de mulheres por cargo.</span><span class="t" lang="en">overall women representation by role.</span></figcaption>
+        </figure>
+        <figure class="pmo-shot">
+          <a class="lightboxgallery-link" href="../images/samarco/forms/gauge-condicionantes.webp" aria-label="Medidor — saúde da área de condicionantes ambientais">
+            <img src="../images/samarco/forms/gauge-condicionantes.webp" alt="Medidor de saúde da área de condicionantes ambientais" loading="lazy" />
+          </a>
+          <figcaption><b><span class="t" lang="pt">Medidor</span><span class="t" lang="en">Gauge</span></b> — <span class="t" lang="pt">saúde da área, com semáforo de status (condicionantes ambientais).</span><span class="t" lang="en">area health, with a status traffic-light (environmental conditions).</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VII. RESULTADOS & IMPACTO
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread">
+      <aside class="margin-l" aria-hidden="true"></aside>
+      <div class="content">
+        <header class="section-head reveal">
+          <span class="roman">VII.</span>
+          <span class="name"><span class="t" lang="pt">Resultados &amp; Impacto</span><span class="t" lang="en">Outcomes &amp; Impact</span></span>
+          <span class="gloss"><span class="t" lang="pt">O que mudou</span><span class="t" lang="en">What changed</span></span>
+        </header>
+
+        <p class="results-intro reveal"><span class="t" lang="pt">A cabine consolidou a leitura executiva do PMO em uma fonte única, e deu ao comitê uma régua comum para decidir:</span>
+           <span class="t" lang="en">The cabin consolidated the PMO's executive read into a single source, and gave the committee a common ruler to decide by:</span></p>
+
+        <aside class="marginalia-stat reveal">
+          <dl>
+            <div>
+              <dt><span class="unit unit-pre">+</span><span class="stat-val" data-count="60">0</span></dt>
+              <dd><span class="t" lang="pt">componentes de data-viz no sistema do PMO</span><span class="t" lang="en">data-viz components in the PMO system</span></dd>
+            </div>
+            <div>
+              <dt><span class="stat-val" data-count="6">0</span></dt>
+              <dd><span class="t" lang="pt">eixos da estratégia unificados em uma só Mandala</span><span class="t" lang="en">strategy axes unified into one Mandala</span></dd>
+            </div>
+            <div>
+              <dt><span class="stat-val" data-count="20">0</span><span class="unit">+</span></dt>
+              <dd><span class="t" lang="pt">planilhas reconciliadas manualmente, substituídas</span><span class="t" lang="en">manually reconciled spreadsheets, replaced</span></dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+      <aside class="margin-r" aria-hidden="true"></aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VIII. ERRATA (APRENDIZADOS)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">VIII.</span>
+        <span class="name">Errata</span>
+        <span class="gloss"><span class="t" lang="pt">Lições e revisões</span><span class="t" lang="en">Lessons &amp; revisions</span></span>
+      </header>
+
+      <ol class="errata-list" data-stagger>
+        <li class="errata-item">
+          <span class="errata-tag"><span class="t" lang="pt">Sobre a cor</span><span class="t" lang="en">On color</span></span>
+          <p class="t" lang="pt">
+            <span class="strike">Onde se quis colorir cada eixo com a sua própria identidade...</span>
+            — <span class="em">descobrimos que cor de marca brigava com cor de status. Reservamos toda a cor para o RAG; a identidade de cada eixo passou a viver no rótulo, não no pigmento.</span>
+          </p>
+          <p class="t" lang="en">
+            <span class="strike">Where we wanted to color each axis with its own identity...</span>
+            — <span class="em">we found brand color fighting status color. We reserved all color for RAG; each axis's identity now lives in the label, not the pigment.</span>
+          </p>
+        </li>
+        <li class="errata-item">
+          <span class="errata-tag"><span class="t" lang="pt">Sobre a densidade</span><span class="t" lang="en">On density</span></span>
+          <p class="t" lang="pt">
+            <span class="strike">Onde a primeira cabine tentou mostrar todos os +30 indicadores de uma vez...</span>
+            — <span class="em">virou ruído. A cabine recuou para cinco indicadores-chave e três painéis; o resto desceu para o atlas, acessível por eixo.</span>
+          </p>
+          <p class="t" lang="en">
+            <span class="strike">Where the first cabin tried to show all +30 indicators at once...</span>
+            — <span class="em">it became noise. The cabin pulled back to five headline indicators and three panels; the rest moved down into the atlas, reachable by axis.</span>
+          </p>
+        </li>
+      </ol>
+
+      <div class="fiction-note reveal">
+        <span><span class="t" lang="pt">Os valores e telas exibidos são ilustrativos, para fins de demonstração de design, e respeitam os parâmetros de confidencialidade acordados com a Samarco.</span><span class="t" lang="en">Figures and screens shown are illustrative, for design demonstration only, and respect the confidentiality terms agreed with Samarco.</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       IX. INSTRUMENTARIUM
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">IX.</span>
+        <span class="name">Instrumentarium</span>
+        <span class="gloss"><span class="t" lang="pt">Instrumentos &amp; método</span><span class="t" lang="en">Tools &amp; method</span></span>
+      </header>
+
+      <ul class="instruments" data-stagger>
+        <li class="instrument">
+          <span class="inst-glyph font-serif-display" aria-hidden="true">✶</span>
+          <span class="inst-name">Figma · Variables</span>
+          <span class="inst-desc"><span class="t" lang="pt">Biblioteca de +60 componentes de data-viz, com tokens de cor, escala e status.</span><span class="t" lang="en">Library of +60 data-viz components, with color, scale and status tokens.</span></span>
+        </li>
+        <li class="instrument">
+          <span class="inst-glyph font-serif-display" aria-hidden="true">✧</span>
+          <span class="inst-name"><span class="t" lang="pt">DS de data-viz</span><span class="t" lang="en">Data-viz DS</span></span>
+          <span class="inst-desc"><span class="t" lang="pt">Gramática visual compartilhada por Finanças, Riscos, Sustentabilidade e Operações.</span><span class="t" lang="en">A visual grammar shared across Finance, Risk, Sustainability and Operations.</span></span>
+        </li>
+        <li class="instrument">
+          <span class="inst-glyph font-serif-display" aria-hidden="true">⚙</span>
+          <span class="inst-name"><span class="t" lang="pt">Sistema RAG · BI</span><span class="t" lang="en">RAG system · BI</span></span>
+          <span class="inst-desc"><span class="t" lang="pt">Lógica de status (verde/âmbar/vermelho) sincronizada às fontes de BI da companhia.</span><span class="t" lang="en">Status logic (green/amber/red) synced to the company's BI sources.</span></span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       COLOPHÃO & EPÍLOGO
+       ============================================================ -->
+  <section class="case-colophon" data-folio>
+    <div class="ornament">✦</div>
+    <p class="case-colophon-body">
+      <span class="t" lang="pt">Esta prancha foi composta pelo autor em <em>MMXXV</em>, a partir do trabalho de design da cabine de comando do PMO Estratégico da Samarco. Os números e telas exibidos servem como espécime conceitual de design de data-viz e arquitetura de informação executiva, mantidos os parâmetros de confidencialidade acordados.</span>
+      <span class="t" lang="en">This plate was set by the author in <em>MMXXV</em>, drawn from the design of Samarco's Strategic PMO command cabin. The figures and screens shown serve as a conceptual specimen of data-viz design and executive information architecture, under the agreed confidentiality terms.</span>
+    </p>
+    <div class="case-colophon-meta">Plate II · Vol. I · MMXXV</div>
+  </section>
+
+  <!-- Navegação de Folios (Verso/Recto) -->
+  <nav class="folio-nav" aria-label="Navegação entre cases">
+    <a class="verso" href="../index.html#works" rel="prev">
+      <span class="folio-marker"><span class="t" lang="pt">← Catálogo (Anverso)</span><span class="t" lang="en">← Catalogue (Anverso)</span></span>
+      <span class="folio-title"><em><span class="t" lang="pt">Catálogo de Obras</span><span class="t" lang="en">A Catalogue of Works</span></em></span>
+    </a>
+    <a class="recto" href="lighthouse.html" rel="next">
+      <span class="folio-marker"><span class="t" lang="pt">Próxima Prancha (Recto) →</span><span class="t" lang="en">Next Plate (Recto) →</span></span>
+      <span class="folio-title"><em><span class="t" lang="pt">Prancha III — Lighthouse App</span><span class="t" lang="en">Plate III — Lighthouse App</span></em></span>
+    </a>
+  </nav>
+
+</main>
+
+<!-- ============================================================
+     CHROME INFERIOR (CONTADOR DE PÁGINAS)
+     ============================================================ -->
+<footer class="chrome-bot">
+  <div class="page-counter" aria-hidden="true">
+    <span class="num" data-counter-current>—</span>
+    <span class="of">/ <span data-counter-total>—</span></span>
+  </div>
+  <div class="ink-progress" aria-hidden="true"></div>
+  <div class="page-counter">
+    <span class="of"><span class="t" lang="pt">Prancha</span><span class="t" lang="en">Plate</span></span>
+    <span class="num">II</span>
+  </div>
+</footer>
+
+<!-- Modais e interações da galeria e scripts locais -->
+<script src="./case-template.js"></script>
+<!-- Chrome de case: Index Rerum (⌘K) + edição de bolso (paridade com a home) -->
+<script src="./case-chrome.js"></script>
+
+<!-- Lightbox das galerias (escopo desta página) -->
+<script>
+(function () {
+  function collect(gallery, clicked) {
+    var links = Array.prototype.slice.call(gallery.querySelectorAll('.lightboxgallery-link'));
+    var items = links.map(function (link) {
+      var img = link.querySelector('img');
+      var caption = (link.getAttribute('aria-label') || '') || (img && img.getAttribute('alt')) || '';
+      return { href: link.getAttribute('href'), caption: caption, thumb: img ? img.src : link.getAttribute('href') };
+    });
+    return { items: items, startIndex: Math.max(0, links.indexOf(clicked)) };
+  }
+  function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+  function open(gallery, clicked) {
+    var data = collect(gallery, clicked);
+    var items = data.items; if (!items.length) return;
+    var current = data.startIndex;
+    var overlay = document.createElement('div');
+    overlay.className = 'lbg-overlay';
+    var multi = items.length > 1;
+    var sidebar = multi ? '<div class="lbg__sidebar">' + items.map(function (it, i) {
+      return '<button class="lbg__thumb' + (i === current ? ' is-active' : '') + '" data-index="' + i + '" type="button"><img src="' + esc(it.thumb) + '" alt=""></button>';
+    }).join('') + '</div>' : '';
+    overlay.innerHTML =
+      '<button class="lbg__close" data-action="close" aria-label="Close">&times;</button>' +
+      sidebar +
+      '<div class="lbg__stage">' +
+        (multi ? '<button class="lbg__nav lbg__nav--prev" data-action="prev" aria-label="Previous">&#8249;</button>' : '') +
+        '<div class="lbg__viewer">' +
+          '<img src="' + esc(items[current].href) + '" alt="">' +
+          '<div class="lbg__caption"><span class="lbg__caption__text">' + esc(items[current].caption) + '</span>' +
+          (multi ? '<span class="lbg__counter">' + (current + 1) + ' / ' + items.length + '</span>' : '') + '</div>' +
+        '</div>' +
+        (multi ? '<button class="lbg__nav lbg__nav--next" data-action="next" aria-label="Next">&#8250;</button>' : '') +
+      '</div>';
+    document.body.appendChild(overlay);
+    document.body.style.overflow = 'hidden';
+
+    var viewer = overlay.querySelector('.lbg__viewer');
+    var imgEl = viewer.querySelector('img');
+    var capEl = overlay.querySelector('.lbg__caption__text');
+    var cntEl = overlay.querySelector('.lbg__counter');
+    var thumbs = Array.prototype.slice.call(overlay.querySelectorAll('.lbg__thumb'));
+
+    function goTo(i) {
+      var n = ((i % items.length) + items.length) % items.length;
+      if (n === current) return;
+      current = n;
+      viewer.classList.remove('is-swapping'); void viewer.offsetWidth;
+      imgEl.src = items[current].href;
+      capEl.textContent = items[current].caption;
+      if (cntEl) cntEl.textContent = (current + 1) + ' / ' + items.length;
+      viewer.classList.add('is-swapping');
+      thumbs.forEach(function (t, k) { t.classList.toggle('is-active', k === current); });
+    }
+    function close() {
+      if (overlay.parentNode) document.body.removeChild(overlay);
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', onKey);
+    }
+    function onKey(e) {
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(current - 1); }
+    }
+    overlay.addEventListener('click', function (e) {
+      var action = e.target.closest('[data-action]');
+      if (action) { e.stopPropagation(); var a = action.getAttribute('data-action'); if (a === 'prev') goTo(current - 1); else if (a === 'next') goTo(current + 1); else close(); return; }
+      var thumb = e.target.closest('.lbg__thumb');
+      if (thumb) { e.stopPropagation(); goTo(parseInt(thumb.dataset.index, 10)); return; }
+      if (e.target.closest('.lbg__viewer, .lbg__sidebar, .lbg__caption, .lbg__nav, .lbg__close')) return;
+      close();
+    });
+    var sx = 0, sy = 0, ta = false;
+    var stage = overlay.querySelector('.lbg__stage');
+    stage.addEventListener('touchstart', function (e) { if (e.touches.length !== 1) return; ta = true; sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+    stage.addEventListener('touchend', function (e) { if (!ta) return; ta = false; var t = e.changedTouches[0]; var dx = t.clientX - sx, dy = t.clientY - sy; if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) { if (dx < 0) goTo(current + 1); else goTo(current - 1); } }, { passive: true });
+    document.addEventListener('keydown', onKey);
+  }
+
+  document.querySelectorAll('.lightboxgallery-link').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var gallery = link.closest('.sl-gallery') || link.parentElement;
+      open(gallery, link);
+    });
+  });
+})();
+</script>
+</body>
+</html>
