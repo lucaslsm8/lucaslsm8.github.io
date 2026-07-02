@@ -235,6 +235,47 @@ const CONTENT = {
           back:  "images/lighthouse/paint-back.webp",
           side:  "images/home/paint-side.webp"
         }
+      }, {
+        roman: "Plate IV",
+        num: "004",
+        title: ["Sports", {
+          reg: " Experience"
+        }],
+        sub: "DirecTV · Multiplataforma · Copa 2022",
+        meta: [{
+          dt: "Comissão",
+          dd: "DirecTV GO — Copa 2022"
+        }, {
+          dt: "Função",
+          dd: "Senior Product Designer · O elo"
+        }, {
+          dt: "Período",
+          dd: "MMXXII (Copa do Qatar)"
+        }, {
+          dt: "Materiais",
+          dd: "Figma, DS multiplataforma, dados FIFA"
+        }, {
+          dt: "Dimensões",
+          dd: "Mobile · Web · TV · 64 partidas"
+        }],
+        desc: [["Hub multiplataforma da DirecTV para a Copa do Mundo de 2022 — ", {
+          strong: "mobile, web e TV"
+        }, " reunidos numa só experiência, com estatísticas oficiais da FIFA em tempo real e recortes próprios para o Brasil e a América Latina."], ["Atuei como elo entre design, desenvolvimento e dados, coordenando DirecTV, Accenture e FIFA sob um prazo inegociável — com um ", {
+          it: "Design System unificado"
+        }, " que mantém a mesma linguagem da palma da mão à tela da sala."]],
+        stats: [{
+          val: "03",
+          lab: "Plataformas\nmobile · web · TV"
+        }, {
+          val: "64",
+          lab: "Partidas\nao vivo"
+        }, {
+          val: "02",
+          lab: "Versões\nregionais"
+        }],
+        link: "ler a ficha completa",
+        href: "projects/sports-experience.html",
+        imgClass: "plate-img-2"
       }]
     },
     method: {
@@ -744,6 +785,47 @@ const CONTENT = {
           back:  "images/lighthouse/paint-back.webp",
           side:  "images/home/paint-side.webp"
         }
+      }, {
+        roman: "Plate IV",
+        num: "004",
+        title: ["Sports", {
+          reg: " Experience"
+        }],
+        sub: "DirecTV · Multiplatform · World Cup 2022",
+        meta: [{
+          dt: "Commission",
+          dd: "DirecTV GO — World Cup 2022"
+        }, {
+          dt: "Role",
+          dd: "Senior Product Designer · The link"
+        }, {
+          dt: "Period",
+          dd: "MMXXII (Qatar World Cup)"
+        }, {
+          dt: "Materials",
+          dd: "Figma, multiplatform DS, FIFA data"
+        }, {
+          dt: "Dimensions",
+          dd: "Mobile · Web · TV · 64 matches"
+        }],
+        desc: [["DirecTV's multiplatform hub for the 2022 World Cup — ", {
+          strong: "mobile, web and TV"
+        }, " brought into one experience, with official real-time FIFA statistics and dedicated cuts for Brazil and Latin America."], ["I acted as the link between design, development and data, coordinating DirecTV, Accenture and FIFA under a non-negotiable deadline — with a ", {
+          it: "unified Design System"
+        }, " that keeps one language from the palm of the hand to the living-room screen."]],
+        stats: [{
+          val: "03",
+          lab: "Platforms\nmobile · web · TV"
+        }, {
+          val: "64",
+          lab: "Matches\ncovered live"
+        }, {
+          val: "02",
+          lab: "Regional\nversions"
+        }],
+        link: "read the full entry",
+        href: "projects/sports-experience.html",
+        imgClass: "plate-img-2"
       }]
     },
     method: {

@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sports Experience — Copa do Mundo 2022 · Lucas Schoenherr</title>
+<meta name="description" content="Estudo de caso do Sports Experience: hub multiplataforma (mobile, web e TV) da DirecTV para a Copa do Mundo 2022, com dados oficiais da FIFA em tempo real, por Lucas Schoenherr." />
+<!-- Open Graph / social -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Sports Experience · Lucas Schoenherr" />
+<meta property="og:description" content="Hub multiplataforma da DirecTV para a Copa do Mundo 2022 — mobile, web e TV num só Design System, com estatísticas da FIFA em tempo real." />
+<meta property="og:locale" content="pt_BR" />
+<meta property="og:url" content="https://lucaslsm8.github.io/Book/projects/sports-experience.html" />
+<meta property="og:image" content="https://lucaslsm8.github.io/Book/images/sports/capa.webp" />
+<meta property="og:image:alt" content="Capa do case Sports Experience" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Sports Experience · Lucas Schoenherr" />
+<meta name="twitter:description" content="Hub multiplataforma da DirecTV para a Copa do Mundo 2022 — mobile, web e TV num só Design System." />
+<meta name="twitter:image" content="https://lucaslsm8.github.io/Book/images/sports/capa.webp" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<!-- Design tokens e estilos da home + específicos do case -->
+<link rel="stylesheet" href="../design-system/tokens.css" />
+<link rel="stylesheet" href="../catalogue.css" />
+<link rel="stylesheet" href="../design-system/case-template.css" />
+
+<style>
+  /* ============================================================
+     PRANCHA IV · SPORTS EXPERIENCE — estilos exclusivos escritos
+     sobre os tokens editoriais. Abordagem HÍBRIDA (como a Samarco):
+     as telas reais preservam o tom do produto (vinho Qatar / ciano
+     DirecTV / verde de gramado); as peças novas são tema-livro,
+     usando o vinho/ciano só como acento semântico.
+     ============================================================ */
+  :root {
+    --sx-wine:  #7a1740;   /* vinho Qatar 2022 */
+    --sx-cyan:  #0f8fbf;   /* ciano DirecTV GO */
+    --sx-turf:  #2f8f56;   /* verde de gramado */
+  }
+
+  /* ---------- Faixa de resultados-chave (logo após o herói) ---------- */
+  .sx-results { padding: var(--sp-7) var(--sp-6) var(--sp-6); }
+  .sx-results__inner { max-width: 1000px; margin: 0 auto; }
+  .sx-results__lab { text-align: center; font-family: var(--mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--oxblood); margin: 0 0 var(--sp-3); }
+  .sx-results__orn { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 0 0 var(--sp-2); color: var(--oxblood); }
+  .sx-results__orn::before, .sx-results__orn::after { content: ''; width: 54px; height: 1px; background: color-mix(in srgb, var(--oxblood) 42%, transparent); }
+  .sx-results__orn span { font-family: var(--serif-display); font-size: 15px; line-height: 1; opacity: .8; }
+  .sx-results__grid { list-style: none; margin: 0; padding: var(--sp-5) 0; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--hairline-strong); border-bottom: 1px solid var(--hairline-strong); }
+  @media (max-width: 720px) { .sx-results__grid { grid-template-columns: repeat(2, 1fr); gap: var(--sp-5) 0; } }
+  @media (max-width: 380px) { .sx-results__grid { grid-template-columns: 1fr; } }
+  .sx-results__item { text-align: center; padding: 0 var(--sp-4); }
+  .sx-results__item + .sx-results__item { border-left: 1px solid var(--hairline); }
+  @media (max-width: 720px) { .sx-results__item:nth-child(odd) { border-left: none; } }
+  @media (max-width: 380px) { .sx-results__item, .sx-results__item + .sx-results__item { border-left: none; } }
+  .sx-results__v { display: block; font-family: var(--serif-display); font-size: clamp(34px, 5vw, 54px); line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .sx-results__v .suf { font-size: .5em; color: var(--oxblood); vertical-align: .5em; margin-left: 1px; }
+  .sx-results__lab2 { display: block; margin-top: 10px; font-family: var(--serif); font-size: 14px; line-height: var(--lh-snug); color: var(--ink-soft); }
+
+  /* ============================================================
+     PEÇA DE IMPACTO — "O HUB EM TRÊS TELAS" (full-bleed)
+     Segmentado Mobile · Web · TV que troca a prancha em exibição.
+     Espelha a Mandala do Samarco / o coverflow do Lighthouse.
+     ============================================================ */
+  .sx-impact { padding: var(--sp-9) var(--sp-6) var(--sp-8); }
+  .sx-impact__inner { max-width: 1120px; margin: 0 auto; }
+  .sx-impact-head { text-align: center; max-width: 720px; margin: 0 auto var(--sp-6); }
+  .sx-impact-head__eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--oxblood); }
+  .sx-impact-head__title { font-family: var(--serif-display); font-style: italic; font-size: clamp(30px, 5vw, 46px); line-height: 1.04; margin: 10px 0 var(--sp-3); color: var(--ink); }
+  .sx-impact-head__sub { font-family: var(--serif); font-size: 17px; line-height: var(--lh-loose); color: var(--ink-soft); }
+  .sx-impact-head__sub .em { color: var(--ink); font-weight: 600; }
+
+  .sx-seg { display: inline-flex; margin: 0 auto var(--sp-6); border: 1px solid var(--hairline-strong); border-radius: var(--radius-pill); overflow: hidden; background: var(--paper-card); }
+  .sx-seg-wrap { display: flex; justify-content: center; }
+  .sx-seg button { appearance: none; border: 0; background: transparent; cursor: pointer; padding: 10px 22px; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); display: inline-flex; align-items: center; gap: 8px; transition: color var(--dur-base), background var(--dur-base); }
+  .sx-seg button + button { border-left: 1px solid var(--hairline); }
+  .sx-seg button .gl { width: 15px; height: 15px; display: block; }
+  .sx-seg button[aria-selected="true"] { color: var(--paper); background: var(--ink); }
+  .sx-seg button:hover:not([aria-selected="true"]) { color: var(--ink); }
+
+  .sx-plat { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: var(--sp-7); align-items: center; }
+  @media (max-width: 900px) { .sx-plat { grid-template-columns: 1fr; gap: var(--sp-5); } }
+  .sx-plat__stage {
+    position: relative; min-height: 460px; display: grid; place-items: center;
+    background:
+      radial-gradient(120% 90% at 50% 0%, color-mix(in srgb, var(--sx-wine) 14%, transparent), transparent 60%),
+      var(--paper-shade);
+    border: 1px solid var(--hairline-strong); border-radius: var(--radius-md);
+    padding: var(--sp-6); overflow: hidden;
+  }
+  .sx-plat__corner { position: absolute; font-family: var(--serif-display); color: color-mix(in srgb, var(--oxblood) 55%, transparent); font-size: 14px; line-height: 1; }
+  .sx-plat__corner.tl { top: 10px; left: 12px; } .sx-plat__corner.tr { top: 10px; right: 12px; }
+  .sx-plat__corner.bl { bottom: 10px; left: 12px; } .sx-plat__corner.br { bottom: 10px; right: 12px; }
+  .sx-screen { display: none; }
+  .sx-screen.is-active { display: block; animation: sxFade var(--dur-slow) var(--ease-out); }
+  @keyframes sxFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .sx-screen img { display: block; max-height: 400px; width: auto; max-width: 100%; margin: 0 auto; border-radius: 14px; box-shadow: 0 24px 50px -18px rgba(0,0,0,.55), 0 0 0 1px rgba(0,0,0,.06); }
+  .sx-screen.landscape img { border-radius: 8px; max-height: 300px; }
+
+  .sx-plat__note { min-width: 0; }
+  .sx-plat__note .n-tag { font-family: var(--mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--sx-cyan); }
+  body.candle .sx-plat__note .n-tag { color: #58c6ea; }
+  .sx-plat__note .n-name { font-family: var(--serif-display); font-style: italic; font-size: 30px; line-height: 1.05; margin: 8px 0 var(--sp-3); color: var(--ink); }
+  .sx-plat__note .n-body { font-family: var(--serif); font-size: 16px; line-height: var(--lh-loose); color: var(--ink-soft); }
+  .sx-plat__note .n-meta { list-style: none; margin: var(--sp-4) 0 0; padding: var(--sp-4) 0 0; border-top: 1px solid var(--hairline); display: grid; gap: 10px; }
+  .sx-plat__note .n-meta li { display: flex; gap: 10px; align-items: baseline; font-family: var(--serif); font-size: 14px; color: var(--ink-soft); }
+  .sx-plat__note .n-meta b { font-family: var(--mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); min-width: 66px; font-weight: 400; }
+  .sx-plat-panel { display: none; } .sx-plat-panel.is-active { display: block; }
+
+  /* ---------- Peça de impacto — carrossel coverflow (paridade Lighthouse) ---------- */
+  /* overflow-x:clip contém o excesso lateral do full-bleed sem barra de rolagem,
+     deixando o drop-shadow vertical dos slides escapar. Fundo normal de papel. */
+  .sx-hero { padding: var(--sp-8) 0 var(--sp-7); overflow-x: clip; }
+  .sx-hero__inner { max-width: 760px; margin: 0 auto; text-align: center; padding: 0 var(--sp-6); }
+  .sx-hero__eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--oxblood); }
+  .sx-hero__title { font-family: var(--serif-display); font-style: italic; font-size: clamp(30px, 5vw, 46px); line-height: 1.04; margin: 12px 0 var(--sp-3); color: var(--ink); }
+  .sx-hero__sub { max-width: 640px; margin: 0 auto; font-family: var(--serif); font-size: 17px; line-height: var(--lh-loose); color: var(--ink-soft); }
+  .sx-hero__sub .em { color: var(--ink); font-weight: 600; }
+  /* Coverflow full-bleed: os slides laterais recuam para fora da viewport em vez
+     de serem cortados dentro da coluna editorial. */
+  .sx-hero__flow { margin: var(--sp-7) 0 0; width: 100vw; margin-left: calc(50% - 50vw); }
+  .sx-coverflow { --swiper-theme-color: var(--oxblood); --swiper-navigation-size: 28px; display: block; width: 100%; padding: var(--sp-2) 0; }
+  .sx-coverflow::part(container), .sx-coverflow::part(wrapper) { overflow: visible; }
+  .sx-coverflow swiper-slide { width: clamp(300px, 52vw, 620px); aspect-ratio: 934 / 1195; display: flex; align-items: center; justify-content: center; }
+  .sx-coverflow swiper-slide img { width: 100%; height: auto; display: block; border-radius: 8px; filter: drop-shadow(0 18px 34px rgba(26,22,18,.34)); }
+  @media (max-width: 640px) { .sx-coverflow swiper-slide { width: 300px; } }
+  .sx-hero__cap { margin: var(--sp-5) 0 0; padding: 0 var(--sp-6); font-family: var(--mono); font-size: 10px; letter-spacing: .08em; color: var(--ink-faint); text-align: center; }
+
+  /* ---------- Switcher realocado dentro da Solução ---------- */
+  .sx-switcher { margin-top: var(--sp-7); padding-top: var(--sp-6); border-top: 1px solid var(--hairline); }
+  .sx-switcher__intro { font-family: var(--serif); font-size: 15px; line-height: var(--lh-snug); color: var(--ink-soft); margin: 0 0 var(--sp-5); max-width: 640px; }
+
+  /* ============================================================
+     DOSSIÊ — sumário lateral + lombada (portado do Lighthouse/Samarco)
+     ============================================================ */
+  body { overflow-x: clip; }
+  .sx-dossier { display: grid; grid-template-columns: clamp(190px, 22vw, 248px) minmax(0, 1fr); gap: clamp(36px, 5vw, 76px); max-width: 1180px; margin: 0 auto; padding: 0 var(--sp-6); align-items: start; }
+  .sx-dossier__rail { position: sticky; top: 88px; align-self: start; padding-right: var(--sp-3); }
+  .sx-dossier__nav-label { font-family: var(--mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--oxblood); margin: 0 0 var(--sp-2); }
+  .sx-dossier__nav { display: flex; flex-direction: column; }
+  .sx-dossier__link { position: relative; display: grid; grid-template-columns: 2.2em 1fr; align-items: baseline; gap: 6px; padding: 7px 0 7px 12px; border: 0; border-bottom: 1px solid var(--hairline); background: transparent; text-align: left; cursor: pointer; color: var(--ink-soft); transition: color var(--dur-fast) ease, padding var(--dur-fast) ease; }
+  .sx-dossier__link::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 2px; height: 0; background: var(--oxblood); transition: height var(--dur-base) var(--ease-out); }
+  .sx-dossier__link:hover { color: var(--ink); }
+  .sx-dossier__link .lk-roman { font-family: var(--serif-display); font-style: italic; font-size: 14px; color: var(--ink-faint); }
+  .sx-dossier__link .lk-name { font-family: var(--serif); font-size: 15px; line-height: 1.25; }
+  .sx-dossier__link.is-active { color: var(--oxblood); }
+  .sx-dossier__link.is-active::before { height: 60%; }
+  .sx-dossier__link.is-active .lk-roman { color: var(--oxblood); }
+  .sx-dossier__link.is-active .lk-name { font-weight: 600; }
+
+  .sx-dossier__spine { min-width: 0; }
+  .sx-dossier__spine .case-section { display: block; min-height: 0; padding: var(--sp-8) 0; scroll-margin-top: 96px; }
+  .sx-dossier__spine > .case-section:first-child { padding-top: 0; }
+  .sx-dossier__spine .case-section + .case-section { border-top: 1px solid var(--hairline-strong); }
+  .sx-dossier__spine .case-intermezzo { width: 100%; max-width: 100%; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; }
+
+  @media (max-width: 900px) {
+    .sx-dossier { grid-template-columns: 1fr; gap: var(--sp-4); padding: 0 var(--sp-4); }
+    .sx-dossier__rail { position: static; padding: var(--sp-4); margin-bottom: var(--sp-2); background: var(--paper-shade); border: 1px solid var(--hairline-strong); border-radius: var(--radius-sm); }
+    .sx-dossier__nav { display: flex; flex-flow: row wrap; gap: 4px 16px; }
+    .sx-dossier__link { width: auto; padding: 5px 0 5px 10px; border-bottom: 0; }
+  }
+
+  /* ---------- Nota editorial (lead) ---------- */
+  .sx-lead { margin-top: var(--sp-4); }
+  .sx-lead p { font-family: var(--serif); font-size: 17px; line-height: var(--lh-loose); color: var(--ink-soft); }
+  .sx-lead p + p { margin-top: var(--sp-3); }
+  .sx-lead .em { color: var(--ink); font-weight: 600; }
+  .sx-h { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--oxblood); margin: 0 0 var(--sp-3); }
+
+  /* ---------- Overview: corpo + ficha técnica ---------- */
+  .sx-grid { display: grid; grid-template-columns: 1fr 290px; gap: var(--sp-6); margin-top: var(--sp-5); align-items: start; }
+  @media (max-width: 900px) { .sx-grid { grid-template-columns: 1fr; } }
+  .sx-body > p { font-family: var(--serif); font-size: 16px; line-height: var(--lh-loose); color: var(--ink-soft); }
+  .sx-body > p + p { margin-top: var(--sp-4); }
+  .sx-body strong { color: var(--ink); font-weight: 600; }
+  .sx-ficha { background: var(--paper-card); border: 1px solid var(--hairline-strong); border-radius: var(--radius-sm); padding: var(--sp-5); }
+  .sx-ficha__title { font-family: var(--serif-display); font-style: italic; font-size: 20px; margin: 0 0 var(--sp-4); color: var(--ink); }
+  .sx-ficha dl { margin: 0; display: grid; gap: var(--sp-3); }
+  .sx-ficha dt { font-family: var(--mono); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); }
+  .sx-ficha dd { margin: 2px 0 0; font-family: var(--serif); font-size: 14px; line-height: 1.35; color: var(--ink); }
+
+  /* ---------- Desafio: três variáveis que convergem ---------- */
+  .sx-question { margin-top: var(--sp-4); padding: var(--sp-5) 0; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+  .sx-question .q-lab { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--oxblood); margin: 0 0 var(--sp-3); }
+  .sx-question .q { font-family: var(--serif-display); font-style: italic; font-size: clamp(22px, 3.2vw, 30px); line-height: 1.22; color: var(--ink); margin: 0; }
+  .sx-vars { list-style: none; margin: var(--sp-6) 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); counter-reset: sxv; }
+  @media (max-width: 760px) { .sx-vars { grid-template-columns: 1fr; } }
+  .sx-var { padding: var(--sp-5); background: var(--paper-card); border: 1px solid var(--hairline-strong); border-radius: var(--radius-sm); border-top: 3px solid var(--oxblood); }
+  .sx-var__n { counter-increment: sxv; font-family: var(--serif-display); font-style: italic; font-size: 34px; line-height: 1; color: var(--oxblood); }
+  .sx-var__n::before { content: counter(sxv, decimal-leading-zero); }
+  .sx-var__name { display: block; margin: 10px 0 8px; font-family: var(--serif-display); font-style: italic; font-size: 21px; line-height: 1.1; color: var(--ink); }
+  .sx-var__body { font-family: var(--serif); font-size: 14.5px; line-height: var(--lh-snug); color: var(--ink-soft); }
+  .sx-note { margin-top: var(--sp-5); font-family: var(--serif); font-size: 16px; line-height: var(--lh-loose); color: var(--ink-soft); }
+
+  /* ---------- Meu Papel: o elo (mesa de alinhamento) ---------- */
+  .sx-elo { margin-top: var(--sp-6); display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); position: relative; }
+  @media (max-width: 760px) { .sx-elo { grid-template-columns: 1fr; } }
+  .sx-elo__party { text-align: center; padding: var(--sp-5) var(--sp-4); background: var(--paper-card); border: 1px solid var(--hairline-strong); border-radius: var(--radius-sm); }
+  .sx-elo__crest { width: 46px; height: 46px; margin: 0 auto var(--sp-3); border: 1px solid var(--hairline-strong); border-radius: 50%; display: grid; place-items: center; font-family: var(--serif-display); font-style: italic; font-size: 20px; color: var(--oxblood); }
+  .sx-elo__name { font-family: var(--serif-display); font-style: italic; font-size: 22px; color: var(--ink); }
+  .sx-elo__role { display: block; margin-top: 6px; font-family: var(--mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); }
+  .sx-elo-center { margin-top: var(--sp-4); display: grid; place-items: center; }
+  .sx-elo-center__hub { text-align: center; padding: var(--sp-5) var(--sp-6); background: var(--ink); color: var(--paper); border-radius: var(--radius-sm); max-width: 460px; }
+  .sx-elo-center__lab { font-family: var(--mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: color-mix(in srgb, var(--paper) 62%, transparent); }
+  .sx-elo-center__name { font-family: var(--serif-display); font-style: italic; font-size: 26px; margin: 6px 0 4px; }
+  .sx-elo-center__sub { font-family: var(--serif); font-size: 14px; line-height: var(--lh-snug); color: color-mix(in srgb, var(--paper) 80%, transparent); }
+
+  /* ---------- Solução: vitrine de componentes do Design System ---------- */
+  .sx-vitrine { margin-top: var(--sp-6); }
+  .sx-vit-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin-bottom: var(--sp-4); font-family: var(--mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-faint); }
+  .sx-vit-legend .sw { display: inline-flex; align-items: center; gap: 7px; }
+  .sx-vit-legend .sw::before { content: ''; width: 11px; height: 11px; border-radius: 3px; }
+  .sx-vit-legend .sw.wine::before { background: var(--sx-wine); }
+  .sx-vit-legend .sw.cyan::before { background: var(--sx-cyan); }
+  .sx-vit-legend .sw.turf::before { background: var(--sx-turf); }
+  .sx-vit-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: var(--sp-5); }
+  .sx-vit-tab { appearance: none; cursor: pointer; background: var(--paper-card); border: 1px solid var(--hairline-strong); border-radius: var(--radius-pill); padding: 8px 16px; font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); transition: all var(--dur-base); }
+  .sx-vit-tab .c { font-family: var(--serif-display); font-style: italic; text-transform: none; letter-spacing: 0; font-size: 13px; margin-right: 6px; }
+  .sx-vit-tab[aria-selected="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .sx-vit-tab:hover:not([aria-selected="true"]) { border-color: var(--oxblood); color: var(--ink); }
+  .sx-vit-panel { display: none; }
+  .sx-vit-panel.is-active { display: block; animation: sxFade var(--dur-base) var(--ease-out); }
+  .sx-vit-panel__desc { font-family: var(--serif); font-size: 15px; line-height: var(--lh-snug); color: var(--ink-soft); margin: 0 0 var(--sp-4); max-width: 640px; }
+  .sx-vit-panel__desc b { color: var(--ink); font-weight: 600; }
+  .sx-vit-strip { display: grid; gap: var(--sp-3); background: #14121a; border: 1px solid var(--hairline-strong); border-radius: var(--radius-md); padding: var(--sp-5); }
+  .sx-vit-strip.cols-6 { grid-template-columns: repeat(6, 1fr); }
+  .sx-vit-strip.cols-4 { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 760px) { .sx-vit-strip.cols-6 { grid-template-columns: repeat(3, 1fr); } .sx-vit-strip.cols-4 { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 420px) { .sx-vit-strip.cols-6 { grid-template-columns: repeat(2, 1fr); } }
+  .sx-vit-strip figure { margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .sx-vit-strip img { width: 100%; height: auto; display: block; border-radius: 6px; background: #1d1a24; }
+  .sx-vit-strip figcaption { font-family: var(--mono); font-size: 8.5px; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.5); text-align: center; }
+  .sx-vit-caption { margin-top: var(--sp-3); font-family: var(--mono); font-size: 10px; letter-spacing: .04em; color: var(--ink-faint); text-align: center; }
+
+  /* ---------- Galerias de telas (pranchas tipped-in, emolduradas · paridade Lighthouse) ---------- */
+  .sx-plates { margin-top: var(--sp-5); display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--sp-5); align-items: start; }
+  .sx-plate { position: relative; display: block; padding: 12px; background: var(--paper-card); border: 1px solid var(--oxblood); border-radius: var(--radius-sm); box-shadow: var(--shadow-soft); cursor: zoom-in; text-decoration: none; transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); }
+  .sx-plate:hover { transform: translateY(-3px); box-shadow: var(--shadow-lens); }
+  .sx-plate img { width: 100%; height: auto; display: block; border: 1px solid rgba(122,38,32,.22); border-radius: var(--art-r, 2px); }
+  /* Arte com cantos arredondados no próprio alpha: o keyline precisa seguir a
+     curva nativa (senão corta reto sobre o canto). --art-r = raio H% / V%
+     medido do alpha, escala junto da imagem. */
+  .sx-plate img[src*="overview-"] { --art-r: 2.63% / 5.25%; }
+  .sx-plate .p-cap { display: flex; align-items: baseline; gap: 9px; margin-top: 10px; padding: 0 2px; font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--ink-soft); line-height: 1.4; }
+  .sx-plate .p-cap::before { content: '✦'; color: var(--oxblood); font-size: 13px; line-height: 1; }
+  .sx-plate .p-roman { font-family: var(--serif-display); font-style: italic; font-size: 13px; color: var(--ink-faint); }
+  .sx-plate .p-txt { font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--ink); }
+  .sx-plate.wide { grid-column: span 8; } .sx-plate.half { grid-column: span 6; } .sx-plate.third { grid-column: span 4; } .sx-plate.full { grid-column: span 12; }
+  @media (max-width: 760px) { .sx-plate.wide, .sx-plate.half, .sx-plate.third { grid-column: span 6; } }
+  @media (max-width: 480px) { .sx-plate.wide, .sx-plate.half, .sx-plate.third, .sx-plate.full { grid-column: span 12; } }
+
+  /* ---------- Entrega: métricas + mockups ---------- */
+  .sx-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-4); margin-top: var(--sp-5); }
+  @media (max-width: 760px) { .sx-stats { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 380px) { .sx-stats { grid-template-columns: 1fr; } }
+  .sx-stat { padding: var(--sp-4) 0; border-top: 2px solid var(--ink); }
+  .sx-stat__v { font-family: var(--serif-display); font-style: italic; font-size: clamp(40px, 6vw, 64px); line-height: .9; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .sx-stat__v .suf, .sx-stat__v .pre { font-size: .4em; color: var(--oxblood); vertical-align: .55em; }
+  .sx-stat__lab { display: block; margin-top: 8px; font-family: var(--serif); font-size: 13.5px; line-height: var(--lh-snug); color: var(--ink-soft); }
+
+  /* ---------- Galeria final (materiais complementares) ---------- */
+  .sx-gal { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--sp-4); margin-top: var(--sp-5); }
+  .sx-gal a { grid-column: span 4; display: block; position: relative; background: var(--ink); border-radius: var(--radius-sm); overflow: hidden; box-shadow: 0 0 0 1px var(--hairline-strong), 0 10px 24px -14px rgba(0,0,0,.4); cursor: zoom-in; }
+  .sx-gal a.w6 { grid-column: span 6; }
+  @media (max-width: 760px) { .sx-gal a, .sx-gal a.w6 { grid-column: span 6; } }
+  @media (max-width: 440px) { .sx-gal a, .sx-gal a.w6 { grid-column: span 12; } }
+  .sx-gal img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 4/3; }
+  .sx-gal .g-cap { position: absolute; bottom: 0; left: 0; right: 0; padding: 22px 10px 8px; font-family: var(--serif); font-size: 11px; color: #fff; background: linear-gradient(to top, rgba(0,0,0,.8), transparent); }
+
+  .sx-disclaimer { margin-top: var(--sp-6); padding: var(--sp-4) var(--sp-5); border-left: 3px solid var(--oxblood); background: var(--paper-card); font-family: var(--serif); font-style: italic; font-size: 13.5px; line-height: var(--lh-snug); color: var(--ink-faint); }
+
+  /* Colofão + folio-nav (paridade) */
+  .case-colophon + .folio-nav { margin-top: 0; }
+  .colo-press { display: flex; flex-direction: column; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-4); }
+  .colo-press__mark { width: 74px; height: 74px; display: grid; place-items: center; border: 1px solid var(--hairline-strong); border-radius: 50%; position: relative; }
+  .colo-press__mark::before { content: ''; position: absolute; inset: 5px; border: 1px solid color-mix(in srgb, var(--oxblood) 32%, transparent); border-radius: 50%; }
+  .colo-press__mark span { font-family: var(--serif-display); font-size: 30px; line-height: 1; font-style: italic; color: var(--ink); }
+  .colo-press__cap { font-family: var(--mono); font-size: 9px; letter-spacing: .24em; text-transform: uppercase; color: var(--ink-faint); }
+  .colo-rule { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 0 auto var(--sp-4); max-width: 320px; color: var(--oxblood); }
+  .colo-rule::before, .colo-rule::after { content: ''; height: 1px; flex: 1; background: linear-gradient(to var(--dir, right), transparent, color-mix(in srgb, var(--oxblood) 46%, transparent)); }
+  .colo-rule::after { --dir: left; }
+  .colo-rule span { font-family: var(--serif-display); font-size: 14px; line-height: 1; opacity: .82; }
+  .colo-finis { font-family: var(--serif-display); font-style: italic; font-size: 15px; letter-spacing: .04em; color: var(--ink-faint); margin: var(--sp-3) 0 0; }
+  .folio-nav .folio-marker { transition: transform var(--dur-base) var(--ease-out), color var(--dur-base); display: inline-block; }
+  .folio-nav .verso:hover .folio-marker { transform: translateX(-4px); color: var(--oxblood); }
+  .folio-nav .recto:hover .folio-marker { transform: translateX(4px); color: var(--oxblood); }
+</style>
+</head>
+<body data-lang="pt">
+<!-- Granulação tátil de papel envelhecido -->
+<div class="paper-grain" aria-hidden="true"></div>
+
+<!-- ============================================================
+     CHROME SUPERIOR
+     ============================================================ -->
+<header class="chrome-top">
+  <div class="running-head">
+    <div class="scroll-compass-wrapper" aria-hidden="true" title="Bússola de Progresso">
+      <svg class="scroll-compass" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="45" stroke="var(--ink-ghost)" stroke-width="1.5" fill="none" stroke-dasharray="4 4" />
+        <circle cx="50" cy="50" r="30" stroke="var(--hairline-strong)" stroke-width="1" fill="none" />
+        <line x1="50" y1="10" x2="50" y2="90" stroke="var(--ink-soft)" stroke-width="1" />
+        <line x1="10" y1="50" x2="90" y2="50" stroke="var(--ink-soft)" stroke-width="1" />
+        <polygon points="50,20 54,50 50,55 46,50" fill="var(--oxblood)" />
+        <polygon points="50,80 54,50 50,45 46,50" fill="var(--ink-soft)" />
+        <circle cx="50" cy="50" r="4" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5" />
+      </svg>
+    </div>
+    <a href="../index.html" class="running-head-home"><span>Lucas Schoenherr</span></a>
+    <span class="sep">·</span>
+    <em><span class="t" lang="pt">Catálogo de Obras</span><span class="t" lang="en">A Catalogue of Works</span></em>
+    <span class="sep">·</span>
+    <span><span class="t" lang="pt">Prancha IV — Sports Experience</span><span class="t" lang="en">Plate IV — Sports Experience</span></span>
+  </div>
+  <nav class="chrome-actions">
+    <a href="../index.html" class="to-catalogue">
+      <em><span class="t" lang="pt">Voltar ao catálogo</span><span class="t" lang="en">Return to catalogue</span></em>
+    </a>
+    <button class="candle-toggle" type="button" aria-pressed="false" title="Modo vela" aria-label="Modo vela">
+      <svg class="candle-icon candle-icon--off" width="22" height="18" viewBox="0 0 24 22" fill="none" aria-hidden="true">
+        <path d="M9 4.6 C 9.6 5.3, 10 5.9, 9 6.6" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" />
+        <rect x="7.2" y="6.6" width="3.6" height="6.4" fill="currentColor" />
+        <path d="M5.6 13 H12.4 L11.2 14.6 H6.8 Z" fill="currentColor" />
+        <rect x="7.4" y="14.6" width="3.2" height="1.6" fill="currentColor" />
+        <ellipse cx="9" cy="17.8" rx="8" ry="1.7" fill="currentColor" />
+        <ellipse cx="9" cy="16.8" rx="6.8" ry="0.7" fill="none" stroke="var(--paper)" stroke-width="0.5" opacity="0.55" />
+        <path d="M16.4 17.4 C 21.4 17.6, 22.8 13.4, 18.6 12.6 C 16.6 12.4, 16.6 14.4, 18.2 14.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <svg class="candle-icon candle-icon--on" width="22" height="18" viewBox="0 0 24 22" fill="none" aria-hidden="true">
+        <path d="M9 0.5 C 7.6 2.2, 7 3.7, 9 5.2 C 11 3.7, 10.4 2.2, 9 0.5 Z" fill="currentColor" opacity="0.9" />
+        <line x1="9" y1="5.2" x2="9" y2="6.6" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" />
+        <rect x="7.2" y="6.6" width="3.6" height="6.4" fill="currentColor" />
+        <path d="M5.6 13 H12.4 L11.2 14.6 H6.8 Z" fill="currentColor" />
+        <rect x="7.4" y="14.6" width="3.2" height="1.6" fill="currentColor" />
+        <ellipse cx="9" cy="17.8" rx="8" ry="1.7" fill="currentColor" />
+        <ellipse cx="9" cy="16.8" rx="6.8" ry="0.7" fill="none" stroke="var(--paper)" stroke-width="0.5" opacity="0.55" />
+        <path d="M16.4 17.4 C 21.4 17.6, 22.8 13.4, 18.6 12.6 C 16.6 12.4, 16.6 14.4, 18.2 14.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+    <div class="lang-toggle" role="group" aria-label="Language / Idioma">
+      <button class="active" type="button" data-lang="pt" aria-pressed="true">PT</button>
+      <span class="pipe">|</span>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </nav>
+</header>
+
+<main class="book">
+
+  <!-- ============================================================
+       0. FRONTISPÍCIO
+       ============================================================ -->
+  <section class="case-frontispiece case-frontispiece--cinematic" data-folio>
+    <div class="frontispiece-halo" aria-hidden="true"></div>
+    <div class="sig">
+      <span class="t" lang="pt">Volume I · Prancha IV · MMXXII</span>
+      <span class="t" lang="en">Volume I · Plate IV · MMXXII</span>
+    </div>
+
+    <div class="case-num">№ 004</div>
+
+    <h1 class="case-title">
+      <span class="it">Sports</span> <span class="reg">Experience</span>
+    </h1>
+
+    <div class="case-rule" aria-hidden="true"></div>
+
+    <p class="case-deck">
+      <span class="t" lang="pt"><span class="em">Um hub multiplataforma para a Copa do Mundo de 2022</span> — mobile, web e TV reunidos numa só experiência, com estatísticas da FIFA em tempo real e recortes próprios para o Brasil e a América Latina.</span>
+      <span class="t" lang="en"><span class="em">A multiplatform hub for the 2022 World Cup</span> — mobile, web and TV brought into one experience, with real-time FIFA statistics and dedicated cuts for Brazil and Latin America.</span>
+    </p>
+
+    <dl class="case-byline case-byline--inline">
+      <div>
+        <span class="lab"><span class="t" lang="pt">Comissão</span><span class="t" lang="en">Commission</span></span>
+        <span class="val">DirecTV GO · <span class="t" lang="pt">Copa 2022</span><span class="t" lang="en">World Cup 2022</span></span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Papel</span><span class="t" lang="en">Role</span></span>
+        <span class="val">Senior Product Designer</span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Período</span><span class="t" lang="en">Period</span></span>
+        <span class="val">MMXXII · 2022</span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Escopo</span><span class="t" lang="en">Scope</span></span>
+        <span class="val"><span class="t" lang="pt">Multiplataforma · Design System · Dados ao vivo</span><span class="t" lang="en">Multiplatform · Design System · Real-time data</span></span>
+      </div>
+    </dl>
+
+    <div class="frontispiece-indicator">
+      <span class="t" lang="pt">Gire a folha para iniciar a leitura</span>
+      <span class="t" lang="en">Scroll down to turn the leaf</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       RESULTADOS-CHAVE
+       ============================================================ -->
+  <section class="sx-results" data-folio aria-label="Resultados-chave">
+    <div class="sx-results__inner reveal">
+      <p class="sx-results__lab"><span class="t" lang="pt">Resultados-chave</span><span class="t" lang="en">Key results</span></p>
+      <div class="sx-results__orn" aria-hidden="true"><span>✦</span></div>
+      <ul class="sx-results__grid">
+        <li class="sx-results__item">
+          <span class="sx-results__v"><span class="stat-val" data-count="3">3</span></span>
+          <span class="sx-results__lab2"><span class="t" lang="pt">Plataformas — mobile, web e TV — num só hub</span><span class="t" lang="en">Platforms — mobile, web and TV — in one hub</span></span>
+        </li>
+        <li class="sx-results__item">
+          <span class="sx-results__v"><span class="stat-val" data-count="2">2</span></span>
+          <span class="sx-results__lab2"><span class="t" lang="pt">Versões regionais — Brasil e América Latina</span><span class="t" lang="en">Regional versions — Brazil and Latin America</span></span>
+        </li>
+        <li class="sx-results__item">
+          <span class="sx-results__v"><span class="stat-val" data-count="64">64</span></span>
+          <span class="sx-results__lab2"><span class="t" lang="pt">Partidas cobertas ao vivo com dados da FIFA</span><span class="t" lang="en">Matches covered live with FIFA data</span></span>
+        </li>
+        <li class="sx-results__item">
+          <span class="sx-results__v"><span class="stat-val" data-count="100">100</span><span class="suf">%</span></span>
+          <span class="sx-results__lab2"><span class="t" lang="pt">Entrega on-time para a estreia, sem slip crítico</span><span class="t" lang="en">On-time delivery for kick-off, no critical slip</span></span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PEÇA DE IMPACTO — HERÓI-MONTAGEM (multiplataforma)
+       ============================================================ -->
+  <section class="sx-hero" data-folio aria-label="O hub multiplataforma da Copa 2022">
+    <div class="sx-hero__inner reveal">
+      <span class="sx-hero__eyebrow"><span class="t" lang="pt">Peça de impacto · um só hub, todas as telas</span><span class="t" lang="en">Impact piece · one hub, every screen</span></span>
+      <h2 class="sx-hero__title"><span class="t" lang="pt">Uma experiência, três telas</span><span class="t" lang="en">One experience, three screens</span></h2>
+      <p class="sx-hero__sub">
+        <span class="t" lang="pt">Do celular à TV, passando pela web e pelas telas de estatística: a mesma <span class="em">linguagem visual</span> da Copa do Mundo de 2022, com dados oficiais da FIFA em tempo real.</span>
+        <span class="t" lang="en">From phone to TV, through the web and the statistics screens: one <span class="em">visual language</span> for the 2022 World Cup, with official real-time FIFA data.</span>
+      </p>
+      <figure class="sx-hero__flow">
+        <swiper-container
+          class="sx-coverflow"
+          effect="coverflow"
+          grab-cursor="true"
+          centered-slides="true"
+          slides-per-view="auto"
+          loop="true"
+          loop-additional-slides="5"
+          space-between="24"
+          keyboard="true"
+          navigation="true"
+          coverflow-effect-rotate="0"
+          coverflow-effect-stretch="0"
+          coverflow-effect-depth="120"
+          coverflow-effect-modifier="1"
+          coverflow-effect-slide-shadows="false">
+          <swiper-slide><img src="../images/sports/flow-7.webp" width="695" height="890" alt="Sports Experience — tela em destaque 1" loading="lazy" /></swiper-slide>
+          <swiper-slide><img src="../images/sports/flow-6.webp" width="934" height="1195" alt="Sports Experience — tela em destaque 2" loading="lazy" /></swiper-slide>
+          <swiper-slide><img src="../images/sports/flow-5.webp" width="934" height="1195" alt="Sports Experience — tela em destaque 3" loading="lazy" /></swiper-slide>
+          <swiper-slide><img src="../images/sports/flow-4.webp" width="934" height="1195" alt="Sports Experience — tela em destaque 4" loading="lazy" /></swiper-slide>
+          <swiper-slide><img src="../images/sports/flow-3.webp" width="934" height="1195" alt="Sports Experience — tela em destaque 5" loading="lazy" /></swiper-slide>
+          <swiper-slide><img src="../images/sports/flow-2.webp" width="934" height="1195" alt="Sports Experience — tela em destaque 6" loading="lazy" /></swiper-slide>
+          <swiper-slide><img src="../images/sports/flow-1.webp" width="934" height="1195" alt="Sports Experience — tela em destaque 7" loading="lazy" /></swiper-slide>
+          <!-- 2º conjunto (repetição, alt="") — dá material ao loop do coverflow para
+               preencher os dois lados em qualquer largura, sem vazio à direita no load
+               (mesma solução do Lighthouse). -->
+          <swiper-slide><img src="../images/sports/flow-7.webp" width="695" height="890" alt="" loading="lazy" /></swiper-slide>
+          <swiper-slide><img src="../images/sports/flow-6.webp" width="934" height="1195" alt="" loading="lazy" /></swiper-slide>
+          <swiper-slide><img src="../images/sports/flow-5.webp" width="934" height="1195" alt="" loading="lazy" /></swiper-slide>
+          <swiper-slide><img src="../images/sports/flow-4.webp" width="934" height="1195" alt="" loading="lazy" /></swiper-slide>
+          <swiper-slide><img src="../images/sports/flow-3.webp" width="934" height="1195" alt="" loading="lazy" /></swiper-slide>
+          <swiper-slide><img src="../images/sports/flow-2.webp" width="934" height="1195" alt="" loading="lazy" /></swiper-slide>
+          <swiper-slide><img src="../images/sports/flow-1.webp" width="934" height="1195" alt="" loading="lazy" /></swiper-slide>
+        </swiper-container>
+        <figcaption class="sx-hero__cap"><span class="t" lang="pt">Arraste, use as setas ou o teclado ←/→ · Sports Experience · DirecTV GO · Copa Qatar 2022</span><span class="t" lang="en">Drag, use the arrows or the ←/→ keys · Sports Experience · DirecTV GO · Qatar 2022 World Cup</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       DOSSIÊ
+       ============================================================ -->
+  <div class="sx-dossier">
+    <aside class="sx-dossier__rail" aria-label="Índice">
+      <p class="sx-dossier__nav-label"><span class="t" lang="pt">Índice do Dossiê</span><span class="t" lang="en">Dossier Index</span></p>
+      <nav class="sx-dossier__nav" aria-label="Índice das seções"></nav>
+    </aside>
+
+    <div class="sx-dossier__spine">
+
+      <!-- I. OVERVIEW -->
+      <section class="case-section" data-folio>
+        <header class="section-head reveal">
+          <span class="roman">I.</span>
+          <span class="name"><span class="t" lang="pt">Overview</span><span class="t" lang="en">Overview</span></span>
+          <span class="gloss"><span class="t" lang="pt">O retrato</span><span class="t" lang="en">The portrait</span></span>
+        </header>
+
+        <div class="sx-lead reveal">
+          <p><span class="t" lang="pt">Um hub central da DirecTV para a Copa de 2022 no Qatar, com <span class="em">2 versões regionais</span> (Brasil e América Latina), <span class="em">3 plataformas</span> (mobile, web e TV) e dados oficiais da FIFA em tempo real, numa experiência integrada.</span>
+            <span class="t" lang="en">DirecTV's central hub for the 2022 World Cup in Qatar, with <span class="em">2 regional versions</span> (Brazil and Latin America), <span class="em">3 platforms</span> (mobile, web and TV) and official FIFA data in real time, in one integrated experience.</span></p>
+        </div>
+
+        <div class="sx-grid reveal">
+          <div class="sx-body">
+            <p><span class="t" lang="pt">O Sports Experience foi criado para ser a casa da Copa dentro da DirecTV GO: transmissão ao vivo e sob demanda, calendário detalhado, estatísticas de times e jogadores e acompanhamento de resultados. Cada funcionalidade foi adaptada para render bem em cada dispositivo, respeitando as particularidades de interação de mobile, web e TV.</span>
+              <span class="t" lang="en">Sports Experience was built to be the home of the World Cup inside DirecTV GO: live and on-demand streaming, a detailed calendar, team and player statistics, and result tracking. Each feature was adapted to perform on every device, respecting the interaction particularities of mobile, web and TV.</span></p>
+            <p><span class="t" lang="pt">A integração com a <strong>FIFA</strong> foi essencial para o acesso a dados oficiais em tempo real e a precisão das informações. O desenvolvimento priorizou consistência visual e funcional entre as plataformas, otimizando a experiência conforme as características de cada meio — e foi disponibilizado a todos os assinantes durante o torneio, incluindo novos usuários.</span>
+              <span class="t" lang="en">Integration with <strong>FIFA</strong> was essential for real-time access to official data and information accuracy. Development prioritized visual and functional consistency across platforms, optimizing the experience per medium — and it was made available to all subscribers during the tournament, including new users.</span></p>
+          </div>
+
+          <aside class="sx-ficha" aria-label="Ficha técnica">
+            <p class="sx-ficha__title"><span class="t" lang="pt">Ficha técnica</span><span class="t" lang="en">The commission</span></p>
+            <dl>
+              <div><dt><span class="t" lang="pt">Cliente</span><span class="t" lang="en">Client</span></dt><dd>DirecTV GO</dd></div>
+              <div><dt><span class="t" lang="pt">Ano</span><span class="t" lang="en">Year</span></dt><dd>MMXXII · 2022</dd></div>
+              <div><dt><span class="t" lang="pt">Plataformas</span><span class="t" lang="en">Platforms</span></dt><dd><span class="t" lang="pt">Mobile · Web · TV</span><span class="t" lang="en">Mobile · Web · TV</span></dd></div>
+              <div><dt><span class="t" lang="pt">Regiões</span><span class="t" lang="en">Regions</span></dt><dd><span class="t" lang="pt">Brasil e América Latina</span><span class="t" lang="en">Brazil and Latin America</span></dd></div>
+              <div><dt><span class="t" lang="pt">Meu papel</span><span class="t" lang="en">My role</span></dt><dd>Senior Product Designer</dd></div>
+              <div><dt><span class="t" lang="pt">Parceiros</span><span class="t" lang="en">Partners</span></dt><dd>DirecTV · Accenture · FIFA</dd></div>
+              <div><dt><span class="t" lang="pt">Dados</span><span class="t" lang="en">Data</span></dt><dd><span class="t" lang="pt">FIFA oficial · tempo real</span><span class="t" lang="en">Official FIFA · real time</span></dd></div>
+            </dl>
+          </aside>
+        </div>
+      </section>
+
+      <!-- II. DESAFIO -->
+      <section class="case-section" data-folio>
+        <header class="section-head reveal">
+          <span class="roman">II.</span>
+          <span class="name"><span class="t" lang="pt">Desafio</span><span class="t" lang="en">The Challenge</span></span>
+          <span class="gloss"><span class="t" lang="pt">O problema</span><span class="t" lang="en">The problem</span></span>
+        </header>
+
+        <div class="sx-question reveal">
+          <p class="q-lab"><span class="t" lang="pt">A questão</span><span class="t" lang="en">The question</span></p>
+          <p class="q"><span class="t" lang="pt">Como fazer três variáveis — um prazo inegociável, dois recortes regionais e dados que mudam a cada segundo — convergirem numa só experiência, em três telas?</span><span class="t" lang="en">How do you make three variables — a non-negotiable deadline, two regional cuts and data changing every second — converge into one experience, across three screens?</span></p>
+        </div>
+
+        <ul class="sx-vars reveal" data-stagger>
+          <li class="sx-var">
+            <span class="sx-var__n" aria-hidden="true"></span>
+            <span class="sx-var__name"><span class="t" lang="pt">Prazo inegociável</span><span class="t" lang="en">Non-negotiable deadline</span></span>
+            <span class="sx-var__body"><span class="t" lang="pt">A estreia da Copa ditava o cronograma. Não havia como adiar a bola rolar — o produto precisava estar no ar antes do apito inicial.</span><span class="t" lang="en">Kick-off dictated the schedule. There was no delaying the first whistle — the product had to be live before it blew.</span></span>
+          </li>
+          <li class="sx-var">
+            <span class="sx-var__n" aria-hidden="true"></span>
+            <span class="sx-var__name"><span class="t" lang="pt">Dois recortes regionais</span><span class="t" lang="en">Two regional cuts</span></span>
+            <span class="sx-var__body"><span class="t" lang="pt">Brasil e América Latina, cada um com restrições legais próprias. Onde faltava uma feature, era preciso reorganizar o conteúdo sem perder qualidade.</span><span class="t" lang="en">Brazil and Latin America, each with its own legal restrictions. Where a feature was missing, content had to be reorganized without losing quality.</span></span>
+          </li>
+          <li class="sx-var">
+            <span class="sx-var__n" aria-hidden="true"></span>
+            <span class="sx-var__name"><span class="t" lang="pt">Dados em tempo real</span><span class="t" lang="en">Real-time data</span></span>
+            <span class="sx-var__body"><span class="t" lang="pt">O volume e o formato dos dados da FIFA variavam. Telas pequenas quebravam com o inesperado — os componentes tinham que absorver a volatilidade.</span><span class="t" lang="en">The volume and shape of FIFA data varied. Small screens broke on the unexpected — components had to absorb the volatility.</span></span>
+          </li>
+        </ul>
+
+        <p class="sx-note reveal"><span class="t" lang="pt">Somava-se a isso a coordenação constante com múltiplas empresas externas. O alinhamento frequente com a FIFA foi decisivo: reuniões recorrentes sincronizavam dados e permitiam implementar mudanças com rapidez — mantendo o produto atualizado e em conformidade com os padrões oficiais.</span><span class="t" lang="en">On top of that came constant coordination with multiple external companies. Frequent alignment with FIFA was decisive: recurring meetings synced data and let us ship changes fast — keeping the product current and compliant with official standards.</span></p>
+      </section>
+
+      <!-- III. MEU PAPEL -->
+      <section class="case-section" data-folio>
+        <header class="section-head reveal">
+          <span class="roman">III.</span>
+          <span class="name"><span class="t" lang="pt">Meu Papel</span><span class="t" lang="en">My Role</span></span>
+          <span class="gloss"><span class="t" lang="pt">O elo</span><span class="t" lang="en">The link</span></span>
+        </header>
+
+        <div class="sx-lead reveal">
+          <p><span class="t" lang="pt">Atuei como <span class="em">Senior Product Designer</span> e como elo entre design, desenvolvimento e dados — coordenando três casas em torno de uma só entrega.</span><span class="t" lang="en">I worked as <span class="em">Senior Product Designer</span> and as the link between design, development and data — coordinating three houses around a single delivery.</span></p>
+        </div>
+
+        <div class="reveal">
+          <div class="sx-elo">
+            <div class="sx-elo__party">
+              <span class="sx-elo__crest" aria-hidden="true">D</span>
+              <span class="sx-elo__name">DirecTV</span>
+              <span class="sx-elo__role"><span class="t" lang="pt">Design & produto</span><span class="t" lang="en">Design & product</span></span>
+            </div>
+            <div class="sx-elo__party">
+              <span class="sx-elo__crest" aria-hidden="true">A</span>
+              <span class="sx-elo__name">Accenture</span>
+              <span class="sx-elo__role"><span class="t" lang="pt">Desenvolvimento & QA</span><span class="t" lang="en">Development & QA</span></span>
+            </div>
+            <div class="sx-elo__party">
+              <span class="sx-elo__crest" aria-hidden="true">F</span>
+              <span class="sx-elo__name">FIFA</span>
+              <span class="sx-elo__role"><span class="t" lang="pt">Dados oficiais</span><span class="t" lang="en">Official data</span></span>
+            </div>
+          </div>
+          <div class="sx-elo-center">
+            <div class="sx-elo-center__hub">
+              <span class="sx-elo-center__lab"><span class="t" lang="pt">O elo</span><span class="t" lang="en">The link</span></span>
+              <span class="sx-elo-center__name">Lucas · Senior Product Designer</span>
+              <span class="sx-elo-center__sub"><span class="t" lang="pt">Traduzindo dados em interface, alinhando expectativas e negociando ajustes — para manter escopo e prazo de pé.</span><span class="t" lang="en">Translating data into interface, aligning expectations and negotiating trade-offs — keeping scope and schedule standing.</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sx-body reveal" style="margin-top: var(--sp-6);">
+          <p><span class="t" lang="pt">A gestão de relacionamentos e expectativas foi central. Participei de reuniões e apresentações regulares com stakeholders e times técnicos — apresentando avanços, coletando feedback e negociando ajustes. Essa comunicação constante manteve o projeto dentro do escopo e do cronograma, com gestão ágil das necessidades do cliente e adaptação rápida a mudanças emergenciais.</span><span class="t" lang="en">Managing relationships and expectations was central. I took part in regular meetings and presentations with stakeholders and technical teams — showing progress, gathering feedback and negotiating adjustments. This constant communication kept the project on scope and on schedule, with agile handling of client needs and fast adaptation to emergent changes.</span></p>
+        </div>
+      </section>
+
+      <!-- IV. SOLUÇÃO -->
+      <section class="case-section" data-folio>
+        <header class="section-head reveal">
+          <span class="roman">IV.</span>
+          <span class="name"><span class="t" lang="pt">Solução</span><span class="t" lang="en">The Solution</span></span>
+          <span class="gloss"><span class="t" lang="pt">O sistema</span><span class="t" lang="en">The system</span></span>
+        </header>
+
+        <div class="sx-lead reveal">
+          <p><span class="t" lang="pt">Um <span class="em">Design System unificado</span> para mobile, web e TV, com componentes de estatística preparados para a volatilidade do dado ao vivo e para a reorganização regional — sem perder a consistência visual.</span><span class="t" lang="en">A <span class="em">unified Design System</span> for mobile, web and TV, with statistics components ready for live-data volatility and regional reorganization — without losing visual consistency.</span></p>
+        </div>
+
+        <div class="sx-switcher reveal">
+          <p class="sx-h"><span class="t" lang="pt">As três telas, um só sistema</span><span class="t" lang="en">Three screens, one system</span></p>
+          <p class="sx-switcher__intro"><span class="t" lang="pt">A mesma linguagem de mobile a TV, adaptando densidade, toque e distância de leitura a cada meio. Escolha uma tela para ver a home em cada plataforma.</span><span class="t" lang="en">One language from mobile to TV, adapting density, touch and reading distance to each medium. Pick a screen to see the home on each platform.</span></p>
+
+          <div class="sx-seg-wrap">
+            <div class="sx-seg" role="tablist" aria-label="Plataforma">
+              <button type="button" role="tab" aria-selected="true" data-plat="tv">
+                <svg class="gl" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.5" y="5" width="19" height="12.5" rx="1.8" stroke="currentColor" stroke-width="1.5"/><path d="M9 21 L12 18 L15 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                TV
+              </button>
+              <button type="button" role="tab" aria-selected="false" data-plat="web">
+                <svg class="gl" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.5" y="4" width="19" height="13" rx="1.8" stroke="currentColor" stroke-width="1.5"/><line x1="8.5" y1="20.5" x2="15.5" y2="20.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="12" y1="17" x2="12" y2="20.5" stroke="currentColor" stroke-width="1.5"/></svg>
+                Web
+              </button>
+              <button type="button" role="tab" aria-selected="false" data-plat="mobile">
+                <svg class="gl" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.2" stroke="currentColor" stroke-width="1.5"/><line x1="10.5" y1="18.5" x2="13.5" y2="18.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                Mobile
+              </button>
+            </div>
+          </div>
+
+          <div class="sx-plat">
+            <div class="sx-plat__stage">
+              <span class="sx-plat__corner tl" aria-hidden="true">✦</span><span class="sx-plat__corner tr" aria-hidden="true">✦</span>
+              <span class="sx-plat__corner bl" aria-hidden="true">✦</span><span class="sx-plat__corner br" aria-hidden="true">✦</span>
+              <div class="sx-screen landscape is-active" data-plat="tv"><img src="../images/sports/home-tv.webp" alt="Home do Sports Experience na TV — menu lateral e destaque Argentina x México da Copa 2022" loading="lazy" /></div>
+              <div class="sx-screen landscape" data-plat="web"><img src="../images/sports/home-web.webp" alt="Home do Sports Experience na web — navegação superior e destaque Argentina x México da Copa 2022" loading="lazy" /></div>
+              <div class="sx-screen" data-plat="mobile"><img src="../images/sports/home-mobile.webp" alt="Home do Sports Experience no mobile — destaque Argentina x México da Copa 2022 e Assistir ao vivo" loading="lazy" /></div>
+            </div>
+
+            <div class="sx-plat__note">
+              <div class="sx-plat-panel" data-plat="mobile">
+                <span class="n-tag">Mobile · DirecTV GO</span>
+                <p class="n-name"><span class="t" lang="pt">No bolso</span><span class="t" lang="en">In the pocket</span></p>
+                <p class="n-body"><span class="t" lang="pt">O placar ao vivo, a escalação e as estatísticas cabem numa tela estreita. Cada componente foi pensado para tolerar dados voláteis sem quebrar o layout.</span><span class="t" lang="en">The live score, lineup and stats fit a narrow screen. Every component was built to absorb volatile data without breaking the layout.</span></p>
+                <ul class="n-meta">
+                  <li><b><span class="t" lang="pt">Contexto</span><span class="t" lang="en">Context</span></b><span class="t" lang="pt">Assistir e acompanhar em movimento</span><span class="t" lang="en">Watching and following on the move</span></li>
+                  <li><b><span class="t" lang="pt">Toque</span><span class="t" lang="en">Touch</span></b><span class="t" lang="pt">Alvos ≥44px, gestos e rolagem</span><span class="t" lang="en">Targets ≥44px, gestures and scroll</span></li>
+                </ul>
+              </div>
+              <div class="sx-plat-panel" data-plat="web">
+                <span class="n-tag">Web · DirecTV GO</span>
+                <p class="n-name"><span class="t" lang="pt">Na mesa</span><span class="t" lang="en">At the desk</span></p>
+                <p class="n-body"><span class="t" lang="pt">Mais espaço para densidade: perfis de seleção e jogador, histórico e estatísticas agregadas convivem numa leitura confortável de desktop.</span><span class="t" lang="en">More room for density: team and player profiles, history and aggregate stats live together in a comfortable desktop read.</span></p>
+                <ul class="n-meta">
+                  <li><b><span class="t" lang="pt">Contexto</span><span class="t" lang="en">Context</span></b><span class="t" lang="pt">Explorar em profundidade</span><span class="t" lang="en">Exploring in depth</span></li>
+                  <li><b><span class="t" lang="pt">Interação</span><span class="t" lang="en">Input</span></b><span class="t" lang="pt">Cursor, hover e teclado</span><span class="t" lang="en">Cursor, hover and keyboard</span></li>
+                </ul>
+              </div>
+              <div class="sx-plat-panel is-active" data-plat="tv">
+                <span class="n-tag">TV · DirecTV GO</span>
+                <p class="n-name"><span class="t" lang="pt">Na sala</span><span class="t" lang="en">In the living room</span></p>
+                <p class="n-body"><span class="t" lang="pt">A home ganha a tela grande — menu lateral fixo, herói da partida em destaque e trilhos de conteúdo, com tipografia e contraste calibrados para a distância de leitura de dez pés.</span><span class="t" lang="en">The home takes the big screen — a fixed side menu, a featured match hero and content rails, with typography and contrast calibrated for ten-foot reading distance.</span></p>
+                <ul class="n-meta">
+                  <li><b><span class="t" lang="pt">Contexto</span><span class="t" lang="en">Context</span></b><span class="t" lang="pt">Assistir com a família</span><span class="t" lang="en">Watching with family</span></li>
+                  <li><b><span class="t" lang="pt">Navegação</span><span class="t" lang="en">Nav</span></b><span class="t" lang="pt">Controle remoto e foco visível</span><span class="t" lang="en">Remote control, visible focus</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sx-vitrine reveal">
+          <p class="sx-h"><span class="t" lang="pt">A vitrine de componentes</span><span class="t" lang="en">The component vitrine</span></p>
+          <div class="sx-vit-legend" aria-hidden="true">
+            <span class="sw wine"><span class="t" lang="pt">Vinho Qatar</span><span class="t" lang="en">Qatar wine</span></span>
+            <span class="sw cyan">DirecTV GO</span>
+            <span class="sw turf"><span class="t" lang="pt">Gramado</span><span class="t" lang="en">Turf</span></span>
+          </div>
+
+          <div class="sx-vit-tabs" role="tablist" aria-label="Componentes do Design System">
+            <button class="sx-vit-tab" type="button" role="tab" aria-selected="true" data-vit="cardlive"><span class="c">a</span>Card ao vivo</button>
+            <button class="sx-vit-tab" type="button" role="tab" aria-selected="false" data-vit="standings"><span class="c">b</span>Classificação</button>
+            <button class="sx-vit-tab" type="button" role="tab" aria-selected="false" data-vit="action"><span class="c">c</span>Ações</button>
+            <button class="sx-vit-tab" type="button" role="tab" aria-selected="false" data-vit="card2x3"><span class="c">d</span>Card 2×3</button>
+          </div>
+
+          <div class="sx-vit-panel is-active" data-vit="cardlive">
+            <p class="sx-vit-panel__desc"><b>Card ao vivo.</b> <span class="t" lang="pt">O cartão de partida com placar, tempo e estatísticas — o componente mais volátil do sistema. Nove estados cobrem pré-jogo, ao vivo, intervalo e encerrado, em cada recorte regional.</span><span class="t" lang="en">The match card with score, clock and stats — the system's most volatile component. Nine states cover pre-match, live, half-time and finished, in each regional cut.</span></p>
+            <div class="sx-vit-strip cols-4">
+              <figure><img src="../images/sports/cardlive.webp" alt="Card ao vivo" loading="lazy" /><figcaption>Base</figcaption></figure>
+              <figure><img src="../images/sports/cardlive-1.webp" alt="Card ao vivo — variação" loading="lazy" /><figcaption>Var. 01</figcaption></figure>
+              <figure><img src="../images/sports/cardlive-2.webp" alt="Card ao vivo — variação" loading="lazy" /><figcaption>Var. 02</figcaption></figure>
+              <figure><img src="../images/sports/cardlive-3.webp" alt="Card ao vivo — variação" loading="lazy" /><figcaption>Var. 03</figcaption></figure>
+            </div>
+            <p class="sx-vit-caption"><span class="t" lang="pt">Estados do cartão de partida ao vivo · Design System Sports Experience</span><span class="t" lang="en">Live match-card states · Sports Experience Design System</span></p>
+          </div>
+
+          <div class="sx-vit-panel" data-vit="standings">
+            <p class="sx-vit-panel__desc"><b>Classificação.</b> <span class="t" lang="pt">A tabela de grupos e a chave de mata-mata. Precisa comportar oito grupos, empates e critérios de desempate sem reflow — a mesma estrutura serve mobile, web e TV.</span><span class="t" lang="en">The group table and knockout bracket. It must hold eight groups, ties and tie-break criteria without reflow — one structure serving mobile, web and TV.</span></p>
+            <div class="sx-vit-strip cols-4">
+              <figure><img src="../images/sports/standings.webp" alt="Componente de classificação" loading="lazy" /><figcaption>Base</figcaption></figure>
+              <figure><img src="../images/sports/standings-1.webp" alt="Classificação — variação" loading="lazy" /><figcaption>Var. 01</figcaption></figure>
+              <figure><img src="../images/sports/standings-2.webp" alt="Classificação — variação" loading="lazy" /><figcaption>Var. 02</figcaption></figure>
+              <figure><img src="../images/sports/standings-3.webp" alt="Classificação — variação" loading="lazy" /><figcaption>Var. 03</figcaption></figure>
+            </div>
+            <p class="sx-vit-caption"><span class="t" lang="pt">Tabela de classificação por grupo · estados</span><span class="t" lang="en">Group standings table · states</span></p>
+          </div>
+
+          <div class="sx-vit-panel" data-vit="action">
+            <p class="sx-vit-panel__desc"><b>Ações em campo.</b> <span class="t" lang="pt">Micro-componente para eventos da partida — gol, cartão, substituição. Legível a poucos centímetros no celular e a três metros na TV, com o mesmo desenho.</span><span class="t" lang="en">Micro-component for match events — goal, card, substitution. Legible inches away on a phone and meters away on TV, from the same design.</span></p>
+            <div class="sx-vit-strip cols-6">
+              <figure><img src="../images/sports/action.webp" alt="Componente de ação" loading="lazy" /><figcaption>Base</figcaption></figure>
+              <figure><img src="../images/sports/action-1.webp" alt="Ação — variação" loading="lazy" /><figcaption>01</figcaption></figure>
+              <figure><img src="../images/sports/action-2.webp" alt="Ação — variação" loading="lazy" /><figcaption>02</figcaption></figure>
+              <figure><img src="../images/sports/action-3.webp" alt="Ação — variação" loading="lazy" /><figcaption>03</figcaption></figure>
+              <figure><img src="../images/sports/action-4.webp" alt="Ação — variação" loading="lazy" /><figcaption>04</figcaption></figure>
+              <figure><img src="../images/sports/action-5.webp" alt="Ação — variação" loading="lazy" /><figcaption>05</figcaption></figure>
+            </div>
+            <p class="sx-vit-caption"><span class="t" lang="pt">Componente de ações do jogador em campo · estados</span><span class="t" lang="en">Player on-pitch action component · states</span></p>
+          </div>
+
+          <div class="sx-vit-panel" data-vit="card2x3">
+            <p class="sx-vit-panel__desc"><b>Card 2×3.</b> <span class="t" lang="pt">O cartão de partida em estado inativo, base do calendário e das listas. Proporção fixa que empacota bem em grades densas e sobrevive à reorganização regional.</span><span class="t" lang="en">The match card in its inactive state, the base of the calendar and lists. A fixed ratio that packs well into dense grids and survives regional reorganization.</span></p>
+            <div class="sx-vit-strip cols-4">
+              <figure><img src="../images/sports/card-2x3.webp" alt="Card 2×3 inativo" loading="lazy" /><figcaption>Base</figcaption></figure>
+              <figure><img src="../images/sports/card-2x3-1.webp" alt="Card 2×3 — variação" loading="lazy" /><figcaption>Var. 01</figcaption></figure>
+              <figure><img src="../images/sports/card-2x3-2.webp" alt="Card 2×3 — variação" loading="lazy" /><figcaption>Var. 02</figcaption></figure>
+              <figure><img src="../images/sports/card-2x3-3.webp" alt="Card 2×3 — variação" loading="lazy" /><figcaption>Var. 03</figcaption></figure>
+            </div>
+            <p class="sx-vit-caption"><span class="t" lang="pt">Card de partida 2×3 (inativo) · estados</span><span class="t" lang="en">2×3 match card (inactive) · states</span></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- INTERMEZZO (sem entrada no índice — sem section-head) -->
+      <section class="case-section case-intermezzo reveal" data-folio aria-label="Interlúdio">
+        <div class="intermezzo-bg l1" aria-hidden="true">64</div>
+        <div class="intermezzo-bg l2" aria-hidden="true">2022</div>
+        <div class="intermezzo-inner">
+          <span class="intermezzo-asterism" aria-hidden="true">⁂</span>
+          <p class="intermezzo-quote">
+            <span class="t" lang="pt">Trabalhar ao mesmo tempo com DirecTV, FIFA e Accenture, sob um prazo inflexível, foi uma aula de priorização e de alinhamento de expectativas.</span>
+            <span class="t" lang="en">Working with DirecTV, FIFA and Accenture at once, under an inflexible deadline, was a lesson in prioritization and expectation-setting.</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- V. TELAS -->
+      <section class="case-section" data-folio>
+        <header class="section-head reveal">
+          <span class="roman">V.</span>
+          <span class="name"><span class="t" lang="pt">Telas</span><span class="t" lang="en">Screens</span></span>
+          <span class="gloss"><span class="t" lang="pt">As pranchas</span><span class="t" lang="en">The plates</span></span>
+        </header>
+
+        <div class="sx-lead reveal">
+          <p><span class="t" lang="pt">Um panorama do produto ao vivo — da home do hub ao perfil de jogador, passando pelo calendário, pela classificação e pela visão multiplataforma. Clique em qualquer prancha para ampliar.</span><span class="t" lang="en">A panorama of the live product — from the hub home to the player profile, through the calendar, standings and the multiplatform view. Click any plate to enlarge.</span></p>
+        </div>
+
+        <div class="sx-plates sl-gallery reveal">
+          <a class="sx-plate wide lightboxgallery-link" href="../images/sports/overview-1.webp" aria-label="Home do hub no mobile, com destaque para a próxima partida da Copa">
+            <img src="../images/sports/overview-1.webp" alt="Home do hub Sports Experience no mobile" loading="lazy" />
+            <span class="p-cap"><span class="p-roman">Pl. i</span> <span class="p-txt"><span class="t" lang="pt">Home do hub no mobile</span><span class="t" lang="en">Hub home on mobile</span></span></span>
+          </a>
+          <a class="sx-plate third lightboxgallery-link" href="../images/sports/hero-2.webp" aria-label="Tela de partida com placar e detalhes">
+            <img src="../images/sports/hero-2.webp" alt="Tela de partida com placar e detalhes" loading="lazy" />
+            <span class="p-cap"><span class="p-roman">Pl. ii</span> <span class="p-txt"><span class="t" lang="pt">Detalhe da partida</span><span class="t" lang="en">Match detail</span></span></span>
+          </a>
+          <a class="sx-plate wide lightboxgallery-link" href="../images/sports/overview-2.webp" aria-label="Calendário de partidas com filtros por fase e dados oficiais da FIFA">
+            <img src="../images/sports/overview-2.webp" alt="Calendário de partidas da Copa 2022" loading="lazy" />
+            <span class="p-cap"><span class="p-roman">Pl. iii</span> <span class="p-txt"><span class="t" lang="pt">Calendário e fases</span><span class="t" lang="en">Calendar and stages</span></span></span>
+          </a>
+          <a class="sx-plate third lightboxgallery-link" href="../images/sports/hero-3.webp" aria-label="Perfil de seleção com escalação">
+            <img src="../images/sports/hero-3.webp" alt="Perfil de seleção com escalação" loading="lazy" />
+            <span class="p-cap"><span class="p-roman">Pl. iv</span> <span class="p-txt"><span class="t" lang="pt">Perfil de seleção</span><span class="t" lang="en">Team profile</span></span></span>
+          </a>
+          <a class="sx-plate half lightboxgallery-link" href="../images/sports/overview-3.webp" aria-label="Tela de partida ao vivo com estatísticas em tempo real e escalação">
+            <img src="../images/sports/overview-3.webp" alt="Partida ao vivo com estatísticas em tempo real" loading="lazy" />
+            <span class="p-cap"><span class="p-roman">Pl. v</span> <span class="p-txt"><span class="t" lang="pt">Ao vivo, com estatística</span><span class="t" lang="en">Live, with statistics</span></span></span>
+          </a>
+          <a class="sx-plate half lightboxgallery-link" href="../images/sports/overview-4.webp" aria-label="Perfil de jogador com estatísticas agregadas e histórico do torneio">
+            <img src="../images/sports/overview-4.webp" alt="Perfil de jogador com estatísticas agregadas" loading="lazy" />
+            <span class="p-cap"><span class="p-roman">Pl. vi</span> <span class="p-txt"><span class="t" lang="pt">Perfil de jogador</span><span class="t" lang="en">Player profile</span></span></span>
+          </a>
+          <a class="sx-plate full lightboxgallery-link" href="../images/sports/overview-5.webp" aria-label="Visão multiplataforma do Sports Experience — mobile, web e TV em conjunto">
+            <img src="../images/sports/overview-5.webp" alt="Visão multiplataforma — mobile, web e TV" loading="lazy" />
+            <span class="p-cap"><span class="p-roman">Pl. vii</span> <span class="p-txt"><span class="t" lang="pt">Visão multiplataforma — mobile, web e TV</span><span class="t" lang="en">Multiplatform view — mobile, web and TV</span></span></span>
+          </a>
+        </div>
+      </section>
+
+      <!-- VI. ENTREGA & IMPACTO -->
+      <section class="case-section" data-folio>
+        <header class="section-head reveal">
+          <span class="roman">VI.</span>
+          <span class="name"><span class="t" lang="pt">Entrega &amp; Impacto</span><span class="t" lang="en">Delivery &amp; Impact</span></span>
+          <span class="gloss"><span class="t" lang="pt">O apito final</span><span class="t" lang="en">The final whistle</span></span>
+        </header>
+
+        <div class="sx-lead reveal">
+          <p><span class="t" lang="pt">O MVP foi entregue <span class="em">no prazo para a estreia da Copa</span>, sem desvios de escopo críticos, aprovado pelos stakeholders da DirecTV e disponibilizado para toda a base de assinantes durante o torneio.</span><span class="t" lang="en">The MVP shipped <span class="em">on time for kick-off</span>, with no critical scope slips, approved by DirecTV stakeholders and made available to the entire subscriber base during the tournament.</span></p>
+        </div>
+
+        <div class="sx-stats reveal" data-stagger>
+          <div class="sx-stat"><span class="sx-stat__v"><span class="stat-val" data-count="3">3</span></span><span class="sx-stat__lab"><span class="t" lang="pt">plataformas num só hub</span><span class="t" lang="en">platforms in one hub</span></span></div>
+          <div class="sx-stat"><span class="sx-stat__v"><span class="stat-val" data-count="2">2</span></span><span class="sx-stat__lab"><span class="t" lang="pt">versões regionais entregues</span><span class="t" lang="en">regional versions delivered</span></span></div>
+          <div class="sx-stat"><span class="sx-stat__v"><span class="stat-val" data-count="64">64</span></span><span class="sx-stat__lab"><span class="t" lang="pt">partidas ao vivo cobertas</span><span class="t" lang="en">live matches covered</span></span></div>
+          <div class="sx-stat"><span class="sx-stat__v"><span class="stat-val" data-count="100">100</span><span class="suf">%</span></span><span class="sx-stat__lab"><span class="t" lang="pt">entrega on-time na estreia</span><span class="t" lang="en">on-time delivery at kick-off</span></span></div>
+        </div>
+
+        <div class="sx-body reveal" style="margin-top: var(--sp-6);">
+          <p><span class="t" lang="pt">A apresentação final foi recebida com entusiasmo. A demonstração das funcionalidades — com o layout responsivo garantindo navegação fluida em qualquer tela — evidenciou o potencial do hub como casa completa da Copa. Os objetivos iniciais foram cumpridos: uma experiência rápida e intuitiva, consistente e de qualidade em todas as plataformas.</span><span class="t" lang="en">The final presentation was met with enthusiasm. The feature demo — with responsive layout ensuring fluid navigation on any screen — showed the hub's potential as a complete World Cup home. The initial goals were met: a fast, intuitive experience, consistent and high-quality across every platform.</span></p>
+        </div>
+
+        <div class="sx-plates sl-gallery reveal" style="margin-top: var(--sp-6);">
+          <a class="sx-plate full lightboxgallery-link" href="../images/sports/entrega-1.webp" aria-label="Mockup de entrega — telas de mobile, web e TV do hub Sports Experience">
+            <img src="../images/sports/entrega-1.webp" alt="Mockup de entrega — mobile, web e TV" loading="lazy" />
+            <span class="p-cap"><span class="p-roman">Pl. viii</span> <span class="p-txt"><span class="t" lang="pt">Mockup de entrega — as três telas</span><span class="t" lang="en">Delivery mockup — the three screens</span></span></span>
+          </a>
+          <a class="sx-plate full lightboxgallery-link" href="../images/sports/entrega-2.webp" aria-label="Vista geral das interfaces entregues — estatísticas em tempo real e cards de partidas ao vivo">
+            <img src="../images/sports/entrega-2.webp" alt="Vista geral das interfaces entregues" loading="lazy" />
+            <span class="p-cap"><span class="p-roman">Pl. ix</span> <span class="p-txt"><span class="t" lang="pt">Vista geral das interfaces entregues</span><span class="t" lang="en">Overview of delivered interfaces</span></span></span>
+          </a>
+        </div>
+      </section>
+
+      <!-- VII. GALERIA -->
+      <section class="case-section" data-folio>
+        <header class="section-head reveal">
+          <span class="roman">VII.</span>
+          <span class="name"><span class="t" lang="pt">Galeria</span><span class="t" lang="en">Gallery</span></span>
+          <span class="gloss"><span class="t" lang="pt">Errata & aparato</span><span class="t" lang="en">Errata & apparatus</span></span>
+        </header>
+
+        <div class="sx-lead reveal">
+          <p><span class="t" lang="pt">Materiais complementares — o estudo cromático do Design System, telas auxiliares, detalhes de componentes e até explorações descartadas por restrições regulatórias. Fora do fluxo principal, mas parte do escopo real do trabalho.</span><span class="t" lang="en">Complementary materials — the Design System's chromatic study, auxiliary screens, component details, and even explorations dropped for regulatory reasons. Outside the main flow, but part of the work's real scope.</span></p>
+        </div>
+
+        <div class="sx-gal sl-gallery reveal">
+          <a class="w6 lightboxgallery-link" href="../images/sports/colors.webp" aria-label="Estudo cromático do Design System — paleta oficial aplicada aos componentes da Copa">
+            <img src="../images/sports/colors.webp" alt="Estudo cromático do Design System" loading="lazy" />
+            <span class="g-cap"><span class="t" lang="pt">Estudo cromático · paleta do sistema</span><span class="t" lang="en">Chromatic study · system palette</span></span>
+          </a>
+          <a class="w6 lightboxgallery-link" href="../images/sports/desafio.webp" aria-label="Panorama do Design System — tokens, componentes e variações de partida em largura total">
+            <img src="../images/sports/desafio.webp" alt="Panorama do Design System — componentes e variações" loading="lazy" />
+            <span class="g-cap"><span class="t" lang="pt">Panorama do Design System</span><span class="t" lang="en">Design System panorama</span></span>
+          </a>
+          <a class="lightboxgallery-link" href="../images/sports/colors-2.webp" aria-label="Variações de cor aplicadas a cards de partida e seleções">
+            <img src="../images/sports/colors-2.webp" alt="Variações de cor em cards de partida" loading="lazy" />
+            <span class="g-cap"><span class="t" lang="pt">Variações de cor nos cards</span><span class="t" lang="en">Color variations on cards</span></span>
+          </a>
+          <a class="lightboxgallery-link" href="../images/sports/profile.webp" aria-label="Tela de perfil do jogador — estatísticas agregadas, histórico e posição">
+            <img src="../images/sports/profile.webp" alt="Perfil do jogador" loading="lazy" />
+            <span class="g-cap"><span class="t" lang="pt">Perfil do jogador</span><span class="t" lang="en">Player profile</span></span>
+          </a>
+          <a class="lightboxgallery-link" href="../images/sports/heat.webp" aria-label="Mapa de calor de movimentação do jogador em campo durante a partida">
+            <img src="../images/sports/heat.webp" alt="Mapa de calor de movimentação em campo" loading="lazy" />
+            <span class="g-cap"><span class="t" lang="pt">Mapa de calor</span><span class="t" lang="en">Heatmap</span></span>
+          </a>
+          <a class="lightboxgallery-link" href="../images/sports/bet.webp" aria-label="Exploração de componente de probabilidades — descartada por restrições regulatórias no Brasil">
+            <img src="../images/sports/bet.webp" alt="Exploração de componente de probabilidades (descartada)" loading="lazy" />
+            <span class="g-cap"><span class="t" lang="pt">Probabilidades — descartada (Brasil)</span><span class="t" lang="en">Probabilities — dropped (Brazil)</span></span>
+          </a>
+        </div>
+
+        <p class="sx-disclaimer reveal"><span class="t" lang="pt">Todos os dados e métricas exibidos nas imagens são fictícios, gerados apenas para fins de demonstração. Não refletem informações reais da empresa ou de suas operações.</span><span class="t" lang="en">All data and metrics shown in the images are fictitious, generated for demonstration only. They do not reflect real company information or operations.</span></p>
+      </section>
+
+    </div><!-- /sx-dossier__spine -->
+  </div><!-- /sx-dossier -->
+
+  <!-- ============================================================
+       COLOFÃO & FOLIO-NAV
+       ============================================================ -->
+  <section class="case-colophon" data-folio>
+    <div class="colo-press">
+      <span class="colo-press__mark" aria-hidden="true"><span>LS</span></span>
+      <span class="colo-press__cap"><span class="t" lang="pt">Marca do compositor</span><span class="t" lang="en">Compositor's mark</span></span>
+    </div>
+    <div class="colo-rule" aria-hidden="true"><span>❦</span></div>
+    <p class="case-colophon-body">
+      <span class="t" lang="pt">Esta prancha foi composta pelo autor em <em>MMXXII</em>, a partir do trabalho de design do Sports Experience da DirecTV para a Copa do Mundo de 2022. As telas e números servem como espécime conceitual de design de produto multiplataforma e Design System, mantidos os parâmetros de confidencialidade acordados.</span>
+      <span class="t" lang="en">This plate was set by the author in <em>MMXXII</em>, drawn from the design of DirecTV's Sports Experience for the 2022 World Cup. The screens and figures serve as a conceptual specimen of multiplatform product design and Design System work, under the agreed confidentiality terms.</span>
+    </p>
+    <div class="case-colophon-meta">Plate IV · Vol. I · MMXXII</div>
+    <p class="colo-finis"><span class="t" lang="pt">Finis · fim da prancha</span><span class="t" lang="en">Finis · end of plate</span></p>
+  </section>
+
+  <nav class="folio-nav" aria-label="Navegação entre cases">
+    <a class="verso" href="lighthouse.html" rel="prev">
+      <span class="folio-marker"><span class="t" lang="pt">← Prancha anterior (Verso)</span><span class="t" lang="en">← Previous Plate (Verso)</span></span>
+      <span class="folio-title"><em><span class="t" lang="pt">Prancha III — Lighthouse App</span><span class="t" lang="en">Plate III — Lighthouse App</span></em></span>
+    </a>
+    <a class="recto" href="../index.html#works" rel="next">
+      <span class="folio-marker"><span class="t" lang="pt">Catálogo (Recto) →</span><span class="t" lang="en">Catalogue (Recto) →</span></span>
+      <span class="folio-title"><em><span class="t" lang="pt">Catálogo de Obras</span><span class="t" lang="en">A Catalogue of Works</span></em></span>
+    </a>
+  </nav>
+
+</main>
+
+<!-- ============================================================
+     CHROME INFERIOR
+     ============================================================ -->
+<footer class="chrome-bot">
+  <div class="page-counter" aria-hidden="true">
+    <span class="num" data-counter-current>—</span>
+    <span class="of">/ <span data-counter-total>—</span></span>
+  </div>
+  <div class="ink-progress" aria-hidden="true"></div>
+  <div class="page-counter">
+    <span class="of"><span class="t" lang="pt">Prancha</span><span class="t" lang="en">Plate</span></span>
+    <span class="num">IV</span>
+  </div>
+</footer>
+
+<!-- Swiper Element (web component) — alimenta o carrossel coverflow da peça de impacto -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-element-bundle.min.js"></script>
+
+<!-- Interações compartilhadas (i18n, count-up, reveal, page-counter) -->
+<script src="./case-template.js"></script>
+<!-- Chrome de case: Index Rerum (⌘K) + edição de bolso -->
+<script src="./case-chrome.js"></script>
+
+<!-- Peça de impacto (segmentado Mobile/Web/TV) + vitrine de componentes -->
+<script>
+(function () {
+  'use strict';
+  // Segmentado de plataforma
+  var seg = document.querySelector('.sx-seg');
+  if (seg) {
+    var btns = Array.prototype.slice.call(seg.querySelectorAll('button'));
+    var screens = Array.prototype.slice.call(document.querySelectorAll('.sx-screen'));
+    var panels = Array.prototype.slice.call(document.querySelectorAll('.sx-plat-panel'));
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var p = b.dataset.plat;
+        btns.forEach(function (x) { x.setAttribute('aria-selected', x === b ? 'true' : 'false'); });
+        screens.forEach(function (s) { s.classList.toggle('is-active', s.dataset.plat === p); });
+        panels.forEach(function (pn) { pn.classList.toggle('is-active', pn.dataset.plat === p); });
+      });
+    });
+  }
+  // Vitrine de componentes
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.sx-vit-tab'));
+  if (tabs.length) {
+    var vpanels = Array.prototype.slice.call(document.querySelectorAll('.sx-vit-panel'));
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () {
+        var v = t.dataset.vit;
+        tabs.forEach(function (x) { x.setAttribute('aria-selected', x === t ? 'true' : 'false'); });
+        vpanels.forEach(function (p) { p.classList.toggle('is-active', p.dataset.vit === v); });
+      });
+    });
+  }
+})();
+</script>
+
+<!-- Lightbox das galerias -->
+<script>
+(function () {
+  function collect(gallery, clicked) {
+    var links = Array.prototype.slice.call(gallery.querySelectorAll('.lightboxgallery-link'));
+    var items = links.map(function (link) {
+      var img = link.querySelector('img');
+      var caption = (link.getAttribute('aria-label') || '') || (img && img.getAttribute('alt')) || '';
+      return { href: link.getAttribute('href'), caption: caption, thumb: img ? img.src : link.getAttribute('href') };
+    });
+    return { items: items, startIndex: Math.max(0, links.indexOf(clicked)) };
+  }
+  function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+  function open(gallery, clicked) {
+    var data = collect(gallery, clicked);
+    var items = data.items; if (!items.length) return;
+    var current = data.startIndex;
+    var overlay = document.createElement('div');
+    overlay.className = 'lbg-overlay';
+    var multi = items.length > 1;
+    var sidebar = multi ? '<div class="lbg__sidebar">' + items.map(function (it, i) {
+      return '<button class="lbg__thumb' + (i === current ? ' is-active' : '') + '" data-index="' + i + '" type="button"><img src="' + esc(it.thumb) + '" alt=""></button>';
+    }).join('') + '</div>' : '';
+    overlay.innerHTML =
+      '<button class="lbg__close" data-action="close" aria-label="Close">&times;</button>' +
+      sidebar +
+      '<div class="lbg__stage">' +
+        (multi ? '<button class="lbg__nav lbg__nav--prev" data-action="prev" aria-label="Previous">&#8249;</button>' : '') +
+        '<div class="lbg__viewer">' +
+          '<img src="' + esc(items[current].href) + '" alt="">' +
+          '<div class="lbg__caption"><span class="lbg__caption__text">' + esc(items[current].caption) + '</span>' +
+          (multi ? '<span class="lbg__counter">' + (current + 1) + ' / ' + items.length + '</span>' : '') + '</div>' +
+        '</div>' +
+        (multi ? '<button class="lbg__nav lbg__nav--next" data-action="next" aria-label="Next">&#8250;</button>' : '') +
+      '</div>';
+    document.body.appendChild(overlay);
+    document.body.style.overflow = 'hidden';
+
+    var viewer = overlay.querySelector('.lbg__viewer');
+    var imgEl = viewer.querySelector('img');
+    var capEl = overlay.querySelector('.lbg__caption__text');
+    var cntEl = overlay.querySelector('.lbg__counter');
+    var thumbs = Array.prototype.slice.call(overlay.querySelectorAll('.lbg__thumb'));
+
+    function goTo(i) {
+      var n = ((i % items.length) + items.length) % items.length;
+      if (n === current) return;
+      current = n;
+      viewer.classList.remove('is-swapping'); void viewer.offsetWidth;
+      imgEl.src = items[current].href;
+      capEl.textContent = items[current].caption;
+      if (cntEl) cntEl.textContent = (current + 1) + ' / ' + items.length;
+      viewer.classList.add('is-swapping');
+      thumbs.forEach(function (t, k) { t.classList.toggle('is-active', k === current); });
+    }
+    function close() {
+      if (overlay.parentNode) document.body.removeChild(overlay);
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', onKey);
+    }
+    function onKey(e) {
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(current - 1); }
+    }
+    overlay.addEventListener('click', function (e) {
+      var action = e.target.closest('[data-action]');
+      if (action) { e.stopPropagation(); var a = action.getAttribute('data-action'); if (a === 'prev') goTo(current - 1); else if (a === 'next') goTo(current + 1); else close(); return; }
+      var thumb = e.target.closest('.lbg__thumb');
+      if (thumb) { e.stopPropagation(); goTo(parseInt(thumb.dataset.index, 10)); return; }
+      if (e.target.closest('.lbg__viewer, .lbg__sidebar, .lbg__caption, .lbg__nav, .lbg__close')) return;
+      close();
+    });
+    var sx = 0, sy = 0, ta = false;
+    var stage = overlay.querySelector('.lbg__stage');
+    stage.addEventListener('touchstart', function (e) { if (e.touches.length !== 1) return; ta = true; sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+    stage.addEventListener('touchend', function (e) { if (!ta) return; ta = false; var t = e.changedTouches[0]; var dx = t.clientX - sx, dy = t.clientY - sy; if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) { if (dx < 0) goTo(current + 1); else goTo(current - 1); } }, { passive: true });
+    document.addEventListener('keydown', onKey);
+  }
+
+  // Ligação feita pelo lightbox compartilhado (lightbox.js).
+})();
+</script>
+
+<!-- Lightbox elaborado (barra SVG: zoom · tela cheia · compartilhar) — compartilhado -->
+<script src="./lightbox.js"></script>
+
+<!-- Dossiê: monta o índice lateral e sincroniza o capítulo corrente -->
+<script>
+(function () {
+  var dossier = document.querySelector('.sx-dossier');
+  if (!dossier) return;
+  var nav = dossier.querySelector('.sx-dossier__nav');
+  var spine = dossier.querySelector('.sx-dossier__spine');
+  if (!nav || !spine) return;
+  var sections = Array.prototype.slice.call(spine.querySelectorAll('.case-section'));
+  var links = [];
+  sections.forEach(function (sec, i) {
+    var head = sec.querySelector('.section-head');
+    if (!head) return;
+    if (!sec.id) sec.id = 'ch-' + (i + 1);
+    var roman = head.querySelector('.roman');
+    var name = head.querySelector('.name');
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'sx-dossier__link';
+    var r = document.createElement('span'); r.className = 'lk-roman';
+    r.textContent = roman ? roman.textContent.replace(/\.$/, '') : String(i + 1);
+    var n = document.createElement('span'); n.className = 'lk-name';
+    if (name) n.innerHTML = name.innerHTML; else n.textContent = 'Capítulo';
+    btn.appendChild(r); btn.appendChild(n);
+    btn.addEventListener('click', function () {
+      var top = sec.getBoundingClientRect().top + window.pageYOffset - 88;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    });
+    nav.appendChild(btn);
+    links.push({ btn: btn, sec: sec });
+  });
+  var LINE = 150;
+  var activeIdx = -1;
+  function update() {
+    if (!links.length) return;
+    var idx = 0;
+    for (var i = 0; i < links.length; i++) {
+      if (links[i].sec.getBoundingClientRect().top - LINE <= 0) idx = i; else break;
+    }
+    if (idx === activeIdx) return;
+    activeIdx = idx;
+    links.forEach(function (l, k) { l.btn.classList.toggle('is-active', k === idx); });
+  }
+  var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(function () { update(); ticking = false; });
+  }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
+</script>
+</body>
+</html>

@@ -79,7 +79,10 @@
   .pmo-results { padding: var(--sp-6) var(--sp-6) var(--sp-5); }
   .pmo-results__inner { max-width: 1000px; margin: 0 auto; }
   .pmo-results__lab { text-align: center; font-family: var(--mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--oxblood); margin: 0 0 var(--sp-4); }
-  .pmo-results__grid { list-style: none; margin: 0; padding: var(--sp-5) 0 0; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--hairline-strong); }
+  .pmo-results__orn { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 0 0 var(--sp-2); color: var(--oxblood); }
+  .pmo-results__orn::before, .pmo-results__orn::after { content: ''; width: 54px; height: 1px; background: color-mix(in srgb, var(--oxblood) 42%, transparent); }
+  .pmo-results__orn span { font-family: var(--serif-display); font-size: 15px; line-height: 1; opacity: .8; }
+  .pmo-results__grid { list-style: none; margin: 0; padding: var(--sp-5) 0; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--hairline-strong); border-bottom: 1px solid var(--hairline-strong); }
   @media (max-width: 720px) { .pmo-results__grid { grid-template-columns: repeat(2, 1fr); gap: var(--sp-4) 0; } }
   @media (max-width: 380px) { .pmo-results__grid { grid-template-columns: 1fr; } }
   .pmo-results__item { text-align: center; padding: 0 var(--sp-4); }
@@ -826,6 +829,214 @@
   .lesson__t { margin: var(--sp-3) 0 8px; font-family: var(--serif-display); font-style: italic; font-size: var(--fs-h4); line-height: 1.2; color: var(--ink); }
   .lesson__b { margin: 0; font-family: var(--serif); font-size: 14.5px; line-height: var(--lh-base); color: var(--ink-soft); }
   .lesson__b b { color: var(--ink); font-weight: 600; }
+
+  /* ============================================================
+     PEÇA DE IMPACTO · A MANDALA ESTRATÉGICA (roda navegável)
+     Enquadra a roda (tom real navy/lime — §3) numa "prancha
+     iluminada": moldura em fio duplo oxblood, fundo de compasso
+     gravado, fleurões nas quinas e legenda a buril. O chrome fica
+     no tema livro; o instrumento, no tom do produto.
+     ============================================================ */
+  .pmo-impact { padding: var(--sp-7) 0 var(--sp-8); overflow-x: clip; }
+  .pmo-impact__inner {
+    width: 100vw; max-width: none; margin-left: calc(50% - 50vw);
+    display: flex; flex-direction: column; align-items: center; gap: var(--sp-5); text-align: center;
+  }
+
+  /* Cabeçalho editorial da peça */
+  .pmo-mandala-head { max-width: 62ch; padding: 0 var(--sp-5); }
+  .pmo-mandala-head__eyebrow { display: inline-flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--oxblood); }
+  .pmo-mandala-head__eyebrow::before, .pmo-mandala-head__eyebrow::after { content: ''; width: 30px; height: 1px; background: currentColor; opacity: .5; }
+  .pmo-mandala-head__title { font-family: var(--serif-display); font-weight: 400; font-style: italic; font-size: clamp(34px, 5vw, 60px); line-height: 1.02; letter-spacing: -.01em; margin: 14px 0 12px; color: var(--ink); }
+  .pmo-mandala-head__sub { font-family: var(--serif); font-size: var(--fs-lead); line-height: var(--lh-normal); color: var(--ink-soft); margin: 0 auto; max-width: 56ch; }
+  .pmo-mandala-head__sub .em { color: var(--oxblood); font-style: italic; }
+
+  /* A prancha — moldura dupla + fundo gravado + fleurões */
+  .pmo-mandala-plate {
+    position: relative; width: min(1120px, 94vw); margin: 0 auto;
+    padding: clamp(22px, 3.2vw, 46px);
+    border: 1px solid var(--hairline-strong); border-radius: var(--radius-md);
+    background:
+      radial-gradient(120% 90% at 28% 40%, color-mix(in srgb, var(--ink) 4%, transparent) 0, transparent 58%),
+      radial-gradient(80% 70% at 82% 78%, color-mix(in srgb, var(--smc-navy) 5%, transparent) 0, transparent 60%),
+      var(--paper-card, #fbf7ef);
+    box-shadow: 0 1px 0 rgba(255,255,255,.55) inset, 0 26px 64px rgba(26,22,18,.18);
+  }
+  .pmo-mandala-plate::before {
+    content: ''; position: absolute; inset: 9px; border-radius: 3px;
+    border: 1px solid color-mix(in srgb, var(--oxblood) 42%, transparent);
+    pointer-events: none;
+  }
+  body.candle .pmo-mandala-plate { box-shadow: 0 26px 64px rgba(0,0,0,.5); }
+  .pmo-mandala-plate__corner { position: absolute; z-index: 2; font-family: var(--serif-display); font-size: 17px; line-height: 1; color: var(--oxblood); opacity: .72; pointer-events: none; }
+  .pmo-mandala-plate__corner--tl { top: 13px; left: 15px; }
+  .pmo-mandala-plate__corner--tr { top: 13px; right: 15px; }
+  .pmo-mandala-plate__corner--bl { bottom: 13px; left: 15px; }
+  .pmo-mandala-plate__corner--br { bottom: 13px; right: 15px; }
+
+  /* Neutraliza o box interno .md2 (a moldura agora é a prancha) */
+  .pmo-mandala-plate .md2 { background: transparent; border: none; padding: 0; margin-top: 0; box-shadow: none; }
+  body.candle .pmo-mandala-plate .md2 { box-shadow: none; }
+
+  /* Anel gravado (astrolábio) atrás da roda — só na prancha */
+  .pmo-mandala-plate .md2-wheel::before {
+    content: ''; position: absolute; inset: -20px; border-radius: 50%; z-index: 0; pointer-events: none;
+    background: repeating-conic-gradient(from 0deg, color-mix(in srgb, var(--ink) 26%, transparent) 0 .35deg, transparent .35deg 6deg);
+    -webkit-mask: radial-gradient(circle, transparent 0 calc(50% - 7px), #000 calc(50% - 7px) 50%, transparent 50%);
+            mask: radial-gradient(circle, transparent 0 calc(50% - 7px), #000 calc(50% - 7px) 50%, transparent 50%);
+    opacity: .55;
+  }
+  .pmo-mandala-plate .md2-wheel::after {
+    content: ''; position: absolute; inset: -20px; border-radius: 50%; z-index: 0; pointer-events: none;
+    border: 1px solid color-mix(in srgb, var(--ink) 20%, transparent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--oxblood) 22%, transparent) inset;
+  }
+  .pmo-mandala-plate .md2-wheel > svg { position: relative; z-index: 1; }
+  .pmo-mandala-plate .md2-node { z-index: 1; }
+
+  /* Título da roda no tom do livro (era navy puro) */
+  .pmo-mandala-plate .md2-toolbar__t { font-family: var(--serif-display); font-style: italic; font-weight: 400; font-size: 19px; color: var(--ink); letter-spacing: 0; }
+
+  /* Dica de interação */
+  .pmo-mandala-hint { display: inline-flex; align-items: center; gap: 9px; margin: 0 auto; font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); }
+  .pmo-mandala-hint__glyph { display: inline-flex; width: 15px; height: 15px; color: var(--oxblood); }
+  .pmo-mandala-hint__glyph svg { width: 100%; height: 100%; display: block; }
+  .pmo-mandala-hint b { color: var(--oxblood); font-weight: 600; }
+
+  /* ============================================================
+     POLISH INTERATIVO (pass 2) — hover consistente + seções vivas
+     ============================================================ */
+  /* Hover nos cards que não tinham (ESG · padrões de viz) */
+  .esg-fam { transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); }
+  .esg-fam:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(0,0,0,.12); }
+  .esg-fam:hover .esg-fam__letter { transform: scale(1.06); }
+  .esg-fam__letter { transition: transform var(--dur-base) var(--ease-out); }
+  .pmo-pattern { transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); }
+  .pmo-pattern:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(0,0,0,.1); }
+
+  /* --- XII · Mapa de riscos: matriz ⇄ lista, realce cruzado --- */
+  .pmo-matrix svg rect[data-sev] { cursor: pointer; transform-box: fill-box; transform-origin: center; transition: transform var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out); }
+  .pmo-matrix.is-dim svg rect[data-sev]:not(.is-hot) { opacity: .28; }
+  .pmo-matrix svg rect.is-hot { transform: scale(1.14); stroke: #1d1823; stroke-width: 2; }
+  .pmo-risk { cursor: pointer; border-radius: 3px; transition: background var(--dur-fast) var(--ease-out); }
+  .pmo-risk:hover, .pmo-risk.is-hot { background: color-mix(in srgb, var(--ink) 6%, transparent); }
+  .pmo-risk.is-hot { box-shadow: inset 3px 0 0 var(--ink); }
+  .pmo-risk-list.is-filtered .pmo-risk:not(.is-match) { opacity: .22; }
+  .pmo-risk__sev { transition: transform var(--dur-fast) var(--ease-out); }
+  .pmo-risk.is-hot .pmo-risk__sev { transform: scale(1.35); }
+  .pmo-risk-cap { display: flex; align-items: center; gap: 12px; margin-top: var(--sp-3); min-height: 20px; font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); }
+  .pmo-risk-cap__reset { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--oxblood); background: none; border: none; border-bottom: 1px solid currentColor; padding: 0 0 1px; cursor: pointer; }
+  .pmo-risk-cap__reset[hidden] { display: none; }
+
+  /* --- X · Anatomia: ponteiro deslizante na escala de reputação --- */
+  .anat__dim { cursor: pointer; transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+  .anat__dim:hover, .anat__dim.is-active { transform: translateX(3px); }
+  .anat__dim.is-active { box-shadow: 0 6px 18px rgba(0,0,0,.1); }
+  .anat__scale { position: relative; }
+  .anat__needle { position: absolute; top: 0; left: 0; width: 0; transform: translateX(-50%); transition: left var(--dur-slow) var(--ease-power); pointer-events: none; z-index: 2; }
+  .anat__needle__stem { position: absolute; top: -3px; left: 50%; transform: translateX(-50%); width: 2px; height: 18px; background: var(--ink); }
+  .anat__needle__stem::after { content: ''; position: absolute; bottom: -4px; left: 50%; transform: translate(-50%, 0) rotate(45deg); width: 7px; height: 7px; background: var(--ink); }
+  .anat__needle__flag { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); white-space: nowrap; font-family: var(--serif-display); font-size: 16px; line-height: 1; color: var(--paper); background: var(--ink); padding: 4px 9px; border-radius: 3px; font-variant-numeric: tabular-nums; }
+  .anat__needle__flag::after { content: ''; position: absolute; bottom: -4px; left: 50%; transform: translate(-50%, 0) rotate(45deg); width: 8px; height: 8px; background: var(--ink); }
+  .anat__needle__flag small { font-family: var(--mono); font-size: 8px; letter-spacing: .06em; opacity: .7; margin-left: 5px; text-transform: uppercase; }
+
+  /* --- Hover coeso nas seções que faltavam --- */
+  .dz-find { transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); }
+  .dz-find:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(0,0,0,.1); }
+  .lesson { transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); }
+  .lesson:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(0,0,0,.1); }
+  .mod-card__icon { transition: transform var(--dur-base) var(--ease-out), background var(--dur-base); }
+  .mod-card:hover .mod-card__icon { transform: scale(1.08) rotate(-2deg); }
+  .sol-flow__step { transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), border-left-color var(--dur-base); }
+  .sol-flow__step:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(0,0,0,.1); border-left-color: var(--oxblood); }
+  .rp-station__dot { transition: transform var(--dur-base) var(--ease-out), background var(--dur-base), color var(--dur-base); }
+  .rp-station:hover .rp-station__dot { transform: scale(1.18); background: var(--oxblood); color: var(--paper); }
+
+  /* --- VI · RAG ao vivo: passar num estado repinta os chips "Aplicado em" --- */
+  .rag-state { cursor: pointer; transition: transform var(--dur-fast) var(--ease-out); }
+  .rag-state:hover { transform: translateX(3px); }
+  .sol-rag-where { --lit: transparent; }
+  .sol-rag-where__chip { transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast); }
+  .sol-rag-where.is-lit .sol-rag-where__chip { border-color: var(--lit); color: var(--ink); }
+  .sol-rag-where.is-lit .sol-rag-where__chip::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--lit); margin-right: 7px; box-shadow: 0 0 0 1px rgba(0,0,0,.08); }
+  .sol-rag-where__hint { font-family: var(--mono); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); font-style: normal; }
+
+  /* ============================================================
+     VIII · BIBLIOTECA CURADA — catálogo de estampas filtrável
+     Fichas uniformes (estampa nº · título · descrição · família ·
+     padrão de viz · status RAG). Filtros por família (com contagem)
+     e por status, com lógica AND. Passe-partout branco unifica os
+     screenshots heterogêneos; o lightbox segue no clique.
+     ============================================================ */
+  .lib-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--sp-4); margin-top: var(--sp-5); padding-bottom: var(--sp-4); border-bottom: 1px solid var(--hairline-strong); }
+  .lib-filters { display: flex; flex-wrap: wrap; gap: 6px; }
+  .lib-tab { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); background: transparent; border: 1px solid var(--hairline-strong); border-radius: var(--radius-pill); padding: 7px 14px; cursor: pointer; transition: background var(--dur-fast), color var(--dur-fast), border-color var(--dur-fast); }
+  .lib-tab b { font-family: var(--serif-display); font-style: italic; font-weight: 400; font-size: 14px; letter-spacing: 0; color: var(--oxblood); }
+  .lib-tab:hover { border-color: var(--ink); color: var(--ink); }
+  .lib-tab.is-active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .lib-tab.is-active b { color: var(--highlighter); }
+  .lib-statusfilter { display: flex; flex-wrap: wrap; gap: 3px; }
+  .lib-status { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); background: transparent; border: 1px solid transparent; border-radius: var(--radius-pill); padding: 6px 12px; cursor: pointer; transition: background var(--dur-fast), color var(--dur-fast), border-color var(--dur-fast); }
+  .lib-status i { width: 9px; height: 9px; border-radius: 50%; box-shadow: 0 0 0 1px rgba(0,0,0,.08); }
+  .lib-status:hover { color: var(--ink); }
+  .lib-status.is-active { color: var(--ink); border-color: var(--hairline-strong); background: var(--paper-card); }
+
+  .lib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(238px, 1fr)); gap: var(--sp-4); margin-top: var(--sp-5); }
+  .lib-card { display: flex; flex-direction: column; border: 1px solid var(--hairline-strong); border-radius: var(--radius-sm); background: var(--paper-card, #fbf7ef); overflow: hidden; transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); }
+  .lib-card.is-hidden { display: none; }
+  .lib-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0,0,0,.14); }
+  .lib-card[data-wide] { grid-column: span 2; }
+  @media (max-width: 560px) { .lib-card[data-wide] { grid-column: span 1; } }
+  .lib-card__plate { position: relative; display: block; aspect-ratio: 4 / 3; background: #fff; border-bottom: 1px solid var(--hairline); overflow: hidden; }
+  .lib-card[data-wide] .lib-card__plate { aspect-ratio: 16 / 9; }
+  .lib-card__plate img { width: 100%; height: 100%; object-fit: contain; padding: 14px; transition: transform var(--dur-slow) var(--ease-out); }
+  .lib-card:hover .lib-card__plate img { transform: scale(1.04); }
+  .lib-card__mag { position: absolute; right: 10px; bottom: 10px; font-family: var(--mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--paper); background: color-mix(in srgb, var(--ink) 82%, transparent); padding: 4px 10px; border-radius: var(--radius-pill); opacity: 0; transform: translateY(6px); transition: opacity var(--dur-base), transform var(--dur-base); }
+  .lib-card:hover .lib-card__mag, .lib-card__plate:focus-visible .lib-card__mag { opacity: 1; transform: none; }
+  .lib-card__body { display: flex; flex-direction: column; gap: 7px; padding: var(--sp-4); flex: 1; }
+  .lib-card__topline { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .lib-card__num { font-family: var(--mono); font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint); }
+  .lib-card__status { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 8.5px; letter-spacing: .1em; text-transform: uppercase; padding: 3px 9px; border-radius: var(--radius-pill); }
+  .lib-card__status::before { content: ''; width: 7px; height: 7px; border-radius: 50%; }
+  .lib-card__status--ok { color: #2b6a44; background: color-mix(in srgb, #2f9e63 15%, transparent); }
+  .lib-card__status--ok::before { background: #2f9e63; }
+  .lib-card__status--warn { color: #8a6410; background: color-mix(in srgb, #d6a312 18%, transparent); }
+  .lib-card__status--warn::before { background: #d6a312; }
+  .lib-card__status--none { color: var(--ink-faint); background: color-mix(in srgb, var(--ink) 6%, transparent); }
+  .lib-card__status--none::before { background: #b6c0c6; }
+  .lib-card__title { font-family: var(--serif-display); font-style: italic; font-size: 20px; line-height: 1.12; color: var(--ink); }
+  .lib-card__desc { margin: 0; font-family: var(--serif); font-size: 13px; line-height: var(--lh-snug); color: var(--ink-soft); }
+  .lib-card__meta { margin-top: auto; padding-top: var(--sp-3); border-top: 1px solid var(--hairline); display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
+  .lib-card__fam { font-family: var(--mono); font-size: 8.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--oxblood); }
+  .lib-card__viz { font-family: var(--serif); font-style: italic; font-size: 12.5px; color: var(--ink-faint); }
+  .lib-card__viz::before { content: '◇'; font-style: normal; color: var(--ink-ghost); margin-right: 5px; }
+  .lib-empty { margin-top: var(--sp-6); text-align: center; font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--ink-soft); }
+  .lib-empty[hidden] { display: none; }
+
+  /* ============================================================
+     COLOFÃO — "explicit" editorial: pressmark + regra floral +
+     linha de composição. Enriquece o .case-colophon compartilhado
+     sem redeclarar seus tokens.
+     ============================================================ */
+  .case-colophon { position: relative; }
+  .colo-press { display: flex; flex-direction: column; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-4); }
+  .colo-press__mark { width: 74px; height: 74px; display: grid; place-items: center; border: 1px solid var(--hairline-strong); border-radius: 50%; position: relative; color: var(--oxblood); }
+  .colo-press__mark::before { content: ''; position: absolute; inset: 5px; border: 1px solid color-mix(in srgb, var(--oxblood) 32%, transparent); border-radius: 50%; }
+  .colo-press__mark span { font-family: var(--serif-display); font-size: 30px; line-height: 1; font-style: italic; color: var(--ink); }
+  .colo-press__cap { font-family: var(--mono); font-size: 9px; letter-spacing: .24em; text-transform: uppercase; color: var(--ink-faint); }
+  .colo-rule { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 0 auto var(--sp-4); max-width: 320px; color: var(--oxblood); }
+  .colo-rule::before, .colo-rule::after { content: ''; height: 1px; flex: 1; background: linear-gradient(to var(--dir, right), transparent, color-mix(in srgb, var(--oxblood) 46%, transparent)); }
+  .colo-rule::after { --dir: left; }
+  .colo-rule span { font-family: var(--serif-display); font-size: 14px; line-height: 1; opacity: .82; }
+  .colo-finis { font-family: var(--serif-display); font-style: italic; font-size: 15px; letter-spacing: .04em; color: var(--ink-faint); margin: var(--sp-3) 0 0; }
+
+  /* Folio-nav — hover mais vivo (seta desliza, título revela) */
+  .folio-nav .verso, .folio-nav .recto { transition: background var(--dur-base) var(--ease-out); }
+  .folio-nav .folio-marker { transition: transform var(--dur-base) var(--ease-out), color var(--dur-base); display: inline-block; }
+  .folio-nav .verso:hover .folio-marker { transform: translateX(-4px); color: var(--oxblood); }
+  .folio-nav .recto:hover .folio-marker { transform: translateX(4px); color: var(--oxblood); }
+  .folio-nav .folio-title { transition: color var(--dur-base); }
+  .folio-nav a:hover .folio-title { color: var(--ink); }
 </style>
 </head>
 <body data-lang="pt">
@@ -947,6 +1158,7 @@
   <section class="pmo-results" data-folio aria-label="Resultados-chave">
     <div class="pmo-results__inner reveal">
       <p class="pmo-results__lab"><span class="t" lang="pt">Resultados-chave</span><span class="t" lang="en">Key results</span></p>
+      <div class="pmo-results__orn" aria-hidden="true"><span>✦</span></div>
       <ul class="pmo-results__grid">
         <li class="pmo-results__item">
           <span class="pmo-results__v"><span class="stat-val" data-count="6">6</span></span>
@@ -975,14 +1187,57 @@
        ============================================================ -->
   <section class="pmo-impact" data-folio aria-label="A Mandala Estratégica — peça de impacto">
     <div class="pmo-impact__inner reveal">
-      <div class="pmo-impact__ph" role="img" aria-label="Placeholder da Mandala Estratégica">
-        <span class="pmo-impact__roman">✺</span>
-        <span class="pmo-impact__name">Mandala</span>
-        <span class="pmo-impact__note"><span class="t" lang="pt">Peça de impacto · a construir</span><span class="t" lang="en">Impact piece · to build</span></span>
+      <header class="pmo-mandala-head">
+        <span class="pmo-mandala-head__eyebrow"><span class="t" lang="pt">Peça de impacto · a home executiva</span><span class="t" lang="en">Impact piece · the executive home</span></span>
+        <h2 class="pmo-mandala-head__title">A Mandala Estratégica</h2>
+        <p class="pmo-mandala-head__sub">
+          <span class="t" lang="pt">Uma <span class="em">única fonte da verdade</span>: os seis eixos da companhia num só instrumento. Clique num eixo — o setor acende e a leitura de indicadores abre ao lado.</span>
+          <span class="t" lang="en">A <span class="em">single source of truth</span>: the company's six axes on one instrument. Click an axis — the sector lights up and its indicator reading opens beside it.</span>
+        </p>
+      </header>
+
+      <div class="pmo-mandala-plate">
+        <span class="pmo-mandala-plate__corner pmo-mandala-plate__corner--tl" aria-hidden="true">✦</span>
+        <span class="pmo-mandala-plate__corner pmo-mandala-plate__corner--tr" aria-hidden="true">✦</span>
+        <span class="pmo-mandala-plate__corner pmo-mandala-plate__corner--bl" aria-hidden="true">✦</span>
+        <span class="pmo-mandala-plate__corner pmo-mandala-plate__corner--br" aria-hidden="true">✦</span>
+
+        <div class="md2">
+          <div class="md2-left">
+            <div class="md2-toolbar">
+              <img class="md2-toolbar__logo" src="../images/samarco/mandala/mandala.webp" alt="" />
+              <span class="md2-toolbar__t">Mandala Estratégica</span>
+            </div>
+            <div class="md2-wheelwrap">
+              <div class="md2-wheel" id="mdWheel">
+                <svg viewBox="0 0 100 100" id="mdSvg" aria-hidden="true">
+                  <circle cx="50" cy="50" r="46" fill="#004170" stroke="#719DC6" stroke-width="1.5"/>
+                  <path id="mdSector" d="" fill="#0a5a96" opacity="0.9"/>
+                  <g stroke="#1b5687" stroke-width="0.6" opacity="0.8">
+                    <line x1="50" y1="50" x2="89.8" y2="73"/><line x1="50" y1="50" x2="10.2" y2="27"/>
+                    <line x1="50" y1="50" x2="89.8" y2="27"/><line x1="50" y1="50" x2="10.2" y2="73"/>
+                    <line x1="50" y1="50" x2="50" y2="4"/><line x1="50" y1="50" x2="50" y2="96"/>
+                  </g>
+                  <circle cx="50" cy="50" r="15" fill="#fff"/>
+                  <circle cx="50" cy="50" r="14.4" fill="none" stroke="#B6C0C6" stroke-width="3.4" stroke-dasharray="56 34" stroke-dashoffset="-9" transform="rotate(-90 50 50)" stroke-linecap="round"/>
+                  <circle cx="50" cy="50" r="6.5" fill="#004170"/>
+                  <circle cx="50" cy="50" r="2.6" fill="#fff"/>
+                </svg>
+              </div>
+            </div>
+            <span class="md2-riscos">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3 L22 20 H2 Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><line x1="12" y1="10" x2="12" y2="15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="17.6" r="0.9" fill="currentColor"/></svg>
+              <span class="t" lang="pt">Riscos</span><span class="t" lang="en">Risks</span>
+            </span>
+          </div>
+
+          <div class="md2-panel" id="mdPanel" aria-live="polite"></div>
+        </div>
       </div>
-      <p class="pmo-impact__cap">
-        <span class="t" lang="pt">A Mandala Estratégica — peça de impacto interativa (a construir).</span>
-        <span class="t" lang="en">The Strategic Mandala — interactive impact piece (to build).</span>
+
+      <p class="pmo-mandala-hint">
+        <span class="pmo-mandala-hint__glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.4"/><path d="M12 5 L14 12 L12 19 L10 12 Z" fill="currentColor"/></svg></span>
+        <span class="t" lang="pt">Clique num dos <b>6 eixos</b> · dados ilustrativos</span><span class="t" lang="en">Click one of the <b>6 axes</b> · illustrative data</span>
       </p>
     </div>
   </section>
@@ -1878,56 +2133,180 @@
           </div>
         </div>
 
-        <!-- Galeria real, agrupada por família (lightbox) -->
-        <div class="sl-gallery reveal">
+        <!-- Catálogo de estampas — filtrável por família + status (lightbox) -->
+        <div class="sl-gallery lib reveal">
 
-          <div class="pmo-group-head">
-            <span class="pmo-group-head__roman">I</span>
-            <span class="pmo-group-head__name"><span class="t" lang="pt">Ambiental e descarbonização</span><span class="t" lang="en">Environmental & decarbonization</span></span>
-            <span class="pmo-group-head__gloss"><span class="t" lang="pt">água · energia · resíduos · emissões</span><span class="t" lang="en">water · energy · waste · emissions</span></span>
-          </div>
-          <div class="pmo-grid">
-            <figure class="pmo-shot--wide pmo-shot"><a class="lightboxgallery-link" href="../images/samarco/indicators/emissoes-gee.webp" aria-label="Emissões de GEE — Escopos 1 e 2"><img src="../images/samarco/indicators/emissoes-gee.webp" alt="Emissões de GEE — Escopos 1 e 2" loading="lazy" /></a><figcaption><b>Emissões de GEE · Escopos 1 e 2</b> — <span class="t" lang="pt">cenários de redução em tela larga, para preservar série e legenda.</span><span class="t" lang="en">reduction scenarios on a wide screen, to preserve series and legend.</span></figcaption></figure>
-            <figure class="pmo-shot"><a class="lightboxgallery-link" href="../images/samarco/indicators/descarbonizacao.webp" aria-label="Ações de descarbonização"><img src="../images/samarco/indicators/descarbonizacao.webp" alt="Ações de descarbonização" loading="lazy" /></a><figcaption><b>Ações de descarbonização</b> — <span class="t" lang="pt">tratada como peça de decisão, não só métrica final.</span><span class="t" lang="en">treated as a decision piece, not just a final metric.</span></figcaption></figure>
-            <figure class="pmo-shot"><a class="lightboxgallery-link" href="../images/samarco/indicators/recuperacao-ambiental.webp" aria-label="Atividades de recuperação ambiental"><img src="../images/samarco/indicators/recuperacao-ambiental.webp" alt="Atividades de recuperação ambiental" loading="lazy" /></a><figcaption><b>Recuperação ambiental</b> — <span class="t" lang="pt">hectares recuperados com escala de avanço direto.</span><span class="t" lang="en">recovered hectares on a direct-advancement scale.</span></figcaption></figure>
-            <figure class="pmo-shot"><a class="lightboxgallery-link" href="../images/samarco/indicators/recuperacao-nascentes.webp" aria-label="Recuperação de nascentes"><img src="../images/samarco/indicators/recuperacao-nascentes.webp" alt="Recuperação de nascentes" loading="lazy" /></a><figcaption><b>Recuperação de nascentes</b> — <span class="t" lang="pt">recorrência comparável entre ciclos.</span><span class="t" lang="en">recurring rate comparable across cycles.</span></figcaption></figure>
-            <figure class="pmo-shot"><a class="lightboxgallery-link" href="../images/samarco/forms/benchmark-agua.webp" aria-label="Benchmark de recirculação de água"><img src="../images/samarco/forms/benchmark-agua.webp" alt="Benchmark de recirculação de água" loading="lazy" /></a><figcaption><b>Recirculação de água</b> — <span class="t" lang="pt">cartão sintético para monitoramento contínuo.</span><span class="t" lang="en">synthetic card for continuous monitoring.</span></figcaption></figure>
-          </div>
-
-          <div class="pmo-group-head">
-            <span class="pmo-group-head__roman">II</span>
-            <span class="pmo-group-head__name"><span class="t" lang="pt">Operação, rejeitos e cenários</span><span class="t" lang="en">Operation, waste & scenarios</span></span>
-            <span class="pmo-group-head__gloss"><span class="t" lang="pt">produção · capacidade · P&amp;D</span><span class="t" lang="en">production · capacity · R&amp;D</span></span>
-          </div>
-          <div class="pmo-grid">
-            <figure class="pmo-shot--wide pmo-shot"><a class="lightboxgallery-link" href="../images/samarco/indicators/comparacao-planos.webp" aria-label="Comparação dos planos"><img src="../images/samarco/indicators/comparacao-planos.webp" alt="Comparação dos planos" loading="lazy" /></a><figcaption><b>Comparação dos planos</b> — <span class="t" lang="pt">confronto de cenários sem alterar a gramática visual.</span><span class="t" lang="en">plan comparison without altering the visual grammar.</span></figcaption></figure>
-            <figure class="pmo-shot"><a class="lightboxgallery-link" href="../images/samarco/indicators/capacidade-rejeitos.webp" aria-label="Limitação de capacidade para disposição de rejeitos"><img src="../images/samarco/indicators/capacidade-rejeitos.webp" alt="Limitação de capacidade para disposição de rejeitos" loading="lazy" /></a><figcaption><b>Capacidade de rejeitos</b> — <span class="t" lang="pt">restrição operacional com peso executivo.</span><span class="t" lang="en">operational restriction with executive weight.</span></figcaption></figure>
-            <figure class="pmo-shot"><a class="lightboxgallery-link" href="../images/samarco/indicators/minerio-marginal.webp" aria-label="Minério marginal entregue à Vale"><img src="../images/samarco/indicators/minerio-marginal.webp" alt="Minério marginal entregue à Vale" loading="lazy" /></a><figcaption><b>Minério marginal</b> — <span class="t" lang="pt">métrica de interface entre produção e parceiro.</span><span class="t" lang="en">interface metric between production and partner.</span></figcaption></figure>
+          <div class="lib-toolbar">
+            <div class="lib-filters" role="tablist" aria-label="Filtrar por família">
+              <button class="lib-tab is-active" type="button" data-dim="fam" data-val="all"><span class="t" lang="pt">Todas</span><span class="t" lang="en">All</span><b>15</b></button>
+              <button class="lib-tab" type="button" data-dim="fam" data-val="ambiental"><span class="t" lang="pt">Ambiental</span><span class="t" lang="en">Environmental</span><b>5</b></button>
+              <button class="lib-tab" type="button" data-dim="fam" data-val="operacao"><span class="t" lang="pt">Operação</span><span class="t" lang="en">Operation</span><b>3</b></button>
+              <button class="lib-tab" type="button" data-dim="fam" data-val="social">Social<b>4</b></button>
+              <button class="lib-tab" type="button" data-dim="fam" data-val="governanca"><span class="t" lang="pt">Governança</span><span class="t" lang="en">Governance</span><b>3</b></button>
+            </div>
+            <div class="lib-statusfilter" role="group" aria-label="Filtrar por status">
+              <button class="lib-status is-active" type="button" data-dim="status" data-val="all"><span class="t" lang="pt">Todos</span><span class="t" lang="en">All</span></button>
+              <button class="lib-status" type="button" data-dim="status" data-val="ok"><i style="background:#2f9e63"></i><span class="t" lang="pt">No alvo</span><span class="t" lang="en">On target</span></button>
+              <button class="lib-status" type="button" data-dim="status" data-val="warn"><i style="background:#d6a312"></i><span class="t" lang="pt">Atenção</span><span class="t" lang="en">Watch</span></button>
+              <button class="lib-status" type="button" data-dim="status" data-val="none"><i style="background:#b6c0c6"></i><span class="t" lang="pt">Sem dado</span><span class="t" lang="en">No data</span></button>
+            </div>
           </div>
 
-          <div class="pmo-group-head">
-            <span class="pmo-group-head__roman">III</span>
-            <span class="pmo-group-head__name"><span class="t" lang="pt">Social, reputação e relacionamento</span><span class="t" lang="en">Social, reputation & engagement</span></span>
-            <span class="pmo-group-head__gloss"><span class="t" lang="pt">comunidade · investimento · inclusão</span><span class="t" lang="en">community · investment · inclusion</span></span>
-          </div>
-          <div class="pmo-grid">
-            <figure class="pmo-shot"><a class="lightboxgallery-link" href="../images/samarco/indicators/piis-investimento-social.webp" aria-label="PIIS — avanço financeiro"><img src="../images/samarco/indicators/piis-investimento-social.webp" alt="PIIS — avanço financeiro" loading="lazy" /></a><figcaption><b>PIIS · avanço financeiro</b> — <span class="t" lang="pt">investimento social sob ótica financeira.</span><span class="t" lang="en">social investment under a financial optic.</span></figcaption></figure>
-            <figure class="pmo-shot"><a class="lightboxgallery-link" href="../images/samarco/indicators/central-relacionamento.webp" aria-label="Central de relacionamento"><img src="../images/samarco/indicators/central-relacionamento.webp" alt="Central de relacionamento" loading="lazy" /></a><figcaption><b>Central de relacionamento</b> — <span class="t" lang="pt">entrada de manifestações organizada para leitura em comitê.</span><span class="t" lang="en">manifestation entry organized for committee reading.</span></figcaption></figure>
-            <figure class="pmo-shot"><a class="lightboxgallery-link" href="../images/samarco/indicators/fortalecimento-economico.webp" aria-label="Fortalecimento econômico"><img src="../images/samarco/indicators/fortalecimento-economico.webp" alt="Fortalecimento econômico" loading="lazy" /></a><figcaption><b>Fortalecimento econômico</b> — <span class="t" lang="pt">métrica de impacto local nas comunidades.</span><span class="t" lang="en">local impact metric in the communities.</span></figcaption></figure>
-            <figure class="pmo-shot"><a class="lightboxgallery-link" href="../images/samarco/forms/donut-mulheres.webp" aria-label="Índice de inclusão — mulheres na liderança"><img src="../images/samarco/forms/donut-mulheres.webp" alt="Índice de inclusão — mulheres na liderança" loading="lazy" /></a><figcaption><b>Índice de Inclusão</b> — <span class="t" lang="pt">status comparável ao resto da Mandala.</span><span class="t" lang="en">status comparable to the rest of the Mandala.</span></figcaption></figure>
+          <div class="lib-grid" id="libGrid">
+
+            <figure class="lib-card" data-fam="ambiental" data-status="ok" data-wide>
+              <a class="lib-card__plate lightboxgallery-link" href="../images/samarco/indicators/emissoes-gee.webp" aria-label="Emissões de GEE — Escopos 1 e 2"><img src="../images/samarco/indicators/emissoes-gee.webp" alt="Emissões de GEE — Escopos 1 e 2" loading="lazy" /><span class="lib-card__mag" aria-hidden="true"><span class="t" lang="pt">⌕ ampliar</span><span class="t" lang="en">⌕ view</span></span></a>
+              <figcaption class="lib-card__body">
+                <div class="lib-card__topline"><span class="lib-card__num">Est. 01</span><span class="lib-card__status lib-card__status--ok"><span class="t" lang="pt">no alvo</span><span class="t" lang="en">on target</span></span></div>
+                <span class="lib-card__title">Emissões de GEE · Escopos 1 e 2</span>
+                <p class="lib-card__desc"><span class="t" lang="pt">Cenários de redução em tela larga, para preservar série e legenda.</span><span class="t" lang="en">Reduction scenarios on a wide screen, to preserve series and legend.</span></p>
+                <div class="lib-card__meta"><span class="lib-card__fam"><span class="t" lang="pt">Ambiental</span><span class="t" lang="en">Environmental</span></span><span class="lib-card__viz"><span class="t" lang="pt">YoY c/ meta</span><span class="t" lang="en">YoY vs target</span></span></div>
+              </figcaption>
+            </figure>
+
+            <figure class="lib-card" data-fam="ambiental" data-status="ok">
+              <a class="lib-card__plate lightboxgallery-link" href="../images/samarco/indicators/descarbonizacao.webp" aria-label="Ações de descarbonização"><img src="../images/samarco/indicators/descarbonizacao.webp" alt="Ações de descarbonização" loading="lazy" /><span class="lib-card__mag" aria-hidden="true"><span class="t" lang="pt">⌕ ampliar</span><span class="t" lang="en">⌕ view</span></span></a>
+              <figcaption class="lib-card__body">
+                <div class="lib-card__topline"><span class="lib-card__num">Est. 02</span><span class="lib-card__status lib-card__status--ok"><span class="t" lang="pt">no alvo</span><span class="t" lang="en">on target</span></span></div>
+                <span class="lib-card__title"><span class="t" lang="pt">Ações de descarbonização</span><span class="t" lang="en">Decarbonization actions</span></span>
+                <p class="lib-card__desc"><span class="t" lang="pt">Tratada como peça de decisão, não só métrica final.</span><span class="t" lang="en">Treated as a decision piece, not just a final metric.</span></p>
+                <div class="lib-card__meta"><span class="lib-card__fam"><span class="t" lang="pt">Ambiental</span><span class="t" lang="en">Environmental</span></span><span class="lib-card__viz"><span class="t" lang="pt">Combo decisão</span><span class="t" lang="en">Decision combo</span></span></div>
+              </figcaption>
+            </figure>
+
+            <figure class="lib-card" data-fam="ambiental" data-status="warn">
+              <a class="lib-card__plate lightboxgallery-link" href="../images/samarco/indicators/recuperacao-ambiental.webp" aria-label="Atividades de recuperação ambiental"><img src="../images/samarco/indicators/recuperacao-ambiental.webp" alt="Atividades de recuperação ambiental" loading="lazy" /><span class="lib-card__mag" aria-hidden="true"><span class="t" lang="pt">⌕ ampliar</span><span class="t" lang="en">⌕ view</span></span></a>
+              <figcaption class="lib-card__body">
+                <div class="lib-card__topline"><span class="lib-card__num">Est. 03</span><span class="lib-card__status lib-card__status--warn"><span class="t" lang="pt">atenção</span><span class="t" lang="en">watch</span></span></div>
+                <span class="lib-card__title"><span class="t" lang="pt">Recuperação ambiental</span><span class="t" lang="en">Environmental recovery</span></span>
+                <p class="lib-card__desc"><span class="t" lang="pt">Hectares recuperados com escala de avanço direto.</span><span class="t" lang="en">Recovered hectares on a direct-advancement scale.</span></p>
+                <div class="lib-card__meta"><span class="lib-card__fam"><span class="t" lang="pt">Ambiental</span><span class="t" lang="en">Environmental</span></span><span class="lib-card__viz"><span class="t" lang="pt">Barra de avanço</span><span class="t" lang="en">Progress bar</span></span></div>
+              </figcaption>
+            </figure>
+
+            <figure class="lib-card" data-fam="ambiental" data-status="ok">
+              <a class="lib-card__plate lightboxgallery-link" href="../images/samarco/indicators/recuperacao-nascentes.webp" aria-label="Recuperação de nascentes"><img src="../images/samarco/indicators/recuperacao-nascentes.webp" alt="Recuperação de nascentes" loading="lazy" /><span class="lib-card__mag" aria-hidden="true"><span class="t" lang="pt">⌕ ampliar</span><span class="t" lang="en">⌕ view</span></span></a>
+              <figcaption class="lib-card__body">
+                <div class="lib-card__topline"><span class="lib-card__num">Est. 04</span><span class="lib-card__status lib-card__status--ok"><span class="t" lang="pt">no alvo</span><span class="t" lang="en">on target</span></span></div>
+                <span class="lib-card__title"><span class="t" lang="pt">Recuperação de nascentes</span><span class="t" lang="en">Spring recovery</span></span>
+                <p class="lib-card__desc"><span class="t" lang="pt">Recorrência comparável entre ciclos.</span><span class="t" lang="en">Recurring rate comparable across cycles.</span></p>
+                <div class="lib-card__meta"><span class="lib-card__fam"><span class="t" lang="pt">Ambiental</span><span class="t" lang="en">Environmental</span></span><span class="lib-card__viz"><span class="t" lang="pt">Série YoY</span><span class="t" lang="en">YoY series</span></span></div>
+              </figcaption>
+            </figure>
+
+            <figure class="lib-card" data-fam="ambiental" data-status="warn">
+              <a class="lib-card__plate lightboxgallery-link" href="../images/samarco/forms/benchmark-agua.webp" aria-label="Benchmark de recirculação de água"><img src="../images/samarco/forms/benchmark-agua.webp" alt="Benchmark de recirculação de água" loading="lazy" /><span class="lib-card__mag" aria-hidden="true"><span class="t" lang="pt">⌕ ampliar</span><span class="t" lang="en">⌕ view</span></span></a>
+              <figcaption class="lib-card__body">
+                <div class="lib-card__topline"><span class="lib-card__num">Est. 05</span><span class="lib-card__status lib-card__status--warn"><span class="t" lang="pt">atenção</span><span class="t" lang="en">watch</span></span></div>
+                <span class="lib-card__title"><span class="t" lang="pt">Recirculação de água</span><span class="t" lang="en">Water recirculation</span></span>
+                <p class="lib-card__desc"><span class="t" lang="pt">Cartão sintético para monitoramento contínuo.</span><span class="t" lang="en">Synthetic card for continuous monitoring.</span></p>
+                <div class="lib-card__meta"><span class="lib-card__fam"><span class="t" lang="pt">Ambiental</span><span class="t" lang="en">Environmental</span></span><span class="lib-card__viz"><span class="t" lang="pt">Cartão KPI</span><span class="t" lang="en">KPI card</span></span></div>
+              </figcaption>
+            </figure>
+
+            <figure class="lib-card" data-fam="operacao" data-status="none" data-wide>
+              <a class="lib-card__plate lightboxgallery-link" href="../images/samarco/indicators/comparacao-planos.webp" aria-label="Comparação dos planos"><img src="../images/samarco/indicators/comparacao-planos.webp" alt="Comparação dos planos" loading="lazy" /><span class="lib-card__mag" aria-hidden="true"><span class="t" lang="pt">⌕ ampliar</span><span class="t" lang="en">⌕ view</span></span></a>
+              <figcaption class="lib-card__body">
+                <div class="lib-card__topline"><span class="lib-card__num">Est. 06</span><span class="lib-card__status lib-card__status--none"><span class="t" lang="pt">cenário</span><span class="t" lang="en">scenario</span></span></div>
+                <span class="lib-card__title"><span class="t" lang="pt">Comparação dos planos</span><span class="t" lang="en">Plan comparison</span></span>
+                <p class="lib-card__desc"><span class="t" lang="pt">Confronto de cenários sem alterar a gramática visual.</span><span class="t" lang="en">Plan comparison without altering the visual grammar.</span></p>
+                <div class="lib-card__meta"><span class="lib-card__fam"><span class="t" lang="pt">Operação</span><span class="t" lang="en">Operation</span></span><span class="lib-card__viz"><span class="t" lang="pt">Linha acumulada</span><span class="t" lang="en">Cumulative line</span></span></div>
+              </figcaption>
+            </figure>
+
+            <figure class="lib-card" data-fam="operacao" data-status="ok">
+              <a class="lib-card__plate lightboxgallery-link" href="../images/samarco/indicators/capacidade-rejeitos.webp" aria-label="Limitação de capacidade para disposição de rejeitos"><img src="../images/samarco/indicators/capacidade-rejeitos.webp" alt="Limitação de capacidade para disposição de rejeitos" loading="lazy" /><span class="lib-card__mag" aria-hidden="true"><span class="t" lang="pt">⌕ ampliar</span><span class="t" lang="en">⌕ view</span></span></a>
+              <figcaption class="lib-card__body">
+                <div class="lib-card__topline"><span class="lib-card__num">Est. 07</span><span class="lib-card__status lib-card__status--ok"><span class="t" lang="pt">no alvo</span><span class="t" lang="en">on target</span></span></div>
+                <span class="lib-card__title"><span class="t" lang="pt">Capacidade de rejeitos</span><span class="t" lang="en">Tailings capacity</span></span>
+                <p class="lib-card__desc"><span class="t" lang="pt">Restrição operacional com peso executivo.</span><span class="t" lang="en">Operational restriction with executive weight.</span></p>
+                <div class="lib-card__meta"><span class="lib-card__fam"><span class="t" lang="pt">Operação</span><span class="t" lang="en">Operation</span></span><span class="lib-card__viz"><span class="t" lang="pt">Medidor</span><span class="t" lang="en">Gauge</span></span></div>
+              </figcaption>
+            </figure>
+
+            <figure class="lib-card" data-fam="operacao" data-status="ok">
+              <a class="lib-card__plate lightboxgallery-link" href="../images/samarco/indicators/minerio-marginal.webp" aria-label="Minério marginal entregue à Vale"><img src="../images/samarco/indicators/minerio-marginal.webp" alt="Minério marginal entregue à Vale" loading="lazy" /><span class="lib-card__mag" aria-hidden="true"><span class="t" lang="pt">⌕ ampliar</span><span class="t" lang="en">⌕ view</span></span></a>
+              <figcaption class="lib-card__body">
+                <div class="lib-card__topline"><span class="lib-card__num">Est. 08</span><span class="lib-card__status lib-card__status--ok"><span class="t" lang="pt">no alvo</span><span class="t" lang="en">on target</span></span></div>
+                <span class="lib-card__title"><span class="t" lang="pt">Minério marginal</span><span class="t" lang="en">Marginal ore</span></span>
+                <p class="lib-card__desc"><span class="t" lang="pt">Métrica de interface entre produção e parceiro.</span><span class="t" lang="en">Interface metric between production and partner.</span></p>
+                <div class="lib-card__meta"><span class="lib-card__fam"><span class="t" lang="pt">Operação</span><span class="t" lang="en">Operation</span></span><span class="lib-card__viz">KPI · YoY</span></div>
+              </figcaption>
+            </figure>
+
+            <figure class="lib-card" data-fam="social" data-status="ok">
+              <a class="lib-card__plate lightboxgallery-link" href="../images/samarco/indicators/piis-investimento-social.webp" aria-label="PIIS — avanço financeiro"><img src="../images/samarco/indicators/piis-investimento-social.webp" alt="PIIS — avanço financeiro" loading="lazy" /><span class="lib-card__mag" aria-hidden="true"><span class="t" lang="pt">⌕ ampliar</span><span class="t" lang="en">⌕ view</span></span></a>
+              <figcaption class="lib-card__body">
+                <div class="lib-card__topline"><span class="lib-card__num">Est. 09</span><span class="lib-card__status lib-card__status--ok"><span class="t" lang="pt">no alvo</span><span class="t" lang="en">on target</span></span></div>
+                <span class="lib-card__title">PIIS · <span class="t" lang="pt">avanço financeiro</span><span class="t" lang="en">financial progress</span></span>
+                <p class="lib-card__desc"><span class="t" lang="pt">Investimento social sob ótica financeira.</span><span class="t" lang="en">Social investment under a financial optic.</span></p>
+                <div class="lib-card__meta"><span class="lib-card__fam">Social</span><span class="lib-card__viz"><span class="t" lang="pt">Barra de meta</span><span class="t" lang="en">Target bar</span></span></div>
+              </figcaption>
+            </figure>
+
+            <figure class="lib-card" data-fam="social" data-status="warn">
+              <a class="lib-card__plate lightboxgallery-link" href="../images/samarco/indicators/central-relacionamento.webp" aria-label="Central de relacionamento"><img src="../images/samarco/indicators/central-relacionamento.webp" alt="Central de relacionamento" loading="lazy" /><span class="lib-card__mag" aria-hidden="true"><span class="t" lang="pt">⌕ ampliar</span><span class="t" lang="en">⌕ view</span></span></a>
+              <figcaption class="lib-card__body">
+                <div class="lib-card__topline"><span class="lib-card__num">Est. 10</span><span class="lib-card__status lib-card__status--warn"><span class="t" lang="pt">atenção</span><span class="t" lang="en">watch</span></span></div>
+                <span class="lib-card__title"><span class="t" lang="pt">Central de relacionamento</span><span class="t" lang="en">Relationship center</span></span>
+                <p class="lib-card__desc"><span class="t" lang="pt">Entrada de manifestações organizada para leitura em comitê.</span><span class="t" lang="en">Manifestation entry organized for committee reading.</span></p>
+                <div class="lib-card__meta"><span class="lib-card__fam">Social</span><span class="lib-card__viz">KPI · NPS</span></div>
+              </figcaption>
+            </figure>
+
+            <figure class="lib-card" data-fam="social" data-status="ok">
+              <a class="lib-card__plate lightboxgallery-link" href="../images/samarco/indicators/fortalecimento-economico.webp" aria-label="Fortalecimento econômico"><img src="../images/samarco/indicators/fortalecimento-economico.webp" alt="Fortalecimento econômico" loading="lazy" /><span class="lib-card__mag" aria-hidden="true"><span class="t" lang="pt">⌕ ampliar</span><span class="t" lang="en">⌕ view</span></span></a>
+              <figcaption class="lib-card__body">
+                <div class="lib-card__topline"><span class="lib-card__num">Est. 11</span><span class="lib-card__status lib-card__status--ok"><span class="t" lang="pt">no alvo</span><span class="t" lang="en">on target</span></span></div>
+                <span class="lib-card__title"><span class="t" lang="pt">Fortalecimento econômico</span><span class="t" lang="en">Economic strengthening</span></span>
+                <p class="lib-card__desc"><span class="t" lang="pt">Métrica de impacto local nas comunidades.</span><span class="t" lang="en">Local impact metric in the communities.</span></p>
+                <div class="lib-card__meta"><span class="lib-card__fam">Social</span><span class="lib-card__viz"><span class="t" lang="pt">Índice</span><span class="t" lang="en">Index</span></span></div>
+              </figcaption>
+            </figure>
+
+            <figure class="lib-card" data-fam="social" data-status="none">
+              <a class="lib-card__plate lightboxgallery-link" href="../images/samarco/forms/donut-mulheres.webp" aria-label="Índice de inclusão — mulheres na liderança"><img src="../images/samarco/forms/donut-mulheres.webp" alt="Índice de inclusão — mulheres na liderança" loading="lazy" /><span class="lib-card__mag" aria-hidden="true"><span class="t" lang="pt">⌕ ampliar</span><span class="t" lang="en">⌕ view</span></span></a>
+              <figcaption class="lib-card__body">
+                <div class="lib-card__topline"><span class="lib-card__num">Est. 12</span><span class="lib-card__status lib-card__status--none"><span class="t" lang="pt">sem dado</span><span class="t" lang="en">no data</span></span></div>
+                <span class="lib-card__title"><span class="t" lang="pt">Índice de Inclusão</span><span class="t" lang="en">Inclusion Index</span></span>
+                <p class="lib-card__desc"><span class="t" lang="pt">Status comparável ao resto da Mandala.</span><span class="t" lang="en">Status comparable to the rest of the Mandala.</span></p>
+                <div class="lib-card__meta"><span class="lib-card__fam">Social</span><span class="lib-card__viz">Donut + KPI</span></div>
+              </figcaption>
+            </figure>
+
+            <figure class="lib-card" data-fam="governanca" data-status="warn" data-wide>
+              <a class="lib-card__plate lightboxgallery-link" href="../images/samarco/indicators/conformidade-sst.webp" aria-label="Conformidade Geral em SST"><img src="../images/samarco/indicators/conformidade-sst.webp" alt="Conformidade Geral em SST" loading="lazy" /><span class="lib-card__mag" aria-hidden="true"><span class="t" lang="pt">⌕ ampliar</span><span class="t" lang="en">⌕ view</span></span></a>
+              <figcaption class="lib-card__body">
+                <div class="lib-card__topline"><span class="lib-card__num">Est. 13</span><span class="lib-card__status lib-card__status--warn"><span class="t" lang="pt">atenção</span><span class="t" lang="en">watch</span></span></div>
+                <span class="lib-card__title">Conformidade Geral em SST</span>
+                <p class="lib-card__desc"><span class="t" lang="pt">Nome longo, tela larga: a proporção evita a miniaturização.</span><span class="t" lang="en">Long name, wide screen: proportion avoids miniaturization.</span></p>
+                <div class="lib-card__meta"><span class="lib-card__fam"><span class="t" lang="pt">Governança</span><span class="t" lang="en">Governance</span></span><span class="lib-card__viz">Combo %</span></div>
+              </figcaption>
+            </figure>
+
+            <figure class="lib-card" data-fam="governanca" data-status="none">
+              <a class="lib-card__plate lightboxgallery-link" href="../images/samarco/indicators/conhecimentos-criticos.webp" aria-label="Mapa de conhecimentos críticos"><img src="../images/samarco/indicators/conhecimentos-criticos.webp" alt="Mapa de conhecimentos críticos" loading="lazy" /><span class="lib-card__mag" aria-hidden="true"><span class="t" lang="pt">⌕ ampliar</span><span class="t" lang="en">⌕ view</span></span></a>
+              <figcaption class="lib-card__body">
+                <div class="lib-card__topline"><span class="lib-card__num">Est. 14</span><span class="lib-card__status lib-card__status--none"><span class="t" lang="pt">sem dado</span><span class="t" lang="en">no data</span></span></div>
+                <span class="lib-card__title"><span class="t" lang="pt">Mapa de conhecimentos críticos</span><span class="t" lang="en">Critical-knowledge map</span></span>
+                <p class="lib-card__desc"><span class="t" lang="pt">Risco de conhecimento tratado como ativo operacional.</span><span class="t" lang="en">Knowledge risk treated as an operational asset.</span></p>
+                <div class="lib-card__meta"><span class="lib-card__fam"><span class="t" lang="pt">Governança</span><span class="t" lang="en">Governance</span></span><span class="lib-card__viz"><span class="t" lang="pt">Mapa</span><span class="t" lang="en">Map</span></span></div>
+              </figcaption>
+            </figure>
+
+            <figure class="lib-card" data-fam="governanca" data-status="warn">
+              <a class="lib-card__plate lightboxgallery-link" href="../images/samarco/indicators/nivel-risco-global.webp" aria-label="Nível de risco global"><img src="../images/samarco/indicators/nivel-risco-global.webp" alt="Nível de risco global" loading="lazy" /><span class="lib-card__mag" aria-hidden="true"><span class="t" lang="pt">⌕ ampliar</span><span class="t" lang="en">⌕ view</span></span></a>
+              <figcaption class="lib-card__body">
+                <div class="lib-card__topline"><span class="lib-card__num">Est. 15</span><span class="lib-card__status lib-card__status--warn"><span class="t" lang="pt">atenção</span><span class="t" lang="en">watch</span></span></div>
+                <span class="lib-card__title"><span class="t" lang="pt">Nível de risco global</span><span class="t" lang="en">Global risk level</span></span>
+                <p class="lib-card__desc"><span class="t" lang="pt">Síntese do risco fechada no mesmo sistema RAG.</span><span class="t" lang="en">Risk synthesis closed within the same RAG system.</span></p>
+                <div class="lib-card__meta"><span class="lib-card__fam"><span class="t" lang="pt">Governança</span><span class="t" lang="en">Governance</span></span><span class="lib-card__viz">Big-number</span></div>
+              </figcaption>
+            </figure>
+
           </div>
 
-          <div class="pmo-group-head">
-            <span class="pmo-group-head__roman">IV</span>
-            <span class="pmo-group-head__name"><span class="t" lang="pt">Governança, SST e risco</span><span class="t" lang="en">Governance, SST & risk</span></span>
-            <span class="pmo-group-head__gloss"><span class="t" lang="pt">conformidade · incidentes · conhecimento crítico</span><span class="t" lang="en">compliance · incidents · critical knowledge</span></span>
-          </div>
-          <div class="pmo-grid">
-            <figure class="pmo-shot--wide pmo-shot"><a class="lightboxgallery-link" href="../images/samarco/indicators/conformidade-sst.webp" aria-label="Conformidade Geral em SST"><img src="../images/samarco/indicators/conformidade-sst.webp" alt="Conformidade Geral em SST" loading="lazy" /></a><figcaption><b>Conformidade Geral em SST</b> — <span class="t" lang="pt">nome longo, tela larga: a proporção evita a miniaturização.</span><span class="t" lang="en">long name, wide screen: proportion avoids miniaturization.</span></figcaption></figure>
-            <figure class="pmo-shot"><a class="lightboxgallery-link" href="../images/samarco/indicators/conhecimentos-criticos.webp" aria-label="Mapa de conhecimentos críticos"><img src="../images/samarco/indicators/conhecimentos-criticos.webp" alt="Mapa de conhecimentos críticos" loading="lazy" /></a><figcaption><b>Mapa de conhecimentos críticos</b> — <span class="t" lang="pt">risco de conhecimento tratado como ativo operacional.</span><span class="t" lang="en">knowledge risk treated as an operational asset.</span></figcaption></figure>
-            <figure class="pmo-shot"><a class="lightboxgallery-link" href="../images/samarco/indicators/nivel-risco-global.webp" aria-label="Nível de risco global"><img src="../images/samarco/indicators/nivel-risco-global.webp" alt="Nível de risco global" loading="lazy" /></a><figcaption><b>Nível de risco global</b> — <span class="t" lang="pt">síntese do risco fechada no mesmo sistema RAG.</span><span class="t" lang="en">risk synthesis closed within the same RAG system.</span></figcaption></figure>
-          </div>
-
+          <p class="lib-empty" hidden><span class="t" lang="pt">Nenhuma estampa nesta combinação de filtros.</span><span class="t" lang="en">No plates in this filter combination.</span></p>
         </div>
       </div>
     </div>
@@ -2306,12 +2685,17 @@
        COLOPHÃO & EPÍLOGO
        ============================================================ -->
   <section class="case-colophon" data-folio>
-    <div class="ornament">✦</div>
+    <div class="colo-press">
+      <span class="colo-press__mark" aria-hidden="true"><span>LS</span></span>
+      <span class="colo-press__cap"><span class="t" lang="pt">Marca do compositor</span><span class="t" lang="en">Compositor's mark</span></span>
+    </div>
+    <div class="colo-rule" aria-hidden="true"><span>❦</span></div>
     <p class="case-colophon-body">
       <span class="t" lang="pt">Esta prancha foi composta pelo autor em <em>MMXXV</em>, a partir do trabalho de design da cabine de comando do PMO Estratégico da Samarco. Os números e telas exibidos servem como espécime conceitual de design de data-viz e arquitetura de informação executiva, mantidos os parâmetros de confidencialidade acordados.</span>
       <span class="t" lang="en">This plate was set by the author in <em>MMXXV</em>, drawn from the design of Samarco's Strategic PMO command cabin. The figures and screens shown serve as a conceptual specimen of data-viz design and executive information architecture, under the agreed confidentiality terms.</span>
     </p>
     <div class="case-colophon-meta">Plate II · Vol. I · MMXXV</div>
+    <p class="colo-finis"><span class="t" lang="pt">Finis · fim da prancha</span><span class="t" lang="en">Finis · end of plate</span></p>
   </section>
 
   <!-- Navegação de Folios (Verso/Recto) -->
@@ -2348,96 +2732,8 @@
 <!-- Chrome de case: Index Rerum (⌘K) + edição de bolso (paridade com a home) -->
 <script src="./case-chrome.js"></script>
 
-<!-- Lightbox das galerias (escopo desta página) -->
-<script>
-(function () {
-  function collect(gallery, clicked) {
-    var links = Array.prototype.slice.call(gallery.querySelectorAll('.lightboxgallery-link'));
-    var items = links.map(function (link) {
-      var img = link.querySelector('img');
-      var caption = (link.getAttribute('aria-label') || '') || (img && img.getAttribute('alt')) || '';
-      return { href: link.getAttribute('href'), caption: caption, thumb: img ? img.src : link.getAttribute('href') };
-    });
-    return { items: items, startIndex: Math.max(0, links.indexOf(clicked)) };
-  }
-  function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
-
-  function open(gallery, clicked) {
-    var data = collect(gallery, clicked);
-    var items = data.items; if (!items.length) return;
-    var current = data.startIndex;
-    var overlay = document.createElement('div');
-    overlay.className = 'lbg-overlay';
-    var multi = items.length > 1;
-    var sidebar = multi ? '<div class="lbg__sidebar">' + items.map(function (it, i) {
-      return '<button class="lbg__thumb' + (i === current ? ' is-active' : '') + '" data-index="' + i + '" type="button"><img src="' + esc(it.thumb) + '" alt=""></button>';
-    }).join('') + '</div>' : '';
-    overlay.innerHTML =
-      '<button class="lbg__close" data-action="close" aria-label="Close">&times;</button>' +
-      sidebar +
-      '<div class="lbg__stage">' +
-        (multi ? '<button class="lbg__nav lbg__nav--prev" data-action="prev" aria-label="Previous">&#8249;</button>' : '') +
-        '<div class="lbg__viewer">' +
-          '<img src="' + esc(items[current].href) + '" alt="">' +
-          '<div class="lbg__caption"><span class="lbg__caption__text">' + esc(items[current].caption) + '</span>' +
-          (multi ? '<span class="lbg__counter">' + (current + 1) + ' / ' + items.length + '</span>' : '') + '</div>' +
-        '</div>' +
-        (multi ? '<button class="lbg__nav lbg__nav--next" data-action="next" aria-label="Next">&#8250;</button>' : '') +
-      '</div>';
-    document.body.appendChild(overlay);
-    document.body.style.overflow = 'hidden';
-
-    var viewer = overlay.querySelector('.lbg__viewer');
-    var imgEl = viewer.querySelector('img');
-    var capEl = overlay.querySelector('.lbg__caption__text');
-    var cntEl = overlay.querySelector('.lbg__counter');
-    var thumbs = Array.prototype.slice.call(overlay.querySelectorAll('.lbg__thumb'));
-
-    function goTo(i) {
-      var n = ((i % items.length) + items.length) % items.length;
-      if (n === current) return;
-      current = n;
-      viewer.classList.remove('is-swapping'); void viewer.offsetWidth;
-      imgEl.src = items[current].href;
-      capEl.textContent = items[current].caption;
-      if (cntEl) cntEl.textContent = (current + 1) + ' / ' + items.length;
-      viewer.classList.add('is-swapping');
-      thumbs.forEach(function (t, k) { t.classList.toggle('is-active', k === current); });
-    }
-    function close() {
-      if (overlay.parentNode) document.body.removeChild(overlay);
-      document.body.style.overflow = '';
-      document.removeEventListener('keydown', onKey);
-    }
-    function onKey(e) {
-      if (e.key === 'Escape') { e.preventDefault(); close(); }
-      else if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); }
-      else if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(current - 1); }
-    }
-    overlay.addEventListener('click', function (e) {
-      var action = e.target.closest('[data-action]');
-      if (action) { e.stopPropagation(); var a = action.getAttribute('data-action'); if (a === 'prev') goTo(current - 1); else if (a === 'next') goTo(current + 1); else close(); return; }
-      var thumb = e.target.closest('.lbg__thumb');
-      if (thumb) { e.stopPropagation(); goTo(parseInt(thumb.dataset.index, 10)); return; }
-      if (e.target.closest('.lbg__viewer, .lbg__sidebar, .lbg__caption, .lbg__nav, .lbg__close')) return;
-      close();
-    });
-    var sx = 0, sy = 0, ta = false;
-    var stage = overlay.querySelector('.lbg__stage');
-    stage.addEventListener('touchstart', function (e) { if (e.touches.length !== 1) return; ta = true; sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
-    stage.addEventListener('touchend', function (e) { if (!ta) return; ta = false; var t = e.changedTouches[0]; var dx = t.clientX - sx, dy = t.clientY - sy; if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) { if (dx < 0) goTo(current + 1); else goTo(current - 1); } }, { passive: true });
-    document.addEventListener('keydown', onKey);
-  }
-
-  document.querySelectorAll('.lightboxgallery-link').forEach(function (link) {
-    link.addEventListener('click', function (e) {
-      e.preventDefault();
-      var gallery = link.closest('.sl-gallery') || link.parentElement;
-      open(gallery, link);
-    });
-  });
-})();
-</script>
+<!-- Lightbox das galerias — versão elaborada, COMPARTILHADA (lightbox.js) -->
+<script src="./lightbox.js"></script>
 
 <!-- Dossiê: monta o índice lateral a partir dos cabeçalhos e sincroniza o capítulo corrente -->
 <script>
@@ -2771,6 +3067,186 @@
   });
 
   select(0);
+})();
+</script>
+
+<!-- Polish interativo (pass 2): Mapa de riscos (XII) ⇄ lista · Anatomia (X) ponteiro. Dados ILUSTRATIVOS. -->
+<script>
+(function () {
+  'use strict';
+
+  /* ===== XII · Mapa de riscos — matriz ⇄ lista (realce cruzado + filtro) ===== */
+  var matrixSvg = document.querySelector('.pmo-matrix svg');
+  var matrixBox = document.querySelector('.pmo-matrix');
+  var riskList = document.querySelector('.pmo-risk-list');
+  if (matrixSvg && matrixBox && riskList) {
+    var rects = Array.prototype.slice.call(matrixSvg.querySelectorAll('rect'));
+    rects.forEach(function (r) { r.setAttribute('data-sev', getComputedStyle(r).fill); });
+    var items = Array.prototype.slice.call(riskList.querySelectorAll('.pmo-risk'));
+    items.forEach(function (li) {
+      var sw = li.querySelector('.pmo-risk__sev');
+      li.dataset.sev = sw ? getComputedStyle(sw).backgroundColor : '';
+    });
+
+    // legenda + reset
+    var cap = document.createElement('div');
+    cap.className = 'pmo-risk-cap';
+    var capTxt = document.createElement('span');
+    var reset = document.createElement('button');
+    reset.type = 'button'; reset.className = 'pmo-risk-cap__reset'; reset.hidden = true;
+    cap.appendChild(capTxt); cap.appendChild(reset);
+    riskList.parentNode.insertBefore(cap, riskList.nextSibling);
+
+    function lang() { return document.body.getAttribute('data-lang') === 'en' ? 'en' : 'pt'; }
+    var T = {
+      pt: { hint: 'Passe o mouse na matriz ou na lista · clique para filtrar', filtered: 'Filtrado por intensidade', reset: 'ver todos' },
+      en: { hint: 'Hover the matrix or list · click to filter', filtered: 'Filtered by intensity', reset: 'show all' }
+    };
+    var filterSev = null;
+
+    function paintHint() { if (!filterSev) capTxt.textContent = T[lang()].hint; }
+
+    function highlight(sev) {
+      rects.forEach(function (r) { r.classList.toggle('is-hot', r.getAttribute('data-sev') === sev); });
+      items.forEach(function (li) { li.classList.toggle('is-hot', li.dataset.sev === sev); });
+      matrixBox.classList.add('is-dim');
+    }
+    function clearHighlight() {
+      if (filterSev) { highlight(filterSev); return; }
+      rects.forEach(function (r) { r.classList.remove('is-hot'); });
+      items.forEach(function (li) { li.classList.remove('is-hot'); });
+      matrixBox.classList.remove('is-dim');
+    }
+    function applyFilter(sev) {
+      filterSev = sev;
+      riskList.classList.add('is-filtered');
+      items.forEach(function (li) { li.classList.toggle('is-match', li.dataset.sev === sev); });
+      highlight(sev);
+      capTxt.textContent = T[lang()].filtered;
+      reset.hidden = false; reset.textContent = '↺ ' + T[lang()].reset;
+    }
+    function clearFilter() {
+      filterSev = null;
+      riskList.classList.remove('is-filtered');
+      items.forEach(function (li) { li.classList.remove('is-match'); });
+      reset.hidden = true;
+      clearHighlight(); paintHint();
+    }
+
+    rects.forEach(function (r) {
+      r.addEventListener('mouseenter', function () { highlight(r.getAttribute('data-sev')); });
+      r.addEventListener('mouseleave', clearHighlight);
+      r.addEventListener('click', function () {
+        var s = r.getAttribute('data-sev');
+        if (filterSev === s) clearFilter(); else applyFilter(s);
+      });
+    });
+    items.forEach(function (li) {
+      li.addEventListener('mouseenter', function () { highlight(li.dataset.sev); });
+      li.addEventListener('mouseleave', clearHighlight);
+      li.addEventListener('click', function () {
+        if (filterSev === li.dataset.sev) clearFilter(); else applyFilter(li.dataset.sev);
+      });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.lang-toggle button'), function (b) {
+      b.addEventListener('click', function () { setTimeout(function () { if (filterSev) applyFilter(filterSev); else paintHint(); }, 0); });
+    });
+    reset.addEventListener('click', clearFilter);
+    paintHint();
+  }
+
+  /* ===== X · Anatomia — ponteiro deslizante na escala de reputação ===== */
+  var scale = document.querySelector('.anat__scale');
+  var dims = Array.prototype.slice.call(document.querySelectorAll('.anat__dim'));
+  if (scale && dims.length) {
+    var bar = scale.querySelector('.anat__bar');
+    var needle = document.createElement('div');
+    needle.className = 'anat__needle';
+    needle.innerHTML = '<span class="anat__needle__flag"></span><span class="anat__needle__stem"></span>';
+    // posiciona o ponteiro sobre a barra
+    bar.style.position = 'relative';
+    bar.appendChild(needle);
+    var flag = needle.querySelector('.anat__needle__flag');
+
+    function valOf(dim) {
+      var v = dim.querySelector('.anat__val');
+      var m = (v ? v.textContent : '').match(/(\d+)[.,]?(\d+)?/);
+      return m ? parseFloat(m[1] + '.' + (m[2] || '0')) : 0;
+    }
+    function labOf(dim) {
+      var lang = document.body.getAttribute('data-lang') === 'en' ? 'en' : 'pt';
+      var nm = dim.querySelector('.anat__nm .t[lang="' + lang + '"]');
+      return nm ? nm.textContent : '';
+    }
+    function move(dim) {
+      var val = valOf(dim);
+      needle.style.left = Math.max(2, Math.min(98, val)) + '%';
+      flag.innerHTML = val.toFixed(1).replace('.', ',') + '<small>' + labOf(dim) + '</small>';
+      dims.forEach(function (d) { d.classList.toggle('is-active', d === dim); });
+    }
+    dims.forEach(function (dim) {
+      dim.addEventListener('mouseenter', function () { move(dim); });
+      dim.addEventListener('click', function () { move(dim); });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.lang-toggle button'), function (b) {
+      b.addEventListener('click', function () { setTimeout(function () { var a = document.querySelector('.anat__dim.is-active') || dims[0]; move(a); }, 0); });
+    });
+    move(dims[0]);
+  }
+
+  /* ===== VI · RAG ao vivo — passar/clicar num estado repinta os chips ===== */
+  var ragList = document.querySelector('.rag-states');
+  var ragWhere = document.querySelector('.sol-rag-where');
+  if (ragList && ragWhere) {
+    var RAG_COLOR = { ok: '#2f9e63', warn: '#d6a312', crit: getComputedStyle(document.documentElement).getPropertyValue('--oxblood').trim() || '#7a2620', none: '#b6c0c6' };
+    var states = Array.prototype.slice.call(ragList.querySelectorAll('.rag-state'));
+    // dica junto ao rótulo "Aplicado em"
+    var lab = ragWhere.querySelector('.sol-rag-where__lab');
+    var hint = document.createElement('span');
+    hint.className = 'sol-rag-where__hint';
+    hint.innerHTML = '<span class="t" lang="pt">· passe num estado</span><span class="t" lang="en">· hover a state</span>';
+    if (lab) lab.appendChild(hint);
+    function litFor(st) {
+      var k = (st.className.match(/rag-state--(\w+)/) || [])[1];
+      return RAG_COLOR[k] || 'transparent';
+    }
+    function light(st) { ragWhere.style.setProperty('--lit', litFor(st)); ragWhere.classList.add('is-lit'); }
+    function unlight() { ragWhere.classList.remove('is-lit'); }
+    var stuck = null;
+    states.forEach(function (st) {
+      st.addEventListener('mouseenter', function () { light(st); });
+      st.addEventListener('mouseleave', function () { if (stuck) light(stuck); else unlight(); });
+      st.addEventListener('click', function () { if (stuck === st) { stuck = null; unlight(); } else { stuck = st; light(st); } });
+    });
+  }
+
+  /* ===== VIII · Biblioteca curada — filtros família + status (AND) ===== */
+  var libGrid = document.getElementById('libGrid');
+  if (libGrid) {
+    var cards = Array.prototype.slice.call(libGrid.querySelectorAll('.lib-card'));
+    var empty = document.querySelector('.lib-empty');
+    var sel = { fam: 'all', status: 'all' };
+    function apply() {
+      var shown = 0;
+      cards.forEach(function (c) {
+        var ok = (sel.fam === 'all' || c.dataset.fam === sel.fam) &&
+                 (sel.status === 'all' || c.dataset.status === sel.status);
+        c.classList.toggle('is-hidden', !ok);
+        if (ok) shown++;
+      });
+      if (empty) empty.hidden = shown !== 0;
+    }
+    Array.prototype.forEach.call(document.querySelectorAll('.lib-tab, .lib-status'), function (btn) {
+      btn.addEventListener('click', function () {
+        var dim = btn.dataset.dim, val = btn.dataset.val;
+        sel[dim] = val;
+        var groupSel = dim === 'fam' ? '.lib-tab' : '.lib-status';
+        Array.prototype.forEach.call(document.querySelectorAll(groupSel), function (b) { b.classList.toggle('is-active', b === btn); });
+        apply();
+      });
+    });
+    apply();
+  }
 })();
 </script>
 </body>
