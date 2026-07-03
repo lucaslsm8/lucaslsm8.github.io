@@ -139,13 +139,15 @@ Montserrat/Arial só nas peças que reproduzem o produto.)
 Raiz dos assets: `../images/samarco/` (referência relativa a partir de `projects/`).
 
 - `capa.webp` — cockpit estilizado escuro (recriação do Lucas, não o Power BI cru).
-- `capa-indicators.webp` — colagem dos Power BI reais (fundo branco).
 - `indicators/` — 14 screenshots reais de indicadores
   (capacidade-rejeitos, central-relacionamento, comparacao-planos, conformidade-sst,
   conhecimentos-criticos, descarbonizacao, emissoes-gee, fortalecimento-economico,
   minerio-marginal, nivel-risco-global, piis-investimento-social, recuperacao-ambiental,
   recuperacao-nascentes, reputacao-global).
-- `forms/` — 5 (benchmark-agua, donut-mulheres, gauge-condicionantes, mapa-piis, piis-avanco).
+- `forms/` — 2 em uso (donut-mulheres, gauge-condicionantes; ver specimen vivo VI). **(2026-07-02: `capa-indicators.webp`,
+  `mapa-piis.webp` e `piis-avanco.webp` foram removidos** — curados originalmente mas nunca wireados em nenhuma
+  seção da prancha; confirmados órfãos numa auditoria geral do portfólio e apagados com aprovação do Lucas. Se
+  precisar recriar a peça de capa-colagem ou os specimens PIIS, a fonte original não está mais no repo.)
 - `mandala/` — **7 ícones dos pilares** em WebP lossless (alpha): `mandala`, `cultura`,
   `sustentabilidade`, `reserva-rejeitos`, `modelo-operacional`, `retomada`, `novos-negocios`.
 
@@ -337,12 +339,18 @@ chips de filtro por família, badge de variantes, e um **demo de token de marca 
 >   - Validado por parser: sequência I–XIV sem furos, `rag-states` só 1× (na VI), 0 erros de tag, i18n balanceado em
 >     todas as seções.
 >
-> **Pendências agora:**
-> 1. **Peça de impacto full-bleed** (`.pmo-impact`, placeholder circular) — a **Mandala navegável** de verdade: o JS
->    (`#mdWheel`/`#mdPanel`/`#mdSector`, 6 pilares + tabelas ilustrativas) está preservado e pronto; falta recriar o
->    **SVG base da roda** (6 gomos navy + medidor + `<path id="mdSector">`) e os alvos no HTML.
-> 2. Rodar validação **ao vivo** quando a :5599 liberar (specimen popula? lightbox abre? count-up dispara? toggle
->    PT/EN re-renderiza specimen?).
+> **Pendências (atualizado 2026-07-02):**
+> 1. ~~Peça de impacto full-bleed — falta recriar o SVG base da roda~~ **Já estava feito.** Checado o HTML real de
+>    `pmo-dashboards.html`: a Mandala navegável (SVG dos 6 gomos + medidor + `#mdSector`, painel-tabela, i18n) está
+>    completa em `.pmo-impact` (linhas ~1188–1243 do HTML, JS em ~2801–2929). Esta nota estava desatualizada — a
+>    peça sobreviveu ao(s) reset(s) documentado(s) acima. Removida a classe CSS morta `.pmo-impact__ph` (sobra do
+>    tempo em que era placeholder circular).
+> 2. ~~Rodar validação ao vivo quando a :5599 liberar~~ **Feito (2026-07-02).** Validado no preview: clique num
+>    pilar troca setor SVG + tabela; toggle PT/EN re-renderiza o painel da Mandala (mantendo o pilar selecionado);
+>    specimen — filtro por família funciona, token de marca repinta a biblioteca ao vivo; lightbox (`lightbox.js`)
+>    abre/zoom/fecha com a imagem correta. 0 erros de console, 0 requests falhando, 0 imagens quebradas. QA mobile
+>    (375px) e tablet (768px): sem overflow horizontal, nós da roda bem distribuídos (58–65px, acima do touch
+>    target mínimo), rail do dossiê colapsa para bloco estático legível.
 
 > **RESET PARA ESQUELETO (2026-06-30, 2ª rodada).** A pedido do Lucas, a prancha foi **reduzida a um
 > esqueleto** para reconstrução colaborativa seção por seção. O **menu lateral agora tem 13 seções**

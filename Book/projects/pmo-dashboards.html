@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Dashboards PMO — Samarco · Lucas Schoenherr</title>
 <meta name="description" content="Estudo de caso da cabine de comando executiva do PMO Estratégico da Samarco: a Mandala Estratégica e +60 componentes de data-viz que substituíram 20+ planilhas, por Lucas Schoenherr." />
+<link rel="canonical" href="https://lucaslsm8.github.io/Book/projects/pmo-dashboards.html" />
 <!-- Open Graph / social -->
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Dashboards PMO · Samarco — Lucas Schoenherr" />
@@ -38,6 +39,24 @@
 <style>
   .case-colophon + .folio-nav { margin-top: 0; }
 
+  /* "Voltar ao catálogo" — redundante no desktop (o nome no running-head já
+     linka pro catálogo), então some dali. Em mobile o running-head se
+     esconde (ver catalogue.css), então o ícone de retorno volta abaixo de
+     640px como único caminho de volta nessa largura — texto preservado só
+     para leitor de tela (clip, não display:none). */
+  .chrome-top .to-catalogue { display: none; }
+  .chrome-top .to-catalogue-icon { flex: 0 0 auto; }
+  @media (max-width: 640px) {
+    .chrome-top .to-catalogue {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 6px; min-width: 44px;
+    }
+    .chrome-top .to-catalogue em {
+      position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+      overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+    }
+  }
+
   /* ---------- Placeholder de seção (esqueleto — a construir juntos) ---------- */
   .pmo-ph {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -54,26 +73,13 @@
 
   /* ---------- Peça de impacto (full-bleed, entre a abertura e o dossiê) ----------
      Espelha o coverflow do Lighthouse: um momento visual que ocupa a largura
-     da viewport antes do corpo. Aqui receberá a Mandala (placeholder por ora). */
+     da viewport antes do corpo. Recebe a Mandala Estratégica navegável (.md2). */
   .pmo-impact { padding: var(--sp-6) 0 var(--sp-7); overflow-x: clip; }
   .pmo-impact__inner {
     width: 100vw; max-width: none; margin-left: calc(50% - 50vw);
     display: flex; flex-direction: column; align-items: center; gap: var(--sp-4);
     text-align: center;
   }
-  .pmo-impact__ph {
-    width: min(420px, 80vw); aspect-ratio: 1;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 12px; padding: var(--sp-5);
-    border: 1px dashed var(--hairline-strong); border-radius: 50%;
-    background:
-      radial-gradient(circle at center, color-mix(in srgb, var(--ink) 4%, transparent) 0 40%, transparent 41%),
-      repeating-conic-gradient(from 0deg, transparent 0 58deg, color-mix(in srgb, var(--ink) 5%, transparent) 58deg 60deg);
-  }
-  .pmo-impact__roman { font-family: var(--serif-display); font-style: italic; font-size: 48px; line-height: 1; color: var(--ink-faint); }
-  .pmo-impact__name { font-family: var(--serif); font-size: 20px; color: var(--ink-soft); }
-  .pmo-impact__note { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); max-width: 24ch; }
-  .pmo-impact__cap { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; color: var(--ink-faint); padding: 0 var(--sp-5); }
 
   /* ---------- Resultados-chave (faixa de escopo, logo após o herói — V2 §2) ---------- */
   .pmo-results { padding: var(--sp-6) var(--sp-6) var(--sp-5); }
@@ -305,15 +311,11 @@
   /* Componentes full-bleed voltam à largura da coluna dentro da lombada */
   .lh-dossier__spine .case-intermezzo { width: 100%; max-width: 100%; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; }
 
+  /* Em telas de toque estreitas, o índice lateral não cabe bem e duplica
+     a navegação natural por scroll — vai direto ao conteúdo. */
   @media (max-width: 900px) {
-    .lh-dossier { grid-template-columns: 1fr; gap: var(--sp-4); padding: 0 var(--sp-4); margin-top: var(--sp-4); }
-    .lh-dossier__rail {
-      position: static; max-height: none; overflow: visible; padding: var(--sp-4);
-      margin-bottom: var(--sp-2); background: var(--paper-shade, #f4efe4);
-      border: 1px solid var(--hairline-strong); border-radius: var(--radius-sm);
-    }
-    .lh-dossier__nav { display: flex; flex-flow: row wrap; gap: 4px 16px; }
-    .lh-dossier__link { width: auto; padding: 5px 0 5px 10px; border-bottom: 0; }
+    .lh-dossier { display: block; padding: 0 var(--sp-4); margin-top: var(--sp-4); }
+    .lh-dossier__rail { display: none; }
   }
 
   /* ============================================================
@@ -1067,6 +1069,10 @@
   </div>
   <nav class="chrome-actions">
     <a href="../index.html" class="to-catalogue">
+      <svg class="to-catalogue-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <polyline points="9 14 4 9 9 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M20 20v-7a4 4 0 0 0-4-4H4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
       <em><span class="t" lang="pt">Voltar ao catálogo</span><span class="t" lang="en">Return to catalogue</span></em>
     </a>
     <button class="candle-toggle" type="button" aria-pressed="false" title="Modo vela" aria-label="Modo vela">
@@ -2700,9 +2706,9 @@
 
   <!-- Navegação de Folios (Verso/Recto) -->
   <nav class="folio-nav" aria-label="Navegação entre cases">
-    <a class="verso" href="../index.html#works" rel="prev">
-      <span class="folio-marker"><span class="t" lang="pt">← Catálogo (Anverso)</span><span class="t" lang="en">← Catalogue (Anverso)</span></span>
-      <span class="folio-title"><em><span class="t" lang="pt">Catálogo de Obras</span><span class="t" lang="en">A Catalogue of Works</span></em></span>
+    <a class="verso" href="genai.html" rel="prev">
+      <span class="folio-marker"><span class="t" lang="pt">← Prancha anterior (Verso)</span><span class="t" lang="en">← Previous Plate (Verso)</span></span>
+      <span class="folio-title"><em><span class="t" lang="pt">Prancha I — Gen.AI</span><span class="t" lang="en">Plate I — Gen.AI</span></em></span>
     </a>
     <a class="recto" href="lighthouse.html" rel="next">
       <span class="folio-marker"><span class="t" lang="pt">Próxima Prancha (Recto) →</span><span class="t" lang="en">Next Plate (Recto) →</span></span>
@@ -2729,7 +2735,7 @@
 
 <!-- Modais e interações da galeria e scripts locais -->
 <script src="./case-template.js"></script>
-<!-- Chrome de case: Index Rerum (⌘K) + edição de bolso (paridade com a home) -->
+<!-- Chrome de case: Index Rerum (⌘K), paridade com a home -->
 <script src="./case-chrome.js"></script>
 
 <!-- Lightbox das galerias — versão elaborada, COMPARTILHADA (lightbox.js) -->

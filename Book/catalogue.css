@@ -3872,6 +3872,18 @@ body.candle .carta .ink-bleed {
   text-transform: uppercase;
 }
 
+/* Marca do compositor + regra + finis — paridade com o colofão das pranchas */
+.colo-press { display: flex; flex-direction: column; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-4); }
+.colo-press__mark { width: 74px; height: 74px; display: grid; place-items: center; border: 1px solid var(--hairline-strong); border-radius: 50%; position: relative; color: var(--oxblood); }
+.colo-press__mark::before { content: ''; position: absolute; inset: 5px; border: 1px solid color-mix(in srgb, var(--oxblood) 32%, transparent); border-radius: 50%; }
+.colo-press__mark span { font-family: var(--serif-display); font-size: 30px; line-height: 1; font-style: italic; color: var(--ink); }
+.colo-press__cap { font-family: var(--mono); font-size: 9px; letter-spacing: .24em; text-transform: uppercase; color: var(--ink-faint); }
+.colo-rule { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 0 auto 24px; max-width: 320px; color: var(--oxblood); }
+.colo-rule::before, .colo-rule::after { content: ''; height: 1px; flex: 1; background: linear-gradient(to var(--dir, right), transparent, color-mix(in srgb, var(--oxblood) 46%, transparent)); }
+.colo-rule::after { --dir: left; }
+.colo-rule span { font-family: var(--serif-display); font-size: 14px; line-height: 1; opacity: .82; }
+.colo-finis { font-family: var(--serif-display); font-style: italic; font-size: 15px; letter-spacing: .04em; color: var(--ink-faint); margin: 24px 0 0; }
+
 /* ============================================================
    Reveal — restrained
    ============================================================ */
@@ -4035,6 +4047,10 @@ body.candle .carta .ink-bleed {
   /* Running head ocupa muito espaço no tablet retrato e colide com os
      títulos de seção (ex.: Sumário). Recolhe já aqui, não só em ≤640. */
   .chrome-top .running-head { display: none; }
+  /* Com o running-head fora, .chrome-actions vira o único item do flex
+     (.chrome-top usa justify-content:space-between) e cola à esquerda.
+     Empurra de volta para a direita. */
+  .chrome-top .chrome-actions { margin-left: auto; }
 
   /* Frontispício no mobile: a flor-de-lis (.ornament-1) e o selo absoluto
      "Volume I · MMXXVI" (top:88px) colidiam em telas estreitas/baixas.

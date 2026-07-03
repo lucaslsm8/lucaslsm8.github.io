@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Sports Experience — Copa do Mundo 2022 · Lucas Schoenherr</title>
 <meta name="description" content="Estudo de caso do Sports Experience: hub multiplataforma (mobile, web e TV) da DirecTV para a Copa do Mundo 2022, com dados oficiais da FIFA em tempo real, por Lucas Schoenherr." />
+<link rel="canonical" href="https://lucaslsm8.github.io/Book/projects/sports-experience.html" />
 <!-- Open Graph / social -->
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Sports Experience · Lucas Schoenherr" />
@@ -41,6 +42,24 @@
     --sx-turf:  #2f8f56;   /* verde de gramado */
   }
 
+  /* "Voltar ao catálogo" — redundante no desktop (o nome no running-head já
+     linka pro catálogo), então some dali. Em mobile o running-head se
+     esconde (ver catalogue.css), então o ícone de retorno volta abaixo de
+     640px como único caminho de volta nessa largura — texto preservado só
+     para leitor de tela (clip, não display:none). */
+  .chrome-top .to-catalogue { display: none; }
+  .chrome-top .to-catalogue-icon { flex: 0 0 auto; }
+  @media (max-width: 640px) {
+    .chrome-top .to-catalogue {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 6px; min-width: 44px;
+    }
+    .chrome-top .to-catalogue em {
+      position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+      overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+    }
+  }
+
   /* ---------- Faixa de resultados-chave (logo após o herói) ---------- */
   .sx-results { padding: var(--sp-7) var(--sp-6) var(--sp-6); }
   .sx-results__inner { max-width: 1000px; margin: 0 auto; }
@@ -72,42 +91,26 @@
   .sx-impact-head__sub { font-family: var(--serif); font-size: 17px; line-height: var(--lh-loose); color: var(--ink-soft); }
   .sx-impact-head__sub .em { color: var(--ink); font-weight: 600; }
 
-  .sx-seg { display: inline-flex; margin: 0 auto var(--sp-6); border: 1px solid var(--hairline-strong); border-radius: var(--radius-pill); overflow: hidden; background: var(--paper-card); }
-  .sx-seg-wrap { display: flex; justify-content: center; }
-  .sx-seg button { appearance: none; border: 0; background: transparent; cursor: pointer; padding: 10px 22px; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); display: inline-flex; align-items: center; gap: 8px; transition: color var(--dur-base), background var(--dur-base); }
-  .sx-seg button + button { border-left: 1px solid var(--hairline); }
-  .sx-seg button .gl { width: 15px; height: 15px; display: block; }
-  .sx-seg button[aria-selected="true"] { color: var(--paper); background: var(--ink); }
-  .sx-seg button:hover:not([aria-selected="true"]) { color: var(--ink); }
-
-  .sx-plat { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: var(--sp-7); align-items: center; }
-  @media (max-width: 900px) { .sx-plat { grid-template-columns: 1fr; gap: var(--sp-5); } }
-  .sx-plat__stage {
-    position: relative; min-height: 460px; display: grid; place-items: center;
-    background:
-      radial-gradient(120% 90% at 50% 0%, color-mix(in srgb, var(--sx-wine) 14%, transparent), transparent 60%),
-      var(--paper-shade);
-    border: 1px solid var(--hairline-strong); border-radius: var(--radius-md);
-    padding: var(--sp-6); overflow: hidden;
-  }
-  .sx-plat__corner { position: absolute; font-family: var(--serif-display); color: color-mix(in srgb, var(--oxblood) 55%, transparent); font-size: 14px; line-height: 1; }
-  .sx-plat__corner.tl { top: 10px; left: 12px; } .sx-plat__corner.tr { top: 10px; right: 12px; }
-  .sx-plat__corner.bl { bottom: 10px; left: 12px; } .sx-plat__corner.br { bottom: 10px; right: 12px; }
-  .sx-screen { display: none; }
-  .sx-screen.is-active { display: block; animation: sxFade var(--dur-slow) var(--ease-out); }
-  @keyframes sxFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-  .sx-screen img { display: block; max-height: 400px; width: auto; max-width: 100%; margin: 0 auto; border-radius: 14px; box-shadow: 0 24px 50px -18px rgba(0,0,0,.55), 0 0 0 1px rgba(0,0,0,.06); }
-  .sx-screen.landscape img { border-radius: 8px; max-height: 300px; }
-
-  .sx-plat__note { min-width: 0; }
-  .sx-plat__note .n-tag { font-family: var(--mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--sx-cyan); }
-  body.candle .sx-plat__note .n-tag { color: #58c6ea; }
-  .sx-plat__note .n-name { font-family: var(--serif-display); font-style: italic; font-size: 30px; line-height: 1.05; margin: 8px 0 var(--sp-3); color: var(--ink); }
-  .sx-plat__note .n-body { font-family: var(--serif); font-size: 16px; line-height: var(--lh-loose); color: var(--ink-soft); }
-  .sx-plat__note .n-meta { list-style: none; margin: var(--sp-4) 0 0; padding: var(--sp-4) 0 0; border-top: 1px solid var(--hairline); display: grid; gap: 10px; }
-  .sx-plat__note .n-meta li { display: flex; gap: 10px; align-items: baseline; font-family: var(--serif); font-size: 14px; color: var(--ink-soft); }
-  .sx-plat__note .n-meta b { font-family: var(--mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); min-width: 66px; font-weight: 400; }
-  .sx-plat-panel { display: none; } .sx-plat-panel.is-active { display: block; }
+  /* ---------- Solução: carrossel de telas (Mobile → Web → TV) ---------- */
+  /* .sl-gallery (escopo do lightbox compartilhado) também é a grade da
+     galeria de pranchas — neutralizada aqui para não colidir com o layout
+     do carrossel (senão os itens flex estouram para o max-content). */
+  .sx-carousel.sl-gallery { display: block; margin-top: var(--sp-2); }
+  /* Sem moldura de pasta — só a imagem, com as setas encostadas nas bordas. */
+  .sx-carousel .carousel-frame { border: none; background: none; box-shadow: none; padding: 0; }
+  .sx-carousel .carousel-frame::before { content: none; }
+  .sx-carousel .carousel-viewport { position: relative; border-radius: var(--radius-sm); }
+  .sx-carousel .carousel-slide { padding: 0; }
+  .sx-carousel .carousel-plate-cut { aspect-ratio: 2 / 1; min-height: 0; background: #14121a; cursor: zoom-in; border-radius: var(--radius-sm); }
+  .sx-carousel .carousel-plate-cut img { width: 100%; height: 100%; object-fit: contain; }
+  .sx-carousel .carousel-plate-cap { justify-content: flex-start; gap: 12px; margin-top: var(--sp-3); }
+  /* O nav tem a mesma proporção 2/1 da imagem e fica colado no topo do
+     viewport — assim as setas centralizam na altura da imagem, não na
+     altura combinada de imagem + legenda (que varia por prancha). */
+  .sx-carousel .carousel-nav { position: absolute; top: 0; left: 0; right: 0; aspect-ratio: 2 / 1; margin: 0; padding: 0 10px; justify-content: space-between; pointer-events: none; }
+  .sx-carousel .carousel-arrow { pointer-events: auto; background: var(--paper); opacity: .9; box-shadow: 0 3px 10px rgba(26,22,18,.3); }
+  .sx-carousel .carousel-arrow:hover { opacity: 1; }
+  .sx-carousel .carousel-dots { display: none; }
 
   /* ---------- Peça de impacto — carrossel coverflow (paridade Lighthouse) ---------- */
   /* overflow-x:clip contém o excesso lateral do full-bleed sem barra de rolagem,
@@ -123,9 +126,9 @@
   .sx-hero__flow { margin: var(--sp-7) 0 0; width: 100vw; margin-left: calc(50% - 50vw); }
   .sx-coverflow { --swiper-theme-color: var(--oxblood); --swiper-navigation-size: 28px; display: block; width: 100%; padding: var(--sp-2) 0; }
   .sx-coverflow::part(container), .sx-coverflow::part(wrapper) { overflow: visible; }
-  .sx-coverflow swiper-slide { width: clamp(300px, 52vw, 620px); aspect-ratio: 934 / 1195; display: flex; align-items: center; justify-content: center; }
+  .sx-coverflow swiper-slide { width: clamp(200px, 28vw, 340px); aspect-ratio: 934 / 1195; display: flex; align-items: center; justify-content: center; }
   .sx-coverflow swiper-slide img { width: 100%; height: auto; display: block; border-radius: 8px; filter: drop-shadow(0 18px 34px rgba(26,22,18,.34)); }
-  @media (max-width: 640px) { .sx-coverflow swiper-slide { width: 300px; } }
+  @media (max-width: 640px) { .sx-coverflow swiper-slide { width: 220px; } }
   .sx-hero__cap { margin: var(--sp-5) 0 0; padding: 0 var(--sp-6); font-family: var(--mono); font-size: 10px; letter-spacing: .08em; color: var(--ink-faint); text-align: center; }
 
   /* ---------- Switcher realocado dentro da Solução ---------- */
@@ -156,11 +159,11 @@
   .sx-dossier__spine .case-section + .case-section { border-top: 1px solid var(--hairline-strong); }
   .sx-dossier__spine .case-intermezzo { width: 100%; max-width: 100%; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; }
 
+  /* Em telas de toque estreitas, o índice lateral não cabe bem e duplica
+     a navegação natural por scroll — vai direto ao conteúdo. */
   @media (max-width: 900px) {
-    .sx-dossier { grid-template-columns: 1fr; gap: var(--sp-4); padding: 0 var(--sp-4); }
-    .sx-dossier__rail { position: static; padding: var(--sp-4); margin-bottom: var(--sp-2); background: var(--paper-shade); border: 1px solid var(--hairline-strong); border-radius: var(--radius-sm); }
-    .sx-dossier__nav { display: flex; flex-flow: row wrap; gap: 4px 16px; }
-    .sx-dossier__link { width: auto; padding: 5px 0 5px 10px; border-bottom: 0; }
+    .sx-dossier { display: block; padding: 0 var(--sp-4); }
+    .sx-dossier__rail { display: none; }
   }
 
   /* ---------- Nota editorial (lead) ---------- */
@@ -199,14 +202,13 @@
   .sx-elo { margin-top: var(--sp-6); display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); position: relative; }
   @media (max-width: 760px) { .sx-elo { grid-template-columns: 1fr; } }
   .sx-elo__party { text-align: center; padding: var(--sp-5) var(--sp-4); background: var(--paper-card); border: 1px solid var(--hairline-strong); border-radius: var(--radius-sm); }
-  .sx-elo__crest { width: 46px; height: 46px; margin: 0 auto var(--sp-3); border: 1px solid var(--hairline-strong); border-radius: 50%; display: grid; place-items: center; font-family: var(--serif-display); font-style: italic; font-size: 20px; color: var(--oxblood); }
+  .sx-elo__crest { height: 34px; margin: 0 auto var(--sp-3); display: flex; align-items: center; justify-content: center; }
+  .sx-elo__crest img { max-height: 100%; width: auto; max-width: 140px; display: block; }
   .sx-elo__name { font-family: var(--serif-display); font-style: italic; font-size: 22px; color: var(--ink); }
   .sx-elo__role { display: block; margin-top: 6px; font-family: var(--mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); }
-  .sx-elo-center { margin-top: var(--sp-4); display: grid; place-items: center; }
-  .sx-elo-center__hub { text-align: center; padding: var(--sp-5) var(--sp-6); background: var(--ink); color: var(--paper); border-radius: var(--radius-sm); max-width: 460px; }
-  .sx-elo-center__lab { font-family: var(--mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: color-mix(in srgb, var(--paper) 62%, transparent); }
-  .sx-elo-center__name { font-family: var(--serif-display); font-style: italic; font-size: 26px; margin: 6px 0 4px; }
-  .sx-elo-center__sub { font-family: var(--serif); font-size: 14px; line-height: var(--lh-snug); color: color-mix(in srgb, var(--paper) 80%, transparent); }
+  /* Nota de rodapé discreta — não um "hub" em destaque: o texto acima
+     (sx-lead) já diz quem fez o quê; aqui só fecha a ideia do elo. */
+  .sx-elo__note { margin: var(--sp-5) auto 0; max-width: 600px; text-align: center; font-family: var(--serif); font-style: italic; font-size: 14.5px; line-height: var(--lh-snug); color: var(--ink-faint); }
 
   /* ---------- Solução: vitrine de componentes do Design System ---------- */
   .sx-vitrine { margin-top: var(--sp-6); }
@@ -216,27 +218,31 @@
   .sx-vit-legend .sw.wine::before { background: var(--sx-wine); }
   .sx-vit-legend .sw.cyan::before { background: var(--sx-cyan); }
   .sx-vit-legend .sw.turf::before { background: var(--sx-turf); }
-  .sx-vit-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: var(--sp-5); }
-  .sx-vit-tab { appearance: none; cursor: pointer; background: var(--paper-card); border: 1px solid var(--hairline-strong); border-radius: var(--radius-pill); padding: 8px 16px; font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); transition: all var(--dur-base); }
-  .sx-vit-tab .c { font-family: var(--serif-display); font-style: italic; text-transform: none; letter-spacing: 0; font-size: 13px; margin-right: 6px; }
-  .sx-vit-tab[aria-selected="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-  .sx-vit-tab:hover:not([aria-selected="true"]) { border-color: var(--oxblood); color: var(--ink); }
-  .sx-vit-panel { display: none; }
-  .sx-vit-panel.is-active { display: block; animation: sxFade var(--dur-base) var(--ease-out); }
-  .sx-vit-panel__desc { font-family: var(--serif); font-size: 15px; line-height: var(--lh-snug); color: var(--ink-soft); margin: 0 0 var(--sp-4); max-width: 640px; }
-  .sx-vit-panel__desc b { color: var(--ink); font-weight: 600; }
-  .sx-vit-strip { display: grid; gap: var(--sp-3); background: #14121a; border: 1px solid var(--hairline-strong); border-radius: var(--radius-md); padding: var(--sp-5); }
-  .sx-vit-strip.cols-6 { grid-template-columns: repeat(6, 1fr); }
-  .sx-vit-strip.cols-4 { grid-template-columns: repeat(4, 1fr); }
-  @media (max-width: 760px) { .sx-vit-strip.cols-6 { grid-template-columns: repeat(3, 1fr); } .sx-vit-strip.cols-4 { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 420px) { .sx-vit-strip.cols-6 { grid-template-columns: repeat(2, 1fr); } }
-  .sx-vit-strip figure { margin: 0; display: flex; flex-direction: column; gap: 8px; }
-  .sx-vit-strip img { width: 100%; height: auto; display: block; border-radius: 6px; background: #1d1a24; }
-  .sx-vit-strip figcaption { font-family: var(--mono); font-size: 8.5px; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.5); text-align: center; }
-  .sx-vit-caption { margin-top: var(--sp-3); font-family: var(--mono); font-size: 10px; letter-spacing: .04em; color: var(--ink-faint); text-align: center; }
+  /* ---------- Vitrine: mostruário em fluxo (marquee infinito · réplica do "loop-slider"
+     de designbylucas.com/Sportsexp.html § A Solução) ----------
+     Sem caixa escura — os cards flutuam direto sobre o papel da página,
+     como pranchas soltas, esmaecidos nas bordas por um gradiente para
+     var(--paper) (adapta ao modo vela). Loop sem emenda: cada faixa repete
+     a sequência o bastante para que MEIO track (uma "cópia") já seja mais
+     largo que o container (~800px no desktop) — senão o ponto de corte em
+     -50% expõe um vão vazio antes de reiniciar (era o caso do Card 2×3,
+     a família mais estreita: 4 cards não bastavam, foram para 12/meio). */
+  .sx-flow { position: relative; margin-top: var(--sp-6); padding: var(--sp-5) 0; overflow: hidden; display: flex; flex-direction: column; gap: var(--sp-4); }
+  .sx-flow__label { align-self: center; margin: 0 0 4px; font-family: var(--mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); }
+  .sx-flow::before { content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(90deg, var(--paper) 0%, transparent 18%, transparent 82%, var(--paper) 100%); }
+  .sx-flow__row { display: flex; overflow: hidden; }
+  .sx-flow__track { display: flex; flex-shrink: 0; width: max-content; align-items: flex-start; animation: sx-flow-loop var(--sx-flow-dur, 24s) linear infinite; animation-direction: var(--sx-flow-dir, normal); }
+  .sx-flow:hover .sx-flow__track { animation-play-state: paused; }
+  .sx-flow__card { flex: 0 0 auto; margin-right: 10px; background: var(--paper-card); border: 1px solid var(--hairline-strong); border-radius: 12px; box-shadow: var(--shadow-soft); transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); }
+  .sx-flow__card img { display: block; border-radius: 11px; }
+  .sx-flow__card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lens); }
+  @keyframes sx-flow-loop { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .sx-flow__track { animation: none; transform: none; } }
 
-  /* ---------- Galerias de telas (pranchas tipped-in, emolduradas · paridade Lighthouse) ---------- */
-  .sx-plates { margin-top: var(--sp-5); display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--sp-5); align-items: start; }
+  /* ---------- Galerias de telas (pranchas tipped-in, emolduradas · mesma linguagem de
+     .lh-plate/.pmo-plate — grid uniforme de 2 colunas, sem mosaico de tamanhos mistos) ---------- */
+  .sx-plates { margin-top: var(--sp-5); display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-5); align-items: start; }
+  @media (max-width: 760px) { .sx-plates { grid-template-columns: 1fr; } }
   .sx-plate { position: relative; display: block; padding: 12px; background: var(--paper-card); border: 1px solid var(--oxblood); border-radius: var(--radius-sm); box-shadow: var(--shadow-soft); cursor: zoom-in; text-decoration: none; transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); }
   .sx-plate:hover { transform: translateY(-3px); box-shadow: var(--shadow-lens); }
   .sx-plate img { width: 100%; height: auto; display: block; border: 1px solid rgba(122,38,32,.22); border-radius: var(--art-r, 2px); }
@@ -244,31 +250,15 @@
      curva nativa (senão corta reto sobre o canto). --art-r = raio H% / V%
      medido do alpha, escala junto da imagem. */
   .sx-plate img[src*="overview-"] { --art-r: 2.63% / 5.25%; }
-  .sx-plate .p-cap { display: flex; align-items: baseline; gap: 9px; margin-top: 10px; padding: 0 2px; font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--ink-soft); line-height: 1.4; }
-  .sx-plate .p-cap::before { content: '✦'; color: var(--oxblood); font-size: 13px; line-height: 1; }
-  .sx-plate .p-roman { font-family: var(--serif-display); font-style: italic; font-size: 13px; color: var(--ink-faint); }
-  .sx-plate .p-txt { font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--ink); }
-  .sx-plate.wide { grid-column: span 8; } .sx-plate.half { grid-column: span 6; } .sx-plate.third { grid-column: span 4; } .sx-plate.full { grid-column: span 12; }
-  @media (max-width: 760px) { .sx-plate.wide, .sx-plate.half, .sx-plate.third { grid-column: span 6; } }
-  @media (max-width: 480px) { .sx-plate.wide, .sx-plate.half, .sx-plate.third, .sx-plate.full { grid-column: span 12; } }
+  .sx-plate__cap { display: flex; align-items: center; gap: 9px; margin-top: 10px; padding: 0 2px; font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--ink-soft); }
+  .sx-plate__cap::before { content: '✦'; color: var(--oxblood); font-size: 13px; line-height: 1; }
+  /* Exceção — pranchas largas/compostas (visão multiplataforma, mockups de entrega) ocupam a faixa inteira */
+  .sx-plate.full { grid-column: 1 / -1; }
+  /* Exceção — capturas de tela cheia com muita área morta (telas de documentação,
+     não produto real): recorta num box 4:3 em vez de expor o canto vazio da imagem. */
+  .sx-plate.crop img { aspect-ratio: 4 / 3; object-fit: cover; }
 
-  /* ---------- Entrega: métricas + mockups ---------- */
-  .sx-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-4); margin-top: var(--sp-5); }
-  @media (max-width: 760px) { .sx-stats { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 380px) { .sx-stats { grid-template-columns: 1fr; } }
-  .sx-stat { padding: var(--sp-4) 0; border-top: 2px solid var(--ink); }
-  .sx-stat__v { font-family: var(--serif-display); font-style: italic; font-size: clamp(40px, 6vw, 64px); line-height: .9; color: var(--ink); font-variant-numeric: tabular-nums; }
-  .sx-stat__v .suf, .sx-stat__v .pre { font-size: .4em; color: var(--oxblood); vertical-align: .55em; }
-  .sx-stat__lab { display: block; margin-top: 8px; font-family: var(--serif); font-size: 13.5px; line-height: var(--lh-snug); color: var(--ink-soft); }
-
-  /* ---------- Galeria final (materiais complementares) ---------- */
-  .sx-gal { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--sp-4); margin-top: var(--sp-5); }
-  .sx-gal a { grid-column: span 4; display: block; position: relative; background: var(--ink); border-radius: var(--radius-sm); overflow: hidden; box-shadow: 0 0 0 1px var(--hairline-strong), 0 10px 24px -14px rgba(0,0,0,.4); cursor: zoom-in; }
-  .sx-gal a.w6 { grid-column: span 6; }
-  @media (max-width: 760px) { .sx-gal a, .sx-gal a.w6 { grid-column: span 6; } }
-  @media (max-width: 440px) { .sx-gal a, .sx-gal a.w6 { grid-column: span 12; } }
-  .sx-gal img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 4/3; }
-  .sx-gal .g-cap { position: absolute; bottom: 0; left: 0; right: 0; padding: 22px 10px 8px; font-family: var(--serif); font-size: 11px; color: #fff; background: linear-gradient(to top, rgba(0,0,0,.8), transparent); }
+  /* ---------- Entrega: métricas (marginalia-stat compartilhado — ver case-template.css) ---------- */
 
   .sx-disclaimer { margin-top: var(--sp-6); padding: var(--sp-4) var(--sp-5); border-left: 3px solid var(--oxblood); background: var(--paper-card); font-family: var(--serif); font-style: italic; font-size: 13.5px; line-height: var(--lh-snug); color: var(--ink-faint); }
 
@@ -317,6 +307,10 @@
   </div>
   <nav class="chrome-actions">
     <a href="../index.html" class="to-catalogue">
+      <svg class="to-catalogue-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <polyline points="9 14 4 9 9 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M20 20v-7a4 4 0 0 0-4-4H4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
       <em><span class="t" lang="pt">Voltar ao catálogo</span><span class="t" lang="en">Return to catalogue</span></em>
     </a>
     <button class="candle-toggle" type="button" aria-pressed="false" title="Modo vela" aria-label="Modo vela">
@@ -576,28 +570,22 @@
         <div class="reveal">
           <div class="sx-elo">
             <div class="sx-elo__party">
-              <span class="sx-elo__crest" aria-hidden="true">D</span>
+              <span class="sx-elo__crest" aria-hidden="true"><img src="../images/sports/logos/directv.svg" alt="" loading="lazy" /></span>
               <span class="sx-elo__name">DirecTV</span>
               <span class="sx-elo__role"><span class="t" lang="pt">Design & produto</span><span class="t" lang="en">Design & product</span></span>
             </div>
             <div class="sx-elo__party">
-              <span class="sx-elo__crest" aria-hidden="true">A</span>
+              <span class="sx-elo__crest" aria-hidden="true"><img src="../images/sports/logos/accenture.svg" alt="" loading="lazy" /></span>
               <span class="sx-elo__name">Accenture</span>
               <span class="sx-elo__role"><span class="t" lang="pt">Desenvolvimento & QA</span><span class="t" lang="en">Development & QA</span></span>
             </div>
             <div class="sx-elo__party">
-              <span class="sx-elo__crest" aria-hidden="true">F</span>
+              <span class="sx-elo__crest" aria-hidden="true"><img src="../images/sports/logos/fifa.svg" alt="" loading="lazy" /></span>
               <span class="sx-elo__name">FIFA</span>
               <span class="sx-elo__role"><span class="t" lang="pt">Dados oficiais</span><span class="t" lang="en">Official data</span></span>
             </div>
           </div>
-          <div class="sx-elo-center">
-            <div class="sx-elo-center__hub">
-              <span class="sx-elo-center__lab"><span class="t" lang="pt">O elo</span><span class="t" lang="en">The link</span></span>
-              <span class="sx-elo-center__name">Lucas · Senior Product Designer</span>
-              <span class="sx-elo-center__sub"><span class="t" lang="pt">Traduzindo dados em interface, alinhando expectativas e negociando ajustes — para manter escopo e prazo de pé.</span><span class="t" lang="en">Translating data into interface, aligning expectations and negotiating trade-offs — keeping scope and schedule standing.</span></span>
-            </div>
-          </div>
+          <p class="sx-elo__note"><span class="t" lang="pt">Entre as três pontas, o dia a dia era traduzir dados em interface e reconciliar prazos — nada mais que o ofício.</span><span class="t" lang="en">Between the three, the day-to-day was translating data into interface and reconciling deadlines — nothing more than the job.</span></p>
         </div>
 
         <div class="sx-body reveal" style="margin-top: var(--sp-6);">
@@ -619,61 +607,66 @@
 
         <div class="sx-switcher reveal">
           <p class="sx-h"><span class="t" lang="pt">As três telas, um só sistema</span><span class="t" lang="en">Three screens, one system</span></p>
-          <p class="sx-switcher__intro"><span class="t" lang="pt">A mesma linguagem de mobile a TV, adaptando densidade, toque e distância de leitura a cada meio. Escolha uma tela para ver a home em cada plataforma.</span><span class="t" lang="en">One language from mobile to TV, adapting density, touch and reading distance to each medium. Pick a screen to see the home on each platform.</span></p>
+          <p class="sx-switcher__intro"><span class="t" lang="pt">A mesma linguagem do bolso à sala: um giro pelas telas reais do produto, do mobile à TV.</span><span class="t" lang="en">The same language from pocket to living room: a walk through the product's real screens, from mobile to TV.</span></p>
 
-          <div class="sx-seg-wrap">
-            <div class="sx-seg" role="tablist" aria-label="Plataforma">
-              <button type="button" role="tab" aria-selected="true" data-plat="tv">
-                <svg class="gl" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.5" y="5" width="19" height="12.5" rx="1.8" stroke="currentColor" stroke-width="1.5"/><path d="M9 21 L12 18 L15 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                TV
-              </button>
-              <button type="button" role="tab" aria-selected="false" data-plat="web">
-                <svg class="gl" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.5" y="4" width="19" height="13" rx="1.8" stroke="currentColor" stroke-width="1.5"/><line x1="8.5" y1="20.5" x2="15.5" y2="20.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="12" y1="17" x2="12" y2="20.5" stroke="currentColor" stroke-width="1.5"/></svg>
-                Web
-              </button>
-              <button type="button" role="tab" aria-selected="false" data-plat="mobile">
-                <svg class="gl" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.2" stroke="currentColor" stroke-width="1.5"/><line x1="10.5" y1="18.5" x2="13.5" y2="18.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                Mobile
-              </button>
-            </div>
-          </div>
-
-          <div class="sx-plat">
-            <div class="sx-plat__stage">
-              <span class="sx-plat__corner tl" aria-hidden="true">✦</span><span class="sx-plat__corner tr" aria-hidden="true">✦</span>
-              <span class="sx-plat__corner bl" aria-hidden="true">✦</span><span class="sx-plat__corner br" aria-hidden="true">✦</span>
-              <div class="sx-screen landscape is-active" data-plat="tv"><img src="../images/sports/home-tv.webp" alt="Home do Sports Experience na TV — menu lateral e destaque Argentina x México da Copa 2022" loading="lazy" /></div>
-              <div class="sx-screen landscape" data-plat="web"><img src="../images/sports/home-web.webp" alt="Home do Sports Experience na web — navegação superior e destaque Argentina x México da Copa 2022" loading="lazy" /></div>
-              <div class="sx-screen" data-plat="mobile"><img src="../images/sports/home-mobile.webp" alt="Home do Sports Experience no mobile — destaque Argentina x México da Copa 2022 e Assistir ao vivo" loading="lazy" /></div>
-            </div>
-
-            <div class="sx-plat__note">
-              <div class="sx-plat-panel" data-plat="mobile">
-                <span class="n-tag">Mobile · DirecTV GO</span>
-                <p class="n-name"><span class="t" lang="pt">No bolso</span><span class="t" lang="en">In the pocket</span></p>
-                <p class="n-body"><span class="t" lang="pt">O placar ao vivo, a escalação e as estatísticas cabem numa tela estreita. Cada componente foi pensado para tolerar dados voláteis sem quebrar o layout.</span><span class="t" lang="en">The live score, lineup and stats fit a narrow screen. Every component was built to absorb volatile data without breaking the layout.</span></p>
-                <ul class="n-meta">
-                  <li><b><span class="t" lang="pt">Contexto</span><span class="t" lang="en">Context</span></b><span class="t" lang="pt">Assistir e acompanhar em movimento</span><span class="t" lang="en">Watching and following on the move</span></li>
-                  <li><b><span class="t" lang="pt">Toque</span><span class="t" lang="en">Touch</span></b><span class="t" lang="pt">Alvos ≥44px, gestos e rolagem</span><span class="t" lang="en">Targets ≥44px, gestures and scroll</span></li>
-                </ul>
-              </div>
-              <div class="sx-plat-panel" data-plat="web">
-                <span class="n-tag">Web · DirecTV GO</span>
-                <p class="n-name"><span class="t" lang="pt">Na mesa</span><span class="t" lang="en">At the desk</span></p>
-                <p class="n-body"><span class="t" lang="pt">Mais espaço para densidade: perfis de seleção e jogador, histórico e estatísticas agregadas convivem numa leitura confortável de desktop.</span><span class="t" lang="en">More room for density: team and player profiles, history and aggregate stats live together in a comfortable desktop read.</span></p>
-                <ul class="n-meta">
-                  <li><b><span class="t" lang="pt">Contexto</span><span class="t" lang="en">Context</span></b><span class="t" lang="pt">Explorar em profundidade</span><span class="t" lang="en">Exploring in depth</span></li>
-                  <li><b><span class="t" lang="pt">Interação</span><span class="t" lang="en">Input</span></b><span class="t" lang="pt">Cursor, hover e teclado</span><span class="t" lang="en">Cursor, hover and keyboard</span></li>
-                </ul>
-              </div>
-              <div class="sx-plat-panel is-active" data-plat="tv">
-                <span class="n-tag">TV · DirecTV GO</span>
-                <p class="n-name"><span class="t" lang="pt">Na sala</span><span class="t" lang="en">In the living room</span></p>
-                <p class="n-body"><span class="t" lang="pt">A home ganha a tela grande — menu lateral fixo, herói da partida em destaque e trilhos de conteúdo, com tipografia e contraste calibrados para a distância de leitura de dez pés.</span><span class="t" lang="en">The home takes the big screen — a fixed side menu, a featured match hero and content rails, with typography and contrast calibrated for ten-foot reading distance.</span></p>
-                <ul class="n-meta">
-                  <li><b><span class="t" lang="pt">Contexto</span><span class="t" lang="en">Context</span></b><span class="t" lang="pt">Assistir com a família</span><span class="t" lang="en">Watching with family</span></li>
-                  <li><b><span class="t" lang="pt">Navegação</span><span class="t" lang="en">Nav</span></b><span class="t" lang="pt">Controle remoto e foco visível</span><span class="t" lang="en">Remote control, visible focus</span></li>
-                </ul>
+          <div class="vitrine-carousel sx-carousel sl-gallery reveal" aria-roledescription="carousel">
+            <div class="carousel-frame">
+              <div class="carousel-viewport">
+                <div class="carousel-track">
+                  <div class="carousel-slide is-active">
+                    <a class="carousel-plate-cut lightboxgallery-link" href="../images/sports/overview-1.webp" aria-label="Mobile — home, torneio e grupos">
+                      <img src="../images/sports/overview-1.webp" alt="Telas mobile — home, torneio e grupos" loading="lazy" />
+                    </a>
+                    <div class="carousel-plate-cap">
+                      <span class="comp-roman">I</span>
+                      <span class="comp-label"><span class="t" lang="pt">Mobile — home, torneio e grupos</span><span class="t" lang="en">Mobile — home, tournament and groups</span></span>
+                    </div>
+                  </div>
+                  <div class="carousel-slide">
+                    <a class="carousel-plate-cut lightboxgallery-link" href="../images/sports/overview-2.webp" aria-label="Mobile — escalação e estatísticas da partida">
+                      <img src="../images/sports/overview-2.webp" alt="Telas mobile — escalação e estatísticas da partida" loading="lazy" />
+                    </a>
+                    <div class="carousel-plate-cap">
+                      <span class="comp-roman">II</span>
+                      <span class="comp-label"><span class="t" lang="pt">Mobile — escalação e estatísticas</span><span class="t" lang="en">Mobile — lineup and match stats</span></span>
+                    </div>
+                  </div>
+                  <div class="carousel-slide">
+                    <a class="carousel-plate-cut lightboxgallery-link" href="../images/sports/overview-3.webp" aria-label="Web — home e canais ao vivo">
+                      <img src="../images/sports/overview-3.webp" alt="Telas web — home e canais ao vivo" loading="lazy" />
+                    </a>
+                    <div class="carousel-plate-cap">
+                      <span class="comp-roman">III</span>
+                      <span class="comp-label"><span class="t" lang="pt">Web — home e canais ao vivo</span><span class="t" lang="en">Web — home and live channels</span></span>
+                    </div>
+                  </div>
+                  <div class="carousel-slide">
+                    <a class="carousel-plate-cut lightboxgallery-link" href="../images/sports/overview-4.webp" aria-label="Web — gols, seleções e classificação">
+                      <img src="../images/sports/overview-4.webp" alt="Telas web — gols, seleções e classificação" loading="lazy" />
+                    </a>
+                    <div class="carousel-plate-cap">
+                      <span class="comp-roman">IV</span>
+                      <span class="comp-label"><span class="t" lang="pt">Web — gols, seleções e classificação</span><span class="t" lang="en">Web — goals, teams and standings</span></span>
+                    </div>
+                  </div>
+                  <div class="carousel-slide">
+                    <a class="carousel-plate-cut lightboxgallery-link" href="../images/sports/overview-5.webp" aria-label="Web e TV — estatísticas ao vivo e a home na tela grande">
+                      <img src="../images/sports/overview-5.webp" alt="Telas web e TV — estatísticas ao vivo e a home na tela grande" loading="lazy" />
+                    </a>
+                    <div class="carousel-plate-cap">
+                      <span class="comp-roman">V</span>
+                      <span class="comp-label"><span class="t" lang="pt">Web e TV — estatísticas e a tela grande</span><span class="t" lang="en">Web and TV — live stats and the big screen</span></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="carousel-nav">
+                  <button class="carousel-arrow carousel-prev" type="button" aria-label="Prancha anterior">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12 H19"/><path d="M13 6 L19 12 L13 18"/></svg>
+                  </button>
+                  <button class="carousel-arrow carousel-next" type="button" aria-label="Próxima prancha">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12 H19"/><path d="M13 6 L19 12 L13 18"/></svg>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -687,57 +680,11 @@
             <span class="sw turf"><span class="t" lang="pt">Gramado</span><span class="t" lang="en">Turf</span></span>
           </div>
 
-          <div class="sx-vit-tabs" role="tablist" aria-label="Componentes do Design System">
-            <button class="sx-vit-tab" type="button" role="tab" aria-selected="true" data-vit="cardlive"><span class="c">a</span>Card ao vivo</button>
-            <button class="sx-vit-tab" type="button" role="tab" aria-selected="false" data-vit="standings"><span class="c">b</span>Classificação</button>
-            <button class="sx-vit-tab" type="button" role="tab" aria-selected="false" data-vit="action"><span class="c">c</span>Ações</button>
-            <button class="sx-vit-tab" type="button" role="tab" aria-selected="false" data-vit="card2x3"><span class="c">d</span>Card 2×3</button>
-          </div>
-
-          <div class="sx-vit-panel is-active" data-vit="cardlive">
-            <p class="sx-vit-panel__desc"><b>Card ao vivo.</b> <span class="t" lang="pt">O cartão de partida com placar, tempo e estatísticas — o componente mais volátil do sistema. Nove estados cobrem pré-jogo, ao vivo, intervalo e encerrado, em cada recorte regional.</span><span class="t" lang="en">The match card with score, clock and stats — the system's most volatile component. Nine states cover pre-match, live, half-time and finished, in each regional cut.</span></p>
-            <div class="sx-vit-strip cols-4">
-              <figure><img src="../images/sports/cardlive.webp" alt="Card ao vivo" loading="lazy" /><figcaption>Base</figcaption></figure>
-              <figure><img src="../images/sports/cardlive-1.webp" alt="Card ao vivo — variação" loading="lazy" /><figcaption>Var. 01</figcaption></figure>
-              <figure><img src="../images/sports/cardlive-2.webp" alt="Card ao vivo — variação" loading="lazy" /><figcaption>Var. 02</figcaption></figure>
-              <figure><img src="../images/sports/cardlive-3.webp" alt="Card ao vivo — variação" loading="lazy" /><figcaption>Var. 03</figcaption></figure>
-            </div>
-            <p class="sx-vit-caption"><span class="t" lang="pt">Estados do cartão de partida ao vivo · Design System Sports Experience</span><span class="t" lang="en">Live match-card states · Sports Experience Design System</span></p>
-          </div>
-
-          <div class="sx-vit-panel" data-vit="standings">
-            <p class="sx-vit-panel__desc"><b>Classificação.</b> <span class="t" lang="pt">A tabela de grupos e a chave de mata-mata. Precisa comportar oito grupos, empates e critérios de desempate sem reflow — a mesma estrutura serve mobile, web e TV.</span><span class="t" lang="en">The group table and knockout bracket. It must hold eight groups, ties and tie-break criteria without reflow — one structure serving mobile, web and TV.</span></p>
-            <div class="sx-vit-strip cols-4">
-              <figure><img src="../images/sports/standings.webp" alt="Componente de classificação" loading="lazy" /><figcaption>Base</figcaption></figure>
-              <figure><img src="../images/sports/standings-1.webp" alt="Classificação — variação" loading="lazy" /><figcaption>Var. 01</figcaption></figure>
-              <figure><img src="../images/sports/standings-2.webp" alt="Classificação — variação" loading="lazy" /><figcaption>Var. 02</figcaption></figure>
-              <figure><img src="../images/sports/standings-3.webp" alt="Classificação — variação" loading="lazy" /><figcaption>Var. 03</figcaption></figure>
-            </div>
-            <p class="sx-vit-caption"><span class="t" lang="pt">Tabela de classificação por grupo · estados</span><span class="t" lang="en">Group standings table · states</span></p>
-          </div>
-
-          <div class="sx-vit-panel" data-vit="action">
-            <p class="sx-vit-panel__desc"><b>Ações em campo.</b> <span class="t" lang="pt">Micro-componente para eventos da partida — gol, cartão, substituição. Legível a poucos centímetros no celular e a três metros na TV, com o mesmo desenho.</span><span class="t" lang="en">Micro-component for match events — goal, card, substitution. Legible inches away on a phone and meters away on TV, from the same design.</span></p>
-            <div class="sx-vit-strip cols-6">
-              <figure><img src="../images/sports/action.webp" alt="Componente de ação" loading="lazy" /><figcaption>Base</figcaption></figure>
-              <figure><img src="../images/sports/action-1.webp" alt="Ação — variação" loading="lazy" /><figcaption>01</figcaption></figure>
-              <figure><img src="../images/sports/action-2.webp" alt="Ação — variação" loading="lazy" /><figcaption>02</figcaption></figure>
-              <figure><img src="../images/sports/action-3.webp" alt="Ação — variação" loading="lazy" /><figcaption>03</figcaption></figure>
-              <figure><img src="../images/sports/action-4.webp" alt="Ação — variação" loading="lazy" /><figcaption>04</figcaption></figure>
-              <figure><img src="../images/sports/action-5.webp" alt="Ação — variação" loading="lazy" /><figcaption>05</figcaption></figure>
-            </div>
-            <p class="sx-vit-caption"><span class="t" lang="pt">Componente de ações do jogador em campo · estados</span><span class="t" lang="en">Player on-pitch action component · states</span></p>
-          </div>
-
-          <div class="sx-vit-panel" data-vit="card2x3">
-            <p class="sx-vit-panel__desc"><b>Card 2×3.</b> <span class="t" lang="pt">O cartão de partida em estado inativo, base do calendário e das listas. Proporção fixa que empacota bem em grades densas e sobrevive à reorganização regional.</span><span class="t" lang="en">The match card in its inactive state, the base of the calendar and lists. A fixed ratio that packs well into dense grids and survives regional reorganization.</span></p>
-            <div class="sx-vit-strip cols-4">
-              <figure><img src="../images/sports/card-2x3.webp" alt="Card 2×3 inativo" loading="lazy" /><figcaption>Base</figcaption></figure>
-              <figure><img src="../images/sports/card-2x3-1.webp" alt="Card 2×3 — variação" loading="lazy" /><figcaption>Var. 01</figcaption></figure>
-              <figure><img src="../images/sports/card-2x3-2.webp" alt="Card 2×3 — variação" loading="lazy" /><figcaption>Var. 02</figcaption></figure>
-              <figure><img src="../images/sports/card-2x3-3.webp" alt="Card 2×3 — variação" loading="lazy" /><figcaption>Var. 03</figcaption></figure>
-            </div>
-            <p class="sx-vit-caption"><span class="t" lang="pt">Card de partida 2×3 (inativo) · estados</span><span class="t" lang="en">2×3 match card (inactive) · states</span></p>
+          <div class="sx-flow reveal">
+        <div class="sx-flow__row"><div class="sx-flow__track" style="--sx-flow-dur:22s; --sx-flow-dir:normal;"><div class="sx-flow__card"><img src="../images/sports/action.webp" width="309" height="176" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/action-1.webp" width="309" height="176" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/action-2.webp" width="309" height="176" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/action-3.webp" width="309" height="176" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/action-4.webp" width="309" height="176" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/action-5.webp" width="309" height="176" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/action.webp" width="309" height="176" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/action-1.webp" width="309" height="176" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/action-2.webp" width="309" height="176" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/action-3.webp" width="309" height="176" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/action-4.webp" width="309" height="176" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/action-5.webp" width="309" height="176" alt="" loading="lazy" /></div></div></div>
+        <div class="sx-flow__row"><div class="sx-flow__track" style="--sx-flow-dur:26s; --sx-flow-dir:reverse;"><div class="sx-flow__card"><img src="../images/sports/standings.webp" width="320" height="228" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/standings-1.webp" width="320" height="228" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/standings-2.webp" width="320" height="228" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/standings-3.webp" width="320" height="228" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/standings.webp" width="320" height="228" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/standings-1.webp" width="320" height="228" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/standings-2.webp" width="320" height="228" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/standings-3.webp" width="320" height="228" alt="" loading="lazy" /></div></div></div>
+        <div class="sx-flow__row"><div class="sx-flow__track" style="--sx-flow-dur:24s; --sx-flow-dir:normal;"><div class="sx-flow__card"><img src="../images/sports/card-2x3.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3-1.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3-2.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3-3.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3-1.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3-2.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3-3.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3-1.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3-2.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3-3.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3-1.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3-2.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3-3.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3-1.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3-2.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3-3.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3-1.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3-2.webp" width="132" height="234" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/card-2x3-3.webp" width="132" height="234" alt="" loading="lazy" /></div></div></div>
+        <div class="sx-flow__row"><div class="sx-flow__track" style="--sx-flow-dur:24s; --sx-flow-dir:reverse;"><div class="sx-flow__card"><img src="../images/sports/cardlive.webp" width="276" height="252" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/cardlive-1.webp" width="276" height="252" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/cardlive-2.webp" width="276" height="252" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/cardlive-3.webp" width="276" height="252" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/cardlive.webp" width="276" height="252" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/cardlive-1.webp" width="276" height="252" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/cardlive-2.webp" width="276" height="252" alt="" loading="lazy" /></div><div class="sx-flow__card"><img src="../images/sports/cardlive-3.webp" width="276" height="252" alt="" loading="lazy" /></div></div></div>
           </div>
         </div>
       </section>
@@ -768,33 +715,33 @@
         </div>
 
         <div class="sx-plates sl-gallery reveal">
-          <a class="sx-plate wide lightboxgallery-link" href="../images/sports/overview-1.webp" aria-label="Home do hub no mobile, com destaque para a próxima partida da Copa">
+          <a class="sx-plate lightboxgallery-link" href="../images/sports/overview-1.webp" aria-label="Home do hub no mobile, com destaque para a próxima partida da Copa">
             <img src="../images/sports/overview-1.webp" alt="Home do hub Sports Experience no mobile" loading="lazy" />
-            <span class="p-cap"><span class="p-roman">Pl. i</span> <span class="p-txt"><span class="t" lang="pt">Home do hub no mobile</span><span class="t" lang="en">Hub home on mobile</span></span></span>
+            <span class="sx-plate__cap"><span class="t" lang="pt">Home do hub no mobile</span><span class="t" lang="en">Hub home on mobile</span></span>
           </a>
-          <a class="sx-plate third lightboxgallery-link" href="../images/sports/hero-2.webp" aria-label="Tela de partida com placar e detalhes">
+          <a class="sx-plate lightboxgallery-link" href="../images/sports/hero-2.webp" aria-label="Tela de partida com placar e detalhes">
             <img src="../images/sports/hero-2.webp" alt="Tela de partida com placar e detalhes" loading="lazy" />
-            <span class="p-cap"><span class="p-roman">Pl. ii</span> <span class="p-txt"><span class="t" lang="pt">Detalhe da partida</span><span class="t" lang="en">Match detail</span></span></span>
+            <span class="sx-plate__cap"><span class="t" lang="pt">Detalhe da partida</span><span class="t" lang="en">Match detail</span></span>
           </a>
-          <a class="sx-plate wide lightboxgallery-link" href="../images/sports/overview-2.webp" aria-label="Calendário de partidas com filtros por fase e dados oficiais da FIFA">
+          <a class="sx-plate lightboxgallery-link" href="../images/sports/overview-2.webp" aria-label="Calendário de partidas com filtros por fase e dados oficiais da FIFA">
             <img src="../images/sports/overview-2.webp" alt="Calendário de partidas da Copa 2022" loading="lazy" />
-            <span class="p-cap"><span class="p-roman">Pl. iii</span> <span class="p-txt"><span class="t" lang="pt">Calendário e fases</span><span class="t" lang="en">Calendar and stages</span></span></span>
+            <span class="sx-plate__cap"><span class="t" lang="pt">Calendário e fases</span><span class="t" lang="en">Calendar and stages</span></span>
           </a>
-          <a class="sx-plate third lightboxgallery-link" href="../images/sports/hero-3.webp" aria-label="Perfil de seleção com escalação">
+          <a class="sx-plate lightboxgallery-link" href="../images/sports/hero-3.webp" aria-label="Perfil de seleção com escalação">
             <img src="../images/sports/hero-3.webp" alt="Perfil de seleção com escalação" loading="lazy" />
-            <span class="p-cap"><span class="p-roman">Pl. iv</span> <span class="p-txt"><span class="t" lang="pt">Perfil de seleção</span><span class="t" lang="en">Team profile</span></span></span>
+            <span class="sx-plate__cap"><span class="t" lang="pt">Perfil de seleção</span><span class="t" lang="en">Team profile</span></span>
           </a>
-          <a class="sx-plate half lightboxgallery-link" href="../images/sports/overview-3.webp" aria-label="Tela de partida ao vivo com estatísticas em tempo real e escalação">
+          <a class="sx-plate lightboxgallery-link" href="../images/sports/overview-3.webp" aria-label="Tela de partida ao vivo com estatísticas em tempo real e escalação">
             <img src="../images/sports/overview-3.webp" alt="Partida ao vivo com estatísticas em tempo real" loading="lazy" />
-            <span class="p-cap"><span class="p-roman">Pl. v</span> <span class="p-txt"><span class="t" lang="pt">Ao vivo, com estatística</span><span class="t" lang="en">Live, with statistics</span></span></span>
+            <span class="sx-plate__cap"><span class="t" lang="pt">Ao vivo, com estatística</span><span class="t" lang="en">Live, with statistics</span></span>
           </a>
-          <a class="sx-plate half lightboxgallery-link" href="../images/sports/overview-4.webp" aria-label="Perfil de jogador com estatísticas agregadas e histórico do torneio">
+          <a class="sx-plate lightboxgallery-link" href="../images/sports/overview-4.webp" aria-label="Perfil de jogador com estatísticas agregadas e histórico do torneio">
             <img src="../images/sports/overview-4.webp" alt="Perfil de jogador com estatísticas agregadas" loading="lazy" />
-            <span class="p-cap"><span class="p-roman">Pl. vi</span> <span class="p-txt"><span class="t" lang="pt">Perfil de jogador</span><span class="t" lang="en">Player profile</span></span></span>
+            <span class="sx-plate__cap"><span class="t" lang="pt">Perfil de jogador</span><span class="t" lang="en">Player profile</span></span>
           </a>
           <a class="sx-plate full lightboxgallery-link" href="../images/sports/overview-5.webp" aria-label="Visão multiplataforma do Sports Experience — mobile, web e TV em conjunto">
             <img src="../images/sports/overview-5.webp" alt="Visão multiplataforma — mobile, web e TV" loading="lazy" />
-            <span class="p-cap"><span class="p-roman">Pl. vii</span> <span class="p-txt"><span class="t" lang="pt">Visão multiplataforma — mobile, web e TV</span><span class="t" lang="en">Multiplatform view — mobile, web and TV</span></span></span>
+            <span class="sx-plate__cap"><span class="t" lang="pt">Visão multiplataforma — mobile, web e TV</span><span class="t" lang="en">Multiplatform view — mobile, web and TV</span></span>
           </a>
         </div>
       </section>
@@ -811,12 +758,26 @@
           <p><span class="t" lang="pt">O MVP foi entregue <span class="em">no prazo para a estreia da Copa</span>, sem desvios de escopo críticos, aprovado pelos stakeholders da DirecTV e disponibilizado para toda a base de assinantes durante o torneio.</span><span class="t" lang="en">The MVP shipped <span class="em">on time for kick-off</span>, with no critical scope slips, approved by DirecTV stakeholders and made available to the entire subscriber base during the tournament.</span></p>
         </div>
 
-        <div class="sx-stats reveal" data-stagger>
-          <div class="sx-stat"><span class="sx-stat__v"><span class="stat-val" data-count="3">3</span></span><span class="sx-stat__lab"><span class="t" lang="pt">plataformas num só hub</span><span class="t" lang="en">platforms in one hub</span></span></div>
-          <div class="sx-stat"><span class="sx-stat__v"><span class="stat-val" data-count="2">2</span></span><span class="sx-stat__lab"><span class="t" lang="pt">versões regionais entregues</span><span class="t" lang="en">regional versions delivered</span></span></div>
-          <div class="sx-stat"><span class="sx-stat__v"><span class="stat-val" data-count="64">64</span></span><span class="sx-stat__lab"><span class="t" lang="pt">partidas ao vivo cobertas</span><span class="t" lang="en">live matches covered</span></span></div>
-          <div class="sx-stat"><span class="sx-stat__v"><span class="stat-val" data-count="100">100</span><span class="suf">%</span></span><span class="sx-stat__lab"><span class="t" lang="pt">entrega on-time na estreia</span><span class="t" lang="en">on-time delivery at kick-off</span></span></div>
-        </div>
+        <aside class="marginalia-stat reveal">
+          <dl>
+            <div>
+              <dt><span class="stat-val" data-count="3">0</span></dt>
+              <dd><span class="t" lang="pt">plataformas num só hub</span><span class="t" lang="en">platforms in one hub</span></dd>
+            </div>
+            <div>
+              <dt><span class="stat-val" data-count="2">0</span></dt>
+              <dd><span class="t" lang="pt">versões regionais entregues</span><span class="t" lang="en">regional versions delivered</span></dd>
+            </div>
+            <div>
+              <dt><span class="stat-val" data-count="64">0</span></dt>
+              <dd><span class="t" lang="pt">partidas ao vivo cobertas</span><span class="t" lang="en">live matches covered</span></dd>
+            </div>
+            <div>
+              <dt><span class="stat-val" data-count="100">0</span><span class="unit">%</span></dt>
+              <dd><span class="t" lang="pt">entrega on-time na estreia</span><span class="t" lang="en">on-time delivery at kick-off</span></dd>
+            </div>
+          </dl>
+        </aside>
 
         <div class="sx-body reveal" style="margin-top: var(--sp-6);">
           <p><span class="t" lang="pt">A apresentação final foi recebida com entusiasmo. A demonstração das funcionalidades — com o layout responsivo garantindo navegação fluida em qualquer tela — evidenciou o potencial do hub como casa completa da Copa. Os objetivos iniciais foram cumpridos: uma experiência rápida e intuitiva, consistente e de qualidade em todas as plataformas.</span><span class="t" lang="en">The final presentation was met with enthusiasm. The feature demo — with responsive layout ensuring fluid navigation on any screen — showed the hub's potential as a complete World Cup home. The initial goals were met: a fast, intuitive experience, consistent and high-quality across every platform.</span></p>
@@ -825,11 +786,11 @@
         <div class="sx-plates sl-gallery reveal" style="margin-top: var(--sp-6);">
           <a class="sx-plate full lightboxgallery-link" href="../images/sports/entrega-1.webp" aria-label="Mockup de entrega — telas de mobile, web e TV do hub Sports Experience">
             <img src="../images/sports/entrega-1.webp" alt="Mockup de entrega — mobile, web e TV" loading="lazy" />
-            <span class="p-cap"><span class="p-roman">Pl. viii</span> <span class="p-txt"><span class="t" lang="pt">Mockup de entrega — as três telas</span><span class="t" lang="en">Delivery mockup — the three screens</span></span></span>
+            <span class="sx-plate__cap"><span class="t" lang="pt">Mockup de entrega — as três telas</span><span class="t" lang="en">Delivery mockup — the three screens</span></span>
           </a>
           <a class="sx-plate full lightboxgallery-link" href="../images/sports/entrega-2.webp" aria-label="Vista geral das interfaces entregues — estatísticas em tempo real e cards de partidas ao vivo">
             <img src="../images/sports/entrega-2.webp" alt="Vista geral das interfaces entregues" loading="lazy" />
-            <span class="p-cap"><span class="p-roman">Pl. ix</span> <span class="p-txt"><span class="t" lang="pt">Vista geral das interfaces entregues</span><span class="t" lang="en">Overview of delivered interfaces</span></span></span>
+            <span class="sx-plate__cap"><span class="t" lang="pt">Vista geral das interfaces entregues</span><span class="t" lang="en">Overview of delivered interfaces</span></span>
           </a>
         </div>
       </section>
@@ -846,30 +807,30 @@
           <p><span class="t" lang="pt">Materiais complementares — o estudo cromático do Design System, telas auxiliares, detalhes de componentes e até explorações descartadas por restrições regulatórias. Fora do fluxo principal, mas parte do escopo real do trabalho.</span><span class="t" lang="en">Complementary materials — the Design System's chromatic study, auxiliary screens, component details, and even explorations dropped for regulatory reasons. Outside the main flow, but part of the work's real scope.</span></p>
         </div>
 
-        <div class="sx-gal sl-gallery reveal">
-          <a class="w6 lightboxgallery-link" href="../images/sports/colors.webp" aria-label="Estudo cromático do Design System — paleta oficial aplicada aos componentes da Copa">
+        <div class="sx-plates sl-gallery reveal">
+          <a class="sx-plate crop lightboxgallery-link" href="../images/sports/colors.webp" aria-label="Estudo cromático do Design System — paleta oficial aplicada aos componentes da Copa">
             <img src="../images/sports/colors.webp" alt="Estudo cromático do Design System" loading="lazy" />
-            <span class="g-cap"><span class="t" lang="pt">Estudo cromático · paleta do sistema</span><span class="t" lang="en">Chromatic study · system palette</span></span>
+            <span class="sx-plate__cap"><span class="t" lang="pt">Estudo cromático · paleta do sistema</span><span class="t" lang="en">Chromatic study · system palette</span></span>
           </a>
-          <a class="w6 lightboxgallery-link" href="../images/sports/desafio.webp" aria-label="Panorama do Design System — tokens, componentes e variações de partida em largura total">
+          <a class="sx-plate crop lightboxgallery-link" href="../images/sports/desafio.webp" aria-label="Panorama do Design System — tokens, componentes e variações de partida em largura total">
             <img src="../images/sports/desafio.webp" alt="Panorama do Design System — componentes e variações" loading="lazy" />
-            <span class="g-cap"><span class="t" lang="pt">Panorama do Design System</span><span class="t" lang="en">Design System panorama</span></span>
+            <span class="sx-plate__cap"><span class="t" lang="pt">Panorama do Design System</span><span class="t" lang="en">Design System panorama</span></span>
           </a>
-          <a class="lightboxgallery-link" href="../images/sports/colors-2.webp" aria-label="Variações de cor aplicadas a cards de partida e seleções">
+          <a class="sx-plate crop lightboxgallery-link" href="../images/sports/colors-2.webp" aria-label="Variações de cor aplicadas a cards de partida e seleções">
             <img src="../images/sports/colors-2.webp" alt="Variações de cor em cards de partida" loading="lazy" />
-            <span class="g-cap"><span class="t" lang="pt">Variações de cor nos cards</span><span class="t" lang="en">Color variations on cards</span></span>
+            <span class="sx-plate__cap"><span class="t" lang="pt">Variações de cor nos cards</span><span class="t" lang="en">Color variations on cards</span></span>
           </a>
-          <a class="lightboxgallery-link" href="../images/sports/profile.webp" aria-label="Tela de perfil do jogador — estatísticas agregadas, histórico e posição">
+          <a class="sx-plate crop lightboxgallery-link" href="../images/sports/profile.webp" aria-label="Tela de perfil do jogador — estatísticas agregadas, histórico e posição">
             <img src="../images/sports/profile.webp" alt="Perfil do jogador" loading="lazy" />
-            <span class="g-cap"><span class="t" lang="pt">Perfil do jogador</span><span class="t" lang="en">Player profile</span></span>
+            <span class="sx-plate__cap"><span class="t" lang="pt">Perfil do jogador</span><span class="t" lang="en">Player profile</span></span>
           </a>
-          <a class="lightboxgallery-link" href="../images/sports/heat.webp" aria-label="Mapa de calor de movimentação do jogador em campo durante a partida">
+          <a class="sx-plate crop lightboxgallery-link" href="../images/sports/heat.webp" aria-label="Mapa de calor de movimentação do jogador em campo durante a partida">
             <img src="../images/sports/heat.webp" alt="Mapa de calor de movimentação em campo" loading="lazy" />
-            <span class="g-cap"><span class="t" lang="pt">Mapa de calor</span><span class="t" lang="en">Heatmap</span></span>
+            <span class="sx-plate__cap"><span class="t" lang="pt">Mapa de calor</span><span class="t" lang="en">Heatmap</span></span>
           </a>
-          <a class="lightboxgallery-link" href="../images/sports/bet.webp" aria-label="Exploração de componente de probabilidades — descartada por restrições regulatórias no Brasil">
+          <a class="sx-plate crop lightboxgallery-link" href="../images/sports/bet.webp" aria-label="Exploração de componente de probabilidades — descartada por restrições regulatórias no Brasil">
             <img src="../images/sports/bet.webp" alt="Exploração de componente de probabilidades (descartada)" loading="lazy" />
-            <span class="g-cap"><span class="t" lang="pt">Probabilidades — descartada (Brasil)</span><span class="t" lang="en">Probabilities — dropped (Brazil)</span></span>
+            <span class="sx-plate__cap"><span class="t" lang="pt">Probabilidades — descartada (Brasil)</span><span class="t" lang="en">Probabilities — dropped (Brazil)</span></span>
           </a>
         </div>
 
@@ -929,42 +890,8 @@
 
 <!-- Interações compartilhadas (i18n, count-up, reveal, page-counter) -->
 <script src="./case-template.js"></script>
-<!-- Chrome de case: Index Rerum (⌘K) + edição de bolso -->
+<!-- Chrome de case: Index Rerum (⌘K) -->
 <script src="./case-chrome.js"></script>
-
-<!-- Peça de impacto (segmentado Mobile/Web/TV) + vitrine de componentes -->
-<script>
-(function () {
-  'use strict';
-  // Segmentado de plataforma
-  var seg = document.querySelector('.sx-seg');
-  if (seg) {
-    var btns = Array.prototype.slice.call(seg.querySelectorAll('button'));
-    var screens = Array.prototype.slice.call(document.querySelectorAll('.sx-screen'));
-    var panels = Array.prototype.slice.call(document.querySelectorAll('.sx-plat-panel'));
-    btns.forEach(function (b) {
-      b.addEventListener('click', function () {
-        var p = b.dataset.plat;
-        btns.forEach(function (x) { x.setAttribute('aria-selected', x === b ? 'true' : 'false'); });
-        screens.forEach(function (s) { s.classList.toggle('is-active', s.dataset.plat === p); });
-        panels.forEach(function (pn) { pn.classList.toggle('is-active', pn.dataset.plat === p); });
-      });
-    });
-  }
-  // Vitrine de componentes
-  var tabs = Array.prototype.slice.call(document.querySelectorAll('.sx-vit-tab'));
-  if (tabs.length) {
-    var vpanels = Array.prototype.slice.call(document.querySelectorAll('.sx-vit-panel'));
-    tabs.forEach(function (t) {
-      t.addEventListener('click', function () {
-        var v = t.dataset.vit;
-        tabs.forEach(function (x) { x.setAttribute('aria-selected', x === t ? 'true' : 'false'); });
-        vpanels.forEach(function (p) { p.classList.toggle('is-active', p.dataset.vit === v); });
-      });
-    });
-  }
-})();
-</script>
 
 <!-- Lightbox das galerias -->
 <script>

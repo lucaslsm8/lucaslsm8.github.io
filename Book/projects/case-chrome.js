@@ -1,16 +1,13 @@
 /* ════════════════════════════════════════════════════════════
    CASE CHROME — paridade da home nas páginas de case
    ────────────────────────────────────────────────────────────
-   i.   Index Rerum (⌘K / Ctrl K · ícone de luneta) — índice da
-        PRÓPRIA prancha, derivado dos cabeçalhos de seção, mais
-        entradas globais (voltar ao catálogo · edição de bolso ·
-        modo vela). Busca, ↑/↓, Enter, Esc.
-   ii.  Edição de bolso (ícone de livreto) — o volume numa lauda.
-        Fatos espelham o CONTENT da home (regra 6 · não inventar).
+   Index Rerum (⌘K / Ctrl K · ícone de luneta) — índice da PRÓPRIA
+   prancha, derivado dos cabeçalhos de seção, mais entradas globais
+   (voltar ao catálogo · modo vela). Busca, ↑/↓, Enter, Esc.
 
    JS puro, sem build. As páginas de case são estáticas (sem React),
-   então os ícones são injetados uma vez; os rótulos acompanham o
-   toggle PT/EN. O nome clicável do running-head é feito no HTML.
+   então o ícone é injetado uma vez; o rótulo acompanha o toggle
+   PT/EN. O nome clicável do running-head é feito no HTML.
    Requer os estilos .ed-* de design-system/case-template.css.
    ════════════════════════════════════════════════════════════ */
 (function () {
@@ -61,138 +58,6 @@
   }
 
   /* ══════════════════════════════════════════════════════════
-     CONTEÚDO BILÍNGUE da edição de bolso (espelha a home).
-     ══════════════════════════════════════════════════════════ */
-  var POCKET = {
-    pt: {
-      label: "Edição de bolso",
-      gloss: "o volume em uma lauda",
-      name: "Lucas Schoenherr",
-      line: "Senior Product Designer · GenAI & Design Systems · Rio de Janeiro · treze anos de prática",
-      worksLabel: "Obras",
-      works: [
-        { r: "I",   t: "Gen.AI — Accenture, 2023–24",
-          d: "9 POCs de IA generativa unificadas por um design system dedicado.",
-          k: "5 avançaram para dev" },
-        { r: "II",  t: "Dashboards PMO — Samarco, 2025",
-          d: "Cabine de comando executiva com a Mandala Estratégica no centro.",
-          k: "20+ planilhas substituídas" },
-        { r: "III", t: "Lighthouse — Vale, 2023",
-          d: "MVP mobile que levou dados críticos de produção à palma da mão.",
-          k: "~200 gestores impactados" }
-      ],
-      contactLabel: "Correspondência",
-      email: "lucas.schoenherr@gmail.com",
-      print: "imprimir esta lauda",
-      full: "ver o catálogo completo ↗",
-      close: "Fechar a edição de bolso"
-    },
-    en: {
-      label: "Pocket edition",
-      gloss: "the volume in a single leaf",
-      name: "Lucas Schoenherr",
-      line: "Senior Product Designer · GenAI & Design Systems · Rio de Janeiro · thirteen years of practice",
-      worksLabel: "Works",
-      works: [
-        { r: "I",   t: "Gen.AI — Accenture, 2023–24",
-          d: "9 generative-AI POCs unified by a dedicated design system.",
-          k: "5 advanced to dev" },
-        { r: "II",  t: "PMO Dashboards — Samarco, 2025",
-          d: "Executive command cabin with the Strategic Mandala at its heart.",
-          k: "20+ spreadsheets replaced" },
-        { r: "III", t: "Lighthouse — Vale, 2023",
-          d: "Mobile MVP that put critical production data in managers' hands.",
-          k: "~200 managers reached" }
-      ],
-      contactLabel: "Correspondence",
-      email: "lucas.schoenherr@gmail.com",
-      print: "print this leaf",
-      full: "see the full catalogue ↗",
-      close: "Close the pocket edition"
-    }
-  };
-
-  /* ══════════════════════════════════════════════════════════
-     EDIÇÃO DE BOLSO
-     ══════════════════════════════════════════════════════════ */
-  var pocketOverlay = null;
-
-  function buildPocket() {
-    var c = POCKET[lang()];
-    var ov = el("div", "ed-pocket");
-    ov.setAttribute("role", "dialog");
-    ov.setAttribute("aria-modal", "true");
-    ov.setAttribute("aria-label", c.label);
-
-    var card = el("article", "ed-pocket-card");
-
-    var head = el("header", "ed-pocket-head");
-    head.appendChild(el("span", "ed-pocket-label", c.label));
-    head.appendChild(el("span", "ed-pocket-gloss", "· " + c.gloss));
-    var x = el("button", "ed-pocket-close", "×");
-    x.type = "button";
-    x.setAttribute("aria-label", c.close);
-    x.addEventListener("click", closePocket);
-    head.appendChild(x);
-    card.appendChild(head);
-
-    card.appendChild(el("h2", "ed-pocket-name", c.name));
-    card.appendChild(el("p", "ed-pocket-line", c.line));
-
-    card.appendChild(el("h3", "ed-pocket-h", c.worksLabel));
-    var ul = el("ul", "ed-pocket-works");
-    c.works.forEach(function (w) {
-      var li = el("li", null);
-      li.appendChild(el("span", "ed-pw-roman", w.r));
-      var body = el("div", "ed-pw-body");
-      body.appendChild(el("strong", "ed-pw-title", w.t));
-      body.appendChild(el("span", "ed-pw-desc", w.d));
-      li.appendChild(body);
-      li.appendChild(el("span", "ed-pw-key", w.k));
-      ul.appendChild(li);
-    });
-    card.appendChild(ul);
-
-    card.appendChild(el("h3", "ed-pocket-h", c.contactLabel));
-    var pc = el("p", "ed-pocket-contact");
-    var mail = el("a", null, c.email);
-    mail.href = "mailto:" + c.email;
-    pc.appendChild(mail);
-    card.appendChild(pc);
-
-    var foot = el("footer", "ed-pocket-foot");
-    var printBtn = el("button", "ed-pocket-print", "⎙ " + c.print);
-    printBtn.type = "button";
-    printBtn.addEventListener("click", function () { window.print(); });
-    foot.appendChild(printBtn);
-    var full = el("a", "ed-pocket-full", c.full);
-    full.href = HOME + "#works";
-    foot.appendChild(full);
-    card.appendChild(foot);
-
-    ov.appendChild(card);
-    ov.addEventListener("click", function (e) { if (e.target === ov) closePocket(); });
-    return ov;
-  }
-
-  function openPocket() {
-    closeIndex();
-    if (pocketOverlay) pocketOverlay.remove();
-    pocketOverlay = buildPocket();
-    document.body.appendChild(pocketOverlay);
-    document.body.classList.add("ed-pocket-open");
-    var x = pocketOverlay.querySelector(".ed-pocket-close");
-    if (x) x.focus();
-  }
-
-  function closePocket() {
-    if (!pocketOverlay) return;
-    pocketOverlay.remove();
-    pocketOverlay = null;
-    document.body.classList.remove("ed-pocket-open");
-  }
-
-  /* ══════════════════════════════════════════════════════════
      INDEX RERUM — índice da prancha + entradas globais
      ══════════════════════════════════════════════════════════ */
   var indexOverlay = null;
@@ -231,10 +96,6 @@
       pt: "Catálogo de obras", en: "Catalogue of works",
       loc: L === "pt" ? "↗ home" : "↗ home", href: HOME + "#works"
     });
-    entries.push({
-      pt: "Edição de bolso", en: "Pocket edition",
-      loc: L === "pt" ? "uma lauda" : "one leaf", pocket: true
-    });
     if (document.querySelector(".candle-toggle")) {
       entries.push({
         pt: "Modo vela / modo dia", en: "Candle / day mode",
@@ -245,7 +106,6 @@
   }
 
   function goTo(entry) {
-    if (entry.pocket) { openPocket(); return; }
     if (entry.click) {
       var btn = document.querySelector(entry.click);
       if (btn) btn.click();
@@ -287,7 +147,6 @@
 
   function openIndex() {
     if (indexOverlay) { closeIndex(); return; }
-    closePocket();
     var L = lang();
     indexSel = 0;
     var allEntries = buildEntries();
@@ -334,7 +193,7 @@
   }
 
   /* ══════════════════════════════════════════════════════════
-     ÍCONES DO CHROME — luneta (esq.) e bolso (dir.) ao redor da vela
+     ÍCONE DO CHROME — luneta ao lado da vela
      ══════════════════════════════════════════════════════════ */
   var LUNETA_SVG =
     '<svg width="22" height="22" viewBox="2.8 1.8 19.5 19.5" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:block">' +
@@ -346,14 +205,6 @@
       '<path d="M6.6 5.7 A 4.4 4.4 0 0 1 10 4.2" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" opacity="0.3"/>' +
     '</svg>';
 
-  var POCKETBOOK_SVG =
-    '<svg width="16" height="22" viewBox="6.5 3 11.5 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:block">' +
-      '<rect x="6.5" y="3" width="11.5" height="16" rx="1.2" fill="currentColor"/>' +
-      '<line x1="9" y1="4.4" x2="9" y2="17.6" stroke="var(--paper)" stroke-width="0.7" opacity="0.4"/>' +
-      '<line x1="16.2" y1="5.2" x2="16.2" y2="16.8" stroke="var(--paper)" stroke-width="0.7" opacity="0.4"/>' +
-      '<path d="M12.2 3 L12.2 9.2 L10.8 7.7 L9.4 9.2 L9.4 3 Z" fill="var(--paper)" opacity="0.85"/>' +
-    '</svg>';
-
   function refreshLabels() {
     var L = lang();
     var luneta = document.querySelector(".ed-icon--index");
@@ -362,11 +213,6 @@
                           : "Index Rerum — search this plate (⌘K)";
       luneta.title = ix;
       luneta.setAttribute("aria-label", ix);
-    }
-    var pocket = document.querySelector(".ed-icon--pocket");
-    if (pocket) {
-      pocket.title = POCKET[L].label;
-      pocket.setAttribute("aria-label", POCKET[L].label);
     }
   }
 
@@ -388,18 +234,6 @@
       anchor.parentNode.insertBefore(luneta, anchor);
     }
 
-    /* bolso — à direita da vela (ou antes do toggle de idioma) */
-    if (!actions.querySelector(".ed-icon--pocket")) {
-      var pocket = el("button", "ed-icon ed-icon--pocket");
-      pocket.type = "button";
-      pocket.innerHTML = POCKETBOOK_SVG;
-      pocket.setAttribute("aria-haspopup", "dialog");
-      pocket.addEventListener("click", openPocket);
-      if (candle && candle.nextSibling) candle.parentNode.insertBefore(pocket, candle.nextSibling);
-      else if (candle) candle.parentNode.appendChild(pocket);
-      else langToggle.parentNode.insertBefore(pocket, langToggle);
-    }
-
     refreshLabels();
   }
 
@@ -407,7 +241,7 @@
   function boot() {
     ensureChromeIcons();
 
-    /* rótulos acompanham o toggle PT/EN (re-checa no próximo frame) */
+    /* rótulo acompanha o toggle PT/EN (re-checa no próximo frame) */
     var lt = document.querySelector(".lang-toggle");
     if (lt) lt.addEventListener("click", function () { requestAnimationFrame(refreshLabels); });
 
@@ -418,7 +252,6 @@
         openIndex();
       } else if (e.key === "Escape") {
         closeIndex();
-        closePocket();
       }
     });
   }

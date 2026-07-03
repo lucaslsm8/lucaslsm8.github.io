@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Lighthouse App — Monitoramento de Produção · Lucas Schoenherr</title>
 <meta name="description" content="Estudo de caso do Lighthouse App: MVP mobile-first que substituiu a intranet legada do corredor logístico norte da Vale, por Lucas Schoenherr." />
+<link rel="canonical" href="https://lucaslsm8.github.io/Book/projects/lighthouse.html" />
 <!-- Open Graph / social -->
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Lighthouse App · Lucas Schoenherr" />
@@ -55,6 +56,24 @@
   .colo-rule span { font-family: var(--serif-display); font-size: 14px; line-height: 1; opacity: .82; }
   .colo-finis { font-family: var(--serif-display); font-style: italic; font-size: 15px; letter-spacing: .04em; color: var(--ink-faint); margin: var(--sp-3) 0 0; }
 
+  /* "Voltar ao catálogo" — redundante no desktop (o nome no running-head já
+     linka pro catálogo), então some dali. Em mobile o running-head se
+     esconde (ver catalogue.css), então o ícone de retorno volta abaixo de
+     640px como único caminho de volta nessa largura — texto preservado só
+     para leitor de tela (clip, não display:none). */
+  .chrome-top .to-catalogue { display: none; }
+  .chrome-top .to-catalogue-icon { flex: 0 0 auto; }
+  @media (max-width: 640px) {
+    .chrome-top .to-catalogue {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 6px; min-width: 44px;
+    }
+    .chrome-top .to-catalogue em {
+      position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+      overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+    }
+  }
+
   /* Folio-nav — hover mais vivo (seta desliza, título revela) */
   .folio-nav .verso, .folio-nav .recto { transition: background var(--dur-base) var(--ease-out); }
   .folio-nav .folio-marker { transition: transform var(--dur-base) var(--ease-out), color var(--dur-base); display: inline-block; }
@@ -62,29 +81,6 @@
   .folio-nav .recto:hover .folio-marker { transform: translateX(4px); color: var(--oxblood); }
   .folio-nav .folio-title { transition: color var(--dur-base); }
   .folio-nav a:hover .folio-title { color: var(--ink); }
-
-  /* Marginália do Argumento mora na margem direita (margem externa, recto).
-     Mantém a leitura alinhada à esquerda — o text-align:right padrão da
-     .margin-r desancoraria a numeração i/ii das notas. */
-  .argument .spread .margin-r { text-align: left; }
-
-  /* A coluna esquerda ficou vazia (a marginália foi p/ a direita). Em ≤1024
-     a regra geral de marginália desenha um filete oxblood em qualquer aside;
-     zera-o quando o aside está vazio para não sobrar um traço solto. */
-  .argument .spread .margin-l:empty { border: 0; margin: 0; padding: 0; }
-
-  /* O cabeçalho ocupa sozinho a 1ª faixa do grid; corpo e marginália
-     dividem a 2ª, então as notas alinham ao TOPO do texto (não ao título),
-     mesmo quando o título quebra em 1 ou 2 linhas. O margin-inline =
-     coluna lateral (140px) + gap (48px) mantém o cabeçalho e seu filete
-     exatamente sobre a coluna central, como antes. */
-  @media (min-width: 1025px) {
-    .argument .spread > .section-head {
-      grid-column: 1 / -1;
-      margin-left: calc(140px + 48px);
-      margin-right: calc(140px + 48px);
-    }
-  }
 
   /* ---------- Minha Participação: grade 2×2 de papéis (padrão Gen.AI) ---------- */
   .bill-roles {
@@ -830,15 +826,11 @@
   }
   .lh-dossier__spine .case-intermezzo { padding-left: 0; padding-right: 0; }
 
+  /* Em telas de toque estreitas, o índice lateral não cabe bem e duplica
+     a navegação natural por scroll — vai direto ao conteúdo. */
   @media (max-width: 900px) {
-    .lh-dossier { grid-template-columns: 1fr; gap: var(--sp-4); padding: 0 var(--sp-4); margin-top: var(--sp-4); }
-    .lh-dossier__rail {
-      position: static; max-height: none; overflow: visible; padding: var(--sp-4);
-      margin-bottom: var(--sp-2); background: var(--paper-shade);
-      border: var(--border-hair); border-radius: var(--radius-sm);
-    }
-    .lh-dossier__nav { display: flex; flex-flow: row wrap; gap: 4px 16px; }
-    .lh-dossier__link { width: auto; padding: 5px 0 5px 10px; border-bottom: 0; }
+    .lh-dossier { display: block; padding: 0 var(--sp-4); margin-top: var(--sp-4); }
+    .lh-dossier__rail { display: none; }
   }
 </style>
 </head>
@@ -870,6 +862,10 @@
   </div>
   <nav class="chrome-actions">
     <a href="../index.html#works" class="to-catalogue">
+      <svg class="to-catalogue-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <polyline points="9 14 4 9 9 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M20 20v-7a4 4 0 0 0-4-4H4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
       <em><span class="t" lang="pt">Voltar ao catálogo</span><span class="t" lang="en">Return to catalogue</span></em>
     </a>
     <button class="candle-toggle" type="button" aria-pressed="false" title="Modo vela" aria-label="Modo vela">
@@ -1021,6 +1017,16 @@
   </section>
 
   <!-- ============================================================
+       DOSSIÊ — sumário lateral + lombada de leitura (Seções I→XIV)
+       ============================================================ -->
+  <div class="lh-dossier">
+    <aside class="lh-dossier__rail" aria-label="Índice">
+      <p class="lh-dossier__nav-label"><span class="t" lang="pt">Índice do Dossiê</span><span class="t" lang="en">Dossier Index</span></p>
+      <nav class="lh-dossier__nav" aria-label="Índice das seções"></nav>
+    </aside>
+    <div class="lh-dossier__spine lh-spread">
+
+  <!-- ============================================================
        I. ARGUMENTO & CONTEXTO (O DESAFIO)
        ============================================================ -->
   <section class="page case-section argument" data-folio>
@@ -1036,16 +1042,16 @@
         <div class="preface">
           <div class="body reveal">
             <p id="arg-lead">
-              <span class="t" lang="pt">O <em>Lighthouse</em> representa uma transformação significativa na forma como a Vale monitora e gerencia sua produção. Nascido da necessidade de modernizar um sistema legado, o projeto foi concebido para substituir uma solução baseada em intranet<span class="fn" data-fn="1">1</span> que já não atendia às demandas de segurança e usabilidade da empresa.</span>
-              <span class="t" lang="en"><em>Lighthouse</em> represents a significant transformation in how Vale monitors and manages its production. Born from the need to modernize a legacy system, the project was conceived to replace an intranet-based solution<span class="fn" data-fn="1">1</span> that no longer met the company's security and usability demands.</span>
+              <span class="t" lang="pt">O <em>Lighthouse</em> marca uma transformação significativa na gestão e monitoramento da produção da Vale. Desenvolvido para modernizar um sistema legado, o projeto substitui uma solução baseada em intranet<span class="fn" data-fn="1">1</span> que já não atendia aos requisitos de segurança e usabilidade da empresa.</span>
+              <span class="t" lang="en"><em>Lighthouse</em> marks a significant transformation in how Vale manages and monitors its production. Developed to modernize a legacy system, it replaces an intranet-based solution<span class="fn" data-fn="1">1</span> that no longer met the company's security and usability requirements.</span>
             </p>
             <p id="arg-p1">
-              <span class="t" lang="pt">Como <em>Lead Product Designer</em>, liderei o desenvolvimento de uma solução <em>mobile-first</em> que unifica dados críticos de múltiplos corredores em uma única interface intuitiva. O aplicativo foi estruturado para atender dois objetivos principais: agilizar a tomada de decisão dos stakeholders através de visualizações de dados em tempo real, e criar um canal de comunicação eficiente entre as equipes através de um sistema de notificações personalizáveis.</span>
-              <span class="t" lang="en">As <em>Lead Product Designer</em>, I led the development of a <em>mobile-first</em> solution that unifies critical data from multiple corridors into a single, intuitive interface. The app was structured around two main goals: speeding up stakeholder decision-making through real-time data visualizations, and creating an efficient communication channel between teams through a customizable notification system.</span>
+              <span class="t" lang="pt">Como <em>Lead Product Designer</em>, liderei o desenvolvimento de uma solução <em>mobile-first</em> que integra dados críticos de diversos corredores em uma interface intuitiva. O aplicativo foi projetado para dois objetivos principais: agilizar a tomada de decisão dos stakeholders com visualizações de dados em tempo real e estabelecer um canal de comunicação eficiente entre as equipes por meio de notificações personalizáveis.</span>
+              <span class="t" lang="en">As <em>Lead Product Designer</em>, I led the development of a <em>mobile-first</em> solution that integrates critical data from multiple corridors into one intuitive interface. The app was designed around two main goals: speeding up stakeholder decision-making with real-time data visualizations, and establishing an efficient communication channel between teams through customizable notifications.</span>
             </p>
             <p id="arg-p2">
-              <span class="t" lang="pt">Adotamos uma abordagem <em>MVP</em> focada inicialmente no corredor norte, priorizando funcionalidades core como visualização de dados em tempo real, sistema de permissões hierárquicas e comunicação entre equipes. Esta estratégia nos permitiu validar rapidamente o conceito e estabelecer as bases para uma futura expansão, incluindo recursos adicionais como geolocalização, upload de imagens e mapas interativos.</span>
-              <span class="t" lang="en">We adopted an <em>MVP</em> approach focused initially on the northern corridor, prioritizing core features such as real-time data visualization, a hierarchical permission system, and team communication. This strategy let us validate the concept quickly and lay the groundwork for future expansion, including added capabilities like geolocation, image upload, and interactive maps.</span>
+              <span class="t" lang="pt">Adotamos uma abordagem <em>MVP</em>, inicialmente focada no corredor norte, priorizando funcionalidades essenciais como visualização de dados em tempo real, permissões hierárquicas e comunicação entre equipes. Essa estratégia permitiu validar rapidamente o conceito e estabelecer bases sólidas para futuras expansões, incluindo recursos como geolocalização, upload de imagens e mapas interativos.</span>
+              <span class="t" lang="en">We adopted an <em>MVP</em> approach, initially focused on the northern corridor, prioritizing essential features such as real-time data visualization, hierarchical permissions, and team communication. This strategy let us quickly validate the concept and lay solid groundwork for future expansion, including features like geolocation, image upload, and interactive maps.</span>
             </p>
           </div>
 
@@ -1058,30 +1064,9 @@
           </ol>
         </div>
       </div>
-      <aside class="margin-r">
-        <p class="gloss" data-anchor="arg-p1">
-          <span class="gloss-num">i</span>
-          <span class="t" lang="pt">Dois objetivos: agilizar a decisão com dados em tempo real e abrir um canal de comunicação entre as equipes.</span>
-          <span class="t" lang="en">Two goals: speed up decisions with real-time data, and open a communication channel between teams.</span>
-        </p>
-        <p class="gloss" data-anchor="arg-p2">
-          <span class="gloss-num">ii</span>
-          <span class="t" lang="pt">MVP no corredor norte para validar o conceito e preparar a expansão futura.</span>
-          <span class="t" lang="en">An MVP on the northern corridor to validate the concept and set up future expansion.</span>
-        </p>
-      </aside>
+      <aside class="margin-r" aria-hidden="true"></aside>
     </div>
   </section>
-
-  <!-- ============================================================
-       DOSSIÊ — sumário lateral + lombada de leitura (Seções II→XIV)
-       ============================================================ -->
-  <div class="lh-dossier">
-    <aside class="lh-dossier__rail" aria-label="Índice">
-      <p class="lh-dossier__nav-label"><span class="t" lang="pt">Índice do Dossiê</span><span class="t" lang="en">Dossier Index</span></p>
-      <nav class="lh-dossier__nav" aria-label="Índice das seções"></nav>
-    </aside>
-    <div class="lh-dossier__spine lh-spread">
 
   <!-- ============================================================
        II. MINHA PARTICIPAÇÃO (DRAMATIS PERSONÆ)
@@ -1132,7 +1117,7 @@
         <span class="gloss"><span class="t" lang="pt">Do Design Thinking ao handoff</span><span class="t" lang="en">From Design Thinking to handoff</span></span>
       </header>
 
-      <p class="results-intro reveal"><span class="t" lang="pt">O projeto começou com sessões de <em>Design Thinking</em> reunindo stakeholders e usuários-chave — Operações, TI e gerência — para mapear as dores do legado e as necessidades reais em campo. Cada achado da pesquisa virou uma decisão de design concreta, e essas decisões guiaram o recorte do MVP no corredor norte.</span><span class="t" lang="en">The project opened with <em>Design Thinking</em> sessions bringing together stakeholders and key users — Operations, IT and management — to map the legacy pains and real field needs. Each research finding became a concrete design decision, and those decisions guided the MVP's scoping to the northern corridor.</span></p>
+      <p class="results-intro reveal"><span class="t" lang="pt">O projeto começou com sessões de <em>Design Thinking</em> que reuniram stakeholders e usuários-chave de Operações, TI e gerência para mapear os desafios do legado e as necessidades reais em campo. Cada achado da pesquisa resultou em uma decisão de design concreta, que orientou o escopo do MVP no corredor norte.</span><span class="t" lang="en">The project opened with <em>Design Thinking</em> sessions that brought together stakeholders and key users from Operations, IT, and management to map the legacy's challenges and real field needs. Each research finding resulted in a concrete design decision, which guided the MVP's scope on the northern corridor.</span></p>
 
       <div class="lh-subhead reveal"><span class="t" lang="pt">O que a pesquisa revelou</span><span class="t" lang="en">What discovery revealed</span></div>
 
@@ -1787,13 +1772,13 @@
 
   <!-- Navegação de Folios (Verso/Recto) -->
   <nav class="folio-nav" aria-label="Navegação entre cases">
-    <a class="verso" href="./genai.html" rel="prev">
-      <span class="folio-marker"><span class="t" lang="pt">← Prancha I (Anverso)</span><span class="t" lang="en">← Plate I (Anverso)</span></span>
-      <span class="folio-title"><em>Gen.AI</em></span>
+    <a class="verso" href="pmo-dashboards.html" rel="prev">
+      <span class="folio-marker"><span class="t" lang="pt">← Prancha anterior (Verso)</span><span class="t" lang="en">← Previous Plate (Verso)</span></span>
+      <span class="folio-title"><em><span class="t" lang="pt">Prancha II — Dashboards PMO</span><span class="t" lang="en">Plate II — PMO Dashboards</span></em></span>
     </a>
-    <a class="recto" href="../index.html#works" rel="next">
-      <span class="folio-marker"><span class="t" lang="pt">Catálogo (Recto) →</span><span class="t" lang="en">Catalogue (Recto) →</span></span>
-      <span class="folio-title"><em><span class="t" lang="pt">Catálogo de Obras</span><span class="t" lang="en">A Catalogue of Works</span></em></span>
+    <a class="recto" href="sports-experience.html" rel="next">
+      <span class="folio-marker"><span class="t" lang="pt">Próxima Prancha (Recto) →</span><span class="t" lang="en">Next Plate (Recto) →</span></span>
+      <span class="folio-title"><em><span class="t" lang="pt">Prancha IV — Sports Experience</span><span class="t" lang="en">Plate IV — Sports Experience</span></em></span>
     </a>
   </nav>
 
@@ -1820,7 +1805,7 @@
 
 <!-- Interações da página de case -->
 <script src="./case-template.js"></script>
-<!-- Chrome de case: Index Rerum (⌘K) + edição de bolso (paridade com a home) -->
+<!-- Chrome de case: Index Rerum (⌘K), paridade com a home -->
 <script src="./case-chrome.js"></script>
 
 <!-- Lightbox das galerias — versão elaborada, COMPARTILHADA (lightbox.js) -->

@@ -33,14 +33,14 @@ const CONTENT = {
       it: "design de produto"
     }, ", com notas sobre método, sistemas e interfaces generativas."],
     smallcaps: "Privately set & published",
-    meta: ["Rio de Janeiro, Brasil", "Treze anos de prática contínua", "Volume I · Composto em MMXXVI"],
+    meta: ["Rio de Janeiro, Brasil", "Treze anos de prática contínua", "Volume I · Composto em 2026"],
     invite: "Vire a página",
     epigraph: ["O melhor design é ", {
-      em: "invisível"
-    }, ". Os melhores sistemas liberam ", {
+      em: "discreto"
+    }, ". Sistemas eficazes promovem a ", {
       em: "criatividade"
-    }, ". O rigor e o calor podem coexistir. E a IA, longe de substituir o ofício, ", {
-      em: "o expande"
+    }, ". Rigor e empatia podem coexistir. A inteligência artificial, em vez de substituir o trabalho humano, ", {
+      em: "amplia seu alcance"
     }, "."],
     epigraphAttr: ["— do prefácio", "L. S."],
     toc: {
@@ -109,7 +109,7 @@ const CONTENT = {
         turnRecto:   "Anverso"
       },
       plates: [{
-        roman: "Plate I",
+        roman: "Placa I",
         num: "001",
         title: ["Gen", {
           reg: "."
@@ -123,19 +123,19 @@ const CONTENT = {
           dd: "Lead Product Designer · UI · Sistema"
         }, {
           dt: "Período",
-          dd: "MMXXIII — MMXXIV (~3 meses)"
+          dd: "2023 — 2024 (~3 meses)"
         }, {
           dt: "Materiais",
           dd: "Figma, Variables, padrões para LLMs"
         }, {
           dt: "Dimensões",
-          dd: "9 POCs · 5 avançaram para dev"
+          dd: "9 POCs"
         }],
-        desc: [["Como único designer do programa na Accenture One Studio, concebi ", {
+        desc: [["Como designer líder do programa na Accenture One Studio, desenvolvi ", {
           strong: "nove provas de conceito"
-        }, " de IA generativa em domínios distintos — DevOps, jurídico, marketing, supply chain —, todas unificadas por um design system dedicado."], ["A premissa: ", {
+        }, " de IA generativa em DevOps, jurídico, marketing e supply chain, todas integradas por um design system dedicado."], ["A premissa era ", {
           it: "desenhar o sistema antes dos produtos"
-        }, ". O resultado: cinco POCs avançaram para protótipo e desenvolvimento, e o vocabulário de UX para IA generativa ficou como base para iniciativas subsequentes na empresa."]],
+        }, ". Como resultado, cinco POCs avançaram para protótipo e desenvolvimento, e o vocabulário de UX para IA generativa serviu de base para iniciativas futuras na empresa."]],
         stats: [{
           val: "09",
           lab: "POCs\nentregues"
@@ -151,7 +151,7 @@ const CONTENT = {
         imgClass: "plate-img-1",
         format: "wide"
       }, {
-        roman: "Plate II",
+        roman: "Placa II",
         num: "002",
         title: ["Dashboards", {
           reg: " PMO"
@@ -165,7 +165,7 @@ const CONTENT = {
           dd: "Senior Product Designer · End-to-end"
         }, {
           dt: "Período",
-          dd: "MMXXV (~4 meses)"
+          dd: "2025 (~4 meses)"
         }, {
           dt: "Materiais",
           dd: "Figma, DS de data-viz, sistema RAG"
@@ -173,9 +173,9 @@ const CONTENT = {
           dt: "Dimensões",
           dd: "Mandala · 6 módulos · +60 comp."
         }],
-        desc: [["Concepção da cabine de comando executiva do PMO Estratégico da Samarco — com a ", {
+        desc: [["Projeto da cabine de comando executiva do PMO Estratégico da Samarco. A ", {
           strong: "Mandala Estratégica"
-        }, " como coração: visualização hexagonal que conecta os 6 eixos da estratégia em uma única fonte da verdade."], ["O desafio: substituir mais de vinte planilhas reconciliadas manualmente por uma interface onde o anormal grita sem sobrecarregar — e unificar, ", {
+        }, " ocupa o centro: uma visualização hexagonal que reúne os seis eixos da estratégia em um painel único e verificável."], ["O desafio era substituir mais de vinte planilhas conciliadas manualmente por uma interface capaz de destacar desvios sem excesso de ruído. Também era necessário unificar, ", {
           it: "pela primeira vez"
         }, ", a linguagem visual de Finanças, Riscos, Sustentabilidade e Operações."]],
         stats: [{
@@ -192,7 +192,7 @@ const CONTENT = {
         href: "projects/pmo-dashboards.html",
         imgClass: "plate-img-2"
       }, {
-        roman: "Plate III",
+        roman: "Placa III",
         num: "003",
         title: ["Lighthouse", {
           reg: ""
@@ -206,17 +206,17 @@ const CONTENT = {
           dd: "Lead Product Designer · Mobile"
         }, {
           dt: "Período",
-          dd: "MMXXIII (~6 meses)"
+          dd: "2023 (~6 meses)"
         }, {
           dt: "Materiais",
-          dd: "Figma, Miro, DS mobile próprio"
+          dd: "Figma, Miro, DS mobile"
         }, {
           dt: "Dimensões",
           dd: "iOS · Android · +40 comp. DS"
         }],
-        desc: [["MVP mobile-first que substituiu a intranet legada do corredor logístico norte da Vale — colocando dados críticos de produção na palma da mão dos gestores, não apenas na sala de controle."], ["Como único designer: discovery, ", {
-          strong: "design system com 40+ componentes"
-        }, " e protótipo aprovado por unanimidade pelo steering de Operações, TI e gerência — com arquitetura modular preparada para escalar a outros corredores."]],
+        desc: [["Uma aplicação projetada para substituir a intranet legada do corredor logístico norte da Vale. Dados de produção passaram a ser acessíveis aos gestores em qualquer lugar, não restritos à sala de controle."], ["Atuei como único designer. Conduzi a fase de discovery, criei o ", {
+          strong: "design system com mais de quarenta componentes"
+        }, " e um protótipo aprovado por todas as áreas envolvidas. A arquitetura modular foi projetada para escalar a outros corredores logísticos."]],
         stats: [{
           val: "+40",
           lab: "Componentes\nno design system"
@@ -236,7 +236,7 @@ const CONTENT = {
           side:  "images/home/paint-side.webp"
         }
       }, {
-        roman: "Plate IV",
+        roman: "Placa IV",
         num: "004",
         title: ["Sports", {
           reg: " Experience"
@@ -247,10 +247,10 @@ const CONTENT = {
           dd: "DirecTV GO — Copa 2022"
         }, {
           dt: "Função",
-          dd: "Senior Product Designer · O elo"
+          dd: "Senior Product Designer"
         }, {
           dt: "Período",
-          dd: "MMXXII (Copa do Qatar)"
+          dd: "2022 (Copa do Qatar)"
         }, {
           dt: "Materiais",
           dd: "Figma, DS multiplataforma, dados FIFA"
@@ -258,11 +258,11 @@ const CONTENT = {
           dt: "Dimensões",
           dd: "Mobile · Web · TV · 64 partidas"
         }],
-        desc: [["Hub multiplataforma da DirecTV para a Copa do Mundo de 2022 — ", {
+        desc: [["Uma plataforma que reúne ", {
           strong: "mobile, web e TV"
-        }, " reunidos numa só experiência, com estatísticas oficiais da FIFA em tempo real e recortes próprios para o Brasil e a América Latina."], ["Atuei como elo entre design, desenvolvimento e dados, coordenando DirecTV, Accenture e FIFA sob um prazo inegociável — com um ", {
-          it: "Design System unificado"
-        }, " que mantém a mesma linguagem da palma da mão à tela da sala."]],
+        }, " em um só percurso. Estatísticas oficiais da FIFA chegam em tempo real; o conteúdo se adapta ao contexto do Brasil e da América Latina. O objetivo: fazer da Copa do Mundo de 2022 uma experiência contínua, não fragmentada."], ["O trabalho exigiu alinhar design, desenvolvimento e dados sob um prazo que não admitia extensão. A solução foi um ", {
+          it: "sistema de design único"
+        }, ", capaz de sustentar a experiência do usuário do mobile à TV sem perder o rigor."]],
         stats: [{
           val: "03",
           lab: "Plataformas\nmobile · web · TV"
@@ -345,20 +345,17 @@ const CONTENT = {
       hint: "clique numa prancha para ampliar",
       items: [
         { roman: "Prancha I", title: "Aplicativo Sírio-Libanês", tag: "Mobile App · UI/UX", img: "images/other/sirio.webp",
-          desc: "Aplicativo para o Hospital Sírio-Libanês — jornada do paciente, agendamento e prontuário em uma experiência mobile clara e acolhedora.",
+          desc: "Aplicativo do Hospital Sírio-Libanês: oferece jornada do paciente, agendamento e acesso ao prontuário em uma experiência mobile clara e acolhedora.",
           label: "Sírio-Libanês", labelSub: "Mobile · UI/UX" },
         { roman: "Prancha II", title: "Vale News", tag: "Mobile App · UI/UX", img: "images/other/valenews.webp",
-          desc: "App de comunicação interna da Vale — notícias, comunicados e cultura organizacional na palma da mão dos colaboradores.",
+          desc: "O aplicativo de comunicação interna da Vale oferece notícias, comunicados e informações sobre a cultura organizacional diretamente aos colaboradores.",
           label: "Vale News", labelSub: "Mobile · UI/UX" },
         { roman: "Prancha III", title: "Leap to the new branding", tag: "Vale · múltiplas mídias", img: "images/other/cracha.webp",
-          desc: "Aplicação do novo branding da Vale em múltiplas mídias gráficas, digitais e físicas — do crachá à sinalização.",
+          desc: "Aplicação do novo branding da Vale em diversas mídias gráficas, digitais e físicas, abrangendo desde crachás até sinalização.",
           label: "New branding", labelSub: "Vale · mídias" },
         { roman: "Prancha IV", title: "Power BI Dashboard", tag: "Vale · data viz", img: "images/other/data.webp",
-          desc: "Painéis de visualização de dados no Power BI para a Vale — indicadores operacionais traduzidos em leitura rápida e acionável.",
-          label: "Power BI", labelSub: "Vale · data viz" },
-        { roman: "Prancha V", title: "Múltiplos sistemas de IA", tag: "Accenture · UI/UX", img: "images/other/ai.webp",
-          desc: "Interfaces para diversos sistemas de Inteligência Artificial na Accenture — de exploradores de dados a assistentes generativos.",
-          label: "Sistemas de IA", labelSub: "Accenture · UI/UX" }
+          desc: "Painéis de visualização de dados no Power BI para a Vale: indicadores operacionais transformados em informações que apoiam decisões antecipadas.",
+          label: "Power BI", labelSub: "Vale · data viz" }
       ],
       close: "Fechar", prev: "Prancha anterior", next: "Próxima prancha"
     },
@@ -406,7 +403,7 @@ const CONTENT = {
         label: "Cronologia de prática",
         sup: "tab. iii",
         rows: [{
-          period: "2024 — Hoje",
+          period: "2024",
           role: "Senior Product Designer",
           firm: "GenAI · Systems · UI",
           current: true,
@@ -495,7 +492,7 @@ const CONTENT = {
         contextNote: "vide infra",
         gloss: "Currículo do autor, em duas folhas — treze anos de product design, sistemas e interfaces generativas.",
         motto: "Ars longa, vita brevis",
-        meta: ["PDF", "2 pp", "240 KB", "MMXXVI"],
+        meta: ["PDF", "2 pp", "240 KB", "2026"],
         printCta: "Abrir a folha",
         cta: "Pegue uma folha",
         aria: "Folha avulsa — Curriculum Vitæ de Lucas Schoenherr",
@@ -526,9 +523,6 @@ const CONTENT = {
         lab: "LinkedIn",
         val: "/in/lucas-scho",
         href: "https://www.linkedin.com/in/lucas-scho"
-      }, {
-        lab: "Status",
-        val: "Disponível para projetos · 2026"
       }],
       stamp: ["MMXXVI", "BR"],
       ui: {
@@ -550,7 +544,7 @@ const CONTENT = {
       }
     },
     colophon: {
-      ornament: "✦",
+      pressCap: "Marca do compositor",
       body: ["Este volume foi composto em ", {
         em: "EB Garamond"
       }, ", ", {
@@ -562,7 +556,8 @@ const CONTENT = {
       }, " — tipos digitais inspirados em fontes clássicas. Foi desenhado, ", {
         em: "escrito e codificado pelo autor"
       }, ", no Rio de Janeiro, Brasil, no ano da graça de dois mil e vinte e seis."],
-      meta: "Impressão privada · Edição I · MMXXVI"
+      meta: "Impressão privada · Edição I · MMXXVI",
+      finis: "Finis · fim do catálogo"
     },
     errata: [
       { label: "Errata", lines: ["Onde se lê ‘pixel perfect’, leia-se ", { strike: "pixel perfect" }, " pixel-honesto."] },
@@ -583,14 +578,14 @@ const CONTENT = {
       it: "product design"
     }, ", with notes on method, systems, and generative interfaces."],
     smallcaps: "Privately set & published",
-    meta: ["Rio de Janeiro, Brazil", "Thirteen years of unbroken practice", "Volume I · Set in MMXXVI"],
+    meta: ["Rio de Janeiro, Brazil", "Thirteen years of unbroken practice", "Volume I · Set in 2026"],
     invite: "Turn the page",
     epigraph: ["The best design is ", {
-      em: "invisible"
-    }, ". Well-made systems unlock ", {
+      em: "unobtrusive"
+    }, ". Effective systems foster ", {
       em: "creativity"
-    }, ". Rigor and warmth can coexist. And AI, far from replacing the craft, ", {
-      em: "expands it"
+    }, ". Rigor and empathy can coexist. Artificial intelligence, rather than replacing human work, ", {
+      em: "extends its reach"
     }, "."],
     epigraphAttr: ["— from the preface", "L. S."],
     toc: {
@@ -673,19 +668,19 @@ const CONTENT = {
           dd: "Lead Product Designer · UI · System"
         }, {
           dt: "Period",
-          dd: "MMXXIII — MMXXIV (~3 months)"
+          dd: "2023 — 2024 (~3 months)"
         }, {
           dt: "Materials",
           dd: "Figma, Variables, LLM patterns"
         }, {
           dt: "Dimensions",
-          dd: "9 POCs · 5 advanced to dev"
+          dd: "9 POCs"
         }],
-        desc: [["As the sole designer of Accenture One Studio's program, I conceived ", {
+        desc: [["As the lead designer of Accenture One Studio's program, I developed ", {
           strong: "nine proofs of concept"
-        }, " in generative AI across distinct domains — DevOps, legal, marketing, supply chain — all unified by a dedicated design system."], ["The premise: ", {
+        }, " in generative AI across DevOps, legal, marketing, and supply chain, all integrated by a dedicated design system."], ["The premise was to ", {
           it: "design the system before the products"
-        }, ". The result: five POCs advanced to prototype and development, and the UX vocabulary for generative AI consolidated in the DS became the foundation for the company's subsequent initiatives."]],
+        }, ". As a result, five POCs advanced to prototype and development, and the UX vocabulary for generative AI served as the foundation for future initiatives at the company."]],
         stats: [{
           val: "09",
           lab: "POCs\ndelivered"
@@ -715,7 +710,7 @@ const CONTENT = {
           dd: "Senior Product Designer · End-to-end"
         }, {
           dt: "Period",
-          dd: "MMXXV (~4 months)"
+          dd: "2025 (~4 months)"
         }, {
           dt: "Materials",
           dd: "Figma, data-viz DS, RAG system"
@@ -723,9 +718,9 @@ const CONTENT = {
           dt: "Dimensions",
           dd: "Mandala · 6 modules · 60+ comp."
         }],
-        desc: [["Design of Samarco's Strategic PMO command center — with the ", {
+        desc: [["Design of Samarco's Strategic PMO executive command center. The ", {
           strong: "Strategic Mandala"
-        }, " at its heart: a hexagonal visualization connecting the company's 6 strategic axes into a single source of truth."], ["The challenge: replace twenty-plus manually reconciled spreadsheets with an interface where the abnormal shouts without overwhelming — and unify, ", {
+        }, " sits at the center: a hexagonal visualization that brings the six strategic axes together into a single, verifiable panel."], ["The challenge was to replace more than twenty manually reconciled spreadsheets with an interface capable of surfacing deviations without excess noise. It also required unifying, ", {
           it: "for the first time"
         }, ", the visual language of Finance, Risk, Sustainability, and Operations."]],
         stats: [{
@@ -756,17 +751,17 @@ const CONTENT = {
           dd: "Lead Product Designer · Mobile"
         }, {
           dt: "Period",
-          dd: "MMXXIII (~6 months)"
+          dd: "2023 (~6 months)"
         }, {
           dt: "Materials",
-          dd: "Figma, Miro, custom mobile DS"
+          dd: "Figma, Miro, mobile DS"
         }, {
           dt: "Dimensions",
           dd: "iOS · Android · 40+ DS comp."
         }],
-        desc: [["Mobile-first MVP replacing Vale's legacy intranet on the northern logistics corridor — putting critical production data in managers' hands, not just the control room."], ["As sole designer: discovery, ", {
-          strong: "design system with 40+ components"
-        }, " and a prototype approved unanimously by the Operations, IT and management steering — with modular architecture ready to scale to other corridors."]],
+        desc: [["An application designed to replace Vale's legacy intranet on the northern logistics corridor. Production data became accessible to managers anywhere, not just in the control room."], ["I worked as the sole designer. I led the discovery phase, created the ", {
+          strong: "design system with more than forty components"
+        }, ", and delivered a prototype approved by every area involved. The modular architecture was designed to scale to other logistics corridors."]],
         stats: [{
           val: "+40",
           lab: "Design system\ncomponents"
@@ -797,10 +792,10 @@ const CONTENT = {
           dd: "DirecTV GO — World Cup 2022"
         }, {
           dt: "Role",
-          dd: "Senior Product Designer · The link"
+          dd: "Senior Product Designer"
         }, {
           dt: "Period",
-          dd: "MMXXII (Qatar World Cup)"
+          dd: "2022 (Qatar World Cup)"
         }, {
           dt: "Materials",
           dd: "Figma, multiplatform DS, FIFA data"
@@ -808,11 +803,11 @@ const CONTENT = {
           dt: "Dimensions",
           dd: "Mobile · Web · TV · 64 matches"
         }],
-        desc: [["DirecTV's multiplatform hub for the 2022 World Cup — ", {
-          strong: "mobile, web and TV"
-        }, " brought into one experience, with official real-time FIFA statistics and dedicated cuts for Brazil and Latin America."], ["I acted as the link between design, development and data, coordinating DirecTV, Accenture and FIFA under a non-negotiable deadline — with a ", {
-          it: "unified Design System"
-        }, " that keeps one language from the palm of the hand to the living-room screen."]],
+        desc: [["A platform that brings together ", {
+          strong: "mobile, web, and TV"
+        }, " in a single journey. Official FIFA statistics arrive in real time; content adapts to the context of Brazil and Latin America. The goal: to make the 2022 World Cup a continuous experience, not a fragmented one."], ["The work required aligning design, development, and data under a deadline that allowed no extension. The solution was a ", {
+          it: "single design system"
+        }, ", capable of sustaining the user experience from mobile to TV without losing rigor."]],
         stats: [{
           val: "03",
           lab: "Platforms\nmobile · web · TV"
@@ -895,20 +890,17 @@ const CONTENT = {
       hint: "click a plate to enlarge",
       items: [
         { roman: "Plate I", title: "Sírio-Libanês App", tag: "Mobile App · UI/UX", img: "images/other/sirio.webp",
-          desc: "App for Hospital Sírio-Libanês — patient journey, scheduling and records in a clear, welcoming mobile experience.",
+          desc: "Hospital Sírio-Libanês app: offers the patient journey, scheduling and access to medical records in a clear, welcoming mobile experience.",
           label: "Sírio-Libanês", labelSub: "Mobile · UI/UX" },
         { roman: "Plate II", title: "Vale News", tag: "Mobile App · UI/UX", img: "images/other/valenews.webp",
-          desc: "Vale's internal-communications app — news, announcements and culture in employees' hands.",
+          desc: "Vale's internal-communications app delivers news, announcements and organizational culture information directly to employees.",
           label: "Vale News", labelSub: "Mobile · UI/UX" },
         { roman: "Plate III", title: "Leap to the new branding", tag: "Vale · multiple media", img: "images/other/cracha.webp",
-          desc: "Rollout of Vale's new branding across graphic, digital and physical media — from badge to signage.",
+          desc: "Application of Vale's new branding across various graphic, digital and physical media, spanning from badges to signage.",
           label: "New branding", labelSub: "Vale · media" },
         { roman: "Plate IV", title: "Power BI Dashboard", tag: "Vale · data viz", img: "images/other/data.webp",
-          desc: "Power BI data-visualization panels for Vale — operational indicators turned into fast, actionable reading.",
-          label: "Power BI", labelSub: "Vale · data viz" },
-        { roman: "Plate V", title: "Multiple AI systems", tag: "Accenture · UI/UX", img: "images/other/ai.webp",
-          desc: "Interfaces for several Artificial Intelligence systems at Accenture — from data explorers to generative assistants.",
-          label: "AI systems", labelSub: "Accenture · UI/UX" }
+          desc: "Power BI data-visualization panels for Vale: operational indicators turned into information that supports early decisions.",
+          label: "Power BI", labelSub: "Vale · data viz" }
       ],
       close: "Close", prev: "Previous plate", next: "Next plate"
     },
@@ -956,7 +948,7 @@ const CONTENT = {
         label: "Chronology of practice",
         sup: "tab. iii",
         rows: [{
-          period: "2024 — Today",
+          period: "2024",
           role: "Senior Product Designer",
           firm: "GenAI · Systems · UI",
           current: true,
@@ -1045,7 +1037,7 @@ const CONTENT = {
         contextNote: "vide infra",
         gloss: "The author's curriculum, in two leaves — thirteen years of product design, systems, and generative interfaces.",
         motto: "Ars longa, vita brevis",
-        meta: ["PDF", "2 pp", "240 KB", "MMXXVI"],
+        meta: ["PDF", "2 pp", "240 KB", "2026"],
         printCta: "Open the leaf",
         cta: "Take a leaf",
         aria: "Loose leaf — Lucas Schoenherr's Curriculum Vitæ",
@@ -1076,9 +1068,6 @@ const CONTENT = {
         lab: "LinkedIn",
         val: "/in/lucas-scho",
         href: "https://www.linkedin.com/in/lucas-scho"
-      }, {
-        lab: "Status",
-        val: "Available for projects · 2026"
       }],
       stamp: ["MMXXVI", "BR"],
       ui: {
@@ -1100,7 +1089,7 @@ const CONTENT = {
       }
     },
     colophon: {
-      ornament: "✦",
+      pressCap: "Compositor's mark",
       body: ["This volume was set in ", {
         em: "EB Garamond"
       }, ", ", {
@@ -1112,7 +1101,8 @@ const CONTENT = {
       }, " — digital types inspired by classical faces. It was ", {
         em: "designed, written, and coded by the author"
       }, " in Rio de Janeiro, Brazil, in the year of grace two thousand twenty-six."],
-      meta: "Privately printed · Edition I · MMXXVI"
+      meta: "Privately printed · Edition I · MMXXVI",
+      finis: "Finis · end of catalogue"
     },
     errata: [
       { label: "Errata", lines: ["Where it reads 'pixel perfect,' substitute ", { strike: "pixel perfect" }, " pixel-honest."] },
@@ -2059,8 +2049,7 @@ function PlateCard({ p, i, t }) {
               e("div", { className: "plate-sub" }, p.sub)
             ),
             e("a", {
-              href: p.href, className: "plate-link",
-              "data-cursor-label": t.cursorLabels.seePlate
+              href: p.href, className: "plate-link"
             }, p.link, " →")
           ),
           e("div", { className: "plate-entry__body" },
@@ -2167,8 +2156,7 @@ function PlateCard({ p, i, t }) {
         )),
         e("a", {
           href: p.href,
-          className: "plate-link",
-          "data-cursor-label": t.cursorLabels.seePlate
+          className: "plate-link"
         }, p.link, " →")
       )
     )
@@ -2860,7 +2848,7 @@ function Apparatus({
         [CV_FIRST, 2015, 2019, 2022, CV_LAST].map((yr, i) => {
           const left  = ((yr - CV_FIRST) / CV_SPAN * 100).toFixed(2) + "%";
           const label = yr === CV_LAST
-            ? (a.cv.rows[0].period.split("—")[1]?.trim() || String(yr))
+            ? a.cv.rows[0].period
             : ["2011","2015","2019","2022"][i];
           return React.createElement("span", {
             key: yr, className: "cv-yr", style: { left }
@@ -3175,15 +3163,6 @@ function Correspondence({ t }) {
             e('span', { className: 'copy-hint', 'aria-hidden': 'true' }, c.ui.abrir)
           ),
           e('span', { 'aria-hidden': 'true' })
-        ),
-
-        e('div', { className: 'field' },
-          e('span', { className: 'f-lab' }, c.fields[2].lab),
-          e('span', { className: 'status-val' },
-            e('span', { className: 'pulse', 'aria-hidden': 'true' }),
-            e('span', { className: 'f-val' }, c.fields[2].val)
-          ),
-          e('span', { 'aria-hidden': 'true' })
         )
       ),
 
@@ -3252,9 +3231,14 @@ function Colophon({ t }) {
   const co = t.colophon;
 
   return e('section', { className: 'colophon page', 'data-page': 'xxii' },
-    e('p',  { className: 'colophon-ornament' }, co.ornament),
+    e('div', { className: 'colo-press' },
+      e('span', { className: 'colo-press__mark', 'aria-hidden': true }, e('span', null, 'LS')),
+      e('span', { className: 'colo-press__cap'  }, co.pressCap)
+    ),
+    e('div', { className: 'colo-rule', 'aria-hidden': true }, e('span', null, '❦')),
     e('p',  { className: 'colophon-body'     }, rich(co.body)),
-    e('p',  { className: 'colophon-meta'     }, co.meta)
+    e('p',  { className: 'colophon-meta'     }, co.meta),
+    e('p',  { className: 'colo-finis'        }, co.finis)
   );
 }
 

@@ -1,8 +1,7 @@
 /* ════════════════════════════════════════════════════════════
    HOME — camada de melhorias sobre a home (index.html)
    Usa os tokens do DS (design-system/tokens.css). Não redeclara :root.
-   Seções: dedicatória ex dono · ícones do chrome (luneta · bolso) ·
-           edição de bolso · index rerum
+   Seções: dedicatória ex dono · ícone do chrome (luneta) · index rerum
    ════════════════════════════════════════════════════════════ */
 
 /* ─── Dedicatória ex dono (?to=Nome) ──────────────────────── */
@@ -37,7 +36,7 @@ body.candle .ed-dedication-name { color: var(--ink); }
   .ed-dedication { animation: none; }
 }
 
-/* ─── Ícones do chrome (luneta à esq. e bolso à dir. da vela) ─ */
+/* ─── Ícone do chrome (luneta à esq. da vela) ─────────────────── */
 .ed-icon {
   display: flex;
   align-items: center;
@@ -56,165 +55,6 @@ body.candle .ed-dedication-name { color: var(--ink); }
 /* alvo de toque confortável no mobile, em paridade com o lang-toggle */
 @media (max-width: 768px) {
   .ed-icon { min-width: 44px; min-height: 44px; }
-}
-
-/* ─── Edição de bolso ─────────────────────────────────────── */
-.ed-pocket {
-  position: fixed;
-  inset: 0;
-  z-index: 9000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--sp-5);
-  background: rgba(26, 22, 18, 0.45);
-  animation: ed-fade-in 0.25s ease;
-}
-
-@keyframes ed-fade-in { from { opacity: 0; } }
-
-.ed-pocket-card {
-  width: min(620px, 100%);
-  max-height: 86vh;
-  overflow-y: auto;
-  background: var(--paper-card);
-  color: var(--ink);
-  border: var(--border-hair-strong);
-  box-shadow: var(--shadow-lens);
-  padding: var(--sp-6) var(--sp-7);
-  font-family: var(--serif);
-  font-size: var(--fs-body);
-  line-height: var(--lh-normal);
-  /* lauda solta: levemente torta, como folha avulsa dentro do livro */
-  transform: rotate(-0.4deg);
-}
-
-.ed-pocket-head {
-  display: flex;
-  align-items: baseline;
-  gap: var(--sp-2);
-  padding-bottom: var(--sp-3);
-  margin-bottom: var(--sp-5);
-  border-bottom: var(--border-hair-strong);
-}
-
-.ed-pocket-label {
-  font-family: var(--mono);
-  font-size: var(--fs-caption);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--oxblood);
-}
-
-.ed-pocket-gloss {
-  font-style: italic;
-  font-size: var(--fs-meta);
-  color: var(--ink-faint);
-}
-
-.ed-pocket-close {
-  margin-left: auto;
-  width: 44px;
-  height: 44px;
-  border: none;
-  background: none;
-  color: var(--ink-faint);
-  font-size: 26px;
-  line-height: 1;
-  cursor: pointer;
-}
-.ed-pocket-close:hover { color: var(--oxblood); }
-
-.ed-pocket-name {
-  font-family: var(--serif-display);
-  font-weight: 400;
-  font-size: var(--fs-h3);
-  line-height: var(--lh-tight);
-}
-
-.ed-pocket-line {
-  margin-top: var(--sp-2);
-  font-size: var(--fs-meta);
-  color: var(--ink-soft);
-}
-
-.ed-pocket-h {
-  margin-top: var(--sp-5);
-  margin-bottom: var(--sp-3);
-  font-family: var(--mono);
-  font-weight: 500;
-  font-size: var(--fs-caption);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-}
-
-.ed-pocket-works { list-style: none; margin: 0; padding: 0; }
-
-.ed-pocket-works li {
-  display: flex;
-  align-items: baseline;
-  gap: var(--sp-3);
-  padding: var(--sp-3) 0;
-  border-bottom: var(--border-dotted);
-}
-
-.ed-pw-roman {
-  font-family: var(--mono);
-  font-size: var(--fs-small);
-  color: var(--oxblood);
-  min-width: 26px;
-}
-
-.ed-pw-body { flex: 1; }
-.ed-pw-title { display: block; font-size: var(--fs-body); }
-.ed-pw-desc  { display: block; font-size: var(--fs-meta); color: var(--ink-soft); }
-
-.ed-pw-key {
-  font-family: var(--mono);
-  font-size: var(--fs-caption);
-  letter-spacing: 0.06em;
-  color: var(--oxblood);
-  white-space: nowrap;
-}
-
-.ed-pocket-method { font-style: italic; color: var(--ink-soft); }
-
-.ed-pocket-contact a {
-  color: var(--ink);
-  text-decoration: none;
-  border-bottom: 1px dotted var(--ink-ghost);
-}
-.ed-pocket-contact a:hover { color: var(--oxblood); border-bottom-color: var(--oxblood); }
-
-.ed-pocket-foot {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--sp-4);
-  flex-wrap: wrap;
-  margin-top: var(--sp-6);
-  padding-top: var(--sp-4);
-  border-top: var(--border-hair);
-}
-
-.ed-pocket-print,
-.ed-pocket-full {
-  min-height: 44px;
-  padding: var(--sp-2) var(--sp-3);
-  border: none;
-  background: none;
-  font-family: var(--mono);
-  font-size: var(--fs-small);
-  letter-spacing: 0.1em;
-  color: var(--ink-soft);
-  cursor: pointer;
-  border-bottom: 1px dotted var(--ink-ghost);
-}
-.ed-pocket-print:hover,
-.ed-pocket-full:hover { color: var(--oxblood); border-bottom-color: var(--oxblood); }
-
-@media (max-width: 768px) {
-  .ed-pocket-card { padding: var(--sp-5); transform: none; }
 }
 
 /* ─── Index Rerum (⌘K / clique na luneta) ─────────────────── */
@@ -315,31 +155,3 @@ body.candle .ed-ix-row.sel { background: var(--paper-deep); }
   color: var(--ink-faint);
 }
 
-/* ─── Impressão da lauda de bolso ─────────────────────────────
-   A edição completa em opúsculo foi descartada; mantém-se apenas o
-   "imprimir esta lauda" do bolso: com a edição de bolso aberta,
-   imprime SÓ a lauda. ──────────────────────────────────────── */
-@media print {
-  body.ed-pocket-open #root,
-  body.ed-pocket-open .chrome-top,
-  body.ed-pocket-open .chrome-bot,
-  body.ed-pocket-open .ed-icon {
-    display: none !important;
-  }
-  body.ed-pocket-open .ed-pocket {
-    position: static;
-    background: none;
-    padding: 0;
-    animation: none;
-  }
-  body.ed-pocket-open .ed-pocket-card {
-    box-shadow: none;
-    border: 1pt solid #1a1612;
-    transform: none;
-    max-height: none;
-    overflow: visible;
-    width: 100%;
-  }
-  body.ed-pocket-open .ed-pocket-close,
-  body.ed-pocket-open .ed-pocket-foot { display: none !important; }
-}

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Gen.AI — Ecossistema de 9 POCs de IA generativa · Lucas Schoenherr</title>
 <meta name="description" content="Estudo de caso do Gen.AI: ecossistema interno da Accenture One Studio com 9 POCs de IA generativa unificadas por um Design System. Lead Product Designer end-to-end: Lucas Schoenherr." />
+<link rel="canonical" href="https://lucaslsm8.github.io/Book/projects/genai.html" />
 <!-- Open Graph / social -->
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Gen.AI — Ecossistema de 9 POCs de IA generativa" />
@@ -35,6 +36,79 @@
 <style>
   /* Zera o espaço entre o Colophão e a navegação Verso/Recto nesta página */
   .case-colophon + .folio-nav { margin-top: 0; }
+
+  /* ============================================================
+     COLOFÃO — "explicit" editorial (paridade com Lighthouse/PMO/Sports):
+     pressmark do compositor + regra floral + linha "Finis".
+     Enriquece o .case-colophon compartilhado sem redeclarar tokens.
+     ============================================================ */
+  .case-colophon { position: relative; }
+  .colo-press { display: flex; flex-direction: column; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-4); }
+  .colo-press__mark { width: 74px; height: 74px; display: grid; place-items: center; border: 1px solid var(--hairline-strong); border-radius: 50%; position: relative; color: var(--oxblood); }
+  .colo-press__mark::before { content: ''; position: absolute; inset: 5px; border: 1px solid color-mix(in srgb, var(--oxblood) 32%, transparent); border-radius: 50%; }
+  .colo-press__mark span { font-family: var(--serif-display); font-size: 30px; line-height: 1; font-style: italic; color: var(--ink); }
+  .colo-press__cap { font-family: var(--mono); font-size: 9px; letter-spacing: .24em; text-transform: uppercase; color: var(--ink-faint); }
+  .colo-rule { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 0 auto var(--sp-4); max-width: 320px; color: var(--oxblood); }
+  .colo-rule::before, .colo-rule::after { content: ''; height: 1px; flex: 1; background: linear-gradient(to var(--dir, right), transparent, color-mix(in srgb, var(--oxblood) 46%, transparent)); }
+  .colo-rule::after { --dir: left; }
+  .colo-rule span { font-family: var(--serif-display); font-size: 14px; line-height: 1; opacity: .82; }
+  .colo-finis { font-family: var(--serif-display); font-style: italic; font-size: 15px; letter-spacing: .04em; color: var(--ink-faint); margin: var(--sp-3) 0 0; }
+
+  /* "Voltar ao catálogo" — redundante no desktop (o nome no running-head já
+     linka pro catálogo), então some dali. Em mobile o running-head se
+     esconde (ver catalogue.css), então o ícone de retorno volta abaixo de
+     640px como único caminho de volta nessa largura — texto preservado só
+     para leitor de tela (clip, não display:none). */
+  .chrome-top .to-catalogue { display: none; }
+  .chrome-top .to-catalogue-icon { flex: 0 0 auto; }
+  @media (max-width: 640px) {
+    .chrome-top .to-catalogue {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 6px; min-width: 44px;
+    }
+    .chrome-top .to-catalogue em {
+      position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+      overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+    }
+  }
+
+  /* ============================================================
+     DOSSIÊ — sumário lateral + lombada (portado do Lighthouse/Sports).
+     Envolve as Seções II→VIII; a I fica de fora (marginalia com
+     conteúdo real). Dentro da lombada os glosses laterais das seções
+     II→VIII são vazios/decorativos em todo o case — seguro escondê-los.
+     ============================================================ */
+  body { overflow-x: clip; }
+  .ga-dossier { display: grid; grid-template-columns: clamp(190px, 22vw, 248px) minmax(0, 1fr); gap: clamp(36px, 5vw, 76px); max-width: 1180px; margin: 0 auto; padding: 0 var(--sp-6); align-items: start; }
+  .ga-dossier__rail { position: sticky; top: 88px; align-self: start; padding-right: var(--sp-3); }
+  .ga-dossier__nav-label { font-family: var(--mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--oxblood); margin: 0 0 var(--sp-2); }
+  .ga-dossier__nav { display: flex; flex-direction: column; }
+  .ga-dossier__link { position: relative; display: grid; grid-template-columns: 2.2em 1fr; align-items: baseline; gap: 6px; padding: 7px 0 7px 12px; border: 0; border-bottom: 1px solid var(--hairline); background: transparent; text-align: left; cursor: pointer; color: var(--ink-soft); transition: color var(--dur-fast) ease, padding var(--dur-fast) ease; }
+  .ga-dossier__link::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 2px; height: 0; background: var(--oxblood); transition: height var(--dur-base) var(--ease-out); }
+  .ga-dossier__link:hover { color: var(--ink); }
+  .ga-dossier__link .lk-roman { font-family: var(--serif-display); font-style: italic; font-size: 14px; color: var(--ink-faint); }
+  .ga-dossier__link .lk-name { font-family: var(--serif); font-size: 15px; line-height: 1.25; }
+  .ga-dossier__link.is-active { color: var(--oxblood); }
+  .ga-dossier__link.is-active::before { height: 60%; }
+  .ga-dossier__link.is-active .lk-roman { color: var(--oxblood); }
+  .ga-dossier__link.is-active .lk-name { font-weight: 600; }
+
+  .ga-dossier__spine { min-width: 0; }
+  .ga-dossier__spine .case-section { display: block; min-height: 0; padding: var(--sp-8) 0; scroll-margin-top: 96px; }
+  .ga-dossier__spine > .case-section:first-child { padding-top: 0; }
+  .ga-dossier__spine .case-section + .case-section { border-top: 1px solid var(--hairline-strong); }
+  .ga-dossier__spine .case-intermezzo { width: 100%; max-width: 100%; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; }
+  .ga-dossier__spine .spread,
+  .ga-dossier__spine .spread-narrow { display: block; max-width: none; margin: 0; padding: 0; }
+  .ga-dossier__spine .margin-l,
+  .ga-dossier__spine .margin-r { display: none; }
+
+  /* Em telas de toque estreitas, o índice lateral não cabe bem e duplica
+     a navegação natural por scroll — vai direto ao conteúdo. */
+  @media (max-width: 900px) {
+    .ga-dossier { display: block; padding: 0 var(--sp-4); }
+    .ga-dossier__rail { display: none; }
+  }
 
   /* ---------- Dramatis Personæ: tese editorial + grade 2×2 de papéis ----------
      Sem objeto decorativo à esquerda. Uma frase-tese grande abre a seção e
@@ -665,6 +739,10 @@
   </div>
   <nav class="chrome-actions">
     <a href="../index.html" class="to-catalogue">
+      <svg class="to-catalogue-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <polyline points="9 14 4 9 9 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M20 20v-7a4 4 0 0 0-4-4H4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
       <em><span class="t" lang="pt">Voltar ao catálogo</span><span class="t" lang="en">Return to catalogue</span></em>
     </a>
     <button class="candle-toggle" type="button" aria-pressed="false" title="Modo vela" aria-label="Modo vela">
@@ -816,6 +894,19 @@
       </aside>
     </div>
   </section>
+
+  <!-- ============================================================
+       DOSSIÊ — sumário lateral + lombada (portado do Lighthouse/Sports).
+       Seção I fica de fora (marginalia com conteúdo real, como no
+       Lighthouse); II→VIII entram na lombada, onde o gloss lateral é
+       decorativo/vazio em todo o case — seguro de esconder no scoping abaixo.
+       ============================================================ -->
+  <div class="ga-dossier">
+    <aside class="ga-dossier__rail" aria-label="Índice">
+      <p class="ga-dossier__nav-label"><span class="t" lang="pt">Índice do Dossiê</span><span class="t" lang="en">Dossier Index</span></p>
+      <nav class="ga-dossier__nav" aria-label="Índice das seções"></nav>
+    </aside>
+    <div class="ga-dossier__spine">
 
   <!-- ============================================================
        II. MINHA PARTICIPAÇÃO (DRAMATIS)
@@ -1403,16 +1494,24 @@
     </div>
   </section>
 
+    </div><!-- /ga-dossier__spine -->
+  </div><!-- /ga-dossier -->
+
   <!-- ============================================================
        COLOPHÃO & NAVEGAÇÃO
        ============================================================ -->
   <section class="case-colophon" data-folio>
-    <div class="ornament">✦</div>
+    <div class="colo-press">
+      <span class="colo-press__mark" aria-hidden="true"><span>LS</span></span>
+      <span class="colo-press__cap"><span class="t" lang="pt">Marca do compositor</span><span class="t" lang="en">Compositor's mark</span></span>
+    </div>
+    <div class="colo-rule" aria-hidden="true"><span>❦</span></div>
     <p class="case-colophon-body">
       <span class="t" lang="pt">Esta prancha foi composta pelo autor para a <em>Accenture · One Studio</em> em MMXXIII–MMXXIV. Todos os dados, respostas de IA e métricas exibidos servem como estudo conceitual de design de produtos de IA generativa, mantendo os parâmetros de confidencialidade acordados. Nenhum dado real da Accenture ou de seus clientes é representado.</span>
       <span class="t" lang="en">This plate was set by the author for <em>Accenture · One Studio</em> in MMXXIII–MMXXIV. All data, AI responses and metrics shown serve as a conceptual specimen of generative-AI product design, under agreed confidentiality terms. No real Accenture or client data is represented.</span>
     </p>
     <div class="case-colophon-meta">Plate I · Vol. I · MMXXIII–MMXXIV</div>
+    <p class="colo-finis"><span class="t" lang="pt">Finis · fim da prancha</span><span class="t" lang="en">Finis · end of plate</span></p>
   </section>
 
   <nav class="folio-nav" aria-label="Navegação entre cases">
@@ -1420,9 +1519,9 @@
       <span class="folio-marker"><span class="t" lang="pt">← Catálogo (Anverso)</span><span class="t" lang="en">← Catalogue (Anverso)</span></span>
       <span class="folio-title"><em><span class="t" lang="pt">Catálogo de Obras</span><span class="t" lang="en">A Catalogue of Works</span></em></span>
     </a>
-    <a class="recto" href="../index.html#works" rel="next">
-      <span class="folio-marker"><span class="t" lang="pt">Próximo Case (Recto) →</span><span class="t" lang="en">Next Plate (Recto) →</span></span>
-      <span class="folio-title"><em><span class="t" lang="pt">Voltar ao catálogo</span><span class="t" lang="en">Return to catalogue</span></em></span>
+    <a class="recto" href="pmo-dashboards.html" rel="next">
+      <span class="folio-marker"><span class="t" lang="pt">Próxima Prancha (Recto) →</span><span class="t" lang="en">Next Plate (Recto) →</span></span>
+      <span class="folio-title"><em><span class="t" lang="pt">Prancha II — Dashboards PMO</span><span class="t" lang="en">Plate II — PMO Dashboards</span></em></span>
     </a>
   </nav>
 
@@ -1441,8 +1540,61 @@
 </footer>
 
 <script src="./case-template.js"></script>
-<!-- Chrome de case: Index Rerum (⌘K) + edição de bolso (paridade com a home) -->
+<!-- Chrome de case: Index Rerum (⌘K), paridade com a home -->
 <script src="./case-chrome.js"></script>
+
+<!-- Dossiê: monta o índice lateral e sincroniza o capítulo corrente (portado do Lighthouse/Sports) -->
+<script>
+(function () {
+  var dossier = document.querySelector('.ga-dossier');
+  if (!dossier) return;
+  var nav = dossier.querySelector('.ga-dossier__nav');
+  var spine = dossier.querySelector('.ga-dossier__spine');
+  if (!nav || !spine) return;
+  var sections = Array.prototype.slice.call(spine.querySelectorAll('.case-section'));
+  var links = [];
+  sections.forEach(function (sec, i) {
+    var head = sec.querySelector('.section-head');
+    if (!head) return;
+    if (!sec.id) sec.id = 'ch-' + (i + 1);
+    var roman = head.querySelector('.roman');
+    var name = head.querySelector('.name');
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'ga-dossier__link';
+    var r = document.createElement('span'); r.className = 'lk-roman';
+    r.textContent = roman ? roman.textContent.replace(/\.$/, '') : String(i + 1);
+    var n = document.createElement('span'); n.className = 'lk-name';
+    if (name) n.innerHTML = name.innerHTML; else n.textContent = 'Capítulo';
+    btn.appendChild(r); btn.appendChild(n);
+    btn.addEventListener('click', function () {
+      var top = sec.getBoundingClientRect().top + window.pageYOffset - 88;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    });
+    nav.appendChild(btn);
+    links.push({ btn: btn, sec: sec });
+  });
+  var LINE = 150;
+  var activeIdx = -1;
+  function update() {
+    if (!links.length) return;
+    var idx = 0;
+    for (var i = 0; i < links.length; i++) {
+      if (links[i].sec.getBoundingClientRect().top - LINE <= 0) idx = i; else break;
+    }
+    if (idx === activeIdx) return;
+    activeIdx = idx;
+    links.forEach(function (l, k) { l.btn.classList.toggle('is-active', k === idx); });
+  }
+  var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(function () { update(); ticking = false; });
+  }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
+</script>
 
 <!-- Plate-flip: vira a prancha de spotlight para revelar o wireframe do esboço -->
 <script>
