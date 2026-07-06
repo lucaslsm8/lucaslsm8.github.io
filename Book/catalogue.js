@@ -111,89 +111,6 @@ const CONTENT = {
       plates: [{
         roman: "Placa I",
         num: "001",
-        title: ["Gen", {
-          reg: "."
-        }, "AI"],
-        sub: "Accenture · Design System · GenAI · 2023 — 2024",
-        meta: [{
-          dt: "Comissão",
-          dd: "Accenture — One Studio"
-        }, {
-          dt: "Função",
-          dd: "Lead Product Designer · UI · Sistema"
-        }, {
-          dt: "Período",
-          dd: "2023 — 2024 (~3 meses)"
-        }, {
-          dt: "Materiais",
-          dd: "Figma, Variables, padrões para LLMs"
-        }, {
-          dt: "Dimensões",
-          dd: "9 POCs"
-        }],
-        desc: [["Como designer líder do programa na Accenture One Studio, desenvolvi ", {
-          strong: "nove provas de conceito"
-        }, " de IA generativa em DevOps, jurídico, marketing e supply chain, todas integradas por um design system dedicado."], ["A premissa era ", {
-          it: "desenhar o sistema antes dos produtos"
-        }, ". Como resultado, cinco POCs avançaram para protótipo e desenvolvimento, e o vocabulário de UX para IA generativa serviu de base para iniciativas futuras na empresa."]],
-        stats: [{
-          val: "09",
-          lab: "POCs\nentregues"
-        }, {
-          val: "05",
-          lab: "Avançaram\npara dev"
-        }, {
-          val: "~3m",
-          lab: "End-to-end"
-        }],
-        link: "ler a ficha completa",
-        href: "projects/genai.html",
-        imgClass: "plate-img-1",
-        format: "wide"
-      }, {
-        roman: "Placa II",
-        num: "002",
-        title: ["Dashboards", {
-          reg: " PMO"
-        }],
-        sub: "Samarco · PMO Estratégico · 2025",
-        meta: [{
-          dt: "Comissão",
-          dd: "Samarco — PMO Estratégico"
-        }, {
-          dt: "Função",
-          dd: "Senior Product Designer · End-to-end"
-        }, {
-          dt: "Período",
-          dd: "2025 (~4 meses)"
-        }, {
-          dt: "Materiais",
-          dd: "Figma, DS de data-viz, sistema RAG"
-        }, {
-          dt: "Dimensões",
-          dd: "Mandala · 6 módulos · +60 comp."
-        }],
-        desc: [["Projeto da cabine de comando executiva do PMO Estratégico da Samarco. A ", {
-          strong: "Mandala Estratégica"
-        }, " ocupa o centro: uma visualização hexagonal que reúne os seis eixos da estratégia em um painel único e verificável."], ["O desafio era substituir mais de vinte planilhas conciliadas manualmente por uma interface capaz de destacar desvios sem excesso de ruído. Também era necessário unificar, ", {
-          it: "pela primeira vez"
-        }, ", a linguagem visual de Finanças, Riscos, Sustentabilidade e Operações."]],
-        stats: [{
-          val: "+60",
-          lab: "Componentes\ndata-viz"
-        }, {
-          val: "06",
-          lab: "Módulos\nintegrados"
-        }, {
-          val: "20+",
-          lab: "Planilhas\nsubstituídas"
-        }],
-        link: "ler a ficha completa",
-        href: "projects/pmo-dashboards.html",
-        imgClass: "plate-img-2"
-      }, {
-        roman: "Placa III",
-        num: "003",
         title: ["Lighthouse", {
           reg: ""
         }],
@@ -236,8 +153,54 @@ const CONTENT = {
           side:  "images/home/paint-side.webp"
         }
       }, {
-        roman: "Placa IV",
-        num: "004",
+        roman: "Placa II",
+        num: "002",
+        title: ["Dashboards", {
+          reg: " PMO"
+        }],
+        sub: "Samarco · PMO Estratégico · 2025",
+        meta: [{
+          dt: "Comissão",
+          dd: "Samarco — PMO Estratégico"
+        }, {
+          dt: "Função",
+          dd: "Senior Product Designer · End-to-end"
+        }, {
+          dt: "Período",
+          dd: "2025 (~4 meses)"
+        }, {
+          dt: "Materiais",
+          dd: "Figma, DS de data-viz, sistema RAG"
+        }, {
+          dt: "Dimensões",
+          dd: "Mandala · 6 módulos · +60 comp."
+        }],
+        desc: [["Projeto da cabine de comando executiva do PMO Estratégico da Samarco. A ", {
+          strong: "Mandala Estratégica"
+        }, " ocupa o centro: uma visualização hexagonal que reúne os seis eixos da estratégia em um painel único e verificável."], ["O desafio era substituir mais de vinte planilhas conciliadas manualmente por uma interface capaz de destacar desvios sem excesso de ruído. Também era necessário unificar, ", {
+          it: "pela primeira vez"
+        }, ", a linguagem visual de Finanças, Riscos, Sustentabilidade e Operações."]],
+        stats: [{
+          val: "+60",
+          lab: "Componentes\ndata-viz"
+        }, {
+          val: "06",
+          lab: "Módulos\nintegrados"
+        }, {
+          val: "20+",
+          lab: "Planilhas\nsubstituídas"
+        }],
+        link: "ler a ficha completa",
+        href: "projects/pmo-dashboards.html",
+        imgClass: "plate-img-2",
+        quadro: {
+          front: "images/samarco/paint-front.webp",
+          back:  "images/samarco/paint-back.webp",
+          side:  "images/home/paint-side.webp"
+        }
+      }, {
+        roman: "Placa III",
+        num: "003",
         title: ["Sports", {
           reg: " Experience"
         }],
@@ -275,7 +238,54 @@ const CONTENT = {
         }],
         link: "ler a ficha completa",
         href: "projects/sports-experience.html",
-        imgClass: "plate-img-2"
+        imgClass: "plate-img-2",
+        quadro: {
+          front: "images/sports/paint-front.webp",
+          back:  "images/sports/paint-back.webp",
+          side:  "images/home/paint-side.webp"
+        }
+      }, {
+        roman: "Placa IV",
+        num: "004",
+        title: ["Gen", {
+          reg: "."
+        }, "AI"],
+        sub: "Accenture · Design System · GenAI · 2023 — 2024",
+        meta: [{
+          dt: "Comissão",
+          dd: "Accenture — One Studio"
+        }, {
+          dt: "Função",
+          dd: "Lead Product Designer · UI · Sistema"
+        }, {
+          dt: "Período",
+          dd: "2023 — 2024 (~3 meses)"
+        }, {
+          dt: "Materiais",
+          dd: "Figma, Variables, padrões para LLMs"
+        }, {
+          dt: "Dimensões",
+          dd: "9 POCs"
+        }],
+        desc: [["Como designer líder do programa na Accenture One Studio, desenvolvi ", {
+          strong: "nove provas de conceito"
+        }, " de IA generativa em DevOps, jurídico, marketing e supply chain, todas integradas por um design system dedicado."], ["A premissa era ", {
+          it: "desenhar o sistema antes dos produtos"
+        }, ". Como resultado, cinco POCs avançaram para protótipo e desenvolvimento, e o vocabulário de UX para IA generativa serviu de base para iniciativas futuras na empresa."]],
+        stats: [{
+          val: "09",
+          lab: "POCs\nentregues"
+        }, {
+          val: "05",
+          lab: "Avançaram\npara dev"
+        }, {
+          val: "~3m",
+          lab: "End-to-end"
+        }],
+        link: "ler a ficha completa",
+        href: "projects/genai.html",
+        imgClass: "plate-img-1",
+        format: "wide"
       }]
     },
     method: {
@@ -358,6 +368,30 @@ const CONTENT = {
           label: "Power BI", labelSub: "Vale · data viz" }
       ],
       close: "Fechar", prev: "Prancha anterior", next: "Próxima prancha"
+    },
+    specialties: {
+      label: "Repertório · Senior Product Designer",
+      title: ["Artes do ofício"],
+      page: "xi",
+      intro: "Treze anos de prática end-to-end — do discovery à entrega — unindo estratégia de produto, design centrado no usuário, design systems e experiências AI-native, com liderança cross-functional e mentoria.",
+      items: [
+        { roman: "I", img: "images/services/ai.webp", alt: "Estudo de IA generativa",
+          title: "IA Generativa", cat: "GenAI · AI-native",
+          desc: "Design de produtos AI-native de ponta a ponta: interfaces conversacionais, fluxos com LLMs e agentes — do discovery e prototipação à prova de conceito validada.",
+          kw: ["LLM", "Agentic UX", "Prompt Design", "Conversational UI"] },
+        { roman: "II", img: "images/services/ux.webp", alt: "Wireframes e mapeamento de jornada",
+          title: "Experiência", cat: "UX · Research",
+          desc: "Pesquisa com usuários, testes de usabilidade e arquitetura de informação — discovery centrado no usuário, orientado por dados, que eleva satisfação e retenção.",
+          kw: ["User Research", "Usability Testing", "Journey Mapping", "Data-driven"] },
+        { roman: "III", img: "images/services/ui.webp", alt: "Estudo de interface",
+          title: "Interface", cat: "UI · Visual",
+          desc: "Do wireframe ao pixel: interaction design, design visual, motion e acessibilidade (WCAG) — design responsivo que traduz complexidade em clareza e converte.",
+          kw: ["Interaction Design", "Prototyping", "Accessibility", "Responsive"] },
+        { roman: "IV", img: "images/services/ds.webp", alt: "Componentes e tokens",
+          title: "Design Systems", cat: "DS · DesignOps",
+          desc: "Design systems escaláveis em Figma — design tokens, bibliotecas de componentes e governança (DesignOps) que aceleram times e garantem consistência.",
+          kw: ["Design Tokens", "Component Library", "Figma", "DesignOps"] }
+      ]
     },
     apparatus: {
       label: "Capítulo III",
@@ -656,89 +690,6 @@ const CONTENT = {
       plates: [{
         roman: "Plate I",
         num: "001",
-        title: ["Gen", {
-          reg: "."
-        }, "AI"],
-        sub: "Accenture · Design System · GenAI · 2023 — 2024",
-        meta: [{
-          dt: "Commission",
-          dd: "Accenture — One Studio"
-        }, {
-          dt: "Role",
-          dd: "Lead Product Designer · UI · System"
-        }, {
-          dt: "Period",
-          dd: "2023 — 2024 (~3 months)"
-        }, {
-          dt: "Materials",
-          dd: "Figma, Variables, LLM patterns"
-        }, {
-          dt: "Dimensions",
-          dd: "9 POCs"
-        }],
-        desc: [["As the lead designer of Accenture One Studio's program, I developed ", {
-          strong: "nine proofs of concept"
-        }, " in generative AI across DevOps, legal, marketing, and supply chain, all integrated by a dedicated design system."], ["The premise was to ", {
-          it: "design the system before the products"
-        }, ". As a result, five POCs advanced to prototype and development, and the UX vocabulary for generative AI served as the foundation for future initiatives at the company."]],
-        stats: [{
-          val: "09",
-          lab: "POCs\ndelivered"
-        }, {
-          val: "05",
-          lab: "Advanced\nto dev"
-        }, {
-          val: "~3m",
-          lab: "End-to-end"
-        }],
-        link: "read the full entry",
-        href: "projects/genai.html",
-        imgClass: "plate-img-1",
-        format: "wide"
-      }, {
-        roman: "Plate II",
-        num: "002",
-        title: ["PMO", {
-          reg: " Dashboards"
-        }],
-        sub: "Samarco · Strategic PMO · 2025",
-        meta: [{
-          dt: "Commission",
-          dd: "Samarco — Strategic PMO"
-        }, {
-          dt: "Role",
-          dd: "Senior Product Designer · End-to-end"
-        }, {
-          dt: "Period",
-          dd: "2025 (~4 months)"
-        }, {
-          dt: "Materials",
-          dd: "Figma, data-viz DS, RAG system"
-        }, {
-          dt: "Dimensions",
-          dd: "Mandala · 6 modules · 60+ comp."
-        }],
-        desc: [["Design of Samarco's Strategic PMO executive command center. The ", {
-          strong: "Strategic Mandala"
-        }, " sits at the center: a hexagonal visualization that brings the six strategic axes together into a single, verifiable panel."], ["The challenge was to replace more than twenty manually reconciled spreadsheets with an interface capable of surfacing deviations without excess noise. It also required unifying, ", {
-          it: "for the first time"
-        }, ", the visual language of Finance, Risk, Sustainability, and Operations."]],
-        stats: [{
-          val: "60+",
-          lab: "Data-viz\ncomponents"
-        }, {
-          val: "06",
-          lab: "Integrated\nmodules"
-        }, {
-          val: "20+",
-          lab: "Spreadsheets\nreplaced"
-        }],
-        link: "read the full entry",
-        href: "projects/pmo-dashboards.html",
-        imgClass: "plate-img-2"
-      }, {
-        roman: "Plate III",
-        num: "003",
         title: ["Lighthouse", {
           reg: ""
         }],
@@ -781,8 +732,54 @@ const CONTENT = {
           side:  "images/home/paint-side.webp"
         }
       }, {
-        roman: "Plate IV",
-        num: "004",
+        roman: "Plate II",
+        num: "002",
+        title: ["PMO", {
+          reg: " Dashboards"
+        }],
+        sub: "Samarco · Strategic PMO · 2025",
+        meta: [{
+          dt: "Commission",
+          dd: "Samarco — Strategic PMO"
+        }, {
+          dt: "Role",
+          dd: "Senior Product Designer · End-to-end"
+        }, {
+          dt: "Period",
+          dd: "2025 (~4 months)"
+        }, {
+          dt: "Materials",
+          dd: "Figma, data-viz DS, RAG system"
+        }, {
+          dt: "Dimensions",
+          dd: "Mandala · 6 modules · 60+ comp."
+        }],
+        desc: [["Design of Samarco's Strategic PMO executive command center. The ", {
+          strong: "Strategic Mandala"
+        }, " sits at the center: a hexagonal visualization that brings the six strategic axes together into a single, verifiable panel."], ["The challenge was to replace more than twenty manually reconciled spreadsheets with an interface capable of surfacing deviations without excess noise. It also required unifying, ", {
+          it: "for the first time"
+        }, ", the visual language of Finance, Risk, Sustainability, and Operations."]],
+        stats: [{
+          val: "60+",
+          lab: "Data-viz\ncomponents"
+        }, {
+          val: "06",
+          lab: "Integrated\nmodules"
+        }, {
+          val: "20+",
+          lab: "Spreadsheets\nreplaced"
+        }],
+        link: "read the full entry",
+        href: "projects/pmo-dashboards.html",
+        imgClass: "plate-img-2",
+        quadro: {
+          front: "images/samarco/paint-front.webp",
+          back:  "images/samarco/paint-back.webp",
+          side:  "images/home/paint-side.webp"
+        }
+      }, {
+        roman: "Plate III",
+        num: "003",
         title: ["Sports", {
           reg: " Experience"
         }],
@@ -820,7 +817,54 @@ const CONTENT = {
         }],
         link: "read the full entry",
         href: "projects/sports-experience.html",
-        imgClass: "plate-img-2"
+        imgClass: "plate-img-2",
+        quadro: {
+          front: "images/sports/paint-front.webp",
+          back:  "images/sports/paint-back.webp",
+          side:  "images/home/paint-side.webp"
+        }
+      }, {
+        roman: "Plate IV",
+        num: "004",
+        title: ["Gen", {
+          reg: "."
+        }, "AI"],
+        sub: "Accenture · Design System · GenAI · 2023 — 2024",
+        meta: [{
+          dt: "Commission",
+          dd: "Accenture — One Studio"
+        }, {
+          dt: "Role",
+          dd: "Lead Product Designer · UI · System"
+        }, {
+          dt: "Period",
+          dd: "2023 — 2024 (~3 months)"
+        }, {
+          dt: "Materials",
+          dd: "Figma, Variables, LLM patterns"
+        }, {
+          dt: "Dimensions",
+          dd: "9 POCs"
+        }],
+        desc: [["As the lead designer of Accenture One Studio's program, I developed ", {
+          strong: "nine proofs of concept"
+        }, " in generative AI across DevOps, legal, marketing, and supply chain, all integrated by a dedicated design system."], ["The premise was to ", {
+          it: "design the system before the products"
+        }, ". As a result, five POCs advanced to prototype and development, and the UX vocabulary for generative AI served as the foundation for future initiatives at the company."]],
+        stats: [{
+          val: "09",
+          lab: "POCs\ndelivered"
+        }, {
+          val: "05",
+          lab: "Advanced\nto dev"
+        }, {
+          val: "~3m",
+          lab: "End-to-end"
+        }],
+        link: "read the full entry",
+        href: "projects/genai.html",
+        imgClass: "plate-img-1",
+        format: "wide"
       }]
     },
     method: {
@@ -903,6 +947,30 @@ const CONTENT = {
           label: "Power BI", labelSub: "Vale · data viz" }
       ],
       close: "Close", prev: "Previous plate", next: "Next plate"
+    },
+    specialties: {
+      label: "Repertoire · Senior Product Designer",
+      title: ["Crafts of the trade"],
+      page: "xi",
+      intro: "Thirteen years of end-to-end practice — from discovery to delivery — uniting product strategy, user-centered design, design systems and AI-native experiences, with cross-functional leadership and mentorship.",
+      items: [
+        { roman: "I", img: "images/services/ai.webp", alt: "Generative AI study",
+          title: "Generative AI", cat: "GenAI · AI-native",
+          desc: "End-to-end AI-native product design: conversational interfaces, LLM-driven flows and agents — from discovery and prototyping to a validated proof of concept.",
+          kw: ["LLM", "Agentic UX", "Prompt Design", "Conversational UI"] },
+        { roman: "II", img: "images/services/ux.webp", alt: "Wireframes and journey mapping",
+          title: "Experience", cat: "UX · Research",
+          desc: "User research, usability testing and information architecture — user-centered, data-driven discovery that lifts satisfaction and retention.",
+          kw: ["User Research", "Usability Testing", "Journey Mapping", "Data-driven"] },
+        { roman: "III", img: "images/services/ui.webp", alt: "Interface study",
+          title: "Interface", cat: "UI · Visual",
+          desc: "From wireframe to pixel: interaction design, visual design, motion and accessibility (WCAG) — responsive design that turns complexity into clarity that converts.",
+          kw: ["Interaction Design", "Prototyping", "Accessibility", "Responsive"] },
+        { roman: "IV", img: "images/services/ds.webp", alt: "Components and tokens",
+          title: "Design Systems", cat: "DS · DesignOps",
+          desc: "Scalable design systems in Figma — design tokens, component libraries and governance (DesignOps) that accelerate teams and guarantee consistency.",
+          kw: ["Design Tokens", "Component Library", "Figma", "DesignOps"] }
+      ]
     },
     apparatus: {
       label: "Chapter III",
@@ -2787,6 +2855,39 @@ function ToolsIndex({ tools }) {
 }
 
 /* ============================================================
+   Specialties — "Artes do ofício" (Repertório)
+   ------------------------------------------------------------
+   Grade de pranchas emolduradas (passe-partout creme) com o
+   verbete centrado de cada disciplina. Texto carregado de
+   palavras-chave de Senior Product Designer (ATS / triagem IA).
+   Fotos em images/services/{ai,ux,ui,ds}.webp. Só tokens do DS.
+   Fica ACIMA do Aparato (ferramentas), como seção própria não
+   numerada (padrão de MinorWorks) — não entra no TOC/scroll-spy.
+   ============================================================ */
+function Specialties({ t }) {
+  const e = React.createElement;
+  const s = t.specialties;
+  return e("section", { className: "specialties page", "data-page": s.page, id: "specialties" },
+    e("div", { className: "spec-wrap" },
+      e(Reveal, null,
+        e("div", { className: "heading" },
+          e("span", { className: "num" }, s.label),
+          e("span", { className: "title" }, rich(s.title)),
+          e("span", { className: "roman" }, s.page))),
+      e(Reveal, { as: "p", delay: 1, className: "spec-lede" }, s.intro),
+      e("div", { className: "spec-grid" },
+        s.items.map((it, i) => e(Reveal, { key: i, as: "article", className: "spec-card", delay: (i % 4) + 1 },
+          e("div", { className: "spec-mat" },
+            e("div", { className: "spec-frame" },
+              e("img", { src: it.img, alt: it.alt, loading: "lazy" }))),
+          e("h3", { className: "spec-title" }, it.title),
+          e("p", { className: "spec-kick" }, it.cat),
+          e("div", { className: "spec-rule", "aria-hidden": "true" }),
+          e("p", { className: "spec-desc" }, it.desc),
+          e("div", { className: "spec-kw" }, it.kw.map((k, j) => e("span", { key: j }, k))))))));
+}
+
+/* ============================================================
    Apparatus
    ============================================================ */
 function Apparatus({
@@ -3347,6 +3448,7 @@ function App() {
       e(Preface,        { t }),
       e(Works,          { t }),
       e(MinorWorks,     { t }),
+      e(Specialties,    { t }),
       e(Apparatus,      { t, lang }),
       e(Correspondence, { t }),
       e(Colophon,       { t })

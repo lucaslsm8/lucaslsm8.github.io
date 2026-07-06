@@ -73,6 +73,150 @@
   }
 
   /* ============================================================
+     HERO DE IMPACTO — "Nove ao mesmo tempo" (substitui a Epígrafe).
+     Banda cinematográfica full-bleed (SEMPRE escura, como o Intermezzo —
+     cores literais, não tokens, p/ não inverter no modo vela). Uma frase-
+     pôster ancora a tese e uma constelação "9 → 1" traduz o argumento
+     central: nove POCs em nove domínios, unificadas por um só Design
+     System. Fica FORA do dossiê (antes dele), então o 100vw funciona.
+     ============================================================ */
+  .ga-hero-band {
+    --hb-cream: #f3ead0;
+    --hb-gilt: #cca24f;
+    --hb-dim: rgba(243, 234, 208, .5);
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-bottom: clamp(56px, 8vw, 104px);
+    padding: clamp(40px, 5vw, 72px) var(--sp-5);
+    background:
+      radial-gradient(120% 90% at 50% 0%, #221708 0%, #161009 60%, #100b06 100%);
+    color: var(--hb-cream);
+    position: relative;
+    overflow: hidden;
+  }
+  /* filete de topo/base que costura a banda ao papel */
+  .ga-hero-band::before,
+  .ga-hero-band::after {
+    content: ''; position: absolute; left: 0; right: 0; height: 1px;
+    background: linear-gradient(to right, transparent, color-mix(in srgb, var(--hb-gilt) 55%, transparent), transparent);
+  }
+  .ga-hero-band::before { top: 0; }
+  .ga-hero-band::after { bottom: 0; }
+  body.candle .ga-hero-band { box-shadow: inset 0 0 0 1px rgba(243, 234, 208, .14); }
+
+  .ga-hero-band__inner {
+    max-width: 1140px; margin: 0 auto; position: relative; z-index: 1;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.22fr);
+    align-items: stretch; gap: clamp(32px, 5vw, 72px);
+  }
+  /* coluna esquerda: conteúdo centrado verticalmente ao lado do astrolábio */
+  .ga-hb-copy { display: flex; flex-direction: column; justify-content: center; }
+  .ga-hb-figure { align-self: center; }
+  .ga-hb-eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .26em;
+    text-transform: uppercase; color: var(--hb-gilt); margin: 0 0 clamp(20px, 3vw, 30px);
+  }
+  .ga-hb-eyebrow::before { content: ''; width: 34px; height: 1px; background: currentColor; opacity: .6; }
+  .ga-hb-title {
+    font-family: var(--serif-display); font-weight: 400; font-style: italic;
+    font-size: clamp(42px, 5.6vw, 80px); line-height: .98; letter-spacing: -.01em;
+    margin: 0 0 clamp(20px, 2.6vw, 32px); color: var(--hb-cream);
+  }
+
+  /* Painel dinâmico à esquerda: repouso (tese) ↔ programa (nome/domínio/desc).
+     Todos os painéis ocupam a MESMA célula do grid, então a altura é a do
+     maior painel e a troca é um cross-fade sem salto de layout. */
+  .ga-hb-detail { display: grid; min-height: 168px; }
+  .ga-hb-panel {
+    grid-area: 1 / 1; opacity: 0; visibility: hidden; transform: translateY(7px);
+    transition: opacity .3s var(--ease-out), transform .3s var(--ease-out);
+    pointer-events: none;
+  }
+  .ga-hb-panel.is-shown { opacity: 1; visibility: visible; transform: none; pointer-events: auto; }
+  .ga-hb-sub {
+    font-family: var(--serif); font-size: clamp(15px, 1.5vw, 19px); line-height: 1.5;
+    color: var(--hb-dim); max-width: 42ch; margin: 0;
+  }
+  .ga-hb-sub .em { color: var(--hb-cream); font-style: italic; }
+  .ga-hb-hint {
+    display: inline-flex; align-items: center; gap: 9px; margin: clamp(18px, 2.4vw, 26px) 0 0;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--hb-gilt);
+  }
+  .ga-hb-hint__ic { font-size: 11px; }
+  .ga-hb-dom {
+    display: block; font-family: var(--mono); font-size: 10px; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--hb-gilt); margin: 0 0 10px;
+  }
+  .ga-hb-progname {
+    font-family: var(--serif-display); font-style: italic; font-weight: 400;
+    font-size: clamp(26px, 3vw, 38px); line-height: 1.02; color: var(--hb-cream); margin: 0 0 12px;
+  }
+  .ga-hb-desc {
+    font-family: var(--serif); font-size: clamp(15px, 1.45vw, 18px); line-height: 1.5;
+    color: var(--hb-dim); max-width: 42ch; margin: 0;
+  }
+
+  /* --- Astrolábio do ecossistema: 9 programas em órbita → 1 Design System --- */
+  .ga-hb-figure { margin: 0; position: relative; }
+  .ga-hb-figure svg { width: 100%; height: auto; display: block; overflow: visible; }
+
+  /* brilho radial sob o núcleo */
+  .ga-hb-glow { pointer-events: none; }
+  /* órbita onde repousam os nove nós */
+  .ga-hb-orbit { fill: none; stroke: color-mix(in srgb, var(--hb-gilt) 34%, transparent); stroke-width: 1; }
+  /* anel-mostrador gravado (gira devagar, como um instrumento) */
+  .ga-hb-dial { transform-box: fill-box; transform-origin: center; animation: ga-hb-rotate 140s linear infinite; }
+  .ga-hb-dial-ring { fill: none; stroke: color-mix(in srgb, var(--hb-gilt) 26%, transparent); stroke-width: 1; stroke-dasharray: 2 8; }
+  .ga-hb-tick { stroke: var(--hb-gilt); stroke-width: 1; opacity: .3; }
+  .ga-hb-tick--major { opacity: .58; stroke-width: 1.4; }
+  @keyframes ga-hb-rotate { to { transform: rotate(360deg); } }
+
+  .ga-hb-spoke { stroke: var(--hb-gilt); stroke-width: 1; opacity: .28; transition: opacity .25s var(--ease-out), stroke-width .25s var(--ease-out); }
+  .ga-hb-spoke.is-active { opacity: .9; stroke-width: 1.5; }
+
+  .ga-hb-node-g { cursor: pointer; outline: none; }
+  .ga-hb-node-core { transition: transform .25s var(--ease-out); transform-box: fill-box; transform-origin: center; }
+  .ga-hb-node { fill: #191207; stroke: color-mix(in srgb, var(--hb-cream) 52%, transparent); stroke-width: 1.2; transition: fill .25s var(--ease-out), stroke .25s var(--ease-out); }
+  /* Ícones reais dos POCs (Material, preenchidos) — herdam a tinta do nó via fill. */
+  .ga-hb-ico { fill: var(--hb-cream); stroke: none; transition: fill .25s var(--ease-out); }
+  .ga-hb-name-lbl { fill: var(--hb-dim); font-family: var(--mono); font-size: 9.5px; letter-spacing: .07em; text-transform: uppercase; transition: fill .25s var(--ease-out); }
+
+  .ga-hb-node-g:hover .ga-hb-node-core,
+  .ga-hb-node-g:focus-visible .ga-hb-node-core,
+  .ga-hb-node-g.is-active .ga-hb-node-core { transform: scale(1.14); }
+  .ga-hb-node-g.is-active .ga-hb-node { fill: var(--hb-gilt); stroke: var(--hb-gilt); }
+  .ga-hb-node-g.is-active .ga-hb-ico { fill: #17110a; }
+  .ga-hb-node-g.is-active .ga-hb-name-lbl { fill: var(--hb-cream); }
+  .ga-hb-node-g:focus-visible .ga-hb-node { stroke: var(--hb-cream); }
+  /* quando um nó está ativo, os demais recuam levemente */
+  .ga-hero-band.ga-hb-focus .ga-hb-node-g:not(.is-active) { opacity: .42; transition: opacity .25s var(--ease-out); }
+
+  .ga-hb-hub { fill: var(--hb-gilt); }
+  .ga-hb-hub-ring { fill: none; stroke: var(--hb-gilt); stroke-width: 1; opacity: .5; }
+  /* Wordmark: "Gen.AI" é o ator principal do núcleo — forte e centrado no círculo. */
+  .ga-hb-hub-cap { fill: #17110a; font-family: var(--serif-display); font-style: normal; font-weight: 700; font-size: 30px; letter-spacing: .005em; text-transform: none; text-anchor: middle; }
+
+  /* pulso suave do anel do hub */
+  @keyframes ga-hb-pulse { 0%, 100% { opacity: .5; } 50% { opacity: .88; } }
+  .ga-hb-hub-ring { animation: ga-hb-pulse 4.5s ease-in-out infinite; }
+
+  @media (max-width: 860px) {
+    .ga-hero-band__inner { grid-template-columns: 1fr; gap: clamp(28px, 6vw, 44px); text-align: center; }
+    .ga-hb-eyebrow { justify-content: center; }
+    .ga-hb-detail { min-height: 148px; justify-items: center; }
+    .ga-hb-sub, .ga-hb-desc { margin-inline: auto; }
+    .ga-hb-figure { max-width: 470px; margin-inline: auto; }
+  }
+  @media (max-width: 560px) {
+    .ga-hb-name-lbl { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ga-hb-hub-ring, .ga-hb-dial { animation: none; }
+    .ga-hb-node-core, .ga-hb-spoke, .ga-hb-panel { transition: none; }
+  }
+
+  /* ============================================================
      DOSSIÊ — sumário lateral + lombada (portado do Lighthouse/Sports).
      Envolve as Seções II→VIII; a I fica de fora (marginalia com
      conteúdo real). Dentro da lombada os glosses laterais das seções
@@ -108,6 +252,27 @@
   @media (max-width: 900px) {
     .ga-dossier { display: block; padding: 0 var(--sp-4); }
     .ga-dossier__rail { display: none; }
+  }
+
+  /* ============================================================
+     OVERVIEW (Seção I) — parágrafo-guia + prosa e ficha técnica lado
+     a lado. Paridade com o Overview das demais pranchas (Sports/PMO),
+     escrito sobre os tokens editoriais e escopado ao case.
+     ============================================================ */
+  .ga-ov-lead { font-family: var(--serif); font-size: clamp(18px, 1.9vw, 22px); line-height: 1.55; color: var(--ink); }
+  .ga-ov-lead .em { color: var(--oxblood); font-style: italic; }
+  .ga-ov-grid { display: grid; grid-template-columns: minmax(0, 1fr) clamp(240px, 26%, 320px); gap: clamp(28px, 4vw, 56px); align-items: start; }
+  .ga-ov-body > p { margin: 0 0 var(--sp-4); }
+  .ga-ov-body > p:last-child { margin-bottom: 0; }
+  .ga-ov-ficha { border: 1px solid var(--hairline-strong); border-radius: var(--radius-sm); padding: var(--sp-4); background: color-mix(in srgb, var(--ink) 2%, transparent); position: sticky; top: 96px; }
+  .ga-ov-ficha__title { font-family: var(--mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); margin: 0 0 var(--sp-3); padding-bottom: var(--sp-2); border-bottom: 1px solid var(--hairline); }
+  .ga-ov-ficha dl { margin: 0; display: grid; gap: 11px; }
+  .ga-ov-ficha dl > div { display: grid; gap: 2px; }
+  .ga-ov-ficha dt { font-family: var(--mono); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); }
+  .ga-ov-ficha dd { margin: 0; font-family: var(--serif); font-size: 14px; line-height: 1.32; color: var(--ink); }
+  @media (max-width: 720px) {
+    .ga-ov-grid { grid-template-columns: 1fr; gap: var(--sp-5); }
+    .ga-ov-ficha { position: static; }
   }
 
   /* ---------- Dramatis Personæ: tese editorial + grade 2×2 de papéis ----------
@@ -200,6 +365,27 @@
     border-color: var(--ink-faint);
   }
   .poc-entry__head { display: flex; align-items: baseline; gap: var(--sp-3); }
+  /* Emblema do POC: ícone real do produto, renderizado como máscara para
+     herdar a tinta do tema (currentColor) — adapta ao modo vela sozinho. */
+  .poc-entry__icon {
+    flex: 0 0 auto; align-self: flex-start;
+    width: 38px; height: 38px;
+    display: grid; place-items: center;
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--radius-sm);
+    background: var(--paper);
+    color: var(--ink-faint);
+    transition: color var(--dur-base) var(--ease-out),
+                border-color var(--dur-base) var(--ease-out);
+  }
+  .poc-entry__icon::before {
+    content: ''; width: 22px; height: 22px;
+    background-color: currentColor;
+    -webkit-mask: var(--poc-icon) center / contain no-repeat;
+            mask: var(--poc-icon) center / contain no-repeat;
+  }
+  .poc-entry--featured .poc-entry__icon { color: var(--oxblood); border-color: var(--oxblood); }
+  .poc-entry:hover .poc-entry__icon { color: var(--ink); }
   .poc-entry__roman {
     font-family: var(--serif-display);
     font-size: var(--fs-h4); color: var(--oxblood); line-height: 1;
@@ -412,6 +598,106 @@
   @media (max-width: 560px) {
     .outcome__index { grid-template-columns: 1fr; row-gap: var(--sp-6); }
     .outcome__group:nth-child(2) { border-left: none; padding-left: 0; }
+  }
+
+  /* ---------- Espécime: a gramática de transparência feita componente ----------
+     Um único cartão-resposta que encarna os 3 sinais que se repetem nas 9 POCs:
+     confiança declarada · fonte rastreável · reversibilidade. Tudo em tokens,
+     então adapta ao modo vela automaticamente. */
+  .ga-grammar {
+    margin-top: var(--sp-7);
+    display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr);
+    gap: clamp(24px, 4vw, 56px); align-items: center;
+  }
+  .ga-grammar__eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--ink-faint); margin: 0 0 var(--sp-4);
+  }
+  .ga-grammar__eyebrow::before { content: ''; width: 26px; height: 1px; background: var(--oxblood); opacity: .7; }
+
+  /* o cartão-resposta ------------------------------------------------ */
+  .ga-answer {
+    background: var(--paper-card);
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--radius-sm);
+    padding: clamp(18px, 2.4vw, 26px);
+    box-shadow: 0 1px 0 var(--paper-shade), 0 20px 44px -30px rgba(43, 34, 20, .55);
+  }
+  .ga-answer__head { display: flex; align-items: center; gap: 10px; margin-bottom: var(--sp-3); }
+  .ga-answer__mark {
+    width: 26px; height: 26px; flex: none; display: grid; place-items: center;
+    border: 1px solid var(--oxblood); border-radius: 50%; color: var(--oxblood);
+    font-family: var(--serif-display); font-style: italic; font-size: 14px; line-height: 1;
+  }
+  .ga-answer__who { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); }
+
+  /* [1] chip de confiança */
+  .ga-conf {
+    margin-left: auto; display: inline-flex; align-items: center; gap: 7px;
+    padding: 4px 10px; border: 1px solid var(--hairline-strong); border-radius: 999px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .06em; color: var(--ink-soft); white-space: nowrap;
+  }
+  .ga-conf__dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--status-green);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--status-green) 20%, transparent);
+  }
+
+  .ga-answer__body {
+    font-family: var(--serif); font-size: clamp(16px, 1.6vw, 18px); line-height: 1.5;
+    color: var(--ink); margin: 0 0 var(--sp-3);
+  }
+  .ga-answer__body mark {
+    background: color-mix(in srgb, var(--cobalt) 14%, transparent);
+    color: var(--cobalt); padding: 0 3px; border-radius: 2px; font-style: normal;
+  }
+
+  /* [2] chips de fonte — citação rastreável ao trecho exato */
+  .ga-cites { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: var(--sp-4); }
+  .ga-cite {
+    display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px;
+    border: 1px solid color-mix(in srgb, var(--cobalt) 42%, var(--hairline-strong));
+    border-radius: var(--radius-sm); background: color-mix(in srgb, var(--cobalt) 7%, transparent);
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .03em; color: var(--cobalt);
+    text-decoration: none; cursor: default; transition: background var(--dur-fast) ease;
+  }
+  .ga-cite:hover { background: color-mix(in srgb, var(--cobalt) 14%, transparent); }
+  .ga-cite svg { width: 12px; height: 12px; flex: none; }
+
+  /* [3] rodapé: reversibilidade + feedback (loop fechado) */
+  .ga-answer__foot {
+    display: flex; align-items: center; gap: clamp(12px, 2vw, 20px); flex-wrap: wrap;
+    padding-top: var(--sp-3); border-top: 1px dotted var(--ink-ghost);
+  }
+  .ga-ctrl {
+    display: inline-flex; align-items: center; gap: 6px; background: none; border: 0; padding: 0; cursor: default;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-faint); transition: color var(--dur-fast) ease;
+  }
+  .ga-ctrl svg { width: 13px; height: 13px; }
+  .ga-ctrl:hover { color: var(--oxblood); }
+  .ga-fb { margin-left: auto; display: inline-flex; align-items: center; gap: 10px; }
+  .ga-fb__label { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); }
+  .ga-fb button { background: none; border: 0; padding: 2px; cursor: default; color: var(--ink-faint); transition: color var(--dur-fast) ease; }
+  .ga-fb button:hover { color: var(--oxblood); }
+  .ga-fb svg { width: 15px; height: 15px; display: block; }
+
+  /* legenda — as três colunas da gramática, glosadas */
+  .ga-grammar__legend { list-style: none; margin: 0; padding: 0; counter-reset: gram; }
+  .ga-grammar__legend li {
+    counter-increment: gram; position: relative; padding: 14px 0 14px 32px;
+    border-bottom: 1px dotted var(--ink-ghost);
+  }
+  .ga-grammar__legend li:last-child { border-bottom: none; }
+  .ga-grammar__legend li::before {
+    content: counter(gram, decimal-leading-zero); position: absolute; left: 0; top: 16px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: var(--oxblood);
+  }
+  .ga-leg-term { display: block; font-family: var(--serif); font-weight: 600; font-size: 16px; color: var(--ink); margin-bottom: 2px; }
+  .ga-leg-def { font-family: var(--serif); font-size: 14.5px; line-height: 1.45; color: var(--ink-soft); }
+
+  @media (max-width: 860px) {
+    .ga-grammar { grid-template-columns: 1fr; gap: clamp(24px, 6vw, 40px); }
   }
 
   /* ---------- Spotlight ---------- */
@@ -735,7 +1021,7 @@
     <span class="sep">·</span>
     <em><span class="t" lang="pt">Catálogo de Obras</span><span class="t" lang="en">A Catalogue of Works</span></em>
     <span class="sep">·</span>
-    <span><span class="t" lang="pt">Prancha I — Gen.AI</span><span class="t" lang="en">Plate I — Gen.AI</span></span>
+    <span><span class="t" lang="pt">Prancha IV — Gen.AI</span><span class="t" lang="en">Plate IV — Gen.AI</span></span>
   </div>
   <nav class="chrome-actions">
     <a href="../index.html" class="to-catalogue">
@@ -782,11 +1068,11 @@
   <section class="case-frontispiece case-frontispiece--cinematic" data-folio>
     <div class="frontispiece-halo" aria-hidden="true"></div>
     <div class="sig">
-      <span class="t" lang="pt">Volume I · Prancha I · MMXXIII–MMXXIV</span>
-      <span class="t" lang="en">Volume I · Plate I · MMXXIII–MMXXIV</span>
+      <span class="t" lang="pt">Volume I · Prancha IV · MMXXIII–MMXXIV</span>
+      <span class="t" lang="en">Volume I · Plate IV · MMXXIII–MMXXIV</span>
     </div>
 
-    <div class="case-num">№ 001</div>
+    <div class="case-num">№ 004</div>
 
     <h1 class="case-title">
       <span class="it">Gen</span><span class="reg">.AI</span>
@@ -795,10 +1081,11 @@
     <div class="case-rule" aria-hidden="true"></div>
 
     <p class="case-deck">
-      <span class="t" lang="pt"><span class="em">Um ecossistema de 9 POCs de IA generativa</span> para a Accenture One Studio, unificadas por um único Design System — concebido e prototipado de ponta a ponta por um só designer em ~3 meses.</span>
-      <span class="t" lang="en"><span class="em">An ecosystem of 9 generative-AI POCs</span> for Accenture One Studio, unified by a single Design System — conceived and prototyped end-to-end by a single designer in ~3 months.</span>
+      <span class="t" lang="pt"><span class="em">Não uma aplicação de IA, mas nove ao mesmo tempo</span> — de DevOps a marketing — unificadas por um único Design System e um vocabulário comum de transparência.</span>
+      <span class="t" lang="en"><span class="em">Not one AI application, but nine at once</span> — from DevOps to marketing — unified by a single Design System and a shared grammar of transparency.</span>
     </p>
 
+    <!-- Byline editorial e técnico -->
     <dl class="case-byline case-byline--inline">
       <div>
         <span class="lab"><span class="t" lang="pt">Comissão</span><span class="t" lang="en">Commission</span></span>
@@ -807,17 +1094,17 @@
       <span class="bl-sep" aria-hidden="true">·</span>
       <div>
         <span class="lab"><span class="t" lang="pt">Papel</span><span class="t" lang="en">Role</span></span>
-        <span class="val">Lead Product Designer (end-to-end)</span>
+        <span class="val"><span class="t" lang="pt">Lead Product Designer (ponta a ponta)</span><span class="t" lang="en">Lead Product Designer (end-to-end)</span></span>
       </div>
       <span class="bl-sep" aria-hidden="true">·</span>
       <div>
         <span class="lab"><span class="t" lang="pt">Período</span><span class="t" lang="en">Period</span></span>
-        <span class="val">MMXXIII–MMXXIV (~3 meses)</span>
+        <span class="val"><span class="t" lang="pt">2023–2024 (~3 meses)</span><span class="t" lang="en">2023–2024 (~3 months)</span></span>
       </div>
       <span class="bl-sep" aria-hidden="true">·</span>
       <div>
         <span class="lab"><span class="t" lang="pt">Escopo</span><span class="t" lang="en">Scope</span></span>
-        <span class="val">Generative AI · Design System · 9 POCs</span>
+        <span class="val"><span class="t" lang="pt">9 POCs · Design System · GenAI</span><span class="t" lang="en">9 POCs · Design System · GenAI</span></span>
       </div>
     </dl>
 
@@ -829,84 +1116,125 @@
   </section>
 
   <!-- ============================================================
-       EPÍGRAFE
+       HERO DE IMPACTO — "Nove ao mesmo tempo" (substitui a Epígrafe)
+       Banda full-bleed com a tese-pôster + constelação 9 → 1.
        ============================================================ -->
-  <section class="case-epigraph" data-folio aria-label="Epigraph">
-    <div class="epigraph-inner reveal">
-      <span class="epigraph-mark" aria-hidden="true">“</span>
-      <blockquote class="epigraph-quote">
-        <span class="t" lang="pt">Projetar para IA generativa é tornar visível o invisível: a confiança, a fonte e a reversibilidade de cada resposta.</span>
-        <span class="t" lang="en">Designing for generative AI is making the invisible visible: the confidence, the source, and the reversibility of every answer.</span>
-      </blockquote>
-      <figcaption class="epigraph-cite">
-        <span class="t" lang="pt">— Princípio fundador do Gen.AI Design System</span>
-        <span class="t" lang="en">— Founding principle of the Gen.AI Design System</span>
-      </figcaption>
-    </div>
-  </section>
+  <section class="ga-hero-band" data-folio aria-label="Nove POCs, um Design System">
+    <div class="ga-hero-band__inner reveal">
+      <div class="ga-hb-copy">
+        <p class="ga-hb-eyebrow">
+          <span class="t" lang="pt">Prancha IV · O ecossistema</span>
+          <span class="t" lang="en">Plate IV · The ecosystem</span>
+        </p>
+        <h2 class="ga-hb-title">
+          <span class="t" lang="pt">Um sistema,<br>nove mentes.</span>
+          <span class="t" lang="en">One system,<br>nine minds.</span>
+        </h2>
 
-  <!-- ============================================================
-       I. ARGUMENTO & CONTEXTO (OVERVIEW)
-       ============================================================ -->
-  <section class="page case-section argument" data-folio>
-    <div class="spread">
-      <aside class="margin-l" aria-hidden="true"></aside>
-
-      <div class="content">
-        <header class="section-head reveal">
-          <span class="roman">I.</span>
-          <span class="name"><span class="t" lang="pt">Argumento &amp; Contexto</span><span class="t" lang="en">Argument &amp; Context</span></span>
-          <span class="gloss"><span class="t" lang="pt">O cenário</span><span class="t" lang="en">The setting</span></span>
-        </header>
-
-        <div class="preface">
-          <div class="body reveal">
-            <p id="arg-p1">
-              <span class="t" lang="pt">Em 2023, com a IA generativa crescendo rapidamente, a Accenture quis entender, no <span class="it">One Studio</span>, onde essa tecnologia poderia ser útil tanto nas operações internas quanto nos produtos para clientes. Em vez de focar em um só produto, a empresa optou por criar 9 POCs ao mesmo tempo para testar, na prática, onde a IA realmente fazia diferença.<span class="fn" data-fn="1">1</span></span>
-              <span class="t" lang="en">In 2023, as generative AI grew rapidly, Accenture wanted to understand, within <span class="it">One Studio</span>, where this technology could be useful both in internal operations and in client-facing products. Rather than focusing on a single product, the company chose to build 9 POCs at once to test, in practice, where AI truly made a difference.<span class="fn" data-fn="1">1</span></span>
-            </p>
-            <p id="arg-p2">
-              <span class="t" lang="pt">Cada POC testava uma habilidade diferente do modelo — gerar textos, criar imagens, analisar documentos, resumir chamadas, classificar riscos e atuar como copilot interno. Os temas iam de DevOps e jurídico a marketing para clientes, customer success, supply chain, QA e gestão de conhecimento. O principal requisito de design era garantir que o usuário enxergasse claramente o que a IA produziu, onde errou e o que não conseguiu fazer.</span>
-              <span class="t" lang="en">Each POC tested a different model capability — generating text, creating images, analysing documents, summarising calls, classifying risk and acting as an internal copilot. Themes ranged from DevOps and legal to client marketing, customer success, supply chain, QA and knowledge management. The core design requirement was to ensure the user could clearly see what the AI produced, where it erred and what it failed to do.</span>
+        <!-- Painel dinâmico: em repouso mostra a tese; ao focar/passar o mouse
+             num programa, revela nome, domínio e descrição daquele POC. -->
+        <div class="ga-hb-detail" data-hero-detail aria-live="polite">
+          <div class="ga-hb-panel is-shown" data-hero-default>
+            <p class="ga-hb-sub">
+              <span class="t" lang="pt">Nove provas de conceito, em nove domínios da consultoria — de DevOps a marketing —, unidas por um <span class="em">só Design System</span> e uma gramática comum de transparência da IA.</span>
+              <span class="t" lang="en">Nine proofs of concept, across nine consulting domains — from DevOps to marketing —, bound by a <span class="em">single Design System</span> and one shared grammar of AI transparency.</span>
             </p>
           </div>
-
-          <ol class="footnotes reveal">
-            <li class="fn-item" data-fn="1">
-              <span class="fn-num">1.</span>
-              <span class="t" lang="pt"><span class="it">O programa envolveu 9 squads e teve um ciclo de ~3 meses, do briefing à entrega de protótipos navegáveis.</span></span>
-              <span class="t" lang="en"><span class="it">The programme involved 9 squads and ran a ~3-month cycle, from briefing to delivery of navigable prototypes.</span></span>
-            </li>
-          </ol>
+          <!-- itens por programa injetados aqui pelo script do hero -->
         </div>
       </div>
-      <aside class="margin-r">
-        <p class="gloss" data-anchor="arg-p1">
-          <span class="gloss-num">i</span>
-          <span class="t" lang="pt">9 squads, 9 domínios: DevOps, engenharia, jurídico, marketing, customer success, supply chain, QA e conhecimento interno.</span>
-          <span class="t" lang="en">9 squads, 9 domains: DevOps, engineering, legal, marketing, customer success, supply chain, QA and internal knowledge.</span>
-        </p>
-        <p class="gloss" data-anchor="arg-p2">
-          <span class="gloss-num">ii</span>
-          <span class="t" lang="pt">O requisito central de design: que o usuário enxergasse o que a IA produziu, onde errou e o que não conseguiu fazer.</span>
-          <span class="t" lang="en">The core design requirement: that the user could see what the AI produced, where it erred, and what it could not do.</span>
-        </p>
-      </aside>
+
+      <figure class="ga-hb-figure">
+        <svg class="ga-hb-svg" viewBox="0 0 720 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Astrolábio: nove programas Gen.AI em órbita de um Design System central">
+          <defs>
+            <radialGradient id="gaHubGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#cca24f" stop-opacity="0.42" />
+              <stop offset="42%" stop-color="#cca24f" stop-opacity="0.12" />
+              <stop offset="100%" stop-color="#cca24f" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+
+          <!-- brilho radial sob o núcleo -->
+          <circle class="ga-hb-glow" cx="360" cy="320" r="180" fill="url(#gaHubGlow)" />
+
+          <!-- anel-mostrador gravado que gira devagar (ticks injetados via JS) -->
+          <g class="ga-hb-dial" data-hero-dial>
+            <circle class="ga-hb-dial-ring" cx="360" cy="320" r="288" />
+          </g>
+
+          <!-- órbita onde repousam os nove -->
+          <circle class="ga-hb-orbit" cx="360" cy="320" r="250" />
+
+          <!-- raios: cada programa ligado ao núcleo -->
+          <g class="ga-hb-spokes" data-hero-spokes fill="none"></g>
+
+          <!-- núcleo: o Design System que unifica os nove -->
+          <circle class="ga-hb-hub-ring" cx="360" cy="320" r="70" />
+          <circle class="ga-hb-hub" cx="360" cy="320" r="56" />
+          <text class="ga-hb-hub-cap" x="360" y="320" dominant-baseline="central">Gen.AI</text>
+
+          <!-- nós -->
+          <g class="ga-hb-nodes" data-hero-nodes></g>
+        </svg>
+      </figure>
     </div>
   </section>
 
   <!-- ============================================================
        DOSSIÊ — sumário lateral + lombada (portado do Lighthouse/Sports).
-       Seção I fica de fora (marginalia com conteúdo real, como no
-       Lighthouse); II→VIII entram na lombada, onde o gloss lateral é
-       decorativo/vazio em todo o case — seguro de esconder no scoping abaixo.
+       Todas as seções (Overview I → Aprendizados VIII) entram na lombada
+       e no índice lateral. O gloss lateral é decorativo/vazio em todo o
+       case — seguro de esconder no scoping do dossiê.
        ============================================================ -->
   <div class="ga-dossier">
     <aside class="ga-dossier__rail" aria-label="Índice">
       <p class="ga-dossier__nav-label"><span class="t" lang="pt">Índice do Dossiê</span><span class="t" lang="en">Dossier Index</span></p>
       <nav class="ga-dossier__nav" aria-label="Índice das seções"></nav>
     </aside>
+
     <div class="ga-dossier__spine">
+
+  <!-- ============================================================
+       I. OVERVIEW
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">I.</span>
+        <span class="name">Overview</span>
+        <span class="gloss"><span class="t" lang="pt">O panorama</span><span class="t" lang="en">The overview</span></span>
+      </header>
+
+      <div class="ga-ov-grid reveal">
+        <div class="ga-ov-body">
+          <p class="ga-ov-lead">
+            <span class="t" lang="pt">Em 2023, com a IA generativa crescendo rapidamente, a Accenture quis entender, no <span class="em">One Studio</span>, onde essa tecnologia poderia ser útil — tanto nas operações internas quanto nos produtos para clientes. Em vez de focar num só produto, criou <span class="em">9 POCs ao mesmo tempo</span> para testar, na prática, onde a IA realmente fazia diferença.</span>
+            <span class="t" lang="en">In 2023, as generative AI grew rapidly, Accenture wanted to understand, within <span class="em">One Studio</span>, where this technology could be useful — both in internal operations and in client-facing products. Rather than focusing on a single product, it built <span class="em">9 POCs at once</span> to test, in practice, where AI truly made a difference.</span>
+          </p>
+          <p>
+            <span class="t" lang="pt">Cada POC testava uma habilidade diferente do modelo — gerar textos, criar imagens, analisar documentos, resumir chamadas, classificar riscos e atuar como copilot interno. Os temas iam de DevOps e jurídico a marketing para clientes, customer success, supply chain, QA e gestão de conhecimento.</span>
+            <span class="t" lang="en">Each POC tested a different model capability — generating text, creating images, analysing documents, summarising calls, classifying risk and acting as an internal copilot. Themes ranged from DevOps and legal to client marketing, customer success, supply chain, QA and knowledge management.</span>
+          </p>
+          <p>
+            <span class="t" lang="pt">O principal requisito de design atravessava todas elas: garantir que o usuário enxergasse claramente <span class="it">o que a IA produziu, onde errou e o que não conseguiu fazer</span> — uma gramática comum de transparência que evitasse que 9 squads criassem 9 soluções distintas para o mesmo problema.</span>
+            <span class="t" lang="en">One design requirement ran through all of them: ensuring the user could clearly see <span class="it">what the AI produced, where it erred and what it failed to do</span> — a shared grammar of transparency that kept 9 squads from building 9 different solutions to the same problem.</span>
+          </p>
+        </div>
+
+        <aside class="ga-ov-ficha" aria-label="Ficha técnica">
+          <p class="ga-ov-ficha__title"><span class="t" lang="pt">Ficha técnica</span><span class="t" lang="en">The commission</span></p>
+          <dl>
+            <div><dt><span class="t" lang="pt">Comissão</span><span class="t" lang="en">Commission</span></dt><dd>Accenture · One Studio</dd></div>
+            <div><dt><span class="t" lang="pt">Período</span><span class="t" lang="en">Period</span></dt><dd><span class="t" lang="pt">2023–2024 · ~3 meses</span><span class="t" lang="en">2023–2024 · ~3 months</span></dd></div>
+            <div><dt><span class="t" lang="pt">Meu papel</span><span class="t" lang="en">My role</span></dt><dd><span class="t" lang="pt">Lead Product Designer (ponta a ponta)</span><span class="t" lang="en">Lead Product Designer (end-to-end)</span></dd></div>
+            <div><dt><span class="t" lang="pt">Escopo</span><span class="t" lang="en">Scope</span></dt><dd><span class="t" lang="pt">9 POCs · Design System</span><span class="t" lang="en">9 POCs · Design System</span></dd></div>
+            <div><dt><span class="t" lang="pt">Times</span><span class="t" lang="en">Teams</span></dt><dd><span class="t" lang="pt">9 squads · 9 domínios</span><span class="t" lang="en">9 squads · 9 domains</span></dd></div>
+            <div><dt><span class="t" lang="pt">Foco de design</span><span class="t" lang="en">Design focus</span></dt><dd><span class="t" lang="pt">Transparência da IA</span><span class="t" lang="en">AI transparency</span></dd></div>
+          </dl>
+        </aside>
+      </div>
+    </div>
+  </section>
 
   <!-- ============================================================
        II. MINHA PARTICIPAÇÃO (DRAMATIS)
@@ -1022,47 +1350,47 @@
 
       <div class="poc-grid reveal" data-stagger>
         <div class="poc-entry">
-          <div class="poc-entry__head"><span class="poc-entry__roman">I</span><span class="poc-entry__titles"><span class="poc-entry__name">Incident Alchemist</span><span class="poc-entry__domain">DevOps &amp; Reliability</span></span></div>
+          <div class="poc-entry__head"><span class="poc-entry__icon" style="--poc-icon:url(../images/genai/icons/incident-alchemist.svg)" aria-hidden="true"></span><span class="poc-entry__roman">I</span><span class="poc-entry__titles"><span class="poc-entry__name">Incident Alchemist</span><span class="poc-entry__domain">DevOps &amp; Reliability</span></span></div>
           <p class="poc-entry__body"><span class="t" lang="pt">Catalogação e identificação automáticas de incidentes: o histórico da área passa a ser usado para evitar novos problemas, não só resolver os já ocorridos.</span><span class="t" lang="en">Automatic incident cataloguing and identification: the team's history is used to prevent new problems, not only to fix those already happening.</span></p>
           <span class="poc-entry__status st--pesquisa"><span class="t" lang="pt">Pesquisa</span><span class="t" lang="en">Research</span></span>
         </div>
         <div class="poc-entry">
-          <div class="poc-entry__head"><span class="poc-entry__roman">II</span><span class="poc-entry__titles"><span class="poc-entry__name">Code Assistant</span><span class="poc-entry__domain">Engineering</span></span></div>
+          <div class="poc-entry__head"><span class="poc-entry__icon" style="--poc-icon:url(../images/genai/icons/code-assistant.svg)" aria-hidden="true"></span><span class="poc-entry__roman">II</span><span class="poc-entry__titles"><span class="poc-entry__name">Code Assistant</span><span class="poc-entry__domain">Engineering</span></span></div>
           <p class="poc-entry__body"><span class="t" lang="pt">Pair programmer interno que roda totalmente on-premises: o time conta com um copilot sem enviar nenhum código sensível para fora.</span><span class="t" lang="en">Internal pair programmer running fully on-premises: engineers get a copilot without sending any sensitive code outside.</span></p>
           <span class="poc-entry__status st--pesquisa"><span class="t" lang="pt">Pesquisa</span><span class="t" lang="en">Research</span></span>
         </div>
         <div class="poc-entry poc-entry--featured">
-          <div class="poc-entry__head"><span class="poc-entry__roman">III</span><span class="poc-entry__titles"><span class="poc-entry__name">Contract Explorer</span><span class="poc-entry__domain">Jurídico · Knowledge Base</span></span></div>
+          <div class="poc-entry__head"><span class="poc-entry__icon" style="--poc-icon:url(../images/genai/icons/contract-explorer.svg)" aria-hidden="true"></span><span class="poc-entry__roman">III</span><span class="poc-entry__titles"><span class="poc-entry__name">Contract Explorer</span><span class="poc-entry__domain">Jurídico · Knowledge Base</span></span></div>
           <p class="poc-entry__body"><span class="t" lang="pt">Chat em linguagem natural sobre a base de contratos, com citações rastreáveis até o trecho exato e edição conforme o nível de acesso de cada usuário.</span><span class="t" lang="en">Natural-language chat over the contract base, with citations traceable to the exact clause and editing scoped to each user's access level.</span></p>
           <span class="poc-entry__status st--dev"><span class="t" lang="pt">Desenvolvido</span><span class="t" lang="en">Developed</span></span>
         </div>
         <div class="poc-entry poc-entry--featured">
-          <div class="poc-entry__head"><span class="poc-entry__roman">IV</span><span class="poc-entry__titles"><span class="poc-entry__name">Campaign Genius</span><span class="poc-entry__domain"><span class="t" lang="pt">Marketing — clientes externos</span><span class="t" lang="en">Marketing — external clients</span></span></span></div>
+          <div class="poc-entry__head"><span class="poc-entry__icon" style="--poc-icon:url(../images/genai/icons/campaign-genius.svg)" aria-hidden="true"></span><span class="poc-entry__roman">IV</span><span class="poc-entry__titles"><span class="poc-entry__name">Campaign Genius</span><span class="poc-entry__domain"><span class="t" lang="pt">Marketing — clientes externos</span><span class="t" lang="en">Marketing — external clients</span></span></span></div>
           <p class="poc-entry__body"><span class="t" lang="pt">Único produto Gen.AI para clientes externos. Cria campanhas completas a partir de prompts positivos, negativos e parâmetros — do texto à imagem e edição final, num só fluxo.</span><span class="t" lang="en">The only Gen.AI product for external clients. Builds full campaigns from positive/negative prompts and parameters — from copy to image and final edit, in a single flow.</span></p>
           <span class="poc-entry__status st--parcial"><span class="t" lang="pt">Dev. parcial</span><span class="t" lang="en">Partial dev.</span></span>
         </div>
         <div class="poc-entry">
-          <div class="poc-entry__head"><span class="poc-entry__roman">V</span><span class="poc-entry__titles"><span class="poc-entry__name">Call Analysis</span><span class="poc-entry__domain">Customer Success</span></span></div>
+          <div class="poc-entry__head"><span class="poc-entry__icon" style="--poc-icon:url(../images/genai/icons/call-analysis.svg)" aria-hidden="true"></span><span class="poc-entry__roman">V</span><span class="poc-entry__titles"><span class="poc-entry__name">Call Analysis</span><span class="poc-entry__domain">Customer Success</span></span></div>
           <p class="poc-entry__body"><span class="t" lang="pt">Resume chamadas com clientes em poucos minutos: identifica obstáculos, próximos passos e pontos de dor sem revisar transcrições manualmente.</span><span class="t" lang="en">Summarises client calls in minutes: surfaces blockers, next steps and pain points without manually reviewing transcripts.</span></p>
           <span class="poc-entry__status st--pesquisa"><span class="t" lang="pt">Pesquisa</span><span class="t" lang="en">Research</span></span>
         </div>
         <div class="poc-entry poc-entry--featured">
-          <div class="poc-entry__head"><span class="poc-entry__roman">VI</span><span class="poc-entry__titles"><span class="poc-entry__name">Deploy Check</span><span class="poc-entry__domain"><span class="t" lang="pt">DevOps · Camada de segurança</span><span class="t" lang="en">DevOps · Safety layer</span></span></span></div>
+          <div class="poc-entry__head"><span class="poc-entry__icon" style="--poc-icon:url(../images/genai/icons/deploy-check.svg)" aria-hidden="true"></span><span class="poc-entry__roman">VI</span><span class="poc-entry__titles"><span class="poc-entry__name">Deploy Check</span><span class="poc-entry__domain"><span class="t" lang="pt">DevOps · Camada de segurança</span><span class="t" lang="en">DevOps · Safety layer</span></span></span></div>
           <p class="poc-entry__body"><span class="t" lang="pt">Roda antes do deploy e exibe o risco estimado com justificativas a um clique. O engenheiro aceita, contesta ou anota — e cada decisão fica no audit trail.</span><span class="t" lang="en">Runs before deploy and shows estimated risk with one-click justifications. Engineers accept, contest or annotate — and every decision is logged in the audit trail.</span></p>
           <span class="poc-entry__status st--proto"><span class="t" lang="pt">Protótipo</span><span class="t" lang="en">Prototype</span></span>
         </div>
         <div class="poc-entry poc-entry--featured">
-          <div class="poc-entry__head"><span class="poc-entry__roman">VII</span><span class="poc-entry__titles"><span class="poc-entry__name">Test Insights</span><span class="poc-entry__domain">Quality Assurance</span></span></div>
+          <div class="poc-entry__head"><span class="poc-entry__icon" style="--poc-icon:url(../images/genai/icons/test-insights.svg)" aria-hidden="true"></span><span class="poc-entry__roman">VII</span><span class="poc-entry__titles"><span class="poc-entry__name">Test Insights</span><span class="poc-entry__domain">Quality Assurance</span></span></div>
           <p class="poc-entry__body"><span class="t" lang="pt">Prevê o resultado da próxima rodada, sugere onde reforçar a cobertura e compara com a rodada anterior — separando fato medido, predição e sugestão.</span><span class="t" lang="en">Predicts the next run's outcome, suggests where to add coverage and compares with the previous run — separating measured fact, prediction and suggestion.</span></p>
           <span class="poc-entry__status st--proto"><span class="t" lang="pt">Protótipo</span><span class="t" lang="en">Prototype</span></span>
         </div>
         <div class="poc-entry">
-          <div class="poc-entry__head"><span class="poc-entry__roman">VIII</span><span class="poc-entry__titles"><span class="poc-entry__name">Impact Analysis</span><span class="poc-entry__domain">Engineering</span></span></div>
+          <div class="poc-entry__head"><span class="poc-entry__icon" style="--poc-icon:url(../images/genai/icons/impact-analysis.svg)" aria-hidden="true"></span><span class="poc-entry__roman">VIII</span><span class="poc-entry__titles"><span class="poc-entry__name">Impact Analysis</span><span class="poc-entry__domain">Engineering</span></span></div>
           <p class="poc-entry__body"><span class="t" lang="pt">Quantifica o impacto de qualquer ação — deploy, alteração de dados ou de fluxo — em todos os pontos afetados a jusante. Pensada para múltiplas áreas.</span><span class="t" lang="en">Quantifies the impact of any action — deploy, data or flow change — across every downstream point affected. Designed to adapt to multiple areas.</span></p>
           <span class="poc-entry__status st--pesquisa"><span class="t" lang="pt">Pesquisa</span><span class="t" lang="en">Research</span></span>
         </div>
         <div class="poc-entry poc-entry--featured">
-          <div class="poc-entry__head"><span class="poc-entry__roman">IX</span><span class="poc-entry__titles"><span class="poc-entry__name">SC Copilot</span><span class="poc-entry__domain">Internal Knowledge · Security-first</span></span></div>
+          <div class="poc-entry__head"><span class="poc-entry__icon" style="--poc-icon:url(../images/genai/icons/sc-copilot.svg)" aria-hidden="true"></span><span class="poc-entry__roman">IX</span><span class="poc-entry__titles"><span class="poc-entry__name">SC Copilot</span><span class="poc-entry__domain">Internal Knowledge · Security-first</span></span></div>
           <p class="poc-entry__body"><span class="t" lang="pt">Copilot interno construído do zero — modelos prontos não atendiam à segurança. Responde sobre processos e políticas, sempre informando a fonte.</span><span class="t" lang="en">Internal copilot built from scratch — off-the-shelf models didn't meet security requirements. Answers about processes and policies, always citing the source.</span></p>
           <span class="poc-entry__status st--proto"><span class="t" lang="pt">Protótipo</span><span class="t" lang="en">Prototype</span></span>
         </div>
@@ -1096,6 +1424,76 @@
         <span class="t" lang="pt">O foco não foram as 9 POCs isoladamente, mas a presença da IA em cada uma — de forma <span class="em">legível, controlável e auditável</span>. A IA gerava, interpretava, comparava e previa; o Design System mantinha a mesma gramática visual e os mesmos padrões de incerteza entre os 9 contextos. A integração girou em torno de 5 princípios, discutidos com cada squad antes de virarem componentes.</span>
         <span class="t" lang="en">The focus was not the 9 POCs in isolation, but the presence of AI in each — <span class="em">legible, controllable and auditable</span>. The AI generated, interpreted, compared and predicted; the Design System kept the same visual grammar and the same uncertainty patterns across the 9 contexts. The integration was built around 5 principles, discussed with each squad before becoming components.</span>
       </p>
+
+      <!-- Espécime: a gramática de transparência num único cartão-resposta.
+           Os 3 sinais (confiança · fonte · reversibilidade) que se repetem nas 9 POCs. -->
+      <figure class="ga-grammar reveal">
+        <div class="ga-grammar__specimen">
+          <p class="ga-grammar__eyebrow">
+            <span class="t" lang="pt">Espécime · uma resposta, três sinais</span>
+            <span class="t" lang="en">Specimen · one answer, three signals</span>
+          </p>
+          <div class="ga-answer" role="group" aria-label="Cartão de resposta da IA">
+            <div class="ga-answer__head">
+              <span class="ga-answer__mark" aria-hidden="true">✦</span>
+              <span class="ga-answer__who">Gen.AI</span>
+              <span class="ga-conf">
+                <span class="ga-conf__dot" aria-hidden="true"></span>
+                <span class="t" lang="pt">Confiança alta · 92%</span>
+                <span class="t" lang="en">High confidence · 92%</span>
+              </span>
+            </div>
+            <p class="ga-answer__body">
+              <span class="t" lang="pt">Encontrei 3 contratos com a cláusula de reajuste — <mark>Contrato 1</mark>, <mark>Contrato 7</mark> e <mark>Contrato 9</mark>.</span>
+              <span class="t" lang="en">I found 3 contracts with the adjustment clause — <mark>Contract 1</mark>, <mark>Contract 7</mark> and <mark>Contract 9</mark>.</span>
+            </p>
+            <div class="ga-cites">
+              <a class="ga-cite" href="#" onclick="return false" aria-label="Fonte: Contrato 7, cláusula 4.2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>
+                Contrato 7 · 4.2
+              </a>
+              <a class="ga-cite" href="#" onclick="return false" aria-label="Fonte: Contrato 9, cláusula 7.1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>
+                Contrato 9 · 7.1
+              </a>
+            </div>
+            <div class="ga-answer__foot">
+              <button type="button" class="ga-ctrl" tabindex="-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-1"/></svg>
+                <span class="t" lang="pt">desfazer</span><span class="t" lang="en">undo</span>
+              </button>
+              <button type="button" class="ga-ctrl" tabindex="-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+                <span class="t" lang="pt">editar</span><span class="t" lang="en">edit</span>
+              </button>
+              <span class="ga-fb">
+                <span class="ga-fb__label"><span class="t" lang="pt">útil?</span><span class="t" lang="en">useful?</span></span>
+                <button type="button" tabindex="-1" aria-label="Resposta útil">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v11"/><path d="M7 10 11 3a2 2 0 0 1 3 2v4h4.5a2 2 0 0 1 2 2.4l-1.4 7a2 2 0 0 1-2 1.6H7"/></svg>
+                </button>
+                <button type="button" tabindex="-1" aria-label="Resposta não útil">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 14V3"/><path d="M17 14l-4 7a2 2 0 0 1-3-2v-4H5.5a2 2 0 0 1-2-2.4l1.4-7A2 2 0 0 1 6.9 2H17"/></svg>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <ol class="ga-grammar__legend">
+          <li>
+            <span class="ga-leg-term"><span class="t" lang="pt">Confiança declarada</span><span class="t" lang="en">Declared confidence</span></span>
+            <span class="ga-leg-def"><span class="t" lang="pt">O modelo diz o quão certo está — nunca uma afirmação sem grau.</span><span class="t" lang="en">The model states how sure it is — never a claim without a degree.</span></span>
+          </li>
+          <li>
+            <span class="ga-leg-term"><span class="t" lang="pt">Fonte rastreável</span><span class="t" lang="en">Traceable source</span></span>
+            <span class="ga-leg-def"><span class="t" lang="pt">Cada afirmação leva ao trecho exato que a originou.</span><span class="t" lang="en">Every claim links back to the exact clause that produced it.</span></span>
+          </li>
+          <li>
+            <span class="ga-leg-term"><span class="t" lang="pt">Reversibilidade</span><span class="t" lang="en">Reversibility</span></span>
+            <span class="ga-leg-def"><span class="t" lang="pt">Desfazer, editar e avaliar presentes em toda resposta — o loop fechado.</span><span class="t" lang="en">Undo, edit and rate present in every answer — the closed loop.</span></span>
+          </li>
+        </ol>
+      </figure>
 
       <div class="principles reveal" data-stagger>
         <div class="principle">
@@ -1392,21 +1790,6 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       INTERMEZZO
-       ============================================================ -->
-  <section class="case-intermezzo" data-folio aria-label="Intermezzo">
-    <span class="intermezzo-bg l1" data-speed="0.15" aria-hidden="true">⁂</span>
-    <span class="intermezzo-bg l2" data-speed="-0.08" aria-hidden="true">❧</span>
-    <div class="intermezzo-inner reveal">
-      <span class="intermezzo-label">Intermezzo</span>
-      <p class="intermezzo-quote">
-        <span class="t" lang="pt">O maior legado não foi um produto isolado, mas um vocabulário comum de UX para IA generativa — reaproveitado pela Accenture nos ciclos seguintes.</span>
-        <span class="t" lang="en">The greatest legacy wasn't a single product, but a shared UX vocabulary for generative AI — reused by Accenture in the cycles that followed.</span>
-      </p>
-      <span class="intermezzo-asterism" aria-hidden="true">⁂</span>
-    </div>
-  </section>
 
   <!-- ============================================================
        VII. ENTREGA & IMPACTO
@@ -1510,18 +1893,18 @@
       <span class="t" lang="pt">Esta prancha foi composta pelo autor para a <em>Accenture · One Studio</em> em MMXXIII–MMXXIV. Todos os dados, respostas de IA e métricas exibidos servem como estudo conceitual de design de produtos de IA generativa, mantendo os parâmetros de confidencialidade acordados. Nenhum dado real da Accenture ou de seus clientes é representado.</span>
       <span class="t" lang="en">This plate was set by the author for <em>Accenture · One Studio</em> in MMXXIII–MMXXIV. All data, AI responses and metrics shown serve as a conceptual specimen of generative-AI product design, under agreed confidentiality terms. No real Accenture or client data is represented.</span>
     </p>
-    <div class="case-colophon-meta">Plate I · Vol. I · MMXXIII–MMXXIV</div>
+    <div class="case-colophon-meta">Plate IV · Vol. I · MMXXIII–MMXXIV</div>
     <p class="colo-finis"><span class="t" lang="pt">Finis · fim da prancha</span><span class="t" lang="en">Finis · end of plate</span></p>
   </section>
 
   <nav class="folio-nav" aria-label="Navegação entre cases">
-    <a class="verso" href="../index.html#works" rel="prev">
-      <span class="folio-marker"><span class="t" lang="pt">← Catálogo (Anverso)</span><span class="t" lang="en">← Catalogue (Anverso)</span></span>
-      <span class="folio-title"><em><span class="t" lang="pt">Catálogo de Obras</span><span class="t" lang="en">A Catalogue of Works</span></em></span>
+    <a class="verso" href="sports-experience.html" rel="prev">
+      <span class="folio-marker"><span class="t" lang="pt">← Prancha anterior (Verso)</span><span class="t" lang="en">← Previous Plate (Verso)</span></span>
+      <span class="folio-title"><em><span class="t" lang="pt">Prancha III — Sports Experience</span><span class="t" lang="en">Plate III — Sports Experience</span></em></span>
     </a>
-    <a class="recto" href="pmo-dashboards.html" rel="next">
-      <span class="folio-marker"><span class="t" lang="pt">Próxima Prancha (Recto) →</span><span class="t" lang="en">Next Plate (Recto) →</span></span>
-      <span class="folio-title"><em><span class="t" lang="pt">Prancha II — Dashboards PMO</span><span class="t" lang="en">Plate II — PMO Dashboards</span></em></span>
+    <a class="recto" href="../index.html#works" rel="next">
+      <span class="folio-marker"><span class="t" lang="pt">Catálogo (Recto) →</span><span class="t" lang="en">Catalogue (Recto) →</span></span>
+      <span class="folio-title"><em><span class="t" lang="pt">Catálogo de Obras</span><span class="t" lang="en">A Catalogue of Works</span></em></span>
     </a>
   </nav>
 
@@ -1542,6 +1925,188 @@
 <script src="./case-template.js"></script>
 <!-- Chrome de case: Index Rerum (⌘K), paridade com a home -->
 <script src="./case-chrome.js"></script>
+
+<!-- Hero "Um sistema, nove mentes": monta a constelação (raios + nós com
+     ícones + rótulos) e o painel dinâmico. Passar o mouse / focar / tocar um
+     programa revela seu domínio e descrição à esquerda. Fonte única de dados. -->
+<script>
+(function () {
+  var band = document.querySelector('.ga-hero-band');
+  if (!band) return;
+  var spokesG = band.querySelector('[data-hero-spokes]');
+  var nodesG  = band.querySelector('[data-hero-nodes]');
+  var dial    = band.querySelector('[data-hero-dial]');
+  var detail  = band.querySelector('[data-hero-detail]');
+  var defPanel = detail && detail.querySelector('[data-hero-default]');
+  if (!spokesG || !nodesG || !detail || !defPanel) return;
+
+  var NS = 'http://www.w3.org/2000/svg';
+  var CX = 360, CY = 320, R = 250, START = -90, STEP = 40, NR = 22;
+
+  // Ticks gravados do anel-mostrador (36 finos + 4 cardeais), no grupo que gira
+  if (dial) {
+    for (var d = 0; d < 360; d += 10) {
+      var major = (d % 90 === 0);
+      var ta = d * Math.PI / 180, ca = Math.cos(ta), sa = Math.sin(ta);
+      var ri = major ? 277 : 283, ro = major ? 295 : 289;
+      var tk = document.createElementNS(NS, 'line');
+      tk.setAttribute('class', 'ga-hb-tick' + (major ? ' ga-hb-tick--major' : ''));
+      tk.setAttribute('x1', (CX + ca * ri).toFixed(1)); tk.setAttribute('y1', (CY + sa * ri).toFixed(1));
+      tk.setAttribute('x2', (CX + ca * ro).toFixed(1)); tk.setAttribute('y2', (CY + sa * ro).toFixed(1));
+      dial.appendChild(tk);
+    }
+  }
+
+  // Ícones reais dos POCs (Material, viewBox 24×24, preenchidos) — herdam fill via .ga-hb-ico.
+  // Chaves mantidas iguais às referenciadas em DATA; agora apontam para os glifos reais dos produtos.
+  var IC = {
+    bell:    '<path d="M4.99994 21C4.14994 21 3.54577 20.6208 3.18744 19.8625C2.82911 19.1042 2.91661 18.4 3.44994 17.75L8.99994 11V5H7.99994C7.71661 5 7.47911 4.90417 7.28744 4.7125C7.09577 4.52083 6.99994 4.28333 6.99994 4C6.99994 3.71667 7.09577 3.47917 7.28744 3.2875C7.47911 3.09583 7.71661 3 7.99994 3H15.9999C16.2833 3 16.5208 3.09583 16.7124 3.2875C16.9041 3.47917 16.9999 3.71667 16.9999 4C16.9999 4.28333 16.9041 4.52083 16.7124 4.7125C16.5208 4.90417 16.2833 5 15.9999 5H14.9999V11L20.5499 17.75C21.0833 18.4 21.1708 19.1042 20.8124 19.8625C20.4541 20.6208 19.8499 21 18.9999 21H4.99994ZM6.99994 18H16.9999L13.5999 14H10.3999L6.99994 18ZM4.99994 19H18.9999L12.9999 11.7V5H10.9999V11.7L4.99994 19Z"/>',
+    code:    '<path d="M9.6 15.6L11 14.175L8.825 12L11 9.825L9.6 8.4L6 12L9.6 15.6ZM14.4 15.6L18 12L14.4 8.4L13 9.825L15.175 12L13 14.175L14.4 15.6ZM5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H19C19.55 3 20.0208 3.19583 20.4125 3.5875C20.8042 3.97917 21 4.45 21 5V19C21 19.55 20.8042 20.0208 20.4125 20.4125C20.0208 20.8042 19.55 21 19 21H5ZM5 19H19V5H5V19Z"/>',
+    doc:     '<path d="M6 22C5.16667 22 4.45833 21.7083 3.875 21.125C3.29167 20.5417 3 19.8333 3 19V16H6V2H21V19C21 19.8333 20.7083 20.5417 20.125 21.125C19.5417 21.7083 18.8333 22 18 22H6ZM18 20C18.2833 20 18.5208 19.9042 18.7125 19.7125C18.9042 19.5208 19 19.2833 19 19V4H8V16H17V19C17 19.2833 17.0958 19.5208 17.2875 19.7125C17.4792 19.9042 17.7167 20 18 20ZM9 9V7H18V9H9ZM9 12V10H18V12H9ZM6 20H15V18H5V19C5 19.2833 5.09583 19.5208 5.2875 19.7125C5.47917 19.9042 5.71667 20 6 20ZM6 20H5H15H6Z"/>',
+    spark:   '<path d="M5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H19C19.55 3 20.0208 3.19583 20.4125 3.5875C20.8042 3.97917 21 4.45 21 5V19C21 19.55 20.8042 20.0208 20.4125 20.4125C20.0208 20.8042 19.55 21 19 21H5ZM5 19H19V5H5V19ZM6 17H18L14.25 12L11.25 16L9 13L6 17ZM8.5 10C8.91667 10 9.27083 9.85417 9.5625 9.5625C9.85417 9.27083 10 8.91667 10 8.5C10 8.08333 9.85417 7.72917 9.5625 7.4375C9.27083 7.14583 8.91667 7 8.5 7C8.08333 7 7.72917 7.14583 7.4375 7.4375C7.14583 7.72917 7 8.08333 7 8.5C7 8.91667 7.14583 9.27083 7.4375 9.5625C7.72917 9.85417 8.08333 10 8.5 10Z"/>',
+    mic:     '<path d="M21 6H19V15H6V17C6 17.55 6.45 18 7 18H18L22 22V7C22 6.45 21.55 6 21 6ZM17 12V3C17 2.45 16.55 2 16 2H3C2.45 2 2 2.45 2 3V17L6 13H16C16.55 13 17 12.55 17 12Z"/>',
+    shield:  '<path d="M10.6 16.05L17.65 9L16.25 7.6L10.6 13.25L7.75 10.4L6.35 11.8L10.6 16.05ZM5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H9.2C9.41667 2.4 9.77917 1.91667 10.2875 1.55C10.7958 1.18333 11.3667 1 12 1C12.6333 1 13.2042 1.18333 13.7125 1.55C14.2208 1.91667 14.5833 2.4 14.8 3H19C19.55 3 20.0208 3.19583 20.4125 3.5875C20.8042 3.97917 21 4.45 21 5V19C21 19.55 20.8042 20.0208 20.4125 20.4125C20.0208 20.8042 19.55 21 19 21H5ZM5 19H19V5H5V19ZM12 4.25C12.2167 4.25 12.3958 4.17917 12.5375 4.0375C12.6792 3.89583 12.75 3.71667 12.75 3.5C12.75 3.28333 12.6792 3.10417 12.5375 2.9625C12.3958 2.82083 12.2167 2.75 12 2.75C11.7833 2.75 11.6042 2.82083 11.4625 2.9625C11.3208 3.10417 11.25 3.28333 11.25 3.5C11.25 3.71667 11.3208 3.89583 11.4625 4.0375C11.6042 4.17917 11.7833 4.25 12 4.25Z"/>',
+    bars:    '<path d="M12 19C13.1 19 14.0417 18.6083 14.825 17.825C15.6083 17.0417 16 16.1 16 15V11C16 9.9 15.6083 8.95833 14.825 8.175C14.0417 7.39167 13.1 7 12 7C10.9 7 9.95833 7.39167 9.175 8.175C8.39167 8.95833 8 9.9 8 11V15C8 16.1 8.39167 17.0417 9.175 17.825C9.95833 18.6083 10.9 19 12 19ZM10 16H14V14H10V16ZM10 12H14V10H10V12ZM12 21C10.9167 21 9.9125 20.7333 8.9875 20.2C8.0625 19.6667 7.33333 18.9333 6.8 18H4V16H6.1C6.05 15.6667 6.02083 15.3333 6.0125 15C6.00417 14.6667 6 14.3333 6 14H4V12H6C6 11.6667 6.00417 11.3333 6.0125 11C6.02083 10.6667 6.05 10.3333 6.1 10H4V8H6.8C7.03333 7.61667 7.29583 7.25833 7.5875 6.925C7.87917 6.59167 8.21667 6.3 8.6 6.05L7 4.4L8.4 3L10.55 5.15C11.0167 5 11.4917 4.925 11.975 4.925C12.4583 4.925 12.9333 5 13.4 5.15L15.6 3L17 4.4L15.35 6.05C15.7333 6.3 16.0792 6.5875 16.3875 6.9125C16.6958 7.2375 16.9667 7.6 17.2 8H20V10H17.9C17.95 10.3333 17.9792 10.6667 17.9875 11C17.9958 11.3333 18 11.6667 18 12H20V14H18C18 14.3333 17.9958 14.6667 17.9875 15C17.9792 15.3333 17.95 15.6667 17.9 16H20V18H17.2C16.6667 18.9333 15.9375 19.6667 15.0125 20.2C14.0875 20.7333 13.0833 21 12 21Z"/>',
+    graph:   '<path d="M20.6 21L15.9 16.3C15.2167 16.8333 14.4625 17.25 13.6375 17.55C12.8125 17.85 11.9333 18 11 18C9.5 18 8.14583 17.6333 6.9375 16.9C5.72917 16.1667 4.775 15.2 4.075 14H6.525C7.09167 14.6167 7.75417 15.1042 8.5125 15.4625C9.27083 15.8208 10.1 16 11 16C12.6667 16 14.0833 15.4167 15.25 14.25C16.4167 13.0833 17 11.6667 17 10C17 8.33333 16.4167 6.91667 15.25 5.75C14.0833 4.58333 12.6667 4 11 4C9.43333 4 8.07917 4.52917 6.9375 5.5875C5.79583 6.64583 5.15833 7.95 5.025 9.5H3.025C3.15833 7.38333 3.9875 5.60417 5.5125 4.1625C7.0375 2.72083 8.86667 2 11 2C13.2333 2 15.125 2.775 16.675 4.325C18.225 5.875 19 7.76667 19 10C19 10.9333 18.85 11.8125 18.55 12.6375C18.25 13.4625 17.8333 14.2167 17.3 14.9L22 19.6L20.6 21ZM9.925 14L8.35 8.8L7.05 12.5H2V11H6L7.65 6.25H9.15L10.675 11.35L11.75 8H13.25L14.75 11H15.5V12.5H13.825L12.65 10.15L11.4 14H9.925Z"/>',
+    chat:    '<path d="M4.9001 21L4.7501 19.725L4.5501 19.625C4.48343 19.5917 4.39176 19.5333 4.2751 19.45L3.0751 19.95L1.9751 18.05L3.0001 17.275V16.75L1.9751 15.95L3.0751 14.05L4.2751 14.55C4.35843 14.5 4.4376 14.45 4.5126 14.4C4.5876 14.35 4.66676 14.3083 4.7501 14.275L4.9001 13H7.1001L7.2501 14.275L7.4501 14.375C7.48343 14.3917 7.5251 14.4167 7.5751 14.45L7.7251 14.55L8.9251 14.05L10.0251 15.95L9.0001 16.725V17.275L14.4751 14.1L13.3501 16.075L13.6501 16.3L9.7001 18.6L8.9251 19.95L7.7251 19.45C7.64176 19.5 7.5626 19.55 7.4876 19.6C7.4126 19.65 7.33343 19.6917 7.2501 19.725L7.1001 21H4.9001ZM6.0001 15.5C5.58343 15.5 5.22926 15.6458 4.9376 15.9375C4.64593 16.2292 4.5001 16.5833 4.5001 17C4.5001 17.4167 4.64593 17.7708 4.9376 18.0625C5.22926 18.3542 5.58343 18.5 6.0001 18.5C6.41676 18.5 6.77093 18.3542 7.0626 18.0625C7.35426 17.7708 7.5001 17.4167 7.5001 17C7.5001 16.5833 7.35426 16.2292 7.0626 15.9375C6.77093 15.6458 6.41676 15.5 6.0001 15.5ZM9.9001 10L9.7501 8.725C9.71676 8.69167 9.6751 8.66667 9.6251 8.65C9.5751 8.63333 9.53343 8.60833 9.5001 8.575V14.075L9.1251 13.425L8.0001 13.9V8.8L7.0001 7.05L8.0001 6.275V5.75L6.9751 4.95L8.0751 3.05L9.2751 3.55C9.35843 3.5 9.4376 3.45 9.5126 3.4C9.5876 3.35 9.66676 3.30833 9.7501 3.275L9.9001 2H12.1001L12.2501 3.275L12.4501 3.375C12.5168 3.40833 12.6084 3.46667 12.7251 3.55L13.9251 3.05L15.0251 4.95L14.0001 5.725V6.25L15.0251 7.05L13.9251 8.95L12.7251 8.45C12.6418 8.5 12.5626 8.55 12.4876 8.6C12.4126 8.65 12.3334 8.69167 12.2501 8.725L12.1001 10H9.9001ZM11.0001 4.5C10.5834 4.5 10.2293 4.64583 9.9376 4.9375C9.64593 5.22917 9.5001 5.58333 9.5001 6C9.5001 6.41667 9.64593 6.77083 9.9376 7.0625C10.2293 7.35417 10.5834 7.5 11.0001 7.5C11.4168 7.5 11.7709 7.35417 12.0626 7.0625C12.3543 6.77083 12.5001 6.41667 12.5001 6C12.5001 5.58333 12.3543 5.22917 12.0626 4.9375C11.7709 4.64583 11.4168 4.5 11.0001 4.5ZM16.9001 21L16.7501 19.725L16.5501 19.625C16.4834 19.5917 16.3918 19.5333 16.2751 19.45L15.0751 19.95L13.9751 18.05L15.0001 17.275V16.75L13.9751 15.975L15.0751 14.05L16.2751 14.55C16.3251 14.5167 16.3584 14.4958 16.3751 14.4875L16.7501 14.3L11.3501 10.5H12.5501L12.6501 9.6L17.5251 13H19.1001L19.2501 14.275L19.4501 14.375C19.4834 14.3917 19.5251 14.4167 19.5751 14.45L19.7251 14.55L20.9251 14.05L22.0251 15.95L21.0001 16.725V17.25L22.0251 18.05L20.9251 19.95L19.7251 19.45C19.6418 19.5 19.5626 19.55 19.4876 19.6C19.4126 19.65 19.3334 19.6917 19.2501 19.725L19.1001 21H16.9001ZM18.0001 15.5C17.5834 15.5 17.2293 15.6458 16.9376 15.9375C16.6459 16.2292 16.5001 16.5833 16.5001 17C16.5001 17.4167 16.6459 17.7708 16.9376 18.0625C17.2293 18.3542 17.5834 18.5 18.0001 18.5C18.4168 18.5 18.7709 18.3542 19.0626 18.0625C19.3543 17.7708 19.5001 17.4167 19.5001 17C19.5001 16.5833 19.3543 16.2292 19.0626 15.9375C18.7709 15.6458 18.4168 15.5 18.0001 15.5Z"/>'
+  };
+
+  var DATA = [
+    { id:'incident', name:'Incident Alchemist', icon:IC.bell,
+      domPt:'DevOps · Confiabilidade', domEn:'DevOps · Reliability',
+      descPt:'Cataloga e identifica incidentes automaticamente — o histórico da área passa a prevenir problemas, não só resolvê-los.',
+      descEn:'Automatically catalogues and identifies incidents — the team’s history starts preventing problems, not just fixing them.' },
+    { id:'code', name:'Code Assistant', icon:IC.code,
+      domPt:'Engenharia', domEn:'Engineering',
+      descPt:'Pair programmer interno rodando totalmente on-premises: um copilot sem enviar código sensível para fora.',
+      descEn:'Internal pair programmer running fully on-premises: a copilot without sending any sensitive code outside.' },
+    { id:'contract', name:'Contract Explorer', icon:IC.doc,
+      domPt:'Jurídico · Base de contratos', domEn:'Legal · Contract base',
+      descPt:'Chat em linguagem natural sobre a base de contratos, com citações rastreáveis até a cláusula exata.',
+      descEn:'Natural-language chat over the contract base, with citations traceable down to the exact clause.' },
+    { id:'campaign', name:'Campaign Genius', icon:IC.spark,
+      domPt:'Marketing · Clientes externos', domEn:'Marketing · External clients',
+      descPt:'Único produto para clientes externos: cria campanhas completas a partir de prompts — do texto à imagem e edição, num só fluxo.',
+      descEn:'The only product for external clients: builds full campaigns from prompts — from copy to image and edit, in one flow.' },
+    { id:'call', name:'Call Analysis', icon:IC.mic,
+      domPt:'Customer Success', domEn:'Customer Success',
+      descPt:'Resume chamadas com clientes em minutos: obstáculos, próximos passos e pontos de dor, sem revisar transcrições à mão.',
+      descEn:'Summarises client calls in minutes: blockers, next steps and pain points, without manually reviewing transcripts.' },
+    { id:'deploy', name:'Deploy Check', icon:IC.shield,
+      domPt:'DevOps · Camada de segurança', domEn:'DevOps · Safety layer',
+      descPt:'Roda antes do deploy e mostra o risco estimado com justificativas; cada decisão fica registrada no audit trail.',
+      descEn:'Runs before deploy and shows estimated risk with justifications; every decision is logged in the audit trail.' },
+    { id:'test', name:'Test Insights', icon:IC.bars,
+      domPt:'Quality Assurance', domEn:'Quality Assurance',
+      descPt:'Prevê o resultado da próxima rodada e sugere onde reforçar a cobertura — separando fato medido, predição e sugestão.',
+      descEn:'Predicts the next run’s outcome and suggests where to add coverage — separating measured fact, prediction and suggestion.' },
+    { id:'impact', name:'Impact Analysis', icon:IC.graph,
+      domPt:'Engenharia', domEn:'Engineering',
+      descPt:'Quantifica o impacto de qualquer ação — deploy, mudança de dados ou de fluxo — em todos os pontos afetados a jusante.',
+      descEn:'Quantifies the impact of any action — deploy, data or flow change — across every downstream point affected.' },
+    { id:'sc', name:'SC Copilot', icon:IC.chat,
+      domPt:'Conhecimento interno · Security-first', domEn:'Internal knowledge · Security-first',
+      descPt:'Copilot interno construído do zero por exigência de segurança — responde sobre processos e políticas sempre citando a fonte.',
+      descEn:'Internal copilot built from scratch for security — answers about processes and policies, always citing the source.' }
+  ];
+
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  var panels = {}, nodes = {};
+  var pinned = null;
+
+  function show(id) {
+    Object.keys(panels).forEach(function (k) { panels[k].classList.toggle('is-shown', k === id); });
+    defPanel.classList.toggle('is-shown', !id);
+    Object.keys(nodes).forEach(function (k) {
+      var on = k === id;
+      nodes[k].g.classList.toggle('is-active', on);
+      nodes[k].spoke.classList.toggle('is-active', on);
+      nodes[k].g.setAttribute('aria-pressed', pinned === k ? 'true' : 'false');
+    });
+    band.classList.toggle('ga-hb-focus', !!id);
+  }
+
+  DATA.forEach(function (p, i) {
+    // painel de detalhe
+    var pn = document.createElement('div');
+    pn.className = 'ga-hb-panel';
+    pn.setAttribute('data-hero-item', p.id);
+    pn.innerHTML =
+      '<span class="ga-hb-dom"><span class="t" lang="pt">' + esc(p.domPt) + '</span><span class="t" lang="en">' + esc(p.domEn) + '</span></span>' +
+      '<h3 class="ga-hb-progname">' + esc(p.name) + '</h3>' +
+      '<p class="ga-hb-desc"><span class="t" lang="pt">' + esc(p.descPt) + '</span><span class="t" lang="en">' + esc(p.descEn) + '</span></p>';
+    detail.appendChild(pn);
+    panels[p.id] = pn;
+
+    // geometria
+    var ang = (START + i * STEP) * Math.PI / 180;
+    var ux = Math.cos(ang), uy = Math.sin(ang);
+    var x = CX + R * ux, y = CY + R * uy;
+
+    // raio
+    var sp = document.createElementNS(NS, 'line');
+    sp.setAttribute('class', 'ga-hb-spoke');
+    sp.setAttribute('x1', x.toFixed(1)); sp.setAttribute('y1', y.toFixed(1));
+    sp.setAttribute('x2', CX); sp.setAttribute('y2', CY);
+    spokesG.appendChild(sp);
+
+    // nó
+    var g = document.createElementNS(NS, 'g');
+    g.setAttribute('class', 'ga-hb-node-g');
+    g.setAttribute('data-id', p.id);
+    g.setAttribute('tabindex', '0');
+    g.setAttribute('role', 'button');
+    g.setAttribute('aria-label', p.name);
+    g.setAttribute('aria-pressed', 'false');
+
+    var core = document.createElementNS(NS, 'g');
+    core.setAttribute('class', 'ga-hb-node-core');
+    var c = document.createElementNS(NS, 'circle');
+    c.setAttribute('class', 'ga-hb-node');
+    c.setAttribute('cx', x.toFixed(1)); c.setAttribute('cy', y.toFixed(1)); c.setAttribute('r', NR);
+    core.appendChild(c);
+    var ico = document.createElementNS(NS, 'g');
+    ico.setAttribute('class', 'ga-hb-ico');
+    ico.setAttribute('transform', 'translate(' + (x - 11).toFixed(1) + ',' + (y - 11).toFixed(1) + ') scale(0.92)');
+    ico.innerHTML = p.icon;
+    core.appendChild(ico);
+    g.appendChild(core);
+
+    // rótulo (nome real, duas linhas)
+    var lx = x + ux * 32, ly = y + uy * 30;
+    var anchor = ux > 0.3 ? 'start' : (ux < -0.3 ? 'end' : 'middle');
+    var words = p.name.split(' ');
+    var line1 = words[0], line2 = words.slice(1).join(' ');
+    var baseY = uy > 0.3 ? ly : (uy < -0.3 ? ly - 11 : ly - 4);
+    var t = document.createElementNS(NS, 'text');
+    t.setAttribute('class', 'ga-hb-name-lbl');
+    t.setAttribute('text-anchor', anchor);
+    var ts1 = document.createElementNS(NS, 'tspan');
+    ts1.setAttribute('x', lx.toFixed(1)); ts1.setAttribute('y', baseY.toFixed(1)); ts1.textContent = line1;
+    t.appendChild(ts1);
+    if (line2) {
+      var ts2 = document.createElementNS(NS, 'tspan');
+      ts2.setAttribute('x', lx.toFixed(1)); ts2.setAttribute('y', (baseY + 11).toFixed(1)); ts2.textContent = line2;
+      t.appendChild(ts2);
+    }
+    g.appendChild(t);
+    nodesG.appendChild(g);
+    nodes[p.id] = { g: g, spoke: sp };
+
+    // interação
+    g.addEventListener('mouseenter', function () { show(p.id); });
+    g.addEventListener('focus', function () { show(p.id); });
+    g.addEventListener('mouseleave', function () { show(pinned); });
+    g.addEventListener('blur', function () { show(pinned); });
+    function toggle(e) { e.preventDefault(); pinned = (pinned === p.id) ? null : p.id; show(pinned); }
+    g.addEventListener('click', toggle);
+    g.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') toggle(e);
+    });
+  });
+})();
+</script>
 
 <!-- Dossiê: monta o índice lateral e sincroniza o capítulo corrente (portado do Lighthouse/Sports) -->
 <script>

@@ -64,10 +64,14 @@
       loupe.ctx.drawImage(cnv, ox, oy, srcSide, srcSide, 0, 0, loupe.cv.width, loupe.cv.height);
     }
 
-    // luzes — chave quente + preenchimento suave, como uma galeria
-    scene.add(new THREE.AmbientLight(0xffffff, 0.78));
-    var key  = new THREE.DirectionalLight(0xfff4e2, 0.95); key.position.set(5, 8, 10);  scene.add(key);
-    var fill = new THREE.DirectionalLight(0xbfd0ff, 0.42); fill.position.set(-6, -3, -8); scene.add(fill);
+    // luzes — chave quente + preenchimento suave, como uma galeria.
+    // A soma que atinge a face frontal é calibrada para ~1.0 (ambiente +
+    // chave·NdotL≈0.78): antes somava ~1.5 e estourava os claros da pintura
+    // (clip para branco em sRGB, sem tone-mapping). Reduzida para preservar
+    // a saturação/contraste da arte original, mantendo o leve relevo 3D.
+    scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+    var key  = new THREE.DirectionalLight(0xfff4e2, 0.55); key.position.set(5, 8, 10);  scene.add(key);
+    var fill = new THREE.DirectionalLight(0xbfd0ff, 0.3);  fill.position.set(-6, -3, -8); scene.add(fill);
 
     // dimensões proporcionais (frente 608x964, espessura 38).
     // Customizáveis via opts.w/opts.h/opts.d — ex.: tela landscape

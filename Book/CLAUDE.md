@@ -79,7 +79,6 @@ Book/
     ├── lighthouse.html          ← case Lighthouse (Plate III · Vale Corredor Norte). Linka tokens + catalogue.css + case-template.css + case-template.js + case-chrome.js
     ├── pmo-dashboards.html      ← case PMO Estratégico · Samarco (Plate II). Dossiê "lombada" I–XIV (índice lateral + scroll-spy), inclui a **Mandala Estratégica navegável** (roda SVG + painel-tabela por eixo, i18n) como peça de impacto full-bleed. Briefing completo em `SAMARCO-PMO.md` — ler antes de mexer
     ├── sports-experience.html   ← case Sports Experience · DirecTV/FIFA (Plate IV). Estrutura enxuta (Overview→Desafio→Papel→Solução→Telas→Entrega→Galeria), sem Dramatis Personæ
-    ├── samarco-lab.html         ← sandbox (noindex) onde os conceitos da Mandala/specimen do PMO foram prototipados antes de entrar na prancha; mantido como referência
     ├── lightbox.js              ← lightbox compartilhado (`.lightboxgallery-link` → overlay `.lbg-overlay` com zoom/fullscreen/share/close); usado por lighthouse.html e pmo-dashboards.html
     ├── SAMARCO-PMO.md           ← briefing autossuficiente do case PMO (fatos confirmados, tokens Figma, decisões, pendências) — atualizar sempre que a prancha mudar
     ├── vitrine.html             ← Vitrine de Componentes (Formato A/B + "Ver o código") + Parecer do Editor. Carrega projects.css/js + Swiper (CDN). **Não linkada no nav público** — referência interna do DS, não descoberta por recrutador
@@ -189,6 +188,17 @@ A pedido do Lucas, revisão completa de organização/otimização em todo o sit
 - Comentários de carregamento do chrome nas 5 páginas de case + `index.html` atualizados (não citam mais "edição de bolso").
 - `projects/vitrine.html` (Parecer do Editor): Addendum IV reescrito para registrar a remoção (numeração mantida — Addendum V em diante não foi renumerado, pra não quebrar as referências cruzadas do texto); a recomendação de prioridade na seção "Ordem sugerida" também ajustada.
 - **O Index Rerum (⌘K · luneta) continua intacto** — era um atalho remissivo independente, não fazia parte da edição de bolso.
+
+---
+
+## Limpeza — páginas de teste e órfãos (2026-07-06)
+
+Faxina a pedido do Lucas. **Apagados** (confirmados um a um antes):
+- `projects/especialidades-options.html`, `projects/genai-hero-options.html`, `projects/pmo-hero-options.html` — estudos `noindex`/`design_doc_mode=canvas` de layout/hero, nunca linkados em nenhuma página. Eram rascunhos de exploração.
+- `projects/samarco-lab.html` — o sandbox da Mandala/specimen do PMO. Os conceitos já foram portados (e superados) em `pmo-dashboards.html`, então o lab virou peso morto. Removida a linha do `robots.txt` (`Disallow` de página inexistente) e a entrada no mapa de arquivos. **Nota:** `SAMARCO-PMO.md` ainda cita o lab em vários pontos como referência histórica dos protótipos — mantido como registro, mas o arquivo não existe mais. Os comentários "portado do samarco-lab" em `pmo-dashboards.html` seguem válidos como proveniência.
+- `images/sports/notebook-tape.png` — órfão (não referenciado em nenhum HTML/CSS/JS) **e** único raster fora de WebP entre os assets novos.
+- **Mantidos por decisão do Lucas:** `case-template.html` (scaffold) e `vitrine.html` (referência interna do DS) — ambos `noindex`/não-públicos, seguem úteis.
+- **Pendências conhecidas não tocadas nesta faxina:** `mandala-full.png` e `mandala-estrategica.png` continuam PNG (em uso pelo `pmo-dashboards.html`) — violam a invariante "zero raster fora de WebP", conversão adiada. O mapa de arquivos ainda cita `tweaks-panel.jsx`, que já não existe — a linha foi deixada como estava (fora do escopo desta rodada).
 
 ---
 
