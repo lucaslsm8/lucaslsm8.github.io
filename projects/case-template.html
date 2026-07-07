@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Aura App — Conversational GenAI · Lucas Schoenherr</title>
+<meta name="description" content="Estudo de caso de design de interface generativa e conversacional Aura por Lucas Schoenherr." />
+<!-- Open Graph / social — TROCAR [placeholders] ao criar um case real a partir deste template -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="[Título do case] · Lucas Schoenherr" />
+<meta property="og:description" content="[Resumo de uma linha do case]" />
+<meta property="og:locale" content="pt_BR" />
+<meta property="og:url" content="https://lucaslsm8.github.io/Book/projects/[arquivo].html" />
+<meta property="og:image" content="https://lucaslsm8.github.io/Book/images/[projeto]/capa.webp" />
+<meta property="og:image:alt" content="[Capa do case]" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="[Título do case] · Lucas Schoenherr" />
+<meta name="twitter:description" content="[Resumo de uma linha do case]" />
+<meta name="twitter:image" content="https://lucaslsm8.github.io/Book/images/[projeto]/capa.webp" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<!-- Design tokens e estilos da home + específicos do case -->
+<link rel="stylesheet" href="../design-system/tokens.css" />
+<link rel="stylesheet" href="../catalogue.css" />
+<link rel="stylesheet" href="../design-system/case-template.css" />
+</head>
+<body data-lang="pt">
+<!-- Granulação tátil de papel envelhecido -->
+<div class="paper-grain" aria-hidden="true"></div>
+
+<!-- ============================================================
+     CHROME SUPERIOR (CABEÇALHO FIXO)
+     ============================================================ -->
+<header class="chrome-top">
+  <div class="running-head">
+    <div class="scroll-compass-wrapper" aria-hidden="true" title="Bússola de Progresso">
+      <!-- Bússola astrolábio sutil que gira dinamicamente no scroll -->
+      <svg class="scroll-compass" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="45" stroke="var(--ink-ghost)" stroke-width="1.5" fill="none" stroke-dasharray="4 4" />
+        <circle cx="50" cy="50" r="30" stroke="var(--hairline-strong)" stroke-width="1" fill="none" />
+        <line x1="50" y1="10" x2="50" y2="90" stroke="var(--ink-soft)" stroke-width="1" />
+        <line x1="10" y1="50" x2="90" y2="50" stroke="var(--ink-soft)" stroke-width="1" />
+        <polygon points="50,20 54,50 50,55 46,50" fill="var(--oxblood)" />
+        <polygon points="50,80 54,50 50,45 46,50" fill="var(--ink-soft)" />
+        <circle cx="50" cy="50" r="4" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5" />
+      </svg>
+    </div>
+    <a href="../index.html" class="running-head-home"><span>Lucas Schoenherr</span></a>
+    <span class="sep">·</span>
+    <em><span class="t" lang="pt">Catálogo de Obras</span><span class="t" lang="en">A Catalogue of Works</span></em>
+    <span class="sep">·</span>
+    <span><span class="t" lang="pt">Prancha V — Aura App</span><span class="t" lang="en">Plate V — Aura App</span></span>
+  </div>
+  <nav class="chrome-actions">
+    <a href="../index.html" class="to-catalogue">
+      <em><span class="t" lang="pt">Voltar ao catálogo</span><span class="t" lang="en">Return to catalogue</span></em>
+    </a>
+    <button class="candle-toggle" type="button" aria-pressed="false" title="Modo vela" aria-label="Modo vela">
+      <svg class="candle-icon candle-icon--off" width="22" height="18" viewBox="0 0 24 22" fill="none" aria-hidden="true">
+        <path d="M9 4.6 C 9.6 5.3, 10 5.9, 9 6.6" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" />
+        <rect x="7.2" y="6.6" width="3.6" height="6.4" fill="currentColor" />
+        <path d="M5.6 13 H12.4 L11.2 14.6 H6.8 Z" fill="currentColor" />
+        <rect x="7.4" y="14.6" width="3.2" height="1.6" fill="currentColor" />
+        <ellipse cx="9" cy="17.8" rx="8" ry="1.7" fill="currentColor" />
+        <ellipse cx="9" cy="16.8" rx="6.8" ry="0.7" fill="none" stroke="var(--paper)" stroke-width="0.5" opacity="0.55" />
+        <path d="M16.4 17.4 C 21.4 17.6, 22.8 13.4, 18.6 12.6 C 16.6 12.4, 16.6 14.4, 18.2 14.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <svg class="candle-icon candle-icon--on" width="22" height="18" viewBox="0 0 24 22" fill="none" aria-hidden="true">
+        <path d="M9 0.5 C 7.6 2.2, 7 3.7, 9 5.2 C 11 3.7, 10.4 2.2, 9 0.5 Z" fill="currentColor" opacity="0.9" />
+        <line x1="9" y1="5.2" x2="9" y2="6.6" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" />
+        <rect x="7.2" y="6.6" width="3.6" height="6.4" fill="currentColor" />
+        <path d="M5.6 13 H12.4 L11.2 14.6 H6.8 Z" fill="currentColor" />
+        <rect x="7.4" y="14.6" width="3.2" height="1.6" fill="currentColor" />
+        <ellipse cx="9" cy="17.8" rx="8" ry="1.7" fill="currentColor" />
+        <ellipse cx="9" cy="16.8" rx="6.8" ry="0.7" fill="none" stroke="var(--paper)" stroke-width="0.5" opacity="0.55" />
+        <path d="M16.4 17.4 C 21.4 17.6, 22.8 13.4, 18.6 12.6 C 16.6 12.4, 16.6 14.4, 18.2 14.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+    <div class="lang-toggle" role="group" aria-label="Language / Idioma">
+      <button class="active" type="button" data-lang="pt" aria-pressed="true">PT</button>
+      <span class="pipe">|</span>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </nav>
+</header>
+
+<main class="book">
+
+  <!-- ============================================================
+       0. FOLHA DE ROSTO (HERO CINEMATOGRÁFICA)
+       Garante o uso de .case-frontispiece para posicionamento correto
+       ============================================================ -->
+  <section class="case-frontispiece case-frontispiece--cinematic" data-folio>
+    <div class="frontispiece-halo" aria-hidden="true"></div>
+    <div class="sig">
+      <span class="t" lang="pt">Volume I · Prancha V · MMXXIV</span>
+      <span class="t" lang="en">Volume I · Plate V · MMXXIV</span>
+    </div>
+    
+    <div class="case-num">№ 004</div>
+
+    <h1 class="case-title">
+      <span class="it">Aura</span> <span class="reg">App</span>
+    </h1>
+
+    <div class="case-rule" aria-hidden="true"></div>
+
+    <p class="case-deck">
+      <span class="t" lang="pt"><span class="em">Substituindo relatórios estáticos de logística industrial</span> por uma interface conversacional inteligente baseada em IA generativa para decisões em tempo real.</span>
+      <span class="t" lang="en"><span class="em">Replacing static industrial logistics reports</span> with an intelligent conversational interface powered by generative AI for real-time decision making.</span>
+    </p>
+
+    <!-- Byline editorial e técnico expandido -->
+    <dl class="case-byline case-byline--inline">
+      <div>
+        <span class="lab"><span class="t" lang="pt">Comissão</span><span class="t" lang="en">Commission</span></span>
+        <span class="val">Samarco · PMO Estratégico</span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Papel</span><span class="t" lang="en">Role</span></span>
+        <span class="val">Lead Product Designer</span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Período</span><span class="t" lang="en">Period</span></span>
+        <span class="val">MMXXIV (~4 meses)</span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Escopo</span><span class="t" lang="en">Scope</span></span>
+        <span class="val">Conversational UX · Design System · GenAI</span>
+      </div>
+    </dl>
+    
+    <div class="frontispiece-indicator">
+      <span class="t" lang="pt">Gire a folha para iniciar a leitura</span>
+      <span class="t" lang="en">Scroll down to turn the leaf</span>
+      <span class="arrow">↓</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       EPÍGRAFE (INTERLÚDIO DE ABERTURA)
+       ============================================================ -->
+  <section class="case-epigraph" data-folio aria-label="Epigraph">
+    <div class="epigraph-inner reveal">
+      <span class="epigraph-mark" aria-hidden="true">“</span>
+      <blockquote class="epigraph-quote">
+        <span class="t" lang="pt">A complexidade sistêmica deve ser absorvida por algoritmos invisíveis, permitindo que a mente humana tome decisões baseada em clareza, não em saturação.</span>
+        <span class="t" lang="en">Systemic complexity must be absorbed by invisible algorithms, allowing the human mind to make decisions based on clarity, not saturation.</span>
+      </blockquote>
+      <figcaption class="epigraph-cite">
+        <span class="t" lang="pt">— Máxima de Arquitetura de Informação para IA</span>
+        <span class="t" lang="en">— Information Architecture Maxim for AI</span>
+      </figcaption>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       I. ARGUMENTO & CONTEXTO (PROBLEMA / DESAFIO)
+       ============================================================ -->
+  <section class="page case-section argument" data-folio>
+    <div class="spread">
+      <aside class="margin-l">
+        <p class="gloss" data-anchor="arg-p1">
+          <span class="gloss-num">i</span>
+          <span class="t" lang="pt">Supervisores lidam com mais de 15 painéis de ERP diferentes em trânsito no terminal operacional.</span>
+          <span class="t" lang="en">Supervisors handle more than 15 different ERP panels while in transit at the operational terminal.</span>
+        </p>
+        <p class="gloss" data-anchor="arg-p2">
+          <span class="gloss-num">ii</span>
+          <span class="t" lang="pt">A latência de consulta manual em banco de dados gerava gargalos de até duas horas na logística de trens.</span>
+          <span class="t" lang="en">Manual database query latency created bottlenecks of up to two hours in train logistics workflows.</span>
+        </p>
+      </aside>
+
+      <div class="content">
+        <header class="section-head reveal">
+          <span class="roman">I.</span>
+          <span class="name"><span class="t" lang="pt">Argumento &amp; Contexto</span><span class="t" lang="en">Argument &amp; Context</span></span>
+          <span class="gloss"><span class="t" lang="pt">O cenário</span><span class="t" lang="en">The setting</span></span>
+        </header>
+
+        <div class="preface">
+          <div class="body reveal">
+            <p id="arg-p1">
+              <span class="t" lang="pt">O monitoramento de pátio e escoamento de minério da Samarco demandava respostas imediatas em cenários dinâmicos. No entanto, os tomadores de decisão em campo encontravam-se soterrados por relatórios manuais dispersos, planilhas concorrentes e dashboards estáticos inacessíveis em ambientes móveis.<span class="fn" data-fn="1">1</span> Esta fragmentação informativa gerava atrasos dispendiosos na cadeia logística.</span>
+              <span class="t" lang="en">Yard monitoring and ore runoff logistics at Samarco demanded immediate answers in dynamic scenarios. However, field decision-makers found themselves buried under scattered manual reports, competing spreadsheets, and static dashboards inaccessible in mobile environments.<span class="fn" data-fn="1">1</span> This informational fragmentation generated costly delays in the logistics chain.</span>
+            </p>
+            <p id="arg-p2">
+              <span class="t" lang="pt">A proposta do projeto Aura consistia em desenhar uma interface híbrida e conversacional inteligente, unificada sob um modelo RAG personalizado. A premissa de design era permitir que supervisores operacionais pudessem consultar e despachar locomotivas por comandos simples de voz ou texto, recebendo cartões de dados interativos de alta fidelidade como resposta direta.</span>
+              <span class="t" lang="en">The Aura project proposed designing an intelligent hybrid and conversational interface, unified under a custom RAG model. The design premise was to allow operational supervisors to query and dispatch locomotives through simple voice or text commands, receiving high-fidelity interactive data cards as direct responses.</span>
+            </p>
+          </div>
+
+          <ol class="footnotes reveal">
+            <li class="fn-item" data-fn="1">
+              <span class="fn-num">1.</span>
+              <span class="t" lang="pt"><span class="it">O RAG (Retrieval-Augmented Generation) foi alimentado de forma confidencial com metadados estruturados dos eixos de produção.</span></span>
+              <span class="t" lang="en"><span class="it">The RAG (Retrieval-Augmented Generation) was confidentially fed with structured metadata from the production axes.</span></span>
+            </li>
+          </ol>
+        </div>
+      </div>
+      <aside class="margin-r" aria-hidden="true"></aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       II. PARTICIPAÇÃO (DRAMATIS PERSONÆ EXPANDIDA)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">II.</span>
+        <span class="name"><span class="t" lang="pt">Minha Participação</span><span class="t" lang="en">My Role &amp; Crew</span></span>
+        <span class="gloss"><span class="t" lang="pt">Dramatis personæ</span><span class="t" lang="en">Cast &amp; duties</span></span>
+      </header>
+
+      <!-- Grid editorial de atribuições e escopo técnico -->
+      <dl class="dramatis reveal" data-stagger>
+        <div class="dramatis-block">
+          <dt><span class="t" lang="pt">Responsabilidade</span><span class="t" lang="en">Responsibility</span></dt>
+          <dd>
+            Lead Product Designer
+            <span class="role"><span class="t" lang="pt">Concepção integral do ecossistema conversacional, UX writing do LLM e design de componentes</span><span class="t" lang="en">Conversational architecture lead, LLM UX writing, and responsive component design</span></span>
+          </dd>
+        </div>
+        <div class="dramatis-block">
+          <dt><span class="t" lang="pt">Colaboradores</span><span class="t" lang="en">Collaborators</span></dt>
+          <dd>
+            Samarco PMO &amp; IA Team
+            <span class="role"><span class="t" lang="pt">1 Engenheiro de IA, 2 PMs, 3 Engenheiros Frontend e Stakeholders operacionais</span><span class="t" lang="en">1 AI Engineer, 2 PMs, 3 Frontend Engineers, and operational Stakeholders</span></span>
+          </dd>
+        </div>
+        <div class="dramatis-block">
+          <dt><span class="t" lang="pt">Escopo do Handoff</span><span class="t" lang="en">Handoff Scope</span></dt>
+          <dd>
+            Figma Variables &amp; UI Tokens
+            <span class="role"><span class="t" lang="pt">Handoff modular com esquemas de preenchimento dinâmico de cards por saídas JSON do modelo</span><span class="t" lang="en">Modular handoff with dynamic card population schemas driven by model JSON outputs</span></span>
+          </dd>
+        </div>
+        <div class="dramatis-block">
+          <dt><span class="t" lang="pt">Objetivo Estratégico</span><span class="t" lang="en">Strategic Goal</span></dt>
+          <dd>
+            Aceleração Operacional
+            <span class="role"><span class="t" lang="pt">Diminuir o tempo de resposta a gargalos logísticos em terminais portuários</span><span class="t" lang="en">Decrease the response latency to operational bottlenecks at port terminals</span></span>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       III. PROCESSO & TIMELINE CRONOLÓGICA (ACTA CRONOGRAMA)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">III.</span>
+        <span class="name"><span class="t" lang="pt">Atos do Processo</span><span class="t" lang="en">Acts of the Process</span></span>
+        <span class="gloss"><span class="t" lang="pt">Cronologia de expedição</span><span class="t" lang="en">Expedition timeline</span></span>
+      </header>
+
+      <div class="timeline-container">
+        <!-- Linha do tempo vintage tátil -->
+        <ol class="timeline-axis" data-stagger>
+          <li class="timeline-node">
+            <span class="node-date">MMXXIV · Sem 1-3</span>
+            <div class="node-badge">I</div>
+            <div class="node-content">
+              <h3 class="node-title"><span class="t" lang="pt">Arqueologia Operacional &amp; Discovery</span><span class="t" lang="en">Field Archaeology &amp; Discovery</span></h3>
+              <p><span class="t" lang="pt">Imersão com operadores de terminal de porto. Descobrimos a necessidade crítica de consultas verbais curtas devido à constante movimentação dos gestores.</span><span class="t" lang="en">Deep dive with port terminal operators. We uncovered a critical need for short, verbal queries due to operators being constantly on the move.</span></p>
+            </div>
+          </li>
+          <li class="timeline-node">
+            <span class="node-date">MMXXIV · Sem 4-6</span>
+            <div class="node-badge">II</div>
+            <div class="node-content">
+              <h3 class="node-title"><span class="t" lang="pt">Mapeamento de Intenções (JSON to UI)</span><span class="t" lang="en">Intent Mapping (JSON to UI)</span></h3>
+              <p><span class="t" lang="pt">Definição de esquemas de intenção de fala do modelo de linguagem. Mapeamos as respostas em texto do LLM para blocos UI estruturados com variáveis.</span><span class="t" lang="en">Defining text-intent patterns for the LLM. We mapped conversational AI text outputs directly to variables in responsive UI blocks.</span></p>
+            </div>
+          </li>
+          <li class="timeline-node">
+            <span class="node-date">MMXXIV · Sem 7-10</span>
+            <div class="node-badge">III</div>
+            <div class="node-content">
+              <h3 class="node-title"><span class="t" lang="pt">Desenho dos Cartões do Design System</span><span class="t" lang="en">Design System Card Prototyping</span></h3>
+              <p><span class="t" lang="pt">Modelagem do espécime visual dos mini dashboards. Construímos 8 variações modulares adaptáveis a diferentes eixos de densidade logística.</span><span class="t" lang="en">Modeling visual specimens for mini-dashboards. We engineered 8 modular card variations tuned to distinct logistic data densities.</span></p>
+            </div>
+          </li>
+          <li class="timeline-node">
+            <span class="node-date">MMXXIV · Sem 11-14</span>
+            <div class="node-badge">IV</div>
+            <div class="node-content">
+              <h3 class="node-title"><span class="t" lang="pt">Testes de Latência &amp; Ajustes de Tom</span><span class="t" lang="en">Prompt Tuning &amp; Skeleton Testing</span></h3>
+              <p><span class="t" lang="pt">Ajuste de prompt para reduzir respostas prolixas e testes de micro-interações de carregamento progressivo para atenuar a percepção de latência do modelo.</span><span class="t" lang="en">Tuning system prompts to prune wordy responses, coupled with custom skeleton loader animations to mitigate perceived model latency.</span></p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       IV. PESQUISA & INSIGHTS (DESCOBERTA / DADOS)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread">
+      <aside class="margin-l">
+        <div class="parchment-stamp" aria-hidden="true">
+          <span class="st-num">INSIGHTS</span>
+        </div>
+      </aside>
+      <div class="content">
+        <header class="section-head reveal">
+          <span class="roman">IV.</span>
+          <span class="name"><span class="t" lang="pt">Pesquisa &amp; Revelações</span><span class="t" lang="en">Discovery &amp; Insights</span></span>
+          <span class="gloss"><span class="t" lang="pt">Achados qualitativos</span><span class="t" lang="en">Qualitative findings</span></span>
+        </header>
+
+        <div class="insights-grid reveal" data-stagger>
+          <!-- Insights Cards no estilo de Cartas de Rascunho / Pergaminho -->
+          <div class="insight-card">
+            <span class="card-num">01.</span>
+            <h4 class="card-title"><span class="t" lang="pt">Interface Híbrida é Vital</span><span class="t" lang="en">Hybrid UI is Essential</span></h4>
+            <p><span class="t" lang="pt">Interfaces puramente textuais de chat falham na logística. Operadores precisam de dados consolidados em cartões visuais com contraste imediato, não de parágrafos gerados por IA para leitura.</span><span class="t" lang="en">Purely textual chat interfaces fail in fast logistics. Operators need structured data mapped onto high-contrast visual cards, not generic paragraphs written by the LLM.</span></p>
+          </div>
+          <div class="insight-card">
+            <span class="card-num">02.</span>
+            <h4 class="card-title"><span class="t" lang="pt">Confiança Exige Linhagem</span><span class="t" lang="en">Trust Demands Lineage</span></h4>
+            <p><span class="t" lang="pt">Decisões industriais envolvem milhões. O supervisor só confia na informação de estoque e frota da IA se puder acessar instantaneamente a fonte RAG original (linhagem de dados transparente).</span><span class="t" lang="en">Industrial decisions carry massive stakes. Supervisors will only trust AI-generated stock and fleet data if they can instantly access the underlying RAG source nodes.</span></p>
+          </div>
+        </div>
+      </div>
+      <aside class="margin-r" aria-hidden="true"></aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       V. PERSONAS & JORNADA DO USUÁRIO
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">V.</span>
+        <span class="name"><span class="t" lang="pt">Personas &amp; Jornada</span><span class="t" lang="en">Personas &amp; Journey</span></span>
+        <span class="gloss"><span class="t" lang="pt">Perfil do supervisor</span><span class="t" lang="en">Supervisor profiles</span></span>
+      </header>
+
+      <!-- Cartão Dossier de Persona -->
+      <div class="persona-dossier reveal">
+        <div class="dossier-header">
+          <div class="avatar-frame">
+            <span class="avatar-placeholder" aria-hidden="true">👷‍♂️</span>
+          </div>
+          <div class="dossier-meta">
+            <span class="dossier-tag">Dossier № 01</span>
+            <h3 class="dossier-name">Supervisor Arthur</h3>
+            <p class="dossier-sub"><span class="t" lang="pt">Supervisor Operacional de Pátio Portuário</span><span class="t" lang="en">Port Yard Operational Supervisor</span></p>
+          </div>
+        </div>
+        <div class="dossier-body">
+          <div class="dossier-col">
+            <h5><span class="t" lang="pt">Necessidades</span><span class="t" lang="en">Needs</span></h5>
+            <p><span class="t" lang="pt">Identificar locomotivas paradas nas linhas e resolver desvios de carregamento sem interromper o trânsito no terminal operacional.</span><span class="t" lang="en">Identify idle locomotives on the lines and resolve loading bottlenecks without stopping active yard terminal traffic.</span></p>
+          </div>
+          <div class="dossier-col">
+            <h5><span class="t" lang="pt">Atritos</span><span class="t" lang="en">Pain Points</span></h5>
+            <p><span class="t" lang="pt">Ter que abrir relatórios complexos em notebooks sob incidência de luz solar extrema de pátio industrial, dependendo de internet oscilante.</span><span class="t" lang="en">Having to open bloated reports on laptops under intense sunlight in noisy industrial fields while relying on spotty mobile network connections.</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mapa de Jornada Simulado Estilo Cartografia Antiga -->
+      <div class="journey-map reveal">
+        <h4 class="journey-title"><span class="t" lang="pt">A Jornada Conversacional do Arthur</span><span class="t" lang="en">Arthur's Conversational Journey</span></h4>
+        <div class="journey-stages">
+          <div class="stage">
+            <span class="st-num">1</span>
+            <h6><span class="t" lang="pt">Comando de Voz</span><span class="t" lang="en">Voice Input</span></h6>
+            <p><span class="t" lang="pt">Arthur questiona o status da Frota 4 no pátio C.</span><span class="t" lang="en">Arthur queries Fleet 4 status in Yard C via voice.</span></p>
+          </div>
+          <div class="stage alert">
+            <span class="st-num">2</span>
+            <h6><span class="t" lang="pt">Resposta Híbrida</span><span class="t" lang="en">Hybrid Response</span></h6>
+            <p><span class="t" lang="pt">IA exibe texto conciso e cartão visual de alerta.</span><span class="t" lang="en">AI outputs concise text and high-priority visual card.</span></p>
+          </div>
+          <div class="stage">
+            <span class="st-num">3</span>
+            <h6><span class="t" lang="pt">Despacho</span><span class="t" lang="en">Dispatch</span></h6>
+            <p><span class="t" lang="pt">Desvio é resolvido via toque em menos de 10s.</span><span class="t" lang="en">Bottleneck resolved with single tap in under 10s.</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VI. ARQUITETURA DA INFORMAÇÃO & FLUXOS (UX WRITING)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">VI.</span>
+        <span class="name"><span class="t" lang="pt">Arquitetura &amp; Fluxos</span><span class="t" lang="en">Architecture &amp; Flows</span></span>
+        <span class="gloss"><span class="t" lang="pt">Estruturação de intenções</span><span class="t" lang="en">Intent schemas</span></span>
+      </header>
+
+      <div class="architecture-box reveal">
+        <p><span class="t" lang="pt">Estruturamos as respostas da IA Aura em intents mapeados semanticamente. O UX Writing assume um tom puramente objetivo e analítico, eliminando cortesias prolixas da IA e garantindo clareza técnica absoluta na leitura dos dados.</span>
+           <span class="t" lang="en">We structured Aura's conversational system into semantic intents. System prompts were tuned to eliminate wordy chatbot greetings, ensuring absolute technical clarity and enabling rapid scanning in high-stress operational yards.</span></p>
+
+        <!-- Diagrama Estilo Catalogação Antiga -->
+        <table class="editorial-table">
+          <thead>
+            <tr>
+              <th><span class="t" lang="pt">Família de Intent</span><span class="t" lang="en">Intent Family</span></th>
+              <th><span class="t" lang="pt">Prompt Recomendado do LLM</span><span class="t" lang="en">LLM Prompt Paradigm</span></th>
+              <th><span class="t" lang="pt">Formato de Saída Híbrido</span><span class="t" lang="en">Hybrid Response UI</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>Query.Frota</code></td>
+              <td><span class="t" lang="pt">"Frota [x]: [n] trens em circulação. [y] atrasados."</span><span class="t" lang="en">"Fleet [x]: [n] trains active. [y] delayed."</span></td>
+              <td><span class="t" lang="pt">Mini-Dashboard de trilho</span><span class="t" lang="en">Rail mini-dashboard card</span></td>
+            </tr>
+            <tr>
+              <td><code>Action.Despacho</code></td>
+              <td><span class="t" lang="pt">"Iniciando manobra de desvio da locomotiva [id]."</span><span class="t" lang="en">"Initiating locomotive dispatch for ID [id]."</span></td>
+              <td><span class="t" lang="pt">Selo de confirmação operacional</span><span class="t" lang="en">Operational confirmation stamp</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VII. ESBOÇOS & WIREFRAMES (FLIP ANVERSO / VERSO)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread">
+      <aside class="margin-l" aria-hidden="true"></aside>
+      <div class="content">
+        <header class="section-head reveal">
+          <span class="roman">VII.</span>
+          <span class="name"><span class="t" lang="pt">Esboços &amp; Wireframes</span><span class="t" lang="en">Sketches &amp; Wireframes</span></span>
+          <span class="gloss"><span class="t" lang="pt">Estruturas modulares</span><span class="t" lang="en">Modular skeletons</span></span>
+        </header>
+
+        <div class="wireframes-intro">
+          <p><span class="t" lang="pt">Cada módulo conversacional foi esboçado sistematicamente no Figma antes de receber polimento estético final. Abaixo, examine o espécime do card conversacional básico: clique para girar a prancha em 3D e revelar o <em>verso</em> — o grid técnico de linhas-guia e proporções flexíveis que compõe o wireframe original.</span>
+             <span class="t" lang="en">Every conversational UI module was systematically drafted in Figma prior to final aesthetic polish. Below, examine the basic conversational card specimen: click to flip it in 3D and reveal the <em>verso</em> — the structural grid and responsive layout guiding the original wireframe.</span></p>
+        </div>
+
+        <div class="plates-3d-grid reveal">
+          <!-- Card de Plate 3D Interativo (Anverso/Verso) -->
+          <div class="plate-3d-wrapper">
+            <div class="plate-3d-card" tabindex="0" role="button" aria-label="Girar prancha / Flip plate">
+              <!-- Anverso: A imagem final ou mockup -->
+              <div class="plate-3d-side plate-3d-front">
+                <span class="p-label">RECTO · COMPOSIÇÃO OPERACIONAL</span>
+                <div class="plate-inner-content placeholder-sketch font-design">
+                  <span class="sketch-glyph">✦</span>
+                  <span class="sketch-txt">Card Frota C1</span>
+                </div>
+              </div>
+              <!-- Verso: Grid técnico/wireframe antigo -->
+              <div class="plate-3d-side plate-3d-back">
+                <span class="p-label">VERSO · GRID DE VARIÁVEIS</span>
+                <div class="plate-inner-content wireframe-grid">
+                  <div class="diagonal-guide"></div>
+                  <span class="sketch-txt">Grid Híbrido 8px</span>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn-flip-trigger">
+              <span class="t" lang="pt">Examine o Verso (Wireframe)</span>
+              <span class="t" lang="en">Examine the Verso (Wireframe)</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <aside class="margin-r" aria-hidden="true"></aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       INTERMEZZO (PULL-QUOTE CINEMATOGRÁFICA)
+       ============================================================ -->
+  <section class="case-intermezzo" data-folio aria-label="Intermezzo">
+    <span class="intermezzo-bg l1" data-speed="0.15" aria-hidden="true">⁂</span>
+    <span class="intermezzo-bg l2" data-speed="-0.08" aria-hidden="true">❧</span>
+    <div class="intermezzo-inner reveal">
+      <span class="intermezzo-label">Intermezzo</span>
+      <p class="intermezzo-quote">
+        <span class="t" lang="pt">O design conversacional para a indústria pesada reside em unificar o rigor de dados complexos com a instantaneidade da linguagem humana.</span>
+        <span class="t" lang="en">Conversational UX in heavy industry lies in bridging the mathematical rigor of data-viz with the immediate scan of natural language.</span>
+      </p>
+      <span class="intermezzo-asterism" aria-hidden="true">⁂</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VIII. DESIGN SYSTEM & ESPECIME VISUAL
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">VIII.</span>
+        <span class="name"><span class="t" lang="pt">Espécime Visual &amp; DS</span><span class="t" lang="en">Visual Specimen &amp; DS</span></span>
+        <span class="gloss"><span class="t" lang="pt">Cores &amp; tipografia</span><span class="t" lang="en">Cores &amp; typography</span></span>
+      </header>
+
+      <div class="specimen-container reveal">
+        <!-- Amostras de Tipografia e Pigmentos Antigos -->
+        <div class="specimen-column font-specimen">
+          <h5><span class="t" lang="pt">Tipografia do Sistema</span><span class="t" lang="en">System Typography</span></h5>
+          <div class="sp-row">
+            <span class="sp-tag">Serif Display</span>
+            <span class="sp-sample font-serif-display">Instrument Serif</span>
+          </div>
+          <div class="sp-row">
+            <span class="sp-tag">Editorial Serif</span>
+            <span class="sp-sample font-serif">EB Garamond</span>
+          </div>
+          <div class="sp-row">
+            <span class="sp-tag">Analytic Mono</span>
+            <span class="sp-sample font-mono">JetBrains Mono</span>
+          </div>
+        </div>
+
+        <div class="specimen-column pigment-specimen">
+          <h5><span class="t" lang="pt">Paleta de Tinta &amp; Pigmento</span><span class="t" lang="en">Ink &amp; Pigment Palette</span></h5>
+          <div class="pigments-flex">
+            <div class="pigment-swatch" style="background: var(--paper);" title="Creme Quente / Paper">
+              <span class="sw-label">Paper</span>
+            </div>
+            <div class="pigment-swatch" style="background: var(--ink);" title="Tinta Forte / Ink">
+              <span class="sw-label" style="color: var(--paper)">Ink</span>
+            </div>
+            <div class="pigment-swatch" style="background: var(--oxblood);" title="Sangue de Boi / Oxblood">
+              <span class="sw-label" style="color: var(--paper)">Oxblood</span>
+            </div>
+            <div class="pigment-swatch" style="background: var(--cobalt);" title="Azul Cobalto / Cobalt">
+              <span class="sw-label" style="color: var(--paper)">Cobalt</span>
+            </div>
+            <div class="pigment-swatch" style="background: var(--highlighter);" title="Amarelo Ouro / Gilt">
+              <span class="sw-label">Gilt</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       IX. SHOWCASES DE PROTÓTIPOS (MOLDURAS E TEMPLATES PREMIUM)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread">
+      <aside class="margin-l" aria-hidden="true"></aside>
+      <div class="content">
+        <header class="section-head reveal">
+          <span class="roman">IX.</span>
+          <span class="name"><span class="t" lang="pt">Templates de Apresentação</span><span class="t" lang="en">Showcase &amp; Framing</span></span>
+          <span class="gloss"><span class="t" lang="pt">Pranchas em moldura</span><span class="t" lang="en">Mounted plates</span></span>
+        </header>
+
+        <div class="showcases-intro">
+          <p><span class="t" lang="pt">Para a perfeita exibição dos artefatos interativos deste portfólio, desenvolvemos dois formatos visuais de apresentação de mockups. Abaixo, você pode examinar um exemplo das molduras digitais. Para a listagem exaustiva de comparações, consulte a <a href="vitrine.html" class="inline-link">Vitrine de Componentes</a>.</span>
+             <span class="t" lang="en">To exhibit the interactive artifacts of this portfolio perfectly, we developed two visual mockup presentation formats. Below, you can examine an example of these digital frames. For the complete comparative sheet, consult the <a href="vitrine.html" class="inline-link">Component Vitrine</a>.</span></p>
+        </div>
+
+        <div class="showcases-flex reveal">
+          <!-- Exemplo 1: Desktop Frame (Formato A - Editorial) -->
+          <div class="showcase-block">
+            <h5><span class="t" lang="pt">Moldura Desktop — Formato A (Minimalista/Editorial)</span><span class="t" lang="en">Desktop Frame — Format A (Minimalist/Editorial)</span></h5>
+            <div class="mockup-desktop format-a">
+              <div class="mockup-header">
+                <div class="mockup-dots">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="mockup-address">aura-app.samarco/terminal-porto/operational</div>
+              </div>
+              <div class="mockup-body">
+                <div class="mockup-screen-content">
+                  <div class="mockup-screen-glare"></div>
+                  <!-- Substituir por screenshot real -->
+                  <div class="screenshot-placeholder">
+                    <span class="font-serif-display" style="font-size: var(--fs-h4); font-style: italic;">[ Monitoramento Conversacional Aura ]</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Exemplo 2: Mobile Frame (Formato B - Artesanal/3D) -->
+          <div class="showcase-block">
+            <h5><span class="t" lang="pt">Moldura Mobile — Formato B (Artesanal/3D com Latão)</span><span class="t" lang="en">Mobile Frame — Format B (Crafted/3D with Brass)</span></h5>
+            <div class="mockup-mobile format-b">
+              <div class="mockup-inner-frame">
+                <div class="mockup-speaker"></div>
+                <div class="mockup-body">
+                  <div class="mockup-screen-content">
+                    <div class="mockup-screen-glare"></div>
+                    <!-- Substituir por screenshot real -->
+                    <div class="screenshot-placeholder">
+                      <span class="font-serif-display" style="font-size: var(--fs-meta); font-style: italic;">[ Mobile Aura ]</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="mockup-home-button"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="margin-r" aria-hidden="true"></aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       X. COMPARAÇÕES BEFORE/AFTER (RESTAURAÇÃO DIGITAL)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">X.</span>
+        <span class="name"><span class="t" lang="pt">Comparações &amp; Restauro</span><span class="t" lang="en">Comparisons &amp; Restoration</span></span>
+        <span class="gloss"><span class="t" lang="pt">Antes &amp; depois</span><span class="t" lang="en">Before &amp; after</span></span>
+      </header>
+
+      <div class="comparisons-intro">
+        <p><span class="t" lang="pt">Deslize o selo central de latão para examinar o processo de restauração operacional: o sistema fragmentado legado à esquerda (representado com visual envelhecido de pergaminho cru e ruído de época) versus a clareza limpa e nítida do novo sistema conversacional à direita.</span>
+           <span class="t" lang="en">Slide the central brass seal to examine our operational restoration: the fragmented legacy system on the left (presented with an aged, raw parchment styling and noise) versus the clean, sharp clarity of the new conversational system on the right.</span></p>
+      </div>
+
+      <!-- Slider de Comparação Interativo Before/After -->
+      <div class="before-after-slider reveal">
+        <!-- Lado B (After - O Novo) -->
+        <div class="slider-side slider-after">
+          <div class="slider-content font-serif-display">
+            <span class="p-label font-mono">ANVERSO · PORTAL CONVERSACIONAL</span>
+            <div class="restoration-preview pristine-state">
+              <span class="rest-star font-serif-display">✦</span>
+              <h3><span class="t" lang="pt">Interface Aura Conversacional</span><span class="t" lang="en">Aura Conversational Interface</span></h3>
+              <p class="font-serif"><span class="t" lang="pt">Estatísticas fáceis sob demanda por voz e toque de forma consolidada.</span><span class="t" lang="en">Conversational statistics on-demand via voice and touch, consolidated.</span></p>
+            </div>
+          </div>
+        </div>
+        <!-- Lado A (Before - O Legado Envelhecido) -->
+        <div class="slider-side slider-before">
+          <div class="slider-content font-serif-display">
+            <span class="p-label font-mono">FRAGMENTO · MÚLTIPLOS LEGADOS</span>
+            <div class="restoration-preview aged-legacy-state">
+              <span class="rest-star font-serif-display">⚓</span>
+              <h3><span class="t" lang="pt">ERP Legado e Planilhas</span><span class="t" lang="en">Legacy ERP &amp; Spreadsheets</span></h3>
+              <p class="font-serif"><span class="t" lang="pt">Informação fragmentada em múltiplos painéis estáticos e complexos.</span><span class="t" lang="en">Fragmented database queries buried in dozens of static spreadsheets.</span></p>
+            </div>
+          </div>
+        </div>
+        <!-- Puxador Central de Latão -->
+        <div class="slider-handle">
+          <div class="handle-seal">
+            <span class="seal-glyph">✦</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       XI. BASTIDORES & DESAFIOS (A CRUX DO PROJETO)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">XI.</span>
+        <span class="name"><span class="t" lang="pt">Bastidores &amp; Crux</span><span class="t" lang="en">Behind the Scenes &amp; Crux</span></span>
+        <span class="gloss"><span class="t" lang="pt">A grande barreira</span><span class="t" lang="en">The hard constraint</span></span>
+      </header>
+
+      <!-- Cartão de Alerta Vintage Lacre de Cera -->
+      <div class="crux-alert reveal">
+        <div class="wax-seal-wrapper" aria-hidden="true">
+          <!-- Selo de lacre de cera em CSS puro -->
+          <div class="wax-seal">
+            <span class="seal-logo">L.S</span>
+          </div>
+        </div>
+        <div class="crux-content">
+          <h4 class="crux-title"><span class="t" lang="pt">A Crux: A Adoção dos Operadores</span><span class="t" lang="en">The Crux: Operator Adoption</span></h4>
+          <p><span class="t" lang="pt">O maior desafio residia na confiança. Supervisores de campo, habituados ao controle analítico rígido de planilhas complexas, hesitaram inicialmente em confiar em métricas sumarizadas por inteligência artificial. O ponto de virada estratégica ocorreu quando introduzimos a transparência de linhagem (RAG lineage): ao tocar em qualquer número na tela, Arthur visualiza instantaneamente os logs e links originais do banco de dados, estabelecendo credibilidade inabalável no sistema.</span>
+             <span class="t" lang="en">The hardest constraint was trust. Port terminal supervisors, deeply protective of raw analytical metrics, initially resisted delegating decision-making to an AI. The breakthrough was designing RAG lineage transparency: by tapping any stat on the interface, Arthur could instantly inspect the source database files, establishing total credibility in the model's calculations.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       XII. INSTRUMENTARIUM & IA UTILIZADA (CO-AUTORA)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">XII.</span>
+        <span class="name">Instrumentarium</span>
+        <span class="gloss"><span class="t" lang="pt">Instrumentos &amp; IA</span><span class="t" lang="en">Tools &amp; Co-authors</span></span>
+      </header>
+
+      <ul class="instruments" data-stagger>
+        <li class="instrument">
+          <span class="inst-glyph font-serif-display" aria-hidden="true">✶</span>
+          <span class="inst-name">Figma Variables</span>
+          <span class="inst-desc"><span class="t" lang="pt">[Mapeamento estrutural de tokens do sistema e componentes responsivos]</span><span class="t" lang="en">[Structural system mapping, variables, and responsive components]</span></span>
+        </li>
+        <li class="instrument">
+          <span class="inst-glyph font-serif-display" aria-hidden="true">✧</span>
+          <span class="inst-name">Custom RAG Framework</span>
+          <span class="inst-desc"><span class="t" lang="pt">[Integração de busca semântica para consulta direta à infraestrutura de TI]</span><span class="t" lang="en">[Retrieval-Augmented Generation schema built upon heavy enterprise IT APIs]</span></span>
+        </li>
+        <li class="instrument">
+          <span class="inst-glyph font-serif-display" aria-hidden="true">⚙</span>
+          <span class="inst-name">Claude 3.5 Sonnet</span>
+          <span class="inst-desc"><span class="t" lang="pt">[Ajustes de prompts do sistema conversacional e refino de copy do assistente]</span><span class="t" lang="en">[Prompt tuning and UX writing refinements for LLM output constraints]</span></span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       XIII. RESULTADOS & IMPACTO (COUNT-UP)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread">
+      <aside class="margin-l" aria-hidden="true"></aside>
+      <div class="content">
+        <header class="section-head reveal">
+          <span class="roman">XIII.</span>
+          <span class="name"><span class="t" lang="pt">Resultados &amp; Impacto</span><span class="t" lang="en">Outcomes &amp; Impact</span></span>
+          <span class="gloss"><span class="t" lang="pt">Métricas auditadas</span><span class="t" lang="en">Audited metrics</span></span>
+        </header>
+
+        <p class="results-intro reveal"><span class="t" lang="pt">A auditoria realizada duas semanas após a implantação piloto do Aura no terminal operante de transporte de minério demonstrou forte ganho estratégico tanto em produtividade quanto em NPS:</span>
+           <span class="t" lang="en">Performance audits ran two weeks post-launch of the Aura pilot at the active port shipping terminal demonstrated massive gains in both operational speed and NPS:</span></p>
+
+        <!-- Faixa de Estatísticas com Count-up -->
+        <aside class="marginalia-stat reveal">
+          <dl>
+            <div>
+              <dt><span class="unit unit-pre">-</span><span class="stat-val" data-count="45">0</span><span class="unit">%</span></dt>
+              <dd><span class="t" lang="pt">tempo médio de decisão crítica em campo (MTTR)</span><span class="t" lang="en">average field critical decision latency (MTTR)</span></dd>
+            </div>
+            <div>
+              <dt><span class="stat-val" data-count="3.8" data-dec="1">0.0</span><span class="unit">×</span></dt>
+              <dd><span class="t" lang="pt">frequência diária de engajamento voluntário da equipe</span><span class="t" lang="en">daily frequency of voluntary crew engagement</span></dd>
+            </div>
+            <div>
+              <dt><span class="unit unit-pre">+</span><span class="stat-val" data-count="32">0</span></dt>
+              <dd><span class="t" lang="pt">delta de satisfação de uso em campo (NPS)</span><span class="t" lang="en">delta in systemic user satisfaction (NPS)</span></dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+      <aside class="margin-r" aria-hidden="true"></aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       XIV. ERRATA (O QUE NÃO FUNCIONOU & APRENDIZADOS)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">XIV.</span>
+        <span class="name">Errata</span>
+        <span class="gloss"><span class="t" lang="pt">Lições e revisões</span><span class="t" lang="en">Lessons &amp; revisions</span></span>
+      </header>
+
+      <!-- Fé de Erratas para documentar o processo real -->
+      <ol class="errata-list" data-stagger>
+        <li class="errata-item">
+          <span class="errata-tag"><span class="t" lang="pt">Para a p. 08</span><span class="t" lang="en">For p. 08</span></span>
+          <p class="t" lang="pt">
+            <span class="strike">Onde se assumiu que operadores iriam digitar comandos complexos no terminal...</span>
+            — <span class="em">Descobrimos que a trepidação e o barulho de pátio pedem voice tags curtas baseadas em prompts sugeridos na tela (smart prompts instantâneos), diminuindo digitações desastrosas.</span>
+          </p>
+          <p class="t" lang="en">
+            <span class="strike">Where we assumed operators would type long queries at the terminal...</span>
+            — <span class="em">We corrected the UX layout to support smart prompts and one-tap speech tags, resolving typographical error rates in highly noisy field conditions.</span>
+          </p>
+        </li>
+        <li class="errata-item">
+          <span class="errata-tag"><span class="t" lang="pt">Para a p. 19</span><span class="t" lang="en">For p. 19</span></span>
+          <p class="t" lang="pt">
+            <span class="strike">Onde se tentou ocultar menus de configuração de variáveis em RAG...</span>
+            — <span class="em">Causou-se frustração em usuários com alto grau técnico de TI. A configuração avançada foi reestabelecida em um painel sanfonado que mantém a tela limpa sem remover a flexibilidade de controle.</span>
+          </p>
+          <p class="t" lang="en">
+            <span class="strike">Where we hid variables controls in the RAG pipeline...</span>
+            — <span class="em">It caused frustration for advanced IT users. Config parameters were re-instituted inside an accordion drawer, preserving clean space without removing system flexibility.</span>
+          </p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================================================================
+       BIBLIOTECA DE BLOCOS — componentes portados do genai.html (2026-06-08)
+       ----------------------------------------------------------------------------
+       NÃO é uma seção de conteúdo: é um catálogo de marcação pronta. Ao montar um
+       case real, RECORTE o bloco desejado, mova-o para a seção numerada que fizer
+       sentido e troque os [placeholders]. Apague esta <section> inteira antes de
+       publicar. O CSS vive em design-system/case-template.css (§ "Componentes
+       portados do genai"); as interações (flip + lightbox) são os <script> no fim
+       deste arquivo. Imagens usam caminhos-exemplo ../images/[projeto]/… .
+       ============================================================================ -->
+  <section class="page case-section blocks-library" data-blocks-library>
+    <div class="spread-narrow">
+      <header class="section-head">
+        <span class="roman">∎</span>
+        <span class="name">Biblioteca de blocos</span>
+        <span class="gloss">Componentes reutilizáveis — recortar e usar</span>
+      </header>
+
+      <!-- ===== A. Dramatis em grade 2×2 (bill-roles) ===== -->
+      <ol class="bill-roles reveal" data-stagger>
+        <li class="bill-role">
+          <span class="bill-role__cue"><span class="t" lang="pt">No papel principal</span><span class="t" lang="en">In the leading role</span></span>
+          <span class="bill-role__name">[Cargo / papel]</span>
+          <span class="bill-role__note"><span class="t" lang="pt">[O que você fez — uma frase.]</span><span class="t" lang="en">[What you did — one line.]</span></span>
+        </li>
+        <li class="bill-role">
+          <span class="bill-role__cue"><span class="t" lang="pt">Em cena com</span><span class="t" lang="en">Sharing the stage with</span></span>
+          <span class="bill-role__name">[Time / stakeholders]</span>
+          <span class="bill-role__note"><span class="t" lang="pt">[Com quem você atuou.]</span><span class="t" lang="en">[Who you worked with.]</span></span>
+        </li>
+      </ol>
+
+      <!-- ===== B. Grade de sub-projetos (poc-grid) + legenda de status ===== -->
+      <div class="poc-grid reveal" data-stagger>
+        <div class="poc-entry poc-entry--featured">
+          <div class="poc-entry__head"><span class="poc-entry__roman">I</span><span class="poc-entry__titles"><span class="poc-entry__name">[Nome do item]</span><span class="poc-entry__domain">[Domínio]</span></span></div>
+          <p class="poc-entry__body"><span class="t" lang="pt">[Descrição curta do item em destaque.]</span><span class="t" lang="en">[Short description of the featured item.]</span></p>
+          <span class="poc-entry__status st--dev"><span class="t" lang="pt">Desenvolvido</span><span class="t" lang="en">Developed</span></span>
+        </div>
+        <div class="poc-entry">
+          <div class="poc-entry__head"><span class="poc-entry__roman">II</span><span class="poc-entry__titles"><span class="poc-entry__name">[Nome do item]</span><span class="poc-entry__domain">[Domínio]</span></span></div>
+          <p class="poc-entry__body"><span class="t" lang="pt">[Descrição curta de um item em pesquisa.]</span><span class="t" lang="en">[Short description of a research item.]</span></p>
+          <span class="poc-entry__status st--pesquisa"><span class="t" lang="pt">Pesquisa</span><span class="t" lang="en">Research</span></span>
+        </div>
+      </div>
+      <div class="status-legend reveal">
+        <span class="status-legend__item"><span class="status-legend__dot sl-dot--pesquisa"></span><span class="t" lang="pt">Pesquisa</span><span class="t" lang="en">Research</span></span>
+        <span class="status-legend__item"><span class="status-legend__dot sl-dot--proto"></span><span class="t" lang="pt">Protótipo</span><span class="t" lang="en">Prototype</span></span>
+        <span class="status-legend__item"><span class="status-legend__dot sl-dot--parcial"></span><span class="t" lang="pt">Dev. parcial</span><span class="t" lang="en">Partial dev.</span></span>
+        <span class="status-legend__item"><span class="status-legend__dot sl-dot--dev"></span><span class="t" lang="pt">Desenvolvido</span><span class="t" lang="en">Developed</span></span>
+      </div>
+
+      <!-- ===== C. Princípios numerados + desfecho (principles / outcome) ===== -->
+      <div class="principles reveal" data-stagger>
+        <div class="principle">
+          <span class="principle__num-big" aria-hidden="true">1</span>
+          <span class="principle__num">01</span>
+          <h3 class="principle__title"><span class="t" lang="pt">[Princípio um]</span><span class="t" lang="en">[Principle one]</span></h3>
+          <span class="principle__tag"><span class="t" lang="pt">[Subtítulo curto.]</span><span class="t" lang="en">[Short tagline.]</span></span>
+          <p class="principle__body"><span class="t" lang="pt">[Descrição do princípio.]</span><span class="t" lang="en">[Principle description.]</span></p>
+        </div>
+        <div class="outcome">
+          <div class="outcome__head">
+            <span class="outcome__mark" aria-hidden="true">✦</span>
+            <span class="outcome__eyebrow"><span class="t" lang="pt">Resultado · Outcome</span><span class="t" lang="en">Outcome · Resultado</span></span>
+            <h3 class="outcome__title"><span class="t" lang="pt">[Desfecho]</span><span class="t" lang="en">[Outcome]</span></h3>
+            <span class="outcome__sub"><span class="t" lang="pt">[Uma linha de síntese.]</span><span class="t" lang="en">[One synthesis line.]</span></span>
+          </div>
+          <div class="outcome__index">
+            <div class="outcome__group">
+              <span class="outcome__group-title"><span class="t" lang="pt">Grupo A</span><span class="t" lang="en">Group A</span></span>
+              <ol class="outcome__list"><li>[Item]</li><li>[Item <em>com nota</em>]</li></ol>
+            </div>
+            <div class="outcome__group">
+              <span class="outcome__group-title"><span class="t" lang="pt">Grupo B</span><span class="t" lang="en">Group B</span></span>
+              <ol class="outcome__list"><li>[Item]</li><li>[Item]</li></ol>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== D. Cronologia em selos de lacre (principles-timeline / t-row) ===== -->
+      <div class="principles-timeline reveal">
+        <div class="t-row left">
+          <div class="t-card">
+            <span class="t-eyebrow"><span class="t" lang="pt">Fase 01</span><span class="t" lang="en">Phase 01</span></span>
+            <h3 class="t-title">[Título]</h3>
+            <span class="t-tag">[Tag]</span>
+            <p class="t-body"><span class="t" lang="pt">[O que aconteceu nesta fase.]</span><span class="t" lang="en">[What happened in this phase.]</span></p>
+          </div>
+          <span class="seal-mark" aria-hidden="true">i</span>
+        </div>
+        <div class="t-row right">
+          <span class="seal-mark" aria-hidden="true">ii</span>
+          <div class="t-card">
+            <span class="t-eyebrow"><span class="t" lang="pt">Fase 02</span><span class="t" lang="en">Phase 02</span></span>
+            <h3 class="t-title">[Título]</h3>
+            <span class="t-tag">[Tag]</span>
+            <p class="t-body"><span class="t" lang="pt">[O que aconteceu nesta fase.]</span><span class="t" lang="en">[What happened in this phase.]</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== E. Spotlight com galeria: prancha + flip recto/verso + mosaico =====
+           A face --recto e cada .sl-thumb abrem a lightbox (classe .lightboxgallery-link).
+           O botão .sl-flip-btn vira a prancha para revelar o --verso (wireframe). -->
+      <article class="spotlight reveal">
+        <span class="spotlight__eyebrow"><span class="t" lang="pt">Spotlight 01 — [Domínio]</span><span class="t" lang="en">Spotlight 01 — [Domain]</span></span>
+        <h3 class="spotlight__title">[Nome do produto]</h3>
+        <div class="spotlight__lead">
+          <p><span class="t" lang="pt">[Parágrafo de abertura do spotlight.]</span><span class="t" lang="en">[Opening paragraph of the spotlight.]</span></p>
+        </div>
+        <div class="sl-gallery">
+          <div class="sl-plate-flip reveal">
+            <div class="sl-flip-inner">
+              <a class="sl-hero sl-face sl-face--recto lightboxgallery-link" href="../images/genai/campaign-genius/1.webp" aria-label="[Produto] — vista principal">
+                <img src="../images/genai/campaign-genius/1.webp" alt="[Produto] — vista principal" loading="lazy" />
+                <div class="sl-hero__cap"><span class="t" lang="pt">[Legenda da vista principal]</span><span class="t" lang="en">[Main view caption]</span></div>
+              </a>
+              <div class="sl-hero sl-face sl-face--verso" aria-hidden="true">
+                <img src="../images/genai/wireframes/campaign-genius.svg" alt="Wireframe — esboço da tela" loading="lazy" />
+                <div class="sl-hero__cap sl-hero__cap--wf"><span class="t" lang="pt">Verso · wireframe do esboço</span><span class="t" lang="en">Verso · the sketch wireframe</span></div>
+              </div>
+            </div>
+            <button class="sl-flip-btn" type="button" aria-pressed="false">
+              <span class="sl-flip-medallion" aria-hidden="true"><span class="sl-flip-glyph">↻</span></span>
+              <span class="sl-flip-tag" aria-hidden="true"><span class="sl-flip-tag-side sl-flip-tag--front">verso</span><span class="sl-flip-tag-side sl-flip-tag--back">recto</span></span>
+              <span class="sl-flip-label sl-flip-label--front"><span class="t" lang="pt">Ver o wireframe</span><span class="t" lang="en">See the wireframe</span></span>
+              <span class="sl-flip-label sl-flip-label--back"><span class="t" lang="pt">Ver a prancha</span><span class="t" lang="en">See the plate</span></span>
+            </button>
+          </div>
+          <div class="sl-grid">
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/2.webp"><img src="../images/genai/campaign-genius/2.webp" alt="[Produto] — vista 2" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/3.webp"><img src="../images/genai/campaign-genius/3.webp" alt="[Produto] — vista 3" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/4.webp"><img src="../images/genai/campaign-genius/4.webp" alt="[Produto] — vista 4" loading="lazy" /></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===== F. Desafio: grade de cards + card largo com livro-razão (rework-list) ===== -->
+      <div class="insights-grid insights-grid--split reveal" data-stagger>
+        <div class="insight-card">
+          <span class="card-num">01.</span>
+          <h4 class="card-title"><span class="t" lang="pt">[Problema um]</span><span class="t" lang="en">[Problem one]</span></h4>
+          <p><span class="t" lang="pt">[Descrição.]</span><span class="t" lang="en">[Description.]</span></p>
+        </div>
+        <div class="insight-card">
+          <span class="card-num">02.</span>
+          <h4 class="card-title"><span class="t" lang="pt">[Problema dois]</span><span class="t" lang="en">[Problem two]</span></h4>
+          <p><span class="t" lang="pt">[Descrição.]</span><span class="t" lang="en">[Description.]</span></p>
+        </div>
+        <div class="insight-card insight-card--wide">
+          <div class="insight-card__lead">
+            <span class="card-num">03.</span>
+            <h4 class="card-title"><span class="t" lang="pt">[Problema com dados ao lado]</span><span class="t" lang="en">[Problem with data aside]</span></h4>
+            <p><span class="t" lang="pt">[Descrição do problema.]</span><span class="t" lang="en">[Problem description.]</span></p>
+          </div>
+          <div class="insight-card__aside">
+            <span class="rework-label"><span class="t" lang="pt">[Rótulo do livro-razão]</span><span class="t" lang="en">[Ledger label]</span></span>
+            <ul class="rework-list">
+              <li><span class="rework-list__n">i</span><span class="rework-list__name">[Item]</span><span class="rework-list__mult">×N</span></li>
+              <li><span class="rework-list__n">ii</span><span class="rework-list__name">[Item]</span><span class="rework-list__mult">×N</span></li>
+            </ul>
+            <div class="rework-foot">
+              <span class="rework-foot__k"><span class="t" lang="pt">[Síntese do total]</span><span class="t" lang="en">[Total synthesis]</span></span>
+              <span class="rework-foot__v">[N×]</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== G. Lições / aprendizados (learnings) ===== -->
+      <div class="learnings reveal" data-stagger>
+        <div class="learning">
+          <span class="learning__num"><span class="t" lang="pt">Lição 01</span><span class="t" lang="en">Learning 01</span></span>
+          <h3 class="learning__title"><span class="t" lang="pt">[Título da lição]</span><span class="t" lang="en">[Learning title]</span></h3>
+          <p class="learning__body"><span class="t" lang="pt">[O que você aprendeu.]</span><span class="t" lang="en">[What you learned.]</span></p>
+        </div>
+      </div>
+
+      <!-- ===== H. Nota de dados fictícios (fiction-note) ===== -->
+      <div class="fiction-note reveal">
+        <span><span class="t" lang="pt">[Aviso: dados e telas são fictícios, apenas para demonstração.]</span><span class="t" lang="en">[Disclaimer: data and screens are fictional, for demonstration only.]</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       XV. COLOPHÃO & EPÍLOGO (FINAL CTA / NAVEGAÇÃO)
+       ============================================================ -->
+  <section class="case-colophon" data-folio>
+    <div class="ornament">✦</div>
+    <p class="case-colophon-body">
+      <span class="t" lang="pt">Esta prancha foi composta pelo autor em <em>MMXXIV</em>, com o auxílio técnico de inteligência generativa e ferramentas de desenvolvimento de alto refinamento para a Samarco. Os dados e marcas exibidos servem como estudo conceitual de restauro operacional e design sistemático, mantendo os parâmetros de confidencialidade acordados.</span>
+      <span class="t" lang="en">This plate was set by the author in <em>MMXXIV</em>, employing artificial intelligence as a co-author and high-end software development kits for Samarco. The figures and branding displayed here serve as a conceptual specimen of operational restoration & systems design under strict confidentiality guidelines.</span>
+    </p>
+    <div class="case-colophon-meta">Plate V · Vol. I · MMXXIV</div>
+  </section>
+
+  <!-- Navegação de Folios (Verso/Recto) -->
+  <nav class="folio-nav" aria-label="Navegação entre cases">
+    <a class="verso" href="../index.html#works" rel="prev">
+      <span class="folio-marker"><span class="t" lang="pt">← Catálogo (Anverso)</span><span class="t" lang="en">← Catalogue (Anverso)</span></span>
+      <span class="folio-title"><em><span class="t" lang="pt">Catálogo de Obras</span><span class="t" lang="en">A Catalogue of Works</span></em></span>
+    </a>
+    <a class="recto" href="#" rel="next">
+      <span class="folio-marker"><span class="t" lang="pt">Próximo Case (Recto) →</span><span class="t" lang="en">Next Plate (Recto) →</span></span>
+      <span class="folio-title"><em><span class="t" lang="pt">Sports Experience · DirecTV</span><span class="t" lang="en">Sports Experience · DirecTV</span></em></span>
+    </a>
+  </nav>
+
+</main>
+
+<!-- ============================================================
+     CHROME INFERIOR (CONTADOR DE PÁGINAS E FLAP ANIMADO)
+     ============================================================ -->
+<footer class="chrome-bot">
+  <div class="page-counter" aria-hidden="true">
+    <span class="num" data-counter-current>—</span>
+    <span class="of">/ <span data-counter-total>—</span></span>
+  </div>
+  <div class="ink-progress" aria-hidden="true"></div>
+  <div class="page-counter">
+    <span class="of"><span class="t" lang="pt">Prancha</span><span class="t" lang="en">Plate</span></span>
+    <span class="num">IV</span>
+  </div>
+</footer>
+
+<!-- Modais e interações da galeria e scripts locais -->
+<script src="./case-template.js"></script>
+<!-- Chrome de case: Index Rerum (⌘K), paridade com a home -->
+<script src="./case-chrome.js"></script>
+
+<!-- ============================================================================
+     Interações dos blocos portados do genai (flip de prancha + lightbox).
+     Mantidos inline no template (espelham o genai) para que cada case criado a
+     partir daqui já saia funcional, sem depender de edição do case-template.js.
+     ============================================================================ -->
+<!-- Plate-flip: vira a prancha de spotlight para revelar o wireframe do esboço -->
+<script>
+(function () {
+  document.querySelectorAll('.sl-flip-btn').forEach(function (btn) {
+    var card = btn.closest('.sl-plate-flip');
+    if (!card) return;
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var flipped = card.classList.toggle('is-flipped');
+      btn.setAttribute('aria-pressed', flipped ? 'true' : 'false');
+      var verso = card.querySelector('.sl-face--verso');
+      var recto = card.querySelector('.sl-face--recto');
+      if (verso) verso.setAttribute('aria-hidden', flipped ? 'false' : 'true');
+      if (recto) recto.setAttribute('aria-hidden', flipped ? 'true' : 'false');
+    });
+  });
+})();
+</script>
+
+<!-- Lightbox das galerias — versão elaborada, COMPARTILHADA (lightbox.js) -->
+<script src="./lightbox.js"></script>
+</body>
+</html>

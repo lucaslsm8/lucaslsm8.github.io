@@ -1,0 +1,168 @@
+/* ============================================================
+   DESIGN TOKENS — Lucas Schoenherr Portfolio
+   Tema: livro antigo (catalogue raisonné) + modernidade
+   ----
+   Fonte única de verdade para cores, tipografia, espaçamento,
+   easings e elevações. NÃO sobrescrever valores em outros CSS;
+   sempre referenciar via var(--token).
+   Compatível com Claude Design / Figma Variables.
+   ============================================================ */
+
+:root {
+  /* --------------------------------------------------------
+     COR — Paleta editorial
+     Paper = fundos | Ink = texto/linhas | Hairline = divisores
+     Oxblood/Cobalt = acentos editoriais raros | Highlighter = destaque
+     -------------------------------------------------------- */
+  --paper:           #f1ece0;   /* fundo principal — creme quente */
+  --paper-shade:     #e8e1cd;   /* superfícies elevadas (cards, colofão) */
+  --paper-deep:      #ddd4bd;   /* sombra de papel mais profunda */
+  --paper-card:      #f7f2e3;   /* superfície de carta/cartão — levemente mais clara que paper */
+
+  --ink:             #1a1612;   /* texto principal — quase-preto quente */
+  --ink-soft:        #4a4136;   /* texto secundário */
+  --ink-faint:       #8b7f6e;   /* texto terciário, captions */
+  --ink-ghost:       #c4b8a0;   /* texto desabilitado, linhas pontilhadas */
+
+  --hairline:        rgba(26, 22, 18, 0.14);   /* divisores sutis */
+  --hairline-strong: rgba(26, 22, 18, 0.28);   /* divisores principais */
+
+  --oxblood:         #7a2620;   /* acento — drop caps, ornamentos, hover */
+  --oxblood-deep:    #5a1814;   /* acento profundo — hover de links oxblood */
+  --cobalt:          #1d3a78;   /* acento secundário */
+  --highlighter:     #f5e3a8;   /* marca-texto, seleção */
+
+  /* Airmail / "par avion" — moldura da Correspondência.
+     A borda da carta troca de paleta por idioma:
+     EN → vermelho + azul · PT → verde + amarelo. */
+  --air-red:         #b23a2e;   /* EN — vermelho postal */
+  --air-blue:        #2b4a8c;   /* EN — azul postal */
+  --air-green:       #2f6b45;   /* PT — verde (tom editorial) */
+  --air-gold:        #c79320;   /* PT — amarelo/ouro (tom editorial) */
+
+  /* --------------------------------------------------------
+     TIPOGRAFIA
+     Serif = corpo + display | Mono = metadados, números, captions
+     -------------------------------------------------------- */
+  --serif:         "EB Garamond", "Adobe Caslon Pro", "Hoefler Text", "Times New Roman", Times, serif;
+  --serif-display: "Instrument Serif", "EB Garamond", serif;
+  --mono:          "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+  --hand:          "Caveat", "Segoe Script", "Bradley Hand", cursive;  /* voz do desenhista — marginalia manuscrita */
+
+  /* Escala tipográfica (referência — usar diretamente em components quando precisar) */
+  --fs-caption:  10px;   /* metadados, page counters */
+  --fs-small:    11px;   /* labels, chrome */
+  --fs-meta:     13px;   /* gloss, attribution */
+  --fs-body:     19px;   /* corpo de texto */
+  --fs-lead:     22px;   /* parágrafos de abertura */
+  --fs-h4:       24px;
+  --fs-h3:       36px;
+  --fs-h2:       56px;
+  --fs-h1:       120px;  /* títulos display, frontispiece */
+
+  /* Line-heights */
+  --lh-tight:  1.0;
+  --lh-snug:   1.2;
+  --lh-normal: 1.5;
+  --lh-loose:  1.6;
+
+  /* --------------------------------------------------------
+     ESPAÇAMENTO
+     Escala 4px base, com saltos editoriais grandes (page, spread)
+     -------------------------------------------------------- */
+  --sp-1:   4px;
+  --sp-2:   8px;
+  --sp-3:   12px;
+  --sp-4:   16px;
+  --sp-5:   24px;
+  --sp-6:   32px;
+  --sp-7:   48px;
+  --sp-8:   64px;
+  --sp-9:   80px;
+  --sp-10:  96px;
+  --sp-11:  120px;
+  --sp-12:  160px;
+
+  /* Larguras de contêiner */
+  --w-prose:       640px;  /* coluna de texto único */
+  --w-narrow:      880px;  /* spread estreito */
+  --w-page:       1280px;  /* spread principal */
+
+  /* --------------------------------------------------------
+     RAIO, BORDA E ELEVAÇÃO
+     -------------------------------------------------------- */
+  --radius-none:  0;
+  --radius-sm:    2px;
+  --radius-md:    4px;
+  --radius-pill:  999px;
+
+  --border-hair:       1px solid var(--hairline);
+  --border-hair-strong: 1px solid var(--hairline-strong);
+  --border-ink:        1px solid var(--ink);
+  --border-dotted:     1px dotted var(--ink-ghost);
+
+  --status-green: #4a8a3a;
+
+  --shadow-soft: 0 4px 12px rgba(26, 22, 18, 0.08);
+  --shadow-lens: 0 0 0 1px var(--hairline), 0 16px 40px rgba(26, 22, 18, 0.2);
+
+  /* --------------------------------------------------------
+     MOVIMENTO
+     -------------------------------------------------------- */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-power:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --dur-fast:   200ms;
+  --dur-base:   300ms;
+  --dur-slow:   600ms;
+  --dur-page:   1000ms;
+
+  /* --------------------------------------------------------
+     Z-INDEX
+     -------------------------------------------------------- */
+  --z-content: 2;
+  --z-chrome:  50;
+  --z-lens:    99;
+  --z-cursor:  100;
+
+  /* --------------------------------------------------------
+     BREAKPOINTS — referência (use em @media, não como var direta)
+       ≥1280  desktop largo
+        1024  laptop / tablet paisagem
+         768  tablet retrato
+         640  mobile grande
+         380  mobile pequeno (iPhone SE class)
+     -------------------------------------------------------- */
+}
+
+/* ============================================================
+   ACESSIBILIDADE GLOBAL — prefers-reduced-motion
+   Usuário pediu "menos animação": cortar transitions/animations
+   e desligar smooth-scroll. Aplica-se a todos os componentes.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .title-author .name-inner { transform: none !important; }
+  .frontispiece .invitation .arrow { animation: none !important; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .cursor-glyph,
+  .lens { display: none !important; }
+}
+
+/* ============================================================
+   FOCO VISÍVEL — padrão consistente para navegação por teclado
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid var(--oxblood);
+  outline-offset: 3px;
+  border-radius: 2px;
+}

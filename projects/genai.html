@@ -1,0 +1,2215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gen.AI — Ecossistema de 9 POCs de IA generativa · Lucas Schoenherr</title>
+<meta name="description" content="Estudo de caso do Gen.AI: ecossistema interno da Accenture One Studio com 9 POCs de IA generativa unificadas por um Design System. Lead Product Designer end-to-end: Lucas Schoenherr." />
+<link rel="canonical" href="https://lucaslsm8.github.io/Book/projects/genai.html" />
+<!-- Open Graph / social -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Gen.AI — Ecossistema de 9 POCs de IA generativa" />
+<meta property="og:description" content="Ecossistema interno da Accenture One Studio: 9 POCs de IA generativa unificadas por um Design System. Lead Product Designer end-to-end." />
+<meta property="og:locale" content="pt_BR" />
+<meta property="og:url" content="https://lucaslsm8.github.io/Book/projects/genai.html" />
+<meta property="og:image" content="https://lucaslsm8.github.io/Book/images/genai/capa.webp" />
+<meta property="og:image:alt" content="Capa da prancha Gen.AI" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Gen.AI — Ecossistema de 9 POCs de IA generativa" />
+<meta name="twitter:description" content="9 POCs de IA generativa unificadas por um Design System." />
+<meta name="twitter:image" content="https://lucaslsm8.github.io/Book/images/genai/capa.webp" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<!-- Design tokens e estilos da home + específicos do case -->
+<link rel="stylesheet" href="../design-system/tokens.css" />
+<link rel="stylesheet" href="../catalogue.css" />
+<link rel="stylesheet" href="../design-system/case-template.css" />
+
+<!-- ============================================================
+     Estilos exclusivos da prancha Gen.AI — escritos sobre os tokens
+     editoriais (paper / ink / oxblood / cobalt). Tema: catálogo
+     raisonné, sem violeta/ciano do projeto antigo.
+     ============================================================ -->
+<style>
+  /* Zera o espaço entre o Colophão e a navegação Verso/Recto nesta página */
+  .case-colophon + .folio-nav { margin-top: 0; }
+
+  /* ============================================================
+     COLOFÃO — "explicit" editorial (paridade com Lighthouse/PMO/Sports):
+     pressmark do compositor + regra floral + linha "Finis".
+     Enriquece o .case-colophon compartilhado sem redeclarar tokens.
+     ============================================================ */
+  .case-colophon { position: relative; }
+  .colo-press { display: flex; flex-direction: column; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-4); }
+  .colo-press__mark { width: 74px; height: 74px; display: grid; place-items: center; border: 1px solid var(--hairline-strong); border-radius: 50%; position: relative; color: var(--oxblood); }
+  .colo-press__mark::before { content: ''; position: absolute; inset: 5px; border: 1px solid color-mix(in srgb, var(--oxblood) 32%, transparent); border-radius: 50%; }
+  .colo-press__mark span { font-family: var(--serif-display); font-size: 30px; line-height: 1; font-style: italic; color: var(--ink); }
+  .colo-press__cap { font-family: var(--mono); font-size: 9px; letter-spacing: .24em; text-transform: uppercase; color: var(--ink-faint); }
+  .colo-rule { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 0 auto var(--sp-4); max-width: 320px; color: var(--oxblood); }
+  .colo-rule::before, .colo-rule::after { content: ''; height: 1px; flex: 1; background: linear-gradient(to var(--dir, right), transparent, color-mix(in srgb, var(--oxblood) 46%, transparent)); }
+  .colo-rule::after { --dir: left; }
+  .colo-rule span { font-family: var(--serif-display); font-size: 14px; line-height: 1; opacity: .82; }
+  .colo-finis { font-family: var(--serif-display); font-style: italic; font-size: 15px; letter-spacing: .04em; color: var(--ink-faint); margin: var(--sp-3) 0 0; }
+
+  /* "Voltar ao catálogo" — redundante no desktop (o nome no running-head já
+     linka pro catálogo), então some dali. Em mobile o running-head se
+     esconde (ver catalogue.css), então o ícone de retorno volta abaixo de
+     640px como único caminho de volta nessa largura — texto preservado só
+     para leitor de tela (clip, não display:none). */
+  .chrome-top .to-catalogue { display: none; }
+  .chrome-top .to-catalogue-icon { flex: 0 0 auto; }
+  @media (max-width: 640px) {
+    .chrome-top .to-catalogue {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 6px; min-width: 44px;
+    }
+    .chrome-top .to-catalogue em {
+      position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+      overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+    }
+  }
+
+  /* ============================================================
+     HERO DE IMPACTO — "Nove ao mesmo tempo" (substitui a Epígrafe).
+     Banda cinematográfica full-bleed (SEMPRE escura, como o Intermezzo —
+     cores literais, não tokens, p/ não inverter no modo vela). Uma frase-
+     pôster ancora a tese e uma constelação "9 → 1" traduz o argumento
+     central: nove POCs em nove domínios, unificadas por um só Design
+     System. Fica FORA do dossiê (antes dele), então o 100vw funciona.
+     ============================================================ */
+  .ga-hero-band {
+    --hb-cream: #f3ead0;
+    --hb-gilt: #cca24f;
+    --hb-dim: rgba(243, 234, 208, .5);
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-bottom: clamp(56px, 8vw, 104px);
+    padding: clamp(40px, 5vw, 72px) var(--sp-5);
+    background:
+      radial-gradient(120% 90% at 50% 0%, #221708 0%, #161009 60%, #100b06 100%);
+    color: var(--hb-cream);
+    position: relative;
+    overflow: hidden;
+  }
+  /* filete de topo/base que costura a banda ao papel */
+  .ga-hero-band::before,
+  .ga-hero-band::after {
+    content: ''; position: absolute; left: 0; right: 0; height: 1px;
+    background: linear-gradient(to right, transparent, color-mix(in srgb, var(--hb-gilt) 55%, transparent), transparent);
+  }
+  .ga-hero-band::before { top: 0; }
+  .ga-hero-band::after { bottom: 0; }
+  body.candle .ga-hero-band { box-shadow: inset 0 0 0 1px rgba(243, 234, 208, .14); }
+
+  .ga-hero-band__inner {
+    max-width: 1140px; margin: 0 auto; position: relative; z-index: 1;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.22fr);
+    align-items: stretch; gap: clamp(32px, 5vw, 72px);
+  }
+  /* coluna esquerda: conteúdo centrado verticalmente ao lado do astrolábio */
+  .ga-hb-copy { display: flex; flex-direction: column; justify-content: center; }
+  .ga-hb-figure { align-self: center; }
+  .ga-hb-eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .26em;
+    text-transform: uppercase; color: var(--hb-gilt); margin: 0 0 clamp(20px, 3vw, 30px);
+  }
+  .ga-hb-eyebrow::before { content: ''; width: 34px; height: 1px; background: currentColor; opacity: .6; }
+  .ga-hb-title {
+    font-family: var(--serif-display); font-weight: 400; font-style: italic;
+    font-size: clamp(42px, 5.6vw, 80px); line-height: .98; letter-spacing: -.01em;
+    margin: 0 0 clamp(20px, 2.6vw, 32px); color: var(--hb-cream);
+  }
+
+  /* Painel dinâmico à esquerda: repouso (tese) ↔ programa (nome/domínio/desc).
+     Todos os painéis ocupam a MESMA célula do grid, então a altura é a do
+     maior painel e a troca é um cross-fade sem salto de layout. */
+  .ga-hb-detail { display: grid; min-height: 168px; }
+  .ga-hb-panel {
+    grid-area: 1 / 1; opacity: 0; visibility: hidden; transform: translateY(7px);
+    transition: opacity .3s var(--ease-out), transform .3s var(--ease-out);
+    pointer-events: none;
+  }
+  .ga-hb-panel.is-shown { opacity: 1; visibility: visible; transform: none; pointer-events: auto; }
+  .ga-hb-sub {
+    font-family: var(--serif); font-size: clamp(15px, 1.5vw, 19px); line-height: 1.5;
+    color: var(--hb-dim); max-width: 42ch; margin: 0;
+  }
+  .ga-hb-sub .em { color: var(--hb-cream); font-style: italic; }
+  .ga-hb-hint {
+    display: inline-flex; align-items: center; gap: 9px; margin: clamp(18px, 2.4vw, 26px) 0 0;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--hb-gilt);
+  }
+  .ga-hb-hint__ic { font-size: 11px; }
+  .ga-hb-dom {
+    display: block; font-family: var(--mono); font-size: 10px; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--hb-gilt); margin: 0 0 10px;
+  }
+  .ga-hb-progname {
+    font-family: var(--serif-display); font-style: italic; font-weight: 400;
+    font-size: clamp(26px, 3vw, 38px); line-height: 1.02; color: var(--hb-cream); margin: 0 0 12px;
+  }
+  .ga-hb-desc {
+    font-family: var(--serif); font-size: clamp(15px, 1.45vw, 18px); line-height: 1.5;
+    color: var(--hb-dim); max-width: 42ch; margin: 0;
+  }
+
+  /* --- Astrolábio do ecossistema: 9 programas em órbita → 1 Design System --- */
+  .ga-hb-figure { margin: 0; position: relative; }
+  .ga-hb-figure svg { width: 100%; height: auto; display: block; overflow: visible; }
+
+  /* brilho radial sob o núcleo */
+  .ga-hb-glow { pointer-events: none; }
+  /* órbita onde repousam os nove nós */
+  .ga-hb-orbit { fill: none; stroke: color-mix(in srgb, var(--hb-gilt) 34%, transparent); stroke-width: 1; }
+  /* anel-mostrador gravado (gira devagar, como um instrumento) */
+  .ga-hb-dial { transform-box: fill-box; transform-origin: center; animation: ga-hb-rotate 140s linear infinite; }
+  .ga-hb-dial-ring { fill: none; stroke: color-mix(in srgb, var(--hb-gilt) 26%, transparent); stroke-width: 1; stroke-dasharray: 2 8; }
+  .ga-hb-tick { stroke: var(--hb-gilt); stroke-width: 1; opacity: .3; }
+  .ga-hb-tick--major { opacity: .58; stroke-width: 1.4; }
+  @keyframes ga-hb-rotate { to { transform: rotate(360deg); } }
+
+  .ga-hb-spoke { stroke: var(--hb-gilt); stroke-width: 1; opacity: .28; transition: opacity .25s var(--ease-out), stroke-width .25s var(--ease-out); }
+  .ga-hb-spoke.is-active { opacity: .9; stroke-width: 1.5; }
+
+  .ga-hb-node-g { cursor: pointer; outline: none; }
+  .ga-hb-node-core { transition: transform .25s var(--ease-out); transform-box: fill-box; transform-origin: center; }
+  .ga-hb-node { fill: #191207; stroke: color-mix(in srgb, var(--hb-cream) 52%, transparent); stroke-width: 1.2; transition: fill .25s var(--ease-out), stroke .25s var(--ease-out); }
+  /* Ícones reais dos POCs (Material, preenchidos) — herdam a tinta do nó via fill. */
+  .ga-hb-ico { fill: var(--hb-cream); stroke: none; transition: fill .25s var(--ease-out); }
+  .ga-hb-name-lbl { fill: var(--hb-dim); font-family: var(--mono); font-size: 9.5px; letter-spacing: .07em; text-transform: uppercase; transition: fill .25s var(--ease-out); }
+
+  .ga-hb-node-g:hover .ga-hb-node-core,
+  .ga-hb-node-g:focus-visible .ga-hb-node-core,
+  .ga-hb-node-g.is-active .ga-hb-node-core { transform: scale(1.14); }
+  .ga-hb-node-g.is-active .ga-hb-node { fill: var(--hb-gilt); stroke: var(--hb-gilt); }
+  .ga-hb-node-g.is-active .ga-hb-ico { fill: #17110a; }
+  .ga-hb-node-g.is-active .ga-hb-name-lbl { fill: var(--hb-cream); }
+  .ga-hb-node-g:focus-visible .ga-hb-node { stroke: var(--hb-cream); }
+  /* quando um nó está ativo, os demais recuam levemente */
+  .ga-hero-band.ga-hb-focus .ga-hb-node-g:not(.is-active) { opacity: .42; transition: opacity .25s var(--ease-out); }
+
+  .ga-hb-hub { fill: var(--hb-gilt); }
+  .ga-hb-hub-ring { fill: none; stroke: var(--hb-gilt); stroke-width: 1; opacity: .5; }
+  /* Wordmark: "Gen.AI" é o ator principal do núcleo — forte e centrado no círculo. */
+  .ga-hb-hub-cap { fill: #17110a; font-family: var(--serif-display); font-style: normal; font-weight: 700; font-size: 30px; letter-spacing: .005em; text-transform: none; text-anchor: middle; }
+
+  /* pulso suave do anel do hub */
+  @keyframes ga-hb-pulse { 0%, 100% { opacity: .5; } 50% { opacity: .88; } }
+  .ga-hb-hub-ring { animation: ga-hb-pulse 4.5s ease-in-out infinite; }
+
+  @media (max-width: 860px) {
+    .ga-hero-band__inner { grid-template-columns: 1fr; gap: clamp(28px, 6vw, 44px); text-align: center; }
+    .ga-hb-eyebrow { justify-content: center; }
+    .ga-hb-detail { min-height: 148px; justify-items: center; }
+    .ga-hb-sub, .ga-hb-desc { margin-inline: auto; }
+    .ga-hb-figure { max-width: 470px; margin-inline: auto; }
+  }
+  @media (max-width: 560px) {
+    .ga-hb-name-lbl { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ga-hb-hub-ring, .ga-hb-dial { animation: none; }
+    .ga-hb-node-core, .ga-hb-spoke, .ga-hb-panel { transition: none; }
+  }
+
+  /* ============================================================
+     DOSSIÊ — sumário lateral + lombada (portado do Lighthouse/Sports).
+     Envolve as Seções II→VIII; a I fica de fora (marginalia com
+     conteúdo real). Dentro da lombada os glosses laterais das seções
+     II→VIII são vazios/decorativos em todo o case — seguro escondê-los.
+     ============================================================ */
+  body { overflow-x: clip; }
+  .ga-dossier { display: grid; grid-template-columns: clamp(190px, 22vw, 248px) minmax(0, 1fr); gap: clamp(36px, 5vw, 76px); max-width: 1180px; margin: 0 auto; padding: 0 var(--sp-6); align-items: start; }
+  .ga-dossier__rail { position: sticky; top: 88px; align-self: start; padding-right: var(--sp-3); }
+  .ga-dossier__nav-label { font-family: var(--mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--oxblood); margin: 0 0 var(--sp-2); }
+  .ga-dossier__nav { display: flex; flex-direction: column; }
+  .ga-dossier__link { position: relative; display: grid; grid-template-columns: 2.2em 1fr; align-items: baseline; gap: 6px; padding: 7px 0 7px 12px; border: 0; border-bottom: 1px solid var(--hairline); background: transparent; text-align: left; cursor: pointer; color: var(--ink-soft); transition: color var(--dur-fast) ease, padding var(--dur-fast) ease; }
+  .ga-dossier__link::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 2px; height: 0; background: var(--oxblood); transition: height var(--dur-base) var(--ease-out); }
+  .ga-dossier__link:hover { color: var(--ink); }
+  .ga-dossier__link .lk-roman { font-family: var(--serif-display); font-style: italic; font-size: 14px; color: var(--ink-faint); }
+  .ga-dossier__link .lk-name { font-family: var(--serif); font-size: 15px; line-height: 1.25; }
+  .ga-dossier__link.is-active { color: var(--oxblood); }
+  .ga-dossier__link.is-active::before { height: 60%; }
+  .ga-dossier__link.is-active .lk-roman { color: var(--oxblood); }
+  .ga-dossier__link.is-active .lk-name { font-weight: 600; }
+
+  .ga-dossier__spine { min-width: 0; }
+  .ga-dossier__spine .case-section { display: block; min-height: 0; padding: var(--sp-8) 0; scroll-margin-top: 96px; }
+  .ga-dossier__spine > .case-section:first-child { padding-top: 0; }
+  .ga-dossier__spine .case-section + .case-section { border-top: 1px solid var(--hairline-strong); }
+  .ga-dossier__spine .case-intermezzo { width: 100%; max-width: 100%; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; }
+  .ga-dossier__spine .spread,
+  .ga-dossier__spine .spread-narrow { display: block; max-width: none; margin: 0; padding: 0; }
+  .ga-dossier__spine .margin-l,
+  .ga-dossier__spine .margin-r { display: none; }
+
+  /* Em telas de toque estreitas, o índice lateral não cabe bem e duplica
+     a navegação natural por scroll — vai direto ao conteúdo. */
+  @media (max-width: 900px) {
+    .ga-dossier { display: block; padding: 0 var(--sp-4); }
+    .ga-dossier__rail { display: none; }
+  }
+
+  /* ============================================================
+     OVERVIEW (Seção I) — parágrafo-guia + prosa e ficha técnica lado
+     a lado. Paridade com o Overview das demais pranchas (Sports/PMO),
+     escrito sobre os tokens editoriais e escopado ao case.
+     ============================================================ */
+  .ga-ov-lead { font-family: var(--serif); font-size: clamp(18px, 1.9vw, 22px); line-height: 1.55; color: var(--ink); }
+  .ga-ov-lead .em { color: var(--oxblood); font-style: italic; }
+  .ga-ov-grid { display: grid; grid-template-columns: minmax(0, 1fr) clamp(240px, 26%, 320px); gap: clamp(28px, 4vw, 56px); align-items: start; }
+  .ga-ov-body > p { margin: 0 0 var(--sp-4); }
+  .ga-ov-body > p:last-child { margin-bottom: 0; }
+  .ga-ov-ficha { border: 1px solid var(--hairline-strong); border-radius: var(--radius-sm); padding: var(--sp-4); background: color-mix(in srgb, var(--ink) 2%, transparent); position: sticky; top: 96px; }
+  .ga-ov-ficha__title { font-family: var(--mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); margin: 0 0 var(--sp-3); padding-bottom: var(--sp-2); border-bottom: 1px solid var(--hairline); }
+  .ga-ov-ficha dl { margin: 0; display: grid; gap: 11px; }
+  .ga-ov-ficha dl > div { display: grid; gap: 2px; }
+  .ga-ov-ficha dt { font-family: var(--mono); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); }
+  .ga-ov-ficha dd { margin: 0; font-family: var(--serif); font-size: 14px; line-height: 1.32; color: var(--ink); }
+  @media (max-width: 720px) {
+    .ga-ov-grid { grid-template-columns: 1fr; gap: var(--sp-5); }
+    .ga-ov-ficha { position: static; }
+  }
+
+  /* ---------- Dramatis Personæ: tese editorial + grade 2×2 de papéis ----------
+     Sem objeto decorativo à esquerda. Uma frase-tese grande abre a seção e
+     enquadra o papel; os quatro papéis vêm numa grade 2×2 com filetes, como
+     uma ficha. Distinto das listas numeradas do resto da página: deixas em
+     itálico oxblood + nome em romano vertical (contraponto ao itálico usado
+     para nomes nas demais seções). */
+  .bill-roles {
+    list-style: none;
+    margin: var(--sp-6) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--hairline);
+  }
+  .bill-role {
+    padding: var(--sp-5) var(--sp-6);
+    border-bottom: 1px solid var(--hairline);
+  }
+  /* Coluna esquerda: alinhada à margem do texto (sem recuo) */
+  .bill-role:nth-child(odd) { padding-left: 0; }
+  /* Coluna direita: divisória vertical central + recuo após ela */
+  .bill-role:nth-child(even) {
+    padding-right: 0;
+    border-left: 1px solid var(--hairline);
+  }
+  /* Deixa: lead-in em serif itálico (não mono) — voz de rubrica teatral */
+  .bill-role__cue {
+    display: block;
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-size: var(--fs-meta);
+    color: var(--oxblood);
+    margin-bottom: 4px;
+  }
+  /* Valor em romano vertical: o resto da página usa itálico p/ nomes, então
+     o upright aqui é deliberadamente o contraponto. */
+  .bill-role__name {
+    display: block;
+    font-family: var(--serif);
+    font-size: var(--fs-h4);
+    line-height: var(--lh-snug);
+    color: var(--ink);
+  }
+  .bill-role__note {
+    display: block;
+    margin-top: var(--sp-2);
+    font-family: var(--serif);
+    font-size: var(--fs-meta);
+    line-height: var(--lh-loose);
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 640px) {
+    .bill-roles { grid-template-columns: 1fr; }
+    .bill-role,
+    .bill-role:nth-child(odd),
+    .bill-role:nth-child(even) {
+      padding-left: 0;
+      padding-right: 0;
+      border-left: none;
+    }
+  }
+
+  /* ---------- Grade dos 9 produtos (o ecossistema) ---------- */
+  .poc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-4);
+    margin-top: var(--sp-6);
+  }
+  /* Base = POC em PESQUISA: recua. Papel plano, stroke pontilhado corrido,
+     acento e título atenuados — leitura de "hipótese / exploração". */
+  .poc-entry {
+    position: relative;
+    display: flex; flex-direction: column; gap: var(--sp-3);
+    padding: var(--sp-5) var(--sp-5) var(--sp-4);
+    background: transparent;
+    border: 1px dotted var(--ink-ghost);
+    border-radius: var(--radius-sm);
+    transition: transform var(--dur-base) var(--ease-out),
+                box-shadow var(--dur-base) var(--ease-out),
+                border-color var(--dur-base) var(--ease-out);
+  }
+  .poc-entry .poc-entry__roman { color: var(--ink-faint); }
+  .poc-entry .poc-entry__name  { color: var(--ink-soft); }
+  .poc-entry:hover {
+    transform: translateY(-3px);
+    border-color: var(--ink-faint);
+  }
+  .poc-entry__head { display: flex; align-items: baseline; gap: var(--sp-3); }
+  /* Emblema do POC: ícone real do produto, renderizado como máscara para
+     herdar a tinta do tema (currentColor) — adapta ao modo vela sozinho. */
+  .poc-entry__icon {
+    flex: 0 0 auto; align-self: flex-start;
+    width: 38px; height: 38px;
+    display: grid; place-items: center;
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--radius-sm);
+    background: var(--paper);
+    color: var(--ink-faint);
+    transition: color var(--dur-base) var(--ease-out),
+                border-color var(--dur-base) var(--ease-out);
+  }
+  .poc-entry__icon::before {
+    content: ''; width: 22px; height: 22px;
+    background-color: currentColor;
+    -webkit-mask: var(--poc-icon) center / contain no-repeat;
+            mask: var(--poc-icon) center / contain no-repeat;
+  }
+  .poc-entry--featured .poc-entry__icon { color: var(--oxblood); border-color: var(--oxblood); }
+  .poc-entry:hover .poc-entry__icon { color: var(--ink); }
+  .poc-entry__roman {
+    font-family: var(--serif-display);
+    font-size: var(--fs-h4); color: var(--oxblood); line-height: 1;
+    flex: 0 0 auto; font-style: italic;
+  }
+  .poc-entry__titles { display: flex; flex-direction: column; gap: 2px; }
+  .poc-entry__name { font-family: var(--serif); font-weight: 600; font-size: 21px; line-height: 1.15; color: var(--ink); }
+  .poc-entry__domain { font-family: var(--mono); font-size: var(--fs-small); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); }
+  .poc-entry__body { font-family: var(--serif); font-size: 16px; line-height: var(--lh-loose); color: var(--ink-soft); flex: 1; }
+  .poc-entry__status {
+    align-self: flex-start;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+    padding: 5px 11px; border-radius: var(--radius-pill);
+    border: 1px solid var(--hairline-strong); color: var(--ink-soft);
+    display: inline-flex; align-items: center; gap: 7px;
+  }
+  .poc-entry__status::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--ink-ghost); }
+  .st--dev::before      { background: #3e7d4f; }
+  .st--proto::before    { background: var(--oxblood); }
+  .st--parcial::before  { background: var(--cobalt); }
+  .st--pesquisa::before { background: var(--ink-ghost); }
+  /* Badge de PESQUISA: stroke pontilhado corrido, sem preenchimento — recua. */
+  /* Badge de PESQUISA: traço tracejado com folga ampla. A borda nativa
+     `dashed` tem gap fixo/apertado e o SVG de fundo esticado distorcia os
+     cantos. Solução: um <svg> inline preenchendo o badge com rect em % e
+     rx em px — cantos sempre circulares e traços uniformes, sem distorção.
+     Tom tan (#8b7f6e) legível tanto no creme quanto no plum (modo vela). */
+  .st--pesquisa {
+    position: relative;
+    border: 0;
+    color: var(--ink-faint);
+    background-color: transparent;
+    background-image: none;
+  }
+  .st--pesquisa .st-dash {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .st--pesquisa .st-dash rect { stroke: #8b7f6e; }
+  .st--pesquisa > span { position: relative; z-index: 1; }
+  .st--pesquisa::before { position: relative; z-index: 1; }
+  /* Badges de projetos que avançaram: stroke sólido + leve preenchimento do acento — destacam. */
+  .st--dev     { border-color: #3e7d4f;       color: #2f5d3b;       background: rgba(62,125,79,0.09); }
+  .st--proto   { border-color: var(--oxblood); color: var(--oxblood); background: rgba(122,38,32,0.08); }
+  .st--parcial { border-color: var(--cobalt);  color: var(--cobalt);  background: rgba(29,58,120,0.08); }
+
+  /* POC que avançou (dev/parcial/protótipo): papel claro, borda sólida,
+     topo oxblood mais forte e elevação — ganha o destaque. */
+  .poc-entry--featured {
+    background: var(--paper-card);
+    border: 1px solid var(--hairline-strong);
+    border-top: 3px solid var(--oxblood);
+    box-shadow: var(--shadow-soft);
+  }
+  .poc-entry--featured .poc-entry__roman { color: var(--oxblood); }
+  .poc-entry--featured .poc-entry__name  { color: var(--ink); }
+  .poc-entry--featured:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lens);
+    border-top-color: var(--oxblood);
+  }
+
+  /* legenda de status */
+  .status-legend { display: flex; flex-wrap: wrap; gap: var(--sp-3) var(--sp-6); margin-top: var(--sp-5);
+    font-family: var(--mono); font-size: var(--fs-small); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+  .status-legend__item { display: inline-flex; align-items: center; gap: 8px; }
+  .status-legend__dot { width: 10px; height: 10px; border-radius: 50%; }
+  .sl-dot--dev { background: #3e7d4f; } .sl-dot--proto { background: var(--oxblood); }
+  .sl-dot--parcial { background: var(--cobalt); } .sl-dot--pesquisa { background: var(--ink-ghost); }
+
+  /* ============================================================
+     V. ESTRATÉGIA & PRINCÍPIOS — 5 princípios numerados + desfecho
+     Lista editorial: numeral iluminado à esquerda, texto à direita.
+     ============================================================ */
+  .principles { margin-top: var(--sp-7); border-top: 1px solid var(--ink); }
+  .principle {
+    display: grid;
+    grid-template-columns: clamp(64px, 8vw, 116px) minmax(0, 1fr);
+    column-gap: var(--sp-6); row-gap: 5px;
+    align-items: start;
+    padding: var(--sp-6) 0;
+    border-bottom: 1px solid var(--hairline);
+    transition: background var(--dur-base) var(--ease-out);
+  }
+  .principle__num-big {
+    grid-column: 1; grid-row: 1 / span 4; align-self: start; text-align: center;
+    font-family: var(--serif-display); font-style: italic; font-weight: 400;
+    font-size: clamp(54px, 7.5vw, 104px); line-height: .8;
+    color: var(--ink-ghost);
+    transition: color var(--dur-base) var(--ease-out);
+  }
+  .principle__num {
+    grid-column: 2; display: none;
+    font-family: var(--mono); font-size: var(--fs-small); letter-spacing: .2em;
+    text-transform: uppercase; color: var(--oxblood);
+  }
+  /* Mantém o rótulo só no desfecho (RESULTADO/OUTCOME) — não é número. */
+  .principle:last-child .principle__num { display: block; }
+  .principle__title {
+    grid-column: 2; margin: 3px 0 0; font-weight: 400;
+    font-family: var(--serif-display); font-style: italic;
+    font-size: clamp(23px, 2.5vw, 31px); line-height: 1.08; color: var(--ink);
+  }
+  .principle__tag {
+    grid-column: 2; margin-top: 2px;
+    font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--ink-faint);
+  }
+  .principle__body {
+    grid-column: 2; margin: var(--sp-3) 0 0; max-width: 64ch;
+    font-family: var(--serif); font-size: 16px; line-height: var(--lh-loose); color: var(--ink-soft);
+  }
+  .principle:not(:last-child):hover { background: rgba(122,38,32,0.025); }
+  .principle:not(:last-child):hover .principle__num-big { color: var(--oxblood); }
+  /* Desfecho (RESULTADO ✦) — painel destacado encerrando a gramática */
+  .principle:last-child {
+    margin-top: var(--sp-6); padding: var(--sp-6);
+    border-bottom: none; border-top: 2px solid var(--oxblood);
+    background: var(--paper-shade);
+  }
+  .principle:last-child .principle__num-big { color: var(--oxblood); font-style: normal; font-size: clamp(40px, 5vw, 64px); }
+  @media (max-width: 640px) {
+    .principle { grid-template-columns: 1fr; row-gap: 3px; padding: var(--sp-5) 0; }
+    .principle__num-big { grid-row: auto; text-align: left; font-size: 52px; line-height: 1; }
+    .principle:last-child { padding: var(--sp-5); }
+  }
+
+  /* ---------- Desfecho: a "biblioteca" como página-de-rosto + índice ----------
+     O resultado é, literalmente, uma biblioteca de componentes — então o card
+     final deixa de imitar os 5 princípios e vira uma estampa de frontispício
+     (cabeçalho centrado, dupla filete) seguida de um índice catalogado em
+     dois grupos. */
+  .outcome {
+    position: relative;
+    margin-top: var(--sp-7);
+    padding: clamp(30px, 4.2vw, 56px);
+    background:
+      radial-gradient(125% 90% at 50% 0%, rgba(122,38,32,0.06), transparent 62%),
+      var(--paper-shade);
+    border: 1px solid var(--ink-ghost);
+  }
+  .outcome::before {
+    content: "";
+    position: absolute;
+    inset: 9px;
+    border: 1px solid rgba(122,38,32,0.26);
+    pointer-events: none;
+  }
+
+  .outcome__head { text-align: center; max-width: 52ch; margin: 0 auto; }
+  .outcome__mark {
+    display: block; line-height: 1;
+    font-family: var(--serif-display); color: var(--oxblood);
+    font-size: clamp(26px, 3vw, 34px);
+  }
+  .outcome__eyebrow {
+    display: block; margin-top: 12px;
+    font-family: var(--mono); font-size: var(--fs-small);
+    letter-spacing: 0.26em; text-transform: uppercase; color: var(--oxblood);
+  }
+  .outcome__title {
+    margin: 8px 0 0; font-weight: 400;
+    font-family: var(--serif-display); font-style: italic;
+    font-size: clamp(31px, 4vw, 47px); line-height: 1.04; color: var(--ink);
+  }
+  .outcome__sub {
+    display: block; margin-top: 12px;
+    font-family: var(--serif); font-style: italic;
+    font-size: clamp(15px, 1.5vw, 18px); line-height: var(--lh-loose);
+    color: var(--ink-faint);
+  }
+
+  .outcome__index {
+    margin-top: clamp(24px, 3vw, 36px);
+    padding-top: clamp(24px, 3vw, 36px);
+    border-top: 1px solid var(--ink-ghost);
+    display: grid; grid-template-columns: 1fr 1fr;
+    column-gap: clamp(28px, 5vw, 64px);
+  }
+  .outcome__group:nth-child(2) {
+    border-left: 1px solid var(--ink-ghost);
+    padding-left: clamp(28px, 5vw, 64px);
+  }
+  .outcome__group-title {
+    display: block; margin-bottom: var(--sp-3); padding-bottom: 7px;
+    border-bottom: 1px solid var(--hairline);
+    font-family: var(--mono); font-size: var(--fs-small);
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-faint);
+  }
+  .outcome__list { list-style: none; margin: 0; padding: 0; counter-reset: cat; }
+  .outcome__list li {
+    counter-increment: cat; position: relative;
+    padding: 8px 0 8px 32px;
+    font-family: var(--serif); font-size: 16px; line-height: 1.38; color: var(--ink);
+    border-bottom: 1px dotted var(--ink-ghost);
+  }
+  .outcome__list li:last-child { border-bottom: none; }
+  .outcome__list li::before {
+    content: counter(cat, decimal-leading-zero);
+    position: absolute; left: 0; top: 11px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: var(--oxblood);
+  }
+  .outcome__list em { font-style: italic; color: var(--ink-soft); }
+
+  @media (max-width: 560px) {
+    .outcome__index { grid-template-columns: 1fr; row-gap: var(--sp-6); }
+    .outcome__group:nth-child(2) { border-left: none; padding-left: 0; }
+  }
+
+  /* ---------- Espécime: a gramática de transparência feita componente ----------
+     Um único cartão-resposta que encarna os 3 sinais que se repetem nas 9 POCs:
+     confiança declarada · fonte rastreável · reversibilidade. Tudo em tokens,
+     então adapta ao modo vela automaticamente. */
+  .ga-grammar {
+    margin-top: var(--sp-7);
+    display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr);
+    gap: clamp(24px, 4vw, 56px); align-items: center;
+  }
+  .ga-grammar__eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--ink-faint); margin: 0 0 var(--sp-4);
+  }
+  .ga-grammar__eyebrow::before { content: ''; width: 26px; height: 1px; background: var(--oxblood); opacity: .7; }
+
+  /* o cartão-resposta ------------------------------------------------ */
+  .ga-answer {
+    background: var(--paper-card);
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--radius-sm);
+    padding: clamp(18px, 2.4vw, 26px);
+    box-shadow: 0 1px 0 var(--paper-shade), 0 20px 44px -30px rgba(43, 34, 20, .55);
+  }
+  .ga-answer__head { display: flex; align-items: center; gap: 10px; margin-bottom: var(--sp-3); }
+  .ga-answer__mark {
+    width: 26px; height: 26px; flex: none; display: grid; place-items: center;
+    border: 1px solid var(--oxblood); border-radius: 50%; color: var(--oxblood);
+    font-family: var(--serif-display); font-style: italic; font-size: 14px; line-height: 1;
+  }
+  .ga-answer__who { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); }
+
+  /* [1] chip de confiança */
+  .ga-conf {
+    margin-left: auto; display: inline-flex; align-items: center; gap: 7px;
+    padding: 4px 10px; border: 1px solid var(--hairline-strong); border-radius: 999px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .06em; color: var(--ink-soft); white-space: nowrap;
+  }
+  .ga-conf__dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--status-green);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--status-green) 20%, transparent);
+  }
+
+  .ga-answer__body {
+    font-family: var(--serif); font-size: clamp(16px, 1.6vw, 18px); line-height: 1.5;
+    color: var(--ink); margin: 0 0 var(--sp-3);
+  }
+  .ga-answer__body mark {
+    background: color-mix(in srgb, var(--cobalt) 14%, transparent);
+    color: var(--cobalt); padding: 0 3px; border-radius: 2px; font-style: normal;
+  }
+
+  /* [2] chips de fonte — citação rastreável ao trecho exato */
+  .ga-cites { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: var(--sp-4); }
+  .ga-cite {
+    display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px;
+    border: 1px solid color-mix(in srgb, var(--cobalt) 42%, var(--hairline-strong));
+    border-radius: var(--radius-sm); background: color-mix(in srgb, var(--cobalt) 7%, transparent);
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .03em; color: var(--cobalt);
+    text-decoration: none; cursor: default; transition: background var(--dur-fast) ease;
+  }
+  .ga-cite:hover { background: color-mix(in srgb, var(--cobalt) 14%, transparent); }
+  .ga-cite svg { width: 12px; height: 12px; flex: none; }
+
+  /* [3] rodapé: reversibilidade + feedback (loop fechado) */
+  .ga-answer__foot {
+    display: flex; align-items: center; gap: clamp(12px, 2vw, 20px); flex-wrap: wrap;
+    padding-top: var(--sp-3); border-top: 1px dotted var(--ink-ghost);
+  }
+  .ga-ctrl {
+    display: inline-flex; align-items: center; gap: 6px; background: none; border: 0; padding: 0; cursor: default;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-faint); transition: color var(--dur-fast) ease;
+  }
+  .ga-ctrl svg { width: 13px; height: 13px; }
+  .ga-ctrl:hover { color: var(--oxblood); }
+  .ga-fb { margin-left: auto; display: inline-flex; align-items: center; gap: 10px; }
+  .ga-fb__label { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); }
+  .ga-fb button { background: none; border: 0; padding: 2px; cursor: default; color: var(--ink-faint); transition: color var(--dur-fast) ease; }
+  .ga-fb button:hover { color: var(--oxblood); }
+  .ga-fb svg { width: 15px; height: 15px; display: block; }
+
+  /* legenda — as três colunas da gramática, glosadas */
+  .ga-grammar__legend { list-style: none; margin: 0; padding: 0; counter-reset: gram; }
+  .ga-grammar__legend li {
+    counter-increment: gram; position: relative; padding: 14px 0 14px 32px;
+    border-bottom: 1px dotted var(--ink-ghost);
+  }
+  .ga-grammar__legend li:last-child { border-bottom: none; }
+  .ga-grammar__legend li::before {
+    content: counter(gram, decimal-leading-zero); position: absolute; left: 0; top: 16px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: var(--oxblood);
+  }
+  .ga-leg-term { display: block; font-family: var(--serif); font-weight: 600; font-size: 16px; color: var(--ink); margin-bottom: 2px; }
+  .ga-leg-def { font-family: var(--serif); font-size: 14.5px; line-height: 1.45; color: var(--ink-soft); }
+
+  @media (max-width: 860px) {
+    .ga-grammar { grid-template-columns: 1fr; gap: clamp(24px, 6vw, 40px); }
+  }
+
+  /* ---------- Spotlight ---------- */
+  .spotlight { margin-top: var(--sp-8); padding-top: var(--sp-6); border-top: var(--border-hair); }
+  .spotlight:first-of-type { border-top: none; }
+  .spotlight__eyebrow { font-family: var(--mono); font-size: var(--fs-small); letter-spacing: .18em; text-transform: uppercase; color: var(--oxblood); }
+  .spotlight__title { font-family: var(--serif-display); font-style: italic; font-size: var(--fs-h3); line-height: 1.1; margin: 8px 0 var(--sp-3); color: var(--ink); }
+  .spotlight__lead { font-family: var(--serif); font-size: 17px; line-height: var(--lh-loose); color: var(--ink-soft); }
+  .spotlight__lead p { margin-bottom: var(--sp-3); }
+  .spotlight__lead .em { color: var(--ink); font-weight: 600; font-style: normal; }
+
+  /* ---------- Galeria: prancha real (passe-partout) + mosaico ---------- */
+  /* Linha 1: prancha real com flip para o wireframe.
+     Linha 2: mosaico de provas em duotom, largura cheia. */
+  .sl-gallery {
+    margin-top: var(--sp-5);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--sp-5);
+    align-items: start;
+  }
+
+  /* Prancha real montada em passe-partout (moldura de museu creme) */
+  .sl-hero {
+    grid-column: 2;
+    position: relative; display: flex; flex-direction: column; gap: 10px;
+    cursor: zoom-in; padding: 12px;
+    background: var(--paper-card); border: 1px solid var(--oxblood); border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-soft);
+    transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+  }
+  .sl-hero img {
+    width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: top center; display: block;
+    border: 1px solid rgba(122,38,32,.22);
+    transition: transform var(--dur-slow) var(--ease-out);
+  }
+  .sl-hero:hover { transform: translateY(-3px); box-shadow: var(--shadow-lens); }
+  .sl-hero:hover img { transform: scale(1.015); }
+  .sl-hero__cap {
+    position: static; padding: 0 2px 2px; background: none;
+    color: var(--ink-soft); font-family: var(--mono); font-size: 11px; letter-spacing: .04em; line-height: 1.4;
+    display: flex; align-items: center; gap: 9px;
+  }
+  .sl-hero__cap::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--oxblood); flex: 0 0 auto; }
+  .sl-hero__cap--wf::before { background: var(--ink-faint); }
+
+  /* ---------- Plate-flip: recto (prancha) ⇄ verso (wireframe do esboço) ----------
+     Largura cheia (mesmo limite do mosaico de thumbs). A prancha ocupa a
+     coluna esquerda; o controle de flip vira um painel à direita, centrado
+     verticalmente no espaço livre ao lado da imagem. */
+  .sl-plate-flip {
+    grid-column: 1 / -1; max-width: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 56px;
+    gap: var(--sp-4); align-items: stretch;
+    perspective: 1800px;
+  }
+  .sl-flip-inner {
+    position: relative; transform-style: preserve-3d;
+    transition: transform 0.75s var(--ease-power);
+  }
+  .sl-plate-flip.is-flipped .sl-flip-inner { transform: rotateY(180deg); }
+  .sl-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; margin: 0; }
+  .sl-face--recto { position: relative; z-index: 2; transform: translateZ(1px); }
+  .sl-face--verso {
+    position: absolute; inset: 0; transform: rotateY(180deg) translateZ(1px);
+    pointer-events: none; cursor: default;
+  }
+  .sl-plate-flip.is-flipped .sl-face--recto { pointer-events: none; }
+  .sl-plate-flip.is-flipped .sl-face--verso { pointer-events: auto; }
+  .sl-face--verso img { background: #f7f2e3; }
+  /* dentro do flip, nenhum hover mexe na face nem na imagem — evita o
+     z-fighting que fazia o protótipo "voltar" ao passar o mouse no verso.
+     O giro é só pelo botão. */
+  /* dentro do flip, o hover NÃO pode zerar o transform das faces — isso
+     removia o rotateY(180deg) do verso e o fazia "desgirar" de volta. Em vez
+     de transform:none, reaplica o transform exato de cada face (sem
+     deslocamento), preservando a rotação. O giro só acontece pelo botão. */
+  .sl-plate-flip .sl-face--recto:hover { transform: translateZ(1px); }
+  .sl-plate-flip .sl-face--verso:hover { transform: rotateY(180deg) translateZ(1px); box-shadow: none; }
+  .sl-plate-flip .sl-hero:hover img { transform: none; }
+  .sl-face--recto:hover { box-shadow: var(--shadow-lens); }
+
+  /* Controle de giro = marca do gravador. Um medalhão intaglio (relevo seco,
+     anel duplo gravado) com a pena que vira o fólio, legendado em mono pela
+     face que será revelada: verso (esboço) ⇄ recto (prancha). */
+  .sl-flip-btn {
+    align-self: start; justify-self: center;
+    display: flex; flex-direction: column; align-items: center; gap: 9px;
+    width: 56px; padding: 4px 0 0; cursor: pointer;
+    background: none; border: 0; color: var(--ink-soft);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .sl-flip-medallion {
+    position: relative;
+    width: 46px; height: 46px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: radial-gradient(circle at 50% 36%, #fcf8ec, var(--paper-card) 72%);
+    /* anel externo gravado · sulco claro · anel interno · relevo seco · sombra de apoio */
+    box-shadow:
+      inset 0 0 0 1px var(--hairline-strong),
+      inset 0 0 0 3.5px var(--paper-card),
+      inset 0 0 0 4.5px var(--hairline),
+      inset 0 2px 5px rgba(26,22,18,.10),
+      0 2px 6px rgba(26,22,18,.10);
+    transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-base) var(--ease-out);
+  }
+  .sl-flip-glyph {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 21px; line-height: 1; color: var(--oxblood);
+    text-shadow: 0 1px 0 rgba(252,248,236,.7);
+    transition: transform 0.7s var(--ease-power);
+  }
+  .sl-plate-flip.is-flipped .sl-flip-glyph { transform: rotate(180deg); }
+
+  /* Legenda editorial — qual fólio aparece ao virar */
+  .sl-flip-tag {
+    position: relative;
+    font-family: var(--mono); font-size: 9.5px; line-height: 1;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-faint);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .sl-flip-tag-side { display: none; }
+  .sl-flip-tag--front { display: inline; }
+  .sl-plate-flip.is-flipped .sl-flip-tag--front { display: none; }
+  .sl-plate-flip.is-flipped .sl-flip-tag--back { display: inline; }
+
+  /* hover — o anel acende em oxblood e o medalhão sobe levemente */
+  .sl-flip-btn:hover .sl-flip-medallion,
+  .sl-flip-btn:focus-visible .sl-flip-medallion {
+    box-shadow:
+      inset 0 0 0 1px var(--oxblood),
+      inset 0 0 0 3.5px var(--paper-card),
+      inset 0 0 0 4.5px rgba(122,38,32,.34),
+      inset 0 2px 5px rgba(26,22,18,.10),
+      0 7px 18px rgba(26,22,18,.16);
+    transform: translateY(-2px);
+  }
+  .sl-flip-btn:hover .sl-flip-tag,
+  .sl-flip-btn:focus-visible .sl-flip-tag { color: var(--oxblood); }
+  .sl-flip-btn:focus { outline: none; }
+
+  /* MODO VELA — sem volume: o medalhão fica plano, só as linhas rosas.
+     Remove o preenchimento radial claro e as sombras de relevo/apoio que,
+     no escuro, viravam um disco brilhante saliente. */
+  body.candle .sl-flip-medallion {
+    background: transparent !important;
+    box-shadow:
+      inset 0 0 0 1px #c46a78,
+      inset 0 0 0 4.5px rgba(196,106,120,0.22) !important;
+  }
+  body.candle .sl-flip-btn:hover .sl-flip-medallion,
+  body.candle .sl-flip-btn:focus-visible .sl-flip-medallion {
+    background: transparent !important;
+    box-shadow:
+      inset 0 0 0 1.5px #c46a78,
+      inset 0 0 0 4.5px rgba(196,106,120,0.34) !important;
+    transform: translateY(-2px);
+  }
+  body.candle .sl-flip-glyph { text-shadow: none; }
+
+  /* descrição completa só para leitores de tela */
+  .sl-flip-label { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  .sl-plate-flip.is-flipped .sl-flip-label--front { display: none; }
+
+  /* Mosaico de provas — largura cheia, em cor plena, montado como num álbum */
+  .sl-grid {
+    grid-column: 1 / -1;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--sp-3);
+  }
+  .sl-thumb {
+    position: relative; display: block; overflow: visible; cursor: zoom-in; aspect-ratio: 4 / 3;
+    background: var(--paper-shade); border: 1px solid var(--hairline-strong);
+    border-radius: var(--radius-sm); box-shadow: var(--shadow-soft);
+    transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+  }
+  .sl-thumb img {
+    width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block;
+    border-radius: var(--radius-sm);
+  }
+  .sl-thumb:hover { transform: translateY(-3px); border-color: var(--oxblood); box-shadow: var(--shadow-lens); }
+  /* Fita adesiva (washi) translúcida — só em alguns thumbs, cantos alternados */
+  .sl-thumb:nth-child(4n+1)::after,
+  .sl-thumb:nth-child(6n+5)::after {
+    content: ''; position: absolute; z-index: 4;
+    width: 56px; height: 19px;
+    background: linear-gradient(115deg, rgba(255,255,255,.24), rgba(255,255,255,0) 48%), rgba(216,199,154,.52);
+    box-shadow: 0 1px 3px rgba(26,22,18,.12);
+    border-left: 1px solid rgba(255,255,255,.28); border-right: 1px solid rgba(255,255,255,.28);
+  }
+  .sl-thumb:nth-child(4n+1)::after { top: -8px; left: 14px; transform: rotate(-5deg); }
+  .sl-thumb:nth-child(6n+5)::after { top: -7px; right: 14px; transform: rotate(4.5deg); }
+
+  /* Marginália do Argumento na coluna direita: alinhada à esquerda (ragged
+     right, como o Figma). No desktop (3 colunas) ela é empurrada para baixo
+     até a altura do corpo; em ≤1024 o .spread colapsa numa coluna e a glosa
+     vira nota inline — então o deslocamento não se aplica. */
+  .argument .spread .margin-r { text-align: left; }
+  .argument .spread .margin-r .gloss + .gloss { margin-top: var(--sp-4); }
+  @media (min-width: 1025px) {
+    .argument .spread {
+      grid-template-columns: 140px minmax(0, 640px) minmax(170px, 1fr);
+      gap: var(--sp-6);
+    }
+    .argument .spread .margin-r { padding-top: clamp(96px, 11vw, 148px); }
+  }
+
+  /* ---------- Desafio: grade de post-its (2 em cima · 1 largo embaixo) ---------- */
+  .insights-grid--split { grid-template-columns: repeat(2, 1fr); }
+  .insight-card--wide {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: var(--sp-7);
+    align-items: stretch;
+  }
+  .insight-card--wide .insight-card__lead p { margin-top: var(--sp-3); }
+  .insight-card__aside {
+    display: flex; flex-direction: column; gap: var(--sp-3);
+    padding-left: var(--sp-7);
+    border-left: 1px solid var(--hairline-strong);
+  }
+  .rework-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--ink-faint);
+  }
+  /* Livro-razão vertical: cada padrão numa linha pautada, preenchendo a altura */
+  .rework-list {
+    list-style: none; margin: 0; padding: 0;
+    display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0;
+  }
+  .rework-list li {
+    display: grid; grid-template-columns: 1.6em minmax(0,1fr) auto;
+    align-items: baseline; gap: var(--sp-3);
+    flex: 1 1 0; padding: var(--sp-3) 0;
+    border-top: 1px solid var(--hairline-strong);
+  }
+  .rework-list li:first-child { border-top: none; }
+  .rework-list__n { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: var(--oxblood); }
+  .rework-list__name { font-family: var(--serif); font-style: italic; font-size: 16px; line-height: 1.2; color: var(--ink); }
+  .rework-list__mult { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: var(--ink-faint); justify-self: end; white-space: nowrap; }
+  .rework-foot {
+    display: flex; justify-content: space-between; align-items: baseline; gap: var(--sp-3);
+    margin-top: var(--sp-2); padding-top: var(--sp-3); border-top: 2px solid var(--oxblood);
+  }
+  .rework-foot__k { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint); max-width: 60%; line-height: 1.3; }
+  .rework-foot__v { font-family: var(--serif-display); font-style: italic; font-size: 26px; line-height: 1; color: var(--oxblood); white-space: nowrap; }
+  /* count-up: largura estável enquanto o número sobe de 0 a 45 */
+  .rework-foot__v .stat-val { font-variant-numeric: tabular-nums; }
+
+  @media (max-width: 900px) {
+    .insight-card--wide { grid-template-columns: 1fr; gap: var(--sp-5); }
+    .insight-card__aside { padding-left: 0; border-left: none; padding-top: var(--sp-5); border-top: 1px solid var(--hairline-strong); }
+  }
+  @media (max-width: 720px) {
+    .insights-grid--split { grid-template-columns: 1fr; }
+  }
+  /* Lightbox: estilos canônicos em design-system/case-template.css (.lbg*) */
+
+  /* ---------- Lições / aprendizados ---------- */
+  .learnings { margin-top: var(--sp-5); }
+  .learning { position: relative; padding: var(--sp-5) 0 var(--sp-5) var(--sp-6); border-top: var(--border-hair); }
+  .learning:first-child { border-top: none; }
+  .learning::before { content: ''; position: absolute; left: 0; top: calc(var(--sp-5) + 8px); width: 8px; height: 8px; border-radius: 50%; background: var(--oxblood); }
+  .learning:first-child::before { top: 8px; }
+  .learning__num { font-family: var(--mono); font-size: var(--fs-small); letter-spacing: .16em; text-transform: uppercase; color: var(--oxblood); }
+  .learning__title { font-family: var(--serif); font-style: italic; font-weight: 600; font-size: 20px; line-height: 1.3; margin: 8px 0 var(--sp-3); color: var(--ink); }
+  .learning__body { font-family: var(--serif); font-size: 16px; line-height: var(--lh-loose); color: var(--ink-soft); }
+
+  /* nota de dados fictícios */
+  .fiction-note {
+    margin-top: var(--sp-5); padding: var(--sp-4) var(--sp-5);
+    border: var(--border-dotted); border-radius: var(--radius-sm);
+    background: var(--paper-shade);
+    font-family: var(--mono); font-size: 12px; line-height: 1.6; letter-spacing: .02em; color: var(--ink-faint);
+    display: flex; gap: var(--sp-3); align-items: flex-start;
+  }
+  .fiction-note::before { content: '⚜'; color: var(--oxblood); font-size: 18px; flex: 0 0 auto; line-height: 1.2; }
+
+  /* ---------- Responsividade ---------- */
+  @media (max-width: 1024px) { .poc-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 880px)  {
+    .sl-plate-flip { grid-template-columns: 1fr; max-width: 100%; }
+    .sl-flip-btn { justify-self: start; }
+  }
+  @media (max-width: 768px)  {
+    .sl-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px)  {
+    .poc-grid { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sl-hero img, .sl-thumb img, .poc-entry, .sl-hero, .sl-thumb { transition: none !important; }
+    /* Flip 3D e glifo: troca instantânea, sem giro animado. */
+    .sl-flip-inner, .sl-flip-glyph { transition: none !important; }
+  }
+</style>
+</head>
+<body data-lang="pt">
+<!-- Granulação tátil de papel envelhecido -->
+<div class="paper-grain" aria-hidden="true"></div>
+
+<!-- ============================================================
+     CHROME SUPERIOR (CABEÇALHO FIXO)
+     ============================================================ -->
+<header class="chrome-top">
+  <div class="running-head">
+    <div class="scroll-compass-wrapper" aria-hidden="true" title="Bússola de Progresso">
+      <svg class="scroll-compass" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="45" stroke="var(--ink-ghost)" stroke-width="1.5" fill="none" stroke-dasharray="4 4" />
+        <circle cx="50" cy="50" r="30" stroke="var(--hairline-strong)" stroke-width="1" fill="none" />
+        <line x1="50" y1="10" x2="50" y2="90" stroke="var(--ink-soft)" stroke-width="1" />
+        <line x1="10" y1="50" x2="90" y2="50" stroke="var(--ink-soft)" stroke-width="1" />
+        <polygon points="50,20 54,50 50,55 46,50" fill="var(--oxblood)" />
+        <polygon points="50,80 54,50 50,45 46,50" fill="var(--ink-soft)" />
+        <circle cx="50" cy="50" r="4" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5" />
+      </svg>
+    </div>
+    <a href="../index.html" class="running-head-home"><span>Lucas Schoenherr</span></a>
+    <span class="sep">·</span>
+    <em><span class="t" lang="pt">Catálogo de Obras</span><span class="t" lang="en">A Catalogue of Works</span></em>
+    <span class="sep">·</span>
+    <span><span class="t" lang="pt">Prancha IV — Gen.AI</span><span class="t" lang="en">Plate IV — Gen.AI</span></span>
+  </div>
+  <nav class="chrome-actions">
+    <a href="../index.html" class="to-catalogue">
+      <svg class="to-catalogue-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <polyline points="9 14 4 9 9 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M20 20v-7a4 4 0 0 0-4-4H4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <em><span class="t" lang="pt">Voltar ao catálogo</span><span class="t" lang="en">Return to catalogue</span></em>
+    </a>
+    <button class="candle-toggle" type="button" aria-pressed="false" title="Modo vela" aria-label="Modo vela">
+      <svg class="candle-icon candle-icon--off" width="22" height="18" viewBox="0 0 24 22" fill="none" aria-hidden="true">
+        <path d="M9 4.6 C 9.6 5.3, 10 5.9, 9 6.6" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" />
+        <rect x="7.2" y="6.6" width="3.6" height="6.4" fill="currentColor" />
+        <path d="M5.6 13 H12.4 L11.2 14.6 H6.8 Z" fill="currentColor" />
+        <rect x="7.4" y="14.6" width="3.2" height="1.6" fill="currentColor" />
+        <ellipse cx="9" cy="17.8" rx="8" ry="1.7" fill="currentColor" />
+        <ellipse cx="9" cy="16.8" rx="6.8" ry="0.7" fill="none" stroke="var(--paper)" stroke-width="0.5" opacity="0.55" />
+        <path d="M16.4 17.4 C 21.4 17.6, 22.8 13.4, 18.6 12.6 C 16.6 12.4, 16.6 14.4, 18.2 14.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <svg class="candle-icon candle-icon--on" width="22" height="18" viewBox="0 0 24 22" fill="none" aria-hidden="true">
+        <path d="M9 0.5 C 7.6 2.2, 7 3.7, 9 5.2 C 11 3.7, 10.4 2.2, 9 0.5 Z" fill="currentColor" opacity="0.9" />
+        <line x1="9" y1="5.2" x2="9" y2="6.6" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" />
+        <rect x="7.2" y="6.6" width="3.6" height="6.4" fill="currentColor" />
+        <path d="M5.6 13 H12.4 L11.2 14.6 H6.8 Z" fill="currentColor" />
+        <rect x="7.4" y="14.6" width="3.2" height="1.6" fill="currentColor" />
+        <ellipse cx="9" cy="17.8" rx="8" ry="1.7" fill="currentColor" />
+        <ellipse cx="9" cy="16.8" rx="6.8" ry="0.7" fill="none" stroke="var(--paper)" stroke-width="0.5" opacity="0.55" />
+        <path d="M16.4 17.4 C 21.4 17.6, 22.8 13.4, 18.6 12.6 C 16.6 12.4, 16.6 14.4, 18.2 14.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+    <div class="lang-toggle" role="group" aria-label="Language / Idioma">
+      <button class="active" type="button" data-lang="pt" aria-pressed="true">PT</button>
+      <span class="pipe">|</span>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </nav>
+</header>
+
+<main class="book">
+
+  <!-- ============================================================
+       0. FOLHA DE ROSTO (FRONTISPÍCIO)
+       ============================================================ -->
+  <section class="case-frontispiece case-frontispiece--cinematic" data-folio>
+    <div class="frontispiece-halo" aria-hidden="true"></div>
+    <div class="sig">
+      <span class="t" lang="pt">Volume I · Prancha IV · MMXXIII–MMXXIV</span>
+      <span class="t" lang="en">Volume I · Plate IV · MMXXIII–MMXXIV</span>
+    </div>
+
+    <div class="case-num">№ 004</div>
+
+    <h1 class="case-title">
+      <span class="it">Gen</span><span class="reg">.AI</span>
+    </h1>
+
+    <div class="case-rule" aria-hidden="true"></div>
+
+    <p class="case-deck">
+      <span class="t" lang="pt"><span class="em">Não uma aplicação de IA, mas nove ao mesmo tempo</span> — de DevOps a marketing — unificadas por um único Design System e um vocabulário comum de transparência.</span>
+      <span class="t" lang="en"><span class="em">Not one AI application, but nine at once</span> — from DevOps to marketing — unified by a single Design System and a shared grammar of transparency.</span>
+    </p>
+
+    <!-- Byline editorial e técnico -->
+    <dl class="case-byline case-byline--inline">
+      <div>
+        <span class="lab"><span class="t" lang="pt">Comissão</span><span class="t" lang="en">Commission</span></span>
+        <span class="val">Accenture · One Studio</span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Papel</span><span class="t" lang="en">Role</span></span>
+        <span class="val"><span class="t" lang="pt">Lead Product Designer (ponta a ponta)</span><span class="t" lang="en">Lead Product Designer (end-to-end)</span></span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Período</span><span class="t" lang="en">Period</span></span>
+        <span class="val"><span class="t" lang="pt">2023–2024 (~3 meses)</span><span class="t" lang="en">2023–2024 (~3 months)</span></span>
+      </div>
+      <span class="bl-sep" aria-hidden="true">·</span>
+      <div>
+        <span class="lab"><span class="t" lang="pt">Escopo</span><span class="t" lang="en">Scope</span></span>
+        <span class="val"><span class="t" lang="pt">9 POCs · Design System · GenAI</span><span class="t" lang="en">9 POCs · Design System · GenAI</span></span>
+      </div>
+    </dl>
+
+    <div class="frontispiece-indicator">
+      <span class="t" lang="pt">Gire a folha para iniciar a leitura</span>
+      <span class="t" lang="en">Scroll down to turn the leaf</span>
+      <span class="arrow">↓</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       HERO DE IMPACTO — "Nove ao mesmo tempo" (substitui a Epígrafe)
+       Banda full-bleed com a tese-pôster + constelação 9 → 1.
+       ============================================================ -->
+  <section class="ga-hero-band" data-folio aria-label="Nove POCs, um Design System">
+    <div class="ga-hero-band__inner reveal">
+      <div class="ga-hb-copy">
+        <p class="ga-hb-eyebrow">
+          <span class="t" lang="pt">Prancha IV · O ecossistema</span>
+          <span class="t" lang="en">Plate IV · The ecosystem</span>
+        </p>
+        <h2 class="ga-hb-title">
+          <span class="t" lang="pt">Um sistema,<br>nove mentes.</span>
+          <span class="t" lang="en">One system,<br>nine minds.</span>
+        </h2>
+
+        <!-- Painel dinâmico: em repouso mostra a tese; ao focar/passar o mouse
+             num programa, revela nome, domínio e descrição daquele POC. -->
+        <div class="ga-hb-detail" data-hero-detail aria-live="polite">
+          <div class="ga-hb-panel is-shown" data-hero-default>
+            <p class="ga-hb-sub">
+              <span class="t" lang="pt">Nove provas de conceito, em nove domínios da consultoria — de DevOps a marketing —, unidas por um <span class="em">só Design System</span> e uma gramática comum de transparência da IA.</span>
+              <span class="t" lang="en">Nine proofs of concept, across nine consulting domains — from DevOps to marketing —, bound by a <span class="em">single Design System</span> and one shared grammar of AI transparency.</span>
+            </p>
+          </div>
+          <!-- itens por programa injetados aqui pelo script do hero -->
+        </div>
+      </div>
+
+      <figure class="ga-hb-figure">
+        <svg class="ga-hb-svg" viewBox="0 0 720 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Astrolábio: nove programas Gen.AI em órbita de um Design System central">
+          <defs>
+            <radialGradient id="gaHubGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#cca24f" stop-opacity="0.42" />
+              <stop offset="42%" stop-color="#cca24f" stop-opacity="0.12" />
+              <stop offset="100%" stop-color="#cca24f" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+
+          <!-- brilho radial sob o núcleo -->
+          <circle class="ga-hb-glow" cx="360" cy="320" r="180" fill="url(#gaHubGlow)" />
+
+          <!-- anel-mostrador gravado que gira devagar (ticks injetados via JS) -->
+          <g class="ga-hb-dial" data-hero-dial>
+            <circle class="ga-hb-dial-ring" cx="360" cy="320" r="288" />
+          </g>
+
+          <!-- órbita onde repousam os nove -->
+          <circle class="ga-hb-orbit" cx="360" cy="320" r="250" />
+
+          <!-- raios: cada programa ligado ao núcleo -->
+          <g class="ga-hb-spokes" data-hero-spokes fill="none"></g>
+
+          <!-- núcleo: o Design System que unifica os nove -->
+          <circle class="ga-hb-hub-ring" cx="360" cy="320" r="70" />
+          <circle class="ga-hb-hub" cx="360" cy="320" r="56" />
+          <text class="ga-hb-hub-cap" x="360" y="320" dominant-baseline="central">Gen.AI</text>
+
+          <!-- nós -->
+          <g class="ga-hb-nodes" data-hero-nodes></g>
+        </svg>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       DOSSIÊ — sumário lateral + lombada (portado do Lighthouse/Sports).
+       Todas as seções (Overview I → Aprendizados VIII) entram na lombada
+       e no índice lateral. O gloss lateral é decorativo/vazio em todo o
+       case — seguro de esconder no scoping do dossiê.
+       ============================================================ -->
+  <div class="ga-dossier">
+    <aside class="ga-dossier__rail" aria-label="Índice">
+      <p class="ga-dossier__nav-label"><span class="t" lang="pt">Índice do Dossiê</span><span class="t" lang="en">Dossier Index</span></p>
+      <nav class="ga-dossier__nav" aria-label="Índice das seções"></nav>
+    </aside>
+
+    <div class="ga-dossier__spine">
+
+  <!-- ============================================================
+       I. OVERVIEW
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">I.</span>
+        <span class="name">Overview</span>
+        <span class="gloss"><span class="t" lang="pt">O panorama</span><span class="t" lang="en">The overview</span></span>
+      </header>
+
+      <div class="ga-ov-grid reveal">
+        <div class="ga-ov-body">
+          <p class="ga-ov-lead">
+            <span class="t" lang="pt">Em 2023, com a IA generativa crescendo rapidamente, a Accenture quis entender, no <span class="em">One Studio</span>, onde essa tecnologia poderia ser útil — tanto nas operações internas quanto nos produtos para clientes. Em vez de focar num só produto, criou <span class="em">9 POCs ao mesmo tempo</span> para testar, na prática, onde a IA realmente fazia diferença.</span>
+            <span class="t" lang="en">In 2023, as generative AI grew rapidly, Accenture wanted to understand, within <span class="em">One Studio</span>, where this technology could be useful — both in internal operations and in client-facing products. Rather than focusing on a single product, it built <span class="em">9 POCs at once</span> to test, in practice, where AI truly made a difference.</span>
+          </p>
+          <p>
+            <span class="t" lang="pt">Cada POC testava uma habilidade diferente do modelo — gerar textos, criar imagens, analisar documentos, resumir chamadas, classificar riscos e atuar como copilot interno. Os temas iam de DevOps e jurídico a marketing para clientes, customer success, supply chain, QA e gestão de conhecimento.</span>
+            <span class="t" lang="en">Each POC tested a different model capability — generating text, creating images, analysing documents, summarising calls, classifying risk and acting as an internal copilot. Themes ranged from DevOps and legal to client marketing, customer success, supply chain, QA and knowledge management.</span>
+          </p>
+          <p>
+            <span class="t" lang="pt">O principal requisito de design atravessava todas elas: garantir que o usuário enxergasse claramente <span class="it">o que a IA produziu, onde errou e o que não conseguiu fazer</span> — uma gramática comum de transparência que evitasse que 9 squads criassem 9 soluções distintas para o mesmo problema.</span>
+            <span class="t" lang="en">One design requirement ran through all of them: ensuring the user could clearly see <span class="it">what the AI produced, where it erred and what it failed to do</span> — a shared grammar of transparency that kept 9 squads from building 9 different solutions to the same problem.</span>
+          </p>
+        </div>
+
+        <aside class="ga-ov-ficha" aria-label="Ficha técnica">
+          <p class="ga-ov-ficha__title"><span class="t" lang="pt">Ficha técnica</span><span class="t" lang="en">The commission</span></p>
+          <dl>
+            <div><dt><span class="t" lang="pt">Comissão</span><span class="t" lang="en">Commission</span></dt><dd>Accenture · One Studio</dd></div>
+            <div><dt><span class="t" lang="pt">Período</span><span class="t" lang="en">Period</span></dt><dd><span class="t" lang="pt">2023–2024 · ~3 meses</span><span class="t" lang="en">2023–2024 · ~3 months</span></dd></div>
+            <div><dt><span class="t" lang="pt">Meu papel</span><span class="t" lang="en">My role</span></dt><dd><span class="t" lang="pt">Lead Product Designer (ponta a ponta)</span><span class="t" lang="en">Lead Product Designer (end-to-end)</span></dd></div>
+            <div><dt><span class="t" lang="pt">Escopo</span><span class="t" lang="en">Scope</span></dt><dd><span class="t" lang="pt">9 POCs · Design System</span><span class="t" lang="en">9 POCs · Design System</span></dd></div>
+            <div><dt><span class="t" lang="pt">Times</span><span class="t" lang="en">Teams</span></dt><dd><span class="t" lang="pt">9 squads · 9 domínios</span><span class="t" lang="en">9 squads · 9 domains</span></dd></div>
+            <div><dt><span class="t" lang="pt">Foco de design</span><span class="t" lang="en">Design focus</span></dt><dd><span class="t" lang="pt">Transparência da IA</span><span class="t" lang="en">AI transparency</span></dd></div>
+          </dl>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       II. MINHA PARTICIPAÇÃO (DRAMATIS)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">II.</span>
+        <span class="name"><span class="t" lang="pt">Minha Participação</span><span class="t" lang="en">My Role</span></span>
+        <span class="gloss"><span class="t" lang="pt">Dramatis personæ</span><span class="t" lang="en">Cast &amp; duties</span></span>
+      </header>
+
+      <ol class="bill-roles reveal" data-stagger>
+          <li class="bill-role">
+            <span class="bill-role__cue"><span class="t" lang="pt">No papel principal</span><span class="t" lang="en">In the leading role</span></span>
+            <span class="bill-role__name">Lead Product Designer</span>
+            <span class="bill-role__note"><span class="t" lang="pt">Único designer do programa: discovery, arquitetura de informação, Design System, protótipos de alta fidelidade e handoff das 9 aplicações.</span><span class="t" lang="en">Sole designer of the programme: discovery, information architecture, Design System, high-fidelity prototypes and handoff of all 9 applications.</span></span>
+          </li>
+          <li class="bill-role">
+            <span class="bill-role__cue"><span class="t" lang="pt">Em cena com</span><span class="t" lang="en">Sharing the stage with</span></span>
+            <span class="bill-role__name"><span class="t" lang="pt">POs · Engenharia · Liderança</span><span class="t" lang="en">POs · Engineering · Leadership</span></span>
+            <span class="bill-role__note"><span class="t" lang="pt">POs e engenharia de 9 squads, reportando diretamente à liderança do One Studio.</span><span class="t" lang="en">POs and engineering across 9 squads, reporting directly to One Studio leadership.</span></span>
+          </li>
+          <li class="bill-role">
+            <span class="bill-role__cue"><span class="t" lang="pt">Em dois palcos</span><span class="t" lang="en">On two stages</span></span>
+            <span class="bill-role__name"><span class="t" lang="pt">Campo &amp; Sistema</span><span class="t" lang="en">Field &amp; System</span></span>
+            <span class="bill-role__note"><span class="t" lang="pt">Acompanhei cada squad para entender o comportamento real da IA em cada domínio — e converti esses aprendizados em padrões reutilizáveis do Design System.</span><span class="t" lang="en">I shadowed each squad to understand the real behaviour of the AI in each domain — and turned those learnings into reusable Design System patterns.</span></span>
+          </li>
+          <li class="bill-role">
+            <span class="bill-role__cue"><span class="t" lang="pt">Com a deixa</span><span class="t" lang="en">On the cue</span></span>
+            <span class="bill-role__name"><span class="t" lang="pt">Coerência em escala</span><span class="t" lang="en">Coherence at scale</span></span>
+            <span class="bill-role__note"><span class="t" lang="pt">Evitar que 9 squads criassem 9 soluções distintas para o mesmo problema de transparência da IA.</span><span class="t" lang="en">Prevent 9 squads from creating 9 distinct solutions to the same AI-transparency problem.</span></span>
+          </li>
+        </ol>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       III. O DESAFIO (3 PROBLEMAS ESTRUTURAIS)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread">
+      <aside class="margin-l" aria-hidden="true"></aside>
+      <div class="content">
+        <header class="section-head reveal">
+          <span class="roman">III.</span>
+          <span class="name"><span class="t" lang="pt">O Desafio</span><span class="t" lang="en">The Challenge</span></span>
+          <span class="gloss"><span class="t" lang="pt">Nove ao mesmo tempo</span><span class="t" lang="en">Nine at once</span></span>
+        </header>
+
+        <div class="preface">
+          <div class="body reveal">
+            <p>
+              <span class="t" lang="pt">O desafio não era criar uma aplicação de IA, mas desenvolver <span class="em">9 ao mesmo tempo</span>, em áreas totalmente diferentes — de DevOps a marketing para clientes externos. Cada uma tinha seu próprio PO e regras de segurança. Sem uma base comum, o risco era claro: 9 produtos com 9 identidades e 9 jeitos distintos de lidar com incerteza do modelo, citação de fontes e controle humano.</span>
+              <span class="t" lang="en">The challenge was not to build one AI application, but to develop <span class="em">9 at once</span>, across entirely different areas — from DevOps to external client marketing. Each had its own PO and security rules. Without a shared foundation, the risk was clear: 9 products with 9 identities and 9 different ways of handling model uncertainty, source citation and human control.</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="insights-grid insights-grid--split reveal" data-stagger>
+          <div class="insight-card">
+            <span class="card-num">01.</span>
+            <h4 class="card-title"><span class="t" lang="pt">Vocabulário fragmentado</span><span class="t" lang="en">Fragmented vocabulary</span></h4>
+            <p><span class="t" lang="pt">Cada squad usava nomes diferentes para "resposta da IA", "resultado" e "sugestão", prejudicando a experiência e a consistência dos textos.</span><span class="t" lang="en">Each squad used different names for "AI answer", "result" and "suggestion", hurting both the experience and the consistency of the copy.</span></p>
+          </div>
+          <div class="insight-card">
+            <span class="card-num">02.</span>
+            <h4 class="card-title"><span class="t" lang="pt">Incerteza invisível</span><span class="t" lang="en">Invisible uncertainty</span></h4>
+            <p><span class="t" lang="pt">Os primeiros protótipos tratavam a saída do modelo como sempre correta — sem mostrar confiança, fontes ou a possibilidade de desfazer.</span><span class="t" lang="en">Early prototypes treated model output as always correct — with no confidence signals, sources or undo path shown.</span></p>
+          </div>
+          <div class="insight-card insight-card--wide">
+            <div class="insight-card__lead">
+              <span class="card-num">03.</span>
+              <h4 class="card-title"><span class="t" lang="pt">Retrabalho de interface</span><span class="t" lang="en">Interface rework</span></h4>
+              <p><span class="t" lang="pt">Padrões básicos de interface eram recriados do zero em cada POC. Sem uma biblioteca comum, cada squad reescrevia os mesmos componentes — multiplicando o esforço e abrindo divergência visual entre os 9 produtos.</span><span class="t" lang="en">Basic interface patterns were rebuilt from scratch in every POC. With no shared library, each squad rewrote the same components — multiplying the effort and opening visual divergence across the 9 products.</span></p>
+            </div>
+            <div class="insight-card__aside">
+              <span class="rework-label"><span class="t" lang="pt">Padrões recriados a cada POC</span><span class="t" lang="en">Patterns rebuilt in every POC</span></span>
+              <ul class="rework-list">
+                <li><span class="rework-list__n">i</span><span class="rework-list__name"><span class="t" lang="pt">Input de prompt</span><span class="t" lang="en">Prompt input</span></span><span class="rework-list__mult">×9</span></li>
+                <li><span class="rework-list__n">ii</span><span class="rework-list__name"><span class="t" lang="pt">Card de resposta</span><span class="t" lang="en">Response card</span></span><span class="rework-list__mult">×9</span></li>
+                <li><span class="rework-list__n">iii</span><span class="rework-list__name"><span class="t" lang="pt">Histórico</span><span class="t" lang="en">History</span></span><span class="rework-list__mult">×9</span></li>
+                <li><span class="rework-list__n">iv</span><span class="rework-list__name"><span class="t" lang="pt">Feedback</span><span class="t" lang="en">Feedback</span></span><span class="rework-list__mult">×9</span></li>
+                <li><span class="rework-list__n">v</span><span class="rework-list__name"><span class="t" lang="pt">Edição assistida</span><span class="t" lang="en">Assisted editing</span></span><span class="rework-list__mult">×9</span></li>
+              </ul>
+              <div class="rework-foot">
+                <span class="rework-foot__k"><span class="t" lang="pt">5 padrões reescritos em 9 produtos</span><span class="t" lang="en">5 patterns rewritten across 9 products</span></span>
+                <span class="rework-foot__v"><span class="stat-val" data-count="45">45</span>×</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="margin-r" aria-hidden="true"></aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       IV. O ECOSSISTEMA — OS 9 PRODUTOS
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">IV.</span>
+        <span class="name"><span class="t" lang="pt">O Ecossistema</span><span class="t" lang="en">The Ecosystem</span></span>
+        <span class="gloss"><span class="t" lang="pt">Os 9 produtos Gen.AI</span><span class="t" lang="en">The 9 Gen.AI products</span></span>
+      </header>
+
+      <p class="results-intro reveal">
+        <span class="t" lang="pt">Cada POC era um produto diferente, num domínio diferente da consultoria. O que era igual em todos: a forma de mostrar a IA na tela — com fonte, confiança e reversibilidade visíveis em cada resposta.</span>
+        <span class="t" lang="en">Each POC was a different product, in a different consulting domain. What stayed the same across all: the way the AI was shown on screen — with source, confidence and reversibility visible in every answer.</span>
+      </p>
+
+      <div class="poc-grid reveal" data-stagger>
+        <div class="poc-entry">
+          <div class="poc-entry__head"><span class="poc-entry__icon" style="--poc-icon:url(../images/genai/icons/incident-alchemist.svg)" aria-hidden="true"></span><span class="poc-entry__roman">I</span><span class="poc-entry__titles"><span class="poc-entry__name">Incident Alchemist</span><span class="poc-entry__domain">DevOps &amp; Reliability</span></span></div>
+          <p class="poc-entry__body"><span class="t" lang="pt">Catalogação e identificação automáticas de incidentes: o histórico da área passa a ser usado para evitar novos problemas, não só resolver os já ocorridos.</span><span class="t" lang="en">Automatic incident cataloguing and identification: the team's history is used to prevent new problems, not only to fix those already happening.</span></p>
+          <span class="poc-entry__status st--pesquisa"><span class="t" lang="pt">Pesquisa</span><span class="t" lang="en">Research</span></span>
+        </div>
+        <div class="poc-entry">
+          <div class="poc-entry__head"><span class="poc-entry__icon" style="--poc-icon:url(../images/genai/icons/code-assistant.svg)" aria-hidden="true"></span><span class="poc-entry__roman">II</span><span class="poc-entry__titles"><span class="poc-entry__name">Code Assistant</span><span class="poc-entry__domain">Engineering</span></span></div>
+          <p class="poc-entry__body"><span class="t" lang="pt">Pair programmer interno que roda totalmente on-premises: o time conta com um copilot sem enviar nenhum código sensível para fora.</span><span class="t" lang="en">Internal pair programmer running fully on-premises: engineers get a copilot without sending any sensitive code outside.</span></p>
+          <span class="poc-entry__status st--pesquisa"><span class="t" lang="pt">Pesquisa</span><span class="t" lang="en">Research</span></span>
+        </div>
+        <div class="poc-entry poc-entry--featured">
+          <div class="poc-entry__head"><span class="poc-entry__icon" style="--poc-icon:url(../images/genai/icons/contract-explorer.svg)" aria-hidden="true"></span><span class="poc-entry__roman">III</span><span class="poc-entry__titles"><span class="poc-entry__name">Contract Explorer</span><span class="poc-entry__domain">Jurídico · Knowledge Base</span></span></div>
+          <p class="poc-entry__body"><span class="t" lang="pt">Chat em linguagem natural sobre a base de contratos, com citações rastreáveis até o trecho exato e edição conforme o nível de acesso de cada usuário.</span><span class="t" lang="en">Natural-language chat over the contract base, with citations traceable to the exact clause and editing scoped to each user's access level.</span></p>
+          <span class="poc-entry__status st--dev"><span class="t" lang="pt">Desenvolvido</span><span class="t" lang="en">Developed</span></span>
+        </div>
+        <div class="poc-entry poc-entry--featured">
+          <div class="poc-entry__head"><span class="poc-entry__icon" style="--poc-icon:url(../images/genai/icons/campaign-genius.svg)" aria-hidden="true"></span><span class="poc-entry__roman">IV</span><span class="poc-entry__titles"><span class="poc-entry__name">Campaign Genius</span><span class="poc-entry__domain"><span class="t" lang="pt">Marketing — clientes externos</span><span class="t" lang="en">Marketing — external clients</span></span></span></div>
+          <p class="poc-entry__body"><span class="t" lang="pt">Único produto Gen.AI para clientes externos. Cria campanhas completas a partir de prompts positivos, negativos e parâmetros — do texto à imagem e edição final, num só fluxo.</span><span class="t" lang="en">The only Gen.AI product for external clients. Builds full campaigns from positive/negative prompts and parameters — from copy to image and final edit, in a single flow.</span></p>
+          <span class="poc-entry__status st--parcial"><span class="t" lang="pt">Dev. parcial</span><span class="t" lang="en">Partial dev.</span></span>
+        </div>
+        <div class="poc-entry">
+          <div class="poc-entry__head"><span class="poc-entry__icon" style="--poc-icon:url(../images/genai/icons/call-analysis.svg)" aria-hidden="true"></span><span class="poc-entry__roman">V</span><span class="poc-entry__titles"><span class="poc-entry__name">Call Analysis</span><span class="poc-entry__domain">Customer Success</span></span></div>
+          <p class="poc-entry__body"><span class="t" lang="pt">Resume chamadas com clientes em poucos minutos: identifica obstáculos, próximos passos e pontos de dor sem revisar transcrições manualmente.</span><span class="t" lang="en">Summarises client calls in minutes: surfaces blockers, next steps and pain points without manually reviewing transcripts.</span></p>
+          <span class="poc-entry__status st--pesquisa"><span class="t" lang="pt">Pesquisa</span><span class="t" lang="en">Research</span></span>
+        </div>
+        <div class="poc-entry poc-entry--featured">
+          <div class="poc-entry__head"><span class="poc-entry__icon" style="--poc-icon:url(../images/genai/icons/deploy-check.svg)" aria-hidden="true"></span><span class="poc-entry__roman">VI</span><span class="poc-entry__titles"><span class="poc-entry__name">Deploy Check</span><span class="poc-entry__domain"><span class="t" lang="pt">DevOps · Camada de segurança</span><span class="t" lang="en">DevOps · Safety layer</span></span></span></div>
+          <p class="poc-entry__body"><span class="t" lang="pt">Roda antes do deploy e exibe o risco estimado com justificativas a um clique. O engenheiro aceita, contesta ou anota — e cada decisão fica no audit trail.</span><span class="t" lang="en">Runs before deploy and shows estimated risk with one-click justifications. Engineers accept, contest or annotate — and every decision is logged in the audit trail.</span></p>
+          <span class="poc-entry__status st--proto"><span class="t" lang="pt">Protótipo</span><span class="t" lang="en">Prototype</span></span>
+        </div>
+        <div class="poc-entry poc-entry--featured">
+          <div class="poc-entry__head"><span class="poc-entry__icon" style="--poc-icon:url(../images/genai/icons/test-insights.svg)" aria-hidden="true"></span><span class="poc-entry__roman">VII</span><span class="poc-entry__titles"><span class="poc-entry__name">Test Insights</span><span class="poc-entry__domain">Quality Assurance</span></span></div>
+          <p class="poc-entry__body"><span class="t" lang="pt">Prevê o resultado da próxima rodada, sugere onde reforçar a cobertura e compara com a rodada anterior — separando fato medido, predição e sugestão.</span><span class="t" lang="en">Predicts the next run's outcome, suggests where to add coverage and compares with the previous run — separating measured fact, prediction and suggestion.</span></p>
+          <span class="poc-entry__status st--proto"><span class="t" lang="pt">Protótipo</span><span class="t" lang="en">Prototype</span></span>
+        </div>
+        <div class="poc-entry">
+          <div class="poc-entry__head"><span class="poc-entry__icon" style="--poc-icon:url(../images/genai/icons/impact-analysis.svg)" aria-hidden="true"></span><span class="poc-entry__roman">VIII</span><span class="poc-entry__titles"><span class="poc-entry__name">Impact Analysis</span><span class="poc-entry__domain">Engineering</span></span></div>
+          <p class="poc-entry__body"><span class="t" lang="pt">Quantifica o impacto de qualquer ação — deploy, alteração de dados ou de fluxo — em todos os pontos afetados a jusante. Pensada para múltiplas áreas.</span><span class="t" lang="en">Quantifies the impact of any action — deploy, data or flow change — across every downstream point affected. Designed to adapt to multiple areas.</span></p>
+          <span class="poc-entry__status st--pesquisa"><span class="t" lang="pt">Pesquisa</span><span class="t" lang="en">Research</span></span>
+        </div>
+        <div class="poc-entry poc-entry--featured">
+          <div class="poc-entry__head"><span class="poc-entry__icon" style="--poc-icon:url(../images/genai/icons/sc-copilot.svg)" aria-hidden="true"></span><span class="poc-entry__roman">IX</span><span class="poc-entry__titles"><span class="poc-entry__name">SC Copilot</span><span class="poc-entry__domain">Internal Knowledge · Security-first</span></span></div>
+          <p class="poc-entry__body"><span class="t" lang="pt">Copilot interno construído do zero — modelos prontos não atendiam à segurança. Responde sobre processos e políticas, sempre informando a fonte.</span><span class="t" lang="en">Internal copilot built from scratch — off-the-shelf models didn't meet security requirements. Answers about processes and policies, always citing the source.</span></p>
+          <span class="poc-entry__status st--proto"><span class="t" lang="pt">Protótipo</span><span class="t" lang="en">Prototype</span></span>
+        </div>
+      </div>
+
+      <div class="status-legend reveal">
+        <span class="status-legend__item"><span class="status-legend__dot sl-dot--pesquisa"></span><span class="t" lang="pt">Pesquisa</span><span class="t" lang="en">Research</span></span>
+        <span class="status-legend__item"><span class="status-legend__dot sl-dot--proto"></span><span class="t" lang="pt">Protótipo</span><span class="t" lang="en">Prototype</span></span>
+        <span class="status-legend__item"><span class="status-legend__dot sl-dot--parcial"></span><span class="t" lang="pt">Dev. parcial</span><span class="t" lang="en">Partial dev.</span></span>
+        <span class="status-legend__item"><span class="status-legend__dot sl-dot--dev"></span><span class="t" lang="pt">Desenvolvido</span><span class="t" lang="en">Developed</span></span>
+      </div>
+
+      <div class="fiction-note reveal">
+        <span><span class="t" lang="pt">Todos os dados, respostas de IA e métricas exibidos nas interfaces são fictícios, gerados apenas para fins de demonstração. O conteúdo não representa dados reais da Accenture ou de seus clientes.</span><span class="t" lang="en">All data, AI responses and metrics shown in the interfaces are fictional, generated for demonstration purposes only. The content does not represent real Accenture or client data.</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       V. ESTRATÉGIA & PRINCÍPIOS (5 PRINCÍPIOS)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">V.</span>
+        <span class="name"><span class="t" lang="pt">Estratégia &amp; Princípios</span><span class="t" lang="en">Strategy &amp; Principles</span></span>
+        <span class="gloss"><span class="t" lang="pt">A gramática comum</span><span class="t" lang="en">The shared grammar</span></span>
+      </header>
+
+      <p class="results-intro reveal">
+        <span class="t" lang="pt">O foco não foram as 9 POCs isoladamente, mas a presença da IA em cada uma — de forma <span class="em">legível, controlável e auditável</span>. A IA gerava, interpretava, comparava e previa; o Design System mantinha a mesma gramática visual e os mesmos padrões de incerteza entre os 9 contextos. A integração girou em torno de 5 princípios, discutidos com cada squad antes de virarem componentes.</span>
+        <span class="t" lang="en">The focus was not the 9 POCs in isolation, but the presence of AI in each — <span class="em">legible, controllable and auditable</span>. The AI generated, interpreted, compared and predicted; the Design System kept the same visual grammar and the same uncertainty patterns across the 9 contexts. The integration was built around 5 principles, discussed with each squad before becoming components.</span>
+      </p>
+
+      <!-- Espécime: a gramática de transparência num único cartão-resposta.
+           Os 3 sinais (confiança · fonte · reversibilidade) que se repetem nas 9 POCs. -->
+      <figure class="ga-grammar reveal">
+        <div class="ga-grammar__specimen">
+          <p class="ga-grammar__eyebrow">
+            <span class="t" lang="pt">Espécime · uma resposta, três sinais</span>
+            <span class="t" lang="en">Specimen · one answer, three signals</span>
+          </p>
+          <div class="ga-answer" role="group" aria-label="Cartão de resposta da IA">
+            <div class="ga-answer__head">
+              <span class="ga-answer__mark" aria-hidden="true">✦</span>
+              <span class="ga-answer__who">Gen.AI</span>
+              <span class="ga-conf">
+                <span class="ga-conf__dot" aria-hidden="true"></span>
+                <span class="t" lang="pt">Confiança alta · 92%</span>
+                <span class="t" lang="en">High confidence · 92%</span>
+              </span>
+            </div>
+            <p class="ga-answer__body">
+              <span class="t" lang="pt">Encontrei 3 contratos com a cláusula de reajuste — <mark>Contrato 1</mark>, <mark>Contrato 7</mark> e <mark>Contrato 9</mark>.</span>
+              <span class="t" lang="en">I found 3 contracts with the adjustment clause — <mark>Contract 1</mark>, <mark>Contract 7</mark> and <mark>Contract 9</mark>.</span>
+            </p>
+            <div class="ga-cites">
+              <a class="ga-cite" href="#" onclick="return false" aria-label="Fonte: Contrato 7, cláusula 4.2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>
+                Contrato 7 · 4.2
+              </a>
+              <a class="ga-cite" href="#" onclick="return false" aria-label="Fonte: Contrato 9, cláusula 7.1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>
+                Contrato 9 · 7.1
+              </a>
+            </div>
+            <div class="ga-answer__foot">
+              <button type="button" class="ga-ctrl" tabindex="-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-1"/></svg>
+                <span class="t" lang="pt">desfazer</span><span class="t" lang="en">undo</span>
+              </button>
+              <button type="button" class="ga-ctrl" tabindex="-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+                <span class="t" lang="pt">editar</span><span class="t" lang="en">edit</span>
+              </button>
+              <span class="ga-fb">
+                <span class="ga-fb__label"><span class="t" lang="pt">útil?</span><span class="t" lang="en">useful?</span></span>
+                <button type="button" tabindex="-1" aria-label="Resposta útil">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v11"/><path d="M7 10 11 3a2 2 0 0 1 3 2v4h4.5a2 2 0 0 1 2 2.4l-1.4 7a2 2 0 0 1-2 1.6H7"/></svg>
+                </button>
+                <button type="button" tabindex="-1" aria-label="Resposta não útil">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 14V3"/><path d="M17 14l-4 7a2 2 0 0 1-3-2v-4H5.5a2 2 0 0 1-2-2.4l1.4-7A2 2 0 0 1 6.9 2H17"/></svg>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <ol class="ga-grammar__legend">
+          <li>
+            <span class="ga-leg-term"><span class="t" lang="pt">Confiança declarada</span><span class="t" lang="en">Declared confidence</span></span>
+            <span class="ga-leg-def"><span class="t" lang="pt">O modelo diz o quão certo está — nunca uma afirmação sem grau.</span><span class="t" lang="en">The model states how sure it is — never a claim without a degree.</span></span>
+          </li>
+          <li>
+            <span class="ga-leg-term"><span class="t" lang="pt">Fonte rastreável</span><span class="t" lang="en">Traceable source</span></span>
+            <span class="ga-leg-def"><span class="t" lang="pt">Cada afirmação leva ao trecho exato que a originou.</span><span class="t" lang="en">Every claim links back to the exact clause that produced it.</span></span>
+          </li>
+          <li>
+            <span class="ga-leg-term"><span class="t" lang="pt">Reversibilidade</span><span class="t" lang="en">Reversibility</span></span>
+            <span class="ga-leg-def"><span class="t" lang="pt">Desfazer, editar e avaliar presentes em toda resposta — o loop fechado.</span><span class="t" lang="en">Undo, edit and rate present in every answer — the closed loop.</span></span>
+          </li>
+        </ol>
+      </figure>
+
+      <div class="principles reveal" data-stagger>
+        <div class="principle">
+          <span class="principle__num-big" aria-hidden="true">1</span>
+          <span class="principle__num">01</span>
+          <h3 class="principle__title"><span class="t" lang="pt">IA como medium</span><span class="t" lang="en">AI as medium</span></h3>
+          <span class="principle__tag"><span class="t" lang="pt">Projetar com a IA, não apenas para a IA.</span><span class="t" lang="en">Design with the AI, not just for it.</span></span>
+          <p class="principle__body"><span class="t" lang="pt">A capacidade do modelo — respostas, limitações e erros — foi considerada desde o início. Em vez de tratar a IA como caixa-preta, cada POC partiu da análise do comportamento real e dos limites do modelo.</span><span class="t" lang="en">The model's capability — answers, limits and errors — was considered from the start. Rather than treating AI as a black box, each POC began from analysing the model's real behaviour and boundaries.</span></p>
+        </div>
+        <div class="principle">
+          <span class="principle__num-big" aria-hidden="true">2</span>
+          <span class="principle__num">02</span>
+          <h3 class="principle__title"><span class="t" lang="pt">Design System como linguagem</span><span class="t" lang="en">Design System as language</span></h3>
+          <span class="principle__tag"><span class="t" lang="pt">A conversa é o elemento fundamental.</span><span class="t" lang="en">The conversation is the fundamental unit.</span></span>
+          <p class="principle__body"><span class="t" lang="pt">Em todas as 9 POCs, a unidade mínima é a troca — pergunta, resposta da IA e ações possíveis. Isso substituiu layouts dashboard-first por layouts progressivos, pensados para dialogar com o modelo.</span><span class="t" lang="en">Across all 9 POCs, the minimal unit is the exchange — question, AI answer and possible actions. This replaced dashboard-first layouts with progressive ones, built to converse with the model.</span></p>
+        </div>
+        <div class="principle">
+          <span class="principle__num-big" aria-hidden="true">3</span>
+          <span class="principle__num">03</span>
+          <h3 class="principle__title"><span class="t" lang="pt">Honestidade do modelo</span><span class="t" lang="en">Model honesty</span></h3>
+          <span class="principle__tag"><span class="t" lang="pt">Transparência quanto à incerteza.</span><span class="t" lang="en">Transparency about uncertainty.</span></span>
+          <p class="principle__body"><span class="t" lang="pt">Cada resposta apresenta indicadores de confiança, fontes citáveis e opções de reversão. O usuário não precisa confiar cegamente: a interface informa a origem da resposta, os dados usados e o que pode ser editado.</span><span class="t" lang="en">Every answer shows confidence indicators, citable sources and undo options. The user need not trust blindly: the interface states the answer's origin, the data used and what can be edited.</span></p>
+        </div>
+        <div class="principle">
+          <span class="principle__num-big" aria-hidden="true">4</span>
+          <span class="principle__num">04</span>
+          <h3 class="principle__title"><span class="t" lang="pt">Contexto vivo</span><span class="t" lang="en">Living context</span></h3>
+          <span class="principle__tag"><span class="t" lang="pt">Contexto reutilizável.</span><span class="t" lang="en">Reusable context.</span></span>
+          <p class="principle__body"><span class="t" lang="pt">Padrões de anexo, histórico, templates de prompt e níveis de acesso permitem que o contexto criado pelo usuário — arquivos, filtros, sessões, permissões — seja recuperado e reutilizado entre tarefas.</span><span class="t" lang="en">Patterns for attachments, history, prompt templates and access levels let the context a user builds — files, filters, sessions, permissions — be recovered and reused across tasks.</span></p>
+        </div>
+        <div class="principle">
+          <span class="principle__num-big" aria-hidden="true">5</span>
+          <span class="principle__num">05</span>
+          <h3 class="principle__title"><span class="t" lang="pt">Loop fechado</span><span class="t" lang="en">Closed loop</span></h3>
+          <span class="principle__tag"><span class="t" lang="pt">Feedback como elemento central.</span><span class="t" lang="en">Feedback as a core element.</span></span>
+          <p class="principle__body"><span class="t" lang="pt">A avaliação das respostas — positiva, negativa, correções, exemplos, refutações — não é opcional: é componente presente em toda resposta, alimentando a evolução de modelos, prompts e mecanismos de segurança.</span><span class="t" lang="en">Rating answers — positive, negative, corrections, examples, rebuttals — is not optional: it is a component present in every response, feeding the evolution of models, prompts and safety mechanisms.</span></p>
+        </div>
+        <div class="outcome">
+          <div class="outcome__head">
+            <span class="outcome__mark" aria-hidden="true">✦</span>
+            <span class="outcome__eyebrow"><span class="t" lang="pt">Resultado · Outcome</span><span class="t" lang="en">Outcome · Resultado</span></span>
+            <h3 class="outcome__title"><span class="t" lang="pt">Uma biblioteca de IA</span><span class="t" lang="en">A library for AI</span></h3>
+            <span class="outcome__sub"><span class="t" lang="pt">Padrões reutilizáveis, por domínio — a gramática dos 5 princípios feita componente.</span><span class="t" lang="en">Reusable, domain-aware patterns — the grammar of the 5 principles made component.</span></span>
+          </div>
+
+          <div class="outcome__index">
+            <div class="outcome__group">
+              <span class="outcome__group-title"><span class="t" lang="pt">Núcleo</span><span class="t" lang="en">Core</span></span>
+              <ol class="outcome__list">
+                <li><span class="t" lang="pt">Entradas de prompt</span><span class="t" lang="en">Prompt inputs</span></li>
+                <li><span class="t" lang="pt">Cartões de resposta <em>com streaming e citações</em></span><span class="t" lang="en">Response cards <em>with streaming and citations</em></span></li>
+                <li><span class="t" lang="pt">Histórico</span><span class="t" lang="en">History</span></li>
+                <li><span class="t" lang="pt">Feedback</span><span class="t" lang="en">Feedback</span></li>
+                <li><span class="t" lang="pt">Edição assistida <em>com permissões</em></span><span class="t" lang="en">Assisted editing <em>with permissions</em></span></li>
+              </ol>
+            </div>
+            <div class="outcome__group">
+              <span class="outcome__group-title"><span class="t" lang="pt">Por domínio</span><span class="t" lang="en">Domain blocks</span></span>
+              <ol class="outcome__list">
+                <li><span class="t" lang="pt">Visualizador de contratos</span><span class="t" lang="en">Contract viewer</span></li>
+                <li><span class="t" lang="pt">Editor de imagens</span><span class="t" lang="en">Generated-image editor</span></li>
+                <li><span class="t" lang="pt">Ranking de testes</span><span class="t" lang="en">Test ranking</span></li>
+                <li><span class="t" lang="pt">Indicador de risco</span><span class="t" lang="en">Risk gauge</span></li>
+                <li><span class="t" lang="pt">Resumo de chamadas</span><span class="t" lang="en">Call summaries</span></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VI. SPOTLIGHTS — AS 5 POCs QUE AVANÇARAM
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">VI.</span>
+        <span class="name">Spotlights</span>
+        <span class="gloss"><span class="t" lang="pt">Cinco pranchas em foco</span><span class="t" lang="en">Five plates in focus</span></span>
+      </header>
+
+      <p class="results-intro reveal">
+        <span class="t" lang="pt">Das 9 POCs, 5 avançaram para protótipo e desenvolvimento — justamente as que mais amadureceram o Design System. As outras 4 (Incident Alchemist, Code Assistant, Call Analysis e Impact Analysis) permaneceram em pesquisa, com hipóteses validadas.</span>
+        <span class="t" lang="en">Of the 9 POCs, 5 advanced to prototype and development — precisely the ones that matured the Design System most. The other 4 (Incident Alchemist, Code Assistant, Call Analysis and Impact Analysis) stayed in research, with validated hypotheses.</span>
+      </p>
+
+      <!-- Spotlight 01 — Campaign Genius -->
+      <article class="spotlight reveal">
+        <span class="spotlight__eyebrow"><span class="t" lang="pt">Spotlight 01 — Marketing · Produto para clientes externos</span><span class="t" lang="en">Spotlight 01 — Marketing · External-client product</span></span>
+        <h3 class="spotlight__title">Campaign Genius</h3>
+        <div class="spotlight__lead">
+          <p><span class="t" lang="pt">A única POC criada como <span class="em">produto para clientes externos</span>; as outras 8 eram ferramentas internas. O objetivo: gerar campanhas completas a partir de prompts positivos, negativos e parâmetros, cobrindo todo o ciclo — copy, direção visual e formato — numa só plataforma.</span><span class="t" lang="en">The only POC built as an <span class="em">external-client product</span>; the other 8 were internal tools. The goal: generate complete campaigns from positive/negative prompts and parameters, covering the whole cycle — copy, art direction and format — on a single platform.</span></p>
+          <p><span class="t" lang="pt">O maior desafio de UX foi integrar geração de imagens e editor visual num único fluxo. O usuário gera variações, seleciona uma e edita com precisão sem trocar de ferramenta. Isso exigiu ir além do "card de resposta": canvas, máscara, ajustes paramétricos e versionamento. O padrão <span class="em">generate → curate → fine-edit</span> nasceu aqui — o maior avanço do Design System.</span><span class="t" lang="en">The biggest UX challenge was integrating image generation and a full visual editor into one flow. The user generates variations, picks one and edits it precisely without switching tools. This pushed the Design System beyond the "response card": canvas, mask, parametric adjustments and versioning. The <span class="em">generate → curate → fine-edit</span> pattern was born here — the system's biggest leap.</span></p>
+        </div>
+        <div class="sl-gallery">
+          <div class="sl-plate-flip reveal">
+            <div class="sl-flip-inner">
+              <a class="sl-hero sl-face sl-face--recto lightboxgallery-link" href="../images/genai/campaign-genius/1.webp" aria-label="Campaign Genius — Main view — campaign generator with prompts and parameters">
+            <img src="../images/genai/campaign-genius/1.webp" alt="Campaign Genius — Main view — campaign generator with prompts and parameters" loading="lazy" />
+            <div class="sl-hero__cap"><span class="t" lang="pt">Vista principal — gerador de campanhas com prompts e parâmetros</span><span class="t" lang="en">Main view — campaign generator with prompts and parameters</span></div>
+          </a>
+              <div class="sl-hero sl-face sl-face--verso" aria-hidden="true">
+                <img src="../images/genai/wireframes/campaign-genius.svg" alt="Wireframe — esboço da tela principal" loading="lazy" />
+                <div class="sl-hero__cap sl-hero__cap--wf"><span class="t" lang="pt">Verso · wireframe do esboço</span><span class="t" lang="en">Verso · the sketch wireframe</span></div>
+              </div>
+            </div>
+            <button class="sl-flip-btn" type="button" aria-pressed="false">
+              <span class="sl-flip-medallion" aria-hidden="true"><span class="sl-flip-glyph">↻</span></span>
+              <span class="sl-flip-tag" aria-hidden="true"><span class="sl-flip-tag-side sl-flip-tag--front">verso</span><span class="sl-flip-tag-side sl-flip-tag--back">recto</span></span>
+              <span class="sl-flip-label sl-flip-label--front"><span class="t" lang="pt">Ver o wireframe</span><span class="t" lang="en">See the wireframe</span></span>
+              <span class="sl-flip-label sl-flip-label--back"><span class="t" lang="pt">Ver a prancha</span><span class="t" lang="en">See the plate</span></span>
+            </button>
+          </div>
+          <div class="sl-grid">
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/2.webp"><img src="../images/genai/campaign-genius/2.webp" alt="Campaign Genius — view 2" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/3.webp"><img src="../images/genai/campaign-genius/3.webp" alt="Campaign Genius — view 3" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/4.webp"><img src="../images/genai/campaign-genius/4.webp" alt="Campaign Genius — view 4" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/5.webp"><img src="../images/genai/campaign-genius/5.webp" alt="Campaign Genius — view 5" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/6.webp"><img src="../images/genai/campaign-genius/6.webp" alt="Campaign Genius — view 6" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/7.webp"><img src="../images/genai/campaign-genius/7.webp" alt="Campaign Genius — view 7" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/8.webp"><img src="../images/genai/campaign-genius/8.webp" alt="Campaign Genius — view 8" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/9.webp"><img src="../images/genai/campaign-genius/9.webp" alt="Campaign Genius — view 9" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/10.webp"><img src="../images/genai/campaign-genius/10.webp" alt="Campaign Genius — view 10" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/11.webp"><img src="../images/genai/campaign-genius/11.webp" alt="Campaign Genius — view 11" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/12.webp"><img src="../images/genai/campaign-genius/12.webp" alt="Campaign Genius — view 12" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/13.webp"><img src="../images/genai/campaign-genius/13.webp" alt="Campaign Genius — view 13" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/14.webp"><img src="../images/genai/campaign-genius/14.webp" alt="Campaign Genius — view 14" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/15.webp"><img src="../images/genai/campaign-genius/15.webp" alt="Campaign Genius — view 15" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/16.webp"><img src="../images/genai/campaign-genius/16.webp" alt="Campaign Genius — view 16" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/17.webp"><img src="../images/genai/campaign-genius/17.webp" alt="Campaign Genius — view 17" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/campaign-genius/18.webp"><img src="../images/genai/campaign-genius/18.webp" alt="Campaign Genius — view 18" loading="lazy" /></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Spotlight 02 — Contract Explorer -->
+      <article class="spotlight reveal">
+        <span class="spotlight__eyebrow"><span class="t" lang="pt">Spotlight 02 — Jurídico · Knowledge Base</span><span class="t" lang="en">Spotlight 02 — Legal · Knowledge Base</span></span>
+        <h3 class="spotlight__title">Contract Explorer</h3>
+        <div class="spotlight__lead">
+          <p><span class="t" lang="pt">Um chat integrado à base interna de contratos. O usuário pergunta em linguagem natural — <span class="it">"quais contratos têm cláusula de exclusividade vigente?"</span>, <span class="it">"compare prazos de rescisão entre estes 3 fornecedores"</span> — e a IA pesquisa em múltiplos arquivos, sempre retornando a citação exata do trecho.</span><span class="t" lang="en">A chat wired to the internal contract base. The user asks in natural language — <span class="it">"which contracts have an active exclusivity clause?"</span>, <span class="it">"compare termination terms across these 3 suppliers"</span> — and the AI searches across files, always returning the exact citing passage.</span></p>
+          <p><span class="t" lang="pt">O desafio central: alinhar as <span class="em">permissões de ação</span> ao papel do usuário. Além de responder, o chatbot edita — mas respeitando limites: leitores consultam, autores editam rascunhos, aprovadores publicam. Virou o padrão de <span class="em">action-bar contextual</span>, depois adotado no SC Copilot e no Code Assistant como a referência de "edição autorizada".</span><span class="t" lang="en">The core challenge: aligning <span class="em">action permissions</span> to the user's role. Beyond answering, the chatbot edits — but within limits: readers consult, authors edit drafts, approvers publish. This became the <span class="em">contextual action-bar</span> pattern, later adopted in SC Copilot and Code Assistant as the reference for "authorised editing".</span></p>
+        </div>
+        <div class="sl-gallery">
+          <div class="sl-plate-flip reveal">
+            <div class="sl-flip-inner">
+              <a class="sl-hero sl-face sl-face--recto lightboxgallery-link" href="../images/genai/contract-explorer/1.webp" aria-label="Contract Explorer — Main view — chat over the contract base with traceable citations">
+            <img src="../images/genai/contract-explorer/1.webp" alt="Contract Explorer — Main view — chat over the contract base with traceable citations" loading="lazy" />
+            <div class="sl-hero__cap"><span class="t" lang="pt">Vista principal — chat sobre a base de contratos com citação rastreável</span><span class="t" lang="en">Main view — chat over the contract base with traceable citations</span></div>
+          </a>
+              <div class="sl-hero sl-face sl-face--verso" aria-hidden="true">
+                <img src="../images/genai/wireframes/contract-explorer.svg" alt="Wireframe — esboço da tela principal" loading="lazy" />
+                <div class="sl-hero__cap sl-hero__cap--wf"><span class="t" lang="pt">Verso · wireframe do esboço</span><span class="t" lang="en">Verso · the sketch wireframe</span></div>
+              </div>
+            </div>
+            <button class="sl-flip-btn" type="button" aria-pressed="false">
+              <span class="sl-flip-medallion" aria-hidden="true"><span class="sl-flip-glyph">↻</span></span>
+              <span class="sl-flip-tag" aria-hidden="true"><span class="sl-flip-tag-side sl-flip-tag--front">verso</span><span class="sl-flip-tag-side sl-flip-tag--back">recto</span></span>
+              <span class="sl-flip-label sl-flip-label--front"><span class="t" lang="pt">Ver o wireframe</span><span class="t" lang="en">See the wireframe</span></span>
+              <span class="sl-flip-label sl-flip-label--back"><span class="t" lang="pt">Ver a prancha</span><span class="t" lang="en">See the plate</span></span>
+            </button>
+          </div>
+          <div class="sl-grid">
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/2.webp"><img src="../images/genai/contract-explorer/2.webp" alt="Contract Explorer — view 2" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/3.webp"><img src="../images/genai/contract-explorer/3.webp" alt="Contract Explorer — view 3" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/4.webp"><img src="../images/genai/contract-explorer/4.webp" alt="Contract Explorer — view 4" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/5.webp"><img src="../images/genai/contract-explorer/5.webp" alt="Contract Explorer — view 5" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/6.webp"><img src="../images/genai/contract-explorer/6.webp" alt="Contract Explorer — view 6" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/7.webp"><img src="../images/genai/contract-explorer/7.webp" alt="Contract Explorer — view 7" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/8.webp"><img src="../images/genai/contract-explorer/8.webp" alt="Contract Explorer — view 8" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/9.webp"><img src="../images/genai/contract-explorer/9.webp" alt="Contract Explorer — view 9" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/10.webp"><img src="../images/genai/contract-explorer/10.webp" alt="Contract Explorer — view 10" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/11.webp"><img src="../images/genai/contract-explorer/11.webp" alt="Contract Explorer — view 11" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/contract-explorer/12.webp"><img src="../images/genai/contract-explorer/12.webp" alt="Contract Explorer — view 12" loading="lazy" /></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Spotlight 03 — Test Insights -->
+      <article class="spotlight reveal">
+        <span class="spotlight__eyebrow"><span class="t" lang="pt">Spotlight 03 — Quality Assurance</span><span class="t" lang="en">Spotlight 03 — Quality Assurance</span></span>
+        <h3 class="spotlight__title">Test Insights</h3>
+        <div class="spotlight__lead">
+          <p><span class="t" lang="pt">Opera sobre dados de teste já processados e faz 4 tarefas integradas: analisa o conjunto rodado, prevê o resultado da próxima rodada, sugere onde a cobertura está frágil e compara com a rodada anterior — tudo numa só tela, longe do "PDF de 400 páginas" que a QA costuma receber.</span><span class="t" lang="en">It works over already-processed test data and performs 4 integrated tasks: analyses the run, predicts the next run's outcome, suggests where coverage is fragile and compares with the previous run — all on one screen, far from the "400-page PDF report" QA usually gets.</span></p>
+          <p><span class="t" lang="pt">O problema de design era <span class="em">separar visualmente</span> os 4 tipos de saída na mesma vista: fato medido, predição (com intervalo de confiança), sugestão (ignorável) e comparativo (delta). Cada tipo ganhou um padrão próprio — <span class="em">fact-card, prediction-card, suggestion-card e delta-card</span>. Em QA, confundir "o que aconteceu" com "o que pode acontecer" custa caro.</span><span class="t" lang="en">The design problem was to <span class="em">visually separate</span> the 4 output types on the same view: measured fact, prediction (with confidence interval), suggestion (skippable) and comparison (delta). Each got its own pattern — <span class="em">fact-card, prediction-card, suggestion-card and delta-card</span>. In QA, confusing "what happened" with "what might" is costly.</span></p>
+        </div>
+        <div class="sl-gallery">
+          <div class="sl-plate-flip reveal">
+            <div class="sl-flip-inner">
+              <a class="sl-hero sl-face sl-face--recto lightboxgallery-link" href="../images/genai/test-insights/1.webp" aria-label="Test Insights — Main view — 4 AI output types on a single screen">
+            <img src="../images/genai/test-insights/1.webp" alt="Test Insights — Main view — 4 AI output types on a single screen" loading="lazy" />
+            <div class="sl-hero__cap"><span class="t" lang="pt">Vista principal — 4 tipos de saída da IA na mesma tela</span><span class="t" lang="en">Main view — 4 AI output types on a single screen</span></div>
+          </a>
+              <div class="sl-hero sl-face sl-face--verso" aria-hidden="true">
+                <img src="../images/genai/wireframes/test-insights.svg" alt="Wireframe — esboço da tela principal" loading="lazy" />
+                <div class="sl-hero__cap sl-hero__cap--wf"><span class="t" lang="pt">Verso · wireframe do esboço</span><span class="t" lang="en">Verso · the sketch wireframe</span></div>
+              </div>
+            </div>
+            <button class="sl-flip-btn" type="button" aria-pressed="false">
+              <span class="sl-flip-medallion" aria-hidden="true"><span class="sl-flip-glyph">↻</span></span>
+              <span class="sl-flip-tag" aria-hidden="true"><span class="sl-flip-tag-side sl-flip-tag--front">verso</span><span class="sl-flip-tag-side sl-flip-tag--back">recto</span></span>
+              <span class="sl-flip-label sl-flip-label--front"><span class="t" lang="pt">Ver o wireframe</span><span class="t" lang="en">See the wireframe</span></span>
+              <span class="sl-flip-label sl-flip-label--back"><span class="t" lang="pt">Ver a prancha</span><span class="t" lang="en">See the plate</span></span>
+            </button>
+          </div>
+          <div class="sl-grid">
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/test-insights/2.webp"><img src="../images/genai/test-insights/2.webp" alt="Test Insights — view 2" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/test-insights/3.webp"><img src="../images/genai/test-insights/3.webp" alt="Test Insights — view 3" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/test-insights/4.webp"><img src="../images/genai/test-insights/4.webp" alt="Test Insights — view 4" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/test-insights/5.webp"><img src="../images/genai/test-insights/5.webp" alt="Test Insights — view 5" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/test-insights/6.webp"><img src="../images/genai/test-insights/6.webp" alt="Test Insights — view 6" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/test-insights/7.webp"><img src="../images/genai/test-insights/7.webp" alt="Test Insights — view 7" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/test-insights/8.webp"><img src="../images/genai/test-insights/8.webp" alt="Test Insights — view 8" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/test-insights/9.webp"><img src="../images/genai/test-insights/9.webp" alt="Test Insights — view 9" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/test-insights/10.webp"><img src="../images/genai/test-insights/10.webp" alt="Test Insights — view 10" loading="lazy" /></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Spotlight 04 — Deploy Check -->
+      <article class="spotlight reveal">
+        <span class="spotlight__eyebrow"><span class="t" lang="pt">Spotlight 04 — DevOps · Camada de segurança</span><span class="t" lang="en">Spotlight 04 — DevOps · Safety layer</span></span>
+        <h3 class="spotlight__title">Deploy Check</h3>
+        <div class="spotlight__lead">
+          <p><span class="t" lang="pt">Uma camada de segurança automatizada entre a aprovação do PR e o deploy. Analisa o conteúdo do PR, a cobertura dos testes afetados, o histórico de incidentes nos arquivos e o tamanho da alteração — e apresenta uma estimativa de risco com uma lista justificada do que ainda precisa de revisão.</span><span class="t" lang="en">An automated safety layer between PR approval and deploy. It analyses the PR content, the affected tests' coverage, the incident history of the files and the change size — then shows a risk estimate with a justified list of what still needs review.</span></p>
+          <p><span class="t" lang="pt">A interação principal é um <span class="em">gauge</span> (baixo, médio, alto) com justificativas clicáveis. Para cada item, o engenheiro pode aceitar, refutar ou anotar — e tudo fica como audit trail. Esse ato de justificar concordância ou discordância com a IA virou o padrão de <span class="em">audit trail</span> do Design System: a camada automatizada complementa o julgamento humano, não o substitui.</span><span class="t" lang="en">The main interaction is a <span class="em">gauge</span> (low, medium, high) with clickable justifications. For each item, the engineer can accept, contest or annotate — all logged as an audit trail. That act of justifying agreement or disagreement with the AI became the Design System's <span class="em">audit trail</span> pattern: the automated layer complements human judgement, it doesn't replace it.</span></p>
+        </div>
+        <div class="sl-gallery">
+          <div class="sl-plate-flip reveal">
+            <div class="sl-flip-inner">
+              <a class="sl-hero sl-face sl-face--recto lightboxgallery-link" href="../images/genai/deploy-check/1.webp" aria-label="Deploy Check — Main view — pre-deploy risk gauge with clickable justifications">
+            <img src="../images/genai/deploy-check/1.webp" alt="Deploy Check — Main view — pre-deploy risk gauge with clickable justifications" loading="lazy" />
+            <div class="sl-hero__cap"><span class="t" lang="pt">Vista principal — gauge de risco pré-deploy com justificativas clicáveis</span><span class="t" lang="en">Main view — pre-deploy risk gauge with clickable justifications</span></div>
+          </a>
+              <div class="sl-hero sl-face sl-face--verso" aria-hidden="true">
+                <img src="../images/genai/wireframes/deploy-check.svg" alt="Wireframe — esboço da tela principal" loading="lazy" />
+                <div class="sl-hero__cap sl-hero__cap--wf"><span class="t" lang="pt">Verso · wireframe do esboço</span><span class="t" lang="en">Verso · the sketch wireframe</span></div>
+              </div>
+            </div>
+            <button class="sl-flip-btn" type="button" aria-pressed="false">
+              <span class="sl-flip-medallion" aria-hidden="true"><span class="sl-flip-glyph">↻</span></span>
+              <span class="sl-flip-tag" aria-hidden="true"><span class="sl-flip-tag-side sl-flip-tag--front">verso</span><span class="sl-flip-tag-side sl-flip-tag--back">recto</span></span>
+              <span class="sl-flip-label sl-flip-label--front"><span class="t" lang="pt">Ver o wireframe</span><span class="t" lang="en">See the wireframe</span></span>
+              <span class="sl-flip-label sl-flip-label--back"><span class="t" lang="pt">Ver a prancha</span><span class="t" lang="en">See the plate</span></span>
+            </button>
+          </div>
+          <div class="sl-grid">
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/deploy-check/2.webp"><img src="../images/genai/deploy-check/2.webp" alt="Deploy Check — view 2" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/deploy-check/3.webp"><img src="../images/genai/deploy-check/3.webp" alt="Deploy Check — view 3" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/deploy-check/4.webp"><img src="../images/genai/deploy-check/4.webp" alt="Deploy Check — view 4" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/deploy-check/5.webp"><img src="../images/genai/deploy-check/5.webp" alt="Deploy Check — view 5" loading="lazy" /></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Spotlight 05 — SC Copilot -->
+      <article class="spotlight reveal">
+        <span class="spotlight__eyebrow"><span class="t" lang="pt">Spotlight 05 — Internal Knowledge · Security-first</span><span class="t" lang="en">Spotlight 05 — Internal Knowledge · Security-first</span></span>
+        <h3 class="spotlight__title">SC Copilot</h3>
+        <div class="spotlight__lead">
+          <p><span class="t" lang="pt">Ferramenta interna para os colaboradores. Responde sobre processos, políticas e funcionamento interno, eliminando a busca por wikis, intranet, RH e múltiplos sistemas. A segurança foi essencial: soluções prontas não atendiam. A IA precisava operar só com dados internos sensíveis, sem risco de vazamento, com controle fino do que cada perfil consulta.</span><span class="t" lang="en">An internal tool for employees. It answers about processes, policies and internal workings, removing the hunt across wikis, intranet, HR and multiple systems. Security was essential: off-the-shelf solutions didn't fit. The AI had to operate solely on sensitive internal data, with no leak risk and fine-grained control of what each profile can query.</span></p>
+          <p><span class="t" lang="pt">Foi um desafio de design <span class="em">e</span> de engenharia. O Design System criou componentes que indicam o <span class="em">escopo de conhecimento</span> da IA em cada resposta: fontes consultadas, restrições de acesso por segurança e casos que exigem intervenção humana. Nasceu o padrão de <span class="em">indicador de escopo e encaminhamento para humanos</span>, diretriz para qualquer copilot interno. A IA nunca simula conhecimento além do permitido.</span><span class="t" lang="en">It was a design <span class="em">and</span> engineering challenge. The Design System built components that signal the AI's <span class="em">knowledge scope</span> in each answer: sources consulted, access restrictions for security and cases needing human intervention. The <span class="em">scope indicator and human hand-off</span> pattern was born, a guideline for any internal copilot. The AI never feigns knowledge beyond what is allowed.</span></p>
+        </div>
+        <div class="sl-gallery">
+          <div class="sl-plate-flip reveal">
+            <div class="sl-flip-inner">
+              <a class="sl-hero sl-face sl-face--recto lightboxgallery-link" href="../images/genai/sc-copilot/1.webp" aria-label="SC Copilot — Main view — internal copilot operating fully on sensitive knowledge">
+            <img src="../images/genai/sc-copilot/1.webp" alt="SC Copilot — Main view — internal copilot operating fully on sensitive knowledge" loading="lazy" style="object-fit: cover" />
+            <div class="sl-hero__cap"><span class="t" lang="pt">Vista principal — copilot interno operando 100% sobre conhecimento sensível</span><span class="t" lang="en">Main view — internal copilot operating fully on sensitive knowledge</span></div>
+          </a>
+              <div class="sl-hero sl-face sl-face--verso" aria-hidden="true">
+                <img src="../images/genai/wireframes/sc-copilot.svg" alt="Wireframe — esboço da tela principal" loading="lazy" />
+                <div class="sl-hero__cap sl-hero__cap--wf"><span class="t" lang="pt">Verso · wireframe do esboço</span><span class="t" lang="en">Verso · the sketch wireframe</span></div>
+              </div>
+            </div>
+            <button class="sl-flip-btn" type="button" aria-pressed="false">
+              <span class="sl-flip-medallion" aria-hidden="true"><span class="sl-flip-glyph">↻</span></span>
+              <span class="sl-flip-tag" aria-hidden="true"><span class="sl-flip-tag-side sl-flip-tag--front">verso</span><span class="sl-flip-tag-side sl-flip-tag--back">recto</span></span>
+              <span class="sl-flip-label sl-flip-label--front"><span class="t" lang="pt">Ver o wireframe</span><span class="t" lang="en">See the wireframe</span></span>
+              <span class="sl-flip-label sl-flip-label--back"><span class="t" lang="pt">Ver a prancha</span><span class="t" lang="en">See the plate</span></span>
+            </button>
+          </div>
+          <div class="sl-grid">
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/sc-copilot/2.webp"><img src="../images/genai/sc-copilot/2.webp" alt="SC Copilot — view 2" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/sc-copilot/3.webp"><img src="../images/genai/sc-copilot/3.webp" alt="SC Copilot — view 3" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/sc-copilot/4.webp"><img src="../images/genai/sc-copilot/4.webp" alt="SC Copilot — view 4" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/sc-copilot/5.webp"><img src="../images/genai/sc-copilot/5.webp" alt="SC Copilot — view 5" loading="lazy" /></a>
+            <a class="sl-thumb lightboxgallery-link" href="../images/genai/sc-copilot/6.webp"><img src="../images/genai/sc-copilot/6.webp" alt="SC Copilot — view 6" loading="lazy" /></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       VII. ENTREGA & IMPACTO
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread">
+      <aside class="margin-l" aria-hidden="true"></aside>
+      <div class="content">
+        <header class="section-head reveal">
+          <span class="roman">VII.</span>
+          <span class="name"><span class="t" lang="pt">Entrega &amp; Impacto</span><span class="t" lang="en">Delivery &amp; Impact</span></span>
+          <span class="gloss"><span class="t" lang="pt">O ativo reutilizável</span><span class="t" lang="en">The reusable asset</span></span>
+        </header>
+
+        <p class="results-intro reveal">
+          <span class="t" lang="pt">Em ~3 meses entreguei o <span class="em">Gen.AI Design System</span> — tokens, componentes base, padrões de interação com IA e blocos por domínio — além de 9 protótipos navegáveis de alta fidelidade, prontos para demonstração executiva e handoff técnico.</span>
+          <span class="t" lang="en">In ~3 months I delivered the <span class="em">Gen.AI Design System</span> — tokens, base components, AI-interaction patterns and domain blocks — plus 9 high-fidelity navigable prototypes, ready for executive demo and technical handoff.</span>
+        </p>
+
+        <aside class="marginalia-stat reveal">
+          <dl>
+            <div>
+              <dt><span class="stat-val" data-count="9">0</span></dt>
+              <dd><span class="t" lang="pt">POCs de Gen.AI concebidas de ponta a ponta</span><span class="t" lang="en">Gen.AI POCs conceived end-to-end</span></dd>
+            </div>
+            <div>
+              <dt><span class="stat-val" data-count="1">0</span></dt>
+              <dd><span class="t" lang="pt">designer end-to-end para as 9 POCs</span><span class="t" lang="en">designer end-to-end for all 9 POCs</span></dd>
+            </div>
+            <div>
+              <dt><span class="unit unit-pre">~</span><span class="stat-val" data-count="3">0</span></dt>
+              <dd><span class="t" lang="pt">meses de liderança end-to-end</span><span class="t" lang="en">months of end-to-end leadership</span></dd>
+            </div>
+            <div>
+              <dt><span class="stat-val" data-count="5">0</span></dt>
+              <dd><span class="t" lang="pt">POCs evoluídas para protótipo e desenvolvimento</span><span class="t" lang="en">POCs advanced to prototype and development</span></dd>
+            </div>
+          </dl>
+        </aside>
+
+        <div class="body reveal" style="margin-top: var(--sp-6);">
+          <p>
+            <span class="t" lang="pt">Das 9 iniciativas, 5 avançaram para prototipação e desenvolvimento: Campaign Genius, Contract Explorer, Deploy Check, Test Insights e SC Copilot. As outras 4 permaneceram em pesquisa, com hipóteses validadas para ciclos futuros. O principal impacto estrutural, porém, não foi um produto: foi o <span class="em">vocabulário de UX para IA generativa</span> — padrões de prompt, citação, transparência de incerteza, edição autorizada, escopo de conhecimento e audit trail — materializado no Design System e reaproveitado em outras iniciativas da Accenture. Esse ativo reutilizável agregou mais valor do que qualquer POC individual.</span>
+            <span class="t" lang="en">Of the 9 initiatives, 5 advanced to prototyping and development: Campaign Genius, Contract Explorer, Deploy Check, Test Insights and SC Copilot. The other 4 stayed in research, with validated hypotheses for future cycles. The main structural impact, though, was not a product: it was the <span class="em">UX vocabulary for generative AI</span> — patterns for prompt, citation, uncertainty transparency, authorised editing, knowledge scope and audit trail — materialised in the Design System and reused across other Accenture initiatives. That reusable asset delivered more value than any single POC.</span>
+          </p>
+        </div>
+      </div>
+      <aside class="margin-r" aria-hidden="true"></aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VIII. APRENDIZADOS (ERRATA)
+       ============================================================ -->
+  <section class="page case-section" data-folio>
+    <div class="spread-narrow">
+      <header class="section-head reveal">
+        <span class="roman">VIII.</span>
+        <span class="name"><span class="t" lang="pt">Aprendizados</span><span class="t" lang="en">Learnings</span></span>
+        <span class="gloss"><span class="t" lang="pt">Errata &amp; revisões</span><span class="t" lang="en">Errata &amp; revisions</span></span>
+      </header>
+
+      <div class="learnings reveal" data-stagger>
+        <div class="learning">
+          <span class="learning__num"><span class="t" lang="pt">Lição 01 · IA como medium</span><span class="t" lang="en">Lesson 01 · AI as medium</span></span>
+          <h3 class="learning__title"><span class="t" lang="pt">O designer deve compreender o modelo, não apenas aplicá-lo.</span><span class="t" lang="en">The designer must understand the model, not just apply it.</span></h3>
+          <p class="learning__body"><span class="t" lang="pt">É fundamental discutir desde o início o que o modelo realmente faz, onde alucina, recusa ou apresenta risco. As POCs me exigiram colaborar com cada squad para entender o comportamento real da IA antes de desenhar — prática que adoto em todo produto com IA desde então.</span><span class="t" lang="en">It's essential to discuss from the start what the model really does, where it hallucinates, refuses or carries risk. The POCs required me to work with each squad to understand the AI's real behaviour before designing — a practice I've kept in every AI product since.</span></p>
+        </div>
+        <div class="learning">
+          <span class="learning__num"><span class="t" lang="pt">Lição 02 · Honestidade do modelo</span><span class="t" lang="en">Lesson 02 · Model honesty</span></span>
+          <h3 class="learning__title"><span class="t" lang="pt">Evidenciar a incerteza, não ocultá-la.</span><span class="t" lang="en">Surface uncertainty, don't hide it.</span></h3>
+          <p class="learning__body"><span class="t" lang="pt">Nos primeiros protótipos, as squads tratavam a saída do modelo como verdade absoluta. O diferencial do UX para IA está em mostrar claramente confiança, fontes, escopo de acesso e reversibilidade. Adotei como critério deixar explícito na interface que a informação foi gerada por um modelo.</span><span class="t" lang="en">In early prototypes, squads treated model output as absolute truth. The differentiator of AI UX is clearly showing confidence, sources, access scope and reversibility. I made it a rule to state explicitly in the interface that information was model-generated.</span></p>
+        </div>
+        <div class="learning">
+          <span class="learning__num"><span class="t" lang="pt">Lição 03 · Design System como linguagem</span><span class="t" lang="en">Lesson 03 · Design System as language</span></span>
+          <h3 class="learning__title"><span class="t" lang="pt">Distinguir o essencial do decorativo.</span><span class="t" lang="en">Separate the essential from the decorative.</span></h3>
+          <p class="learning__body"><span class="t" lang="pt">Quando um padrão precisa funcionar em DevOps, jurídico, supply chain e marketing sem reinventar o vocabulário, o decorativo cai naturalmente. O Gen.AI me ensinou a perguntar, em cada componente: "isso é estrutura ou é enfeite?" — e a justificar a escolha aos stakeholders.</span><span class="t" lang="en">When a pattern must work across DevOps, legal, supply chain and marketing without reinventing the vocabulary, the decorative falls away naturally. Gen.AI taught me to ask, for each component: "is this structure or ornament?" — and to justify the choice to stakeholders.</span></p>
+        </div>
+        <div class="learning">
+          <span class="learning__num"><span class="t" lang="pt">Lição 04 · Design System como infraestrutura</span><span class="t" lang="en">Lesson 04 · Design System as infrastructure</span></span>
+          <h3 class="learning__title"><span class="t" lang="pt">Sustentável só se incorporar a intenção de uso, não apenas os tokens.</span><span class="t" lang="en">Sustainable only if it carries usage intent, not just tokens.</span></h3>
+          <p class="learning__body"><span class="t" lang="pt">Entreguei paletas, componentes e specs — mas o que fez o Gen.AI durar depois do programa foi a documentação de quando usar o quê, por quê, com qual modelo, sob qual acesso e o que não fazer. Em design para IA, tokens envelhecem rápido; heurísticas de decisão, bem mais devagar.</span><span class="t" lang="en">I delivered palettes, components and specs — but what made Gen.AI last beyond the programme was documenting when to use what, why, with which model, under which access, and what not to do. In AI design, tokens age fast; decision heuristics age far slower.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    </div><!-- /ga-dossier__spine -->
+  </div><!-- /ga-dossier -->
+
+  <!-- ============================================================
+       COLOPHÃO & NAVEGAÇÃO
+       ============================================================ -->
+  <section class="case-colophon" data-folio>
+    <div class="colo-press">
+      <span class="colo-press__mark" aria-hidden="true"><span>LS</span></span>
+      <span class="colo-press__cap"><span class="t" lang="pt">Marca do compositor</span><span class="t" lang="en">Compositor's mark</span></span>
+    </div>
+    <div class="colo-rule" aria-hidden="true"><span>❦</span></div>
+    <p class="case-colophon-body">
+      <span class="t" lang="pt">Esta prancha foi composta pelo autor para a <em>Accenture · One Studio</em> em MMXXIII–MMXXIV. Todos os dados, respostas de IA e métricas exibidos servem como estudo conceitual de design de produtos de IA generativa, mantendo os parâmetros de confidencialidade acordados. Nenhum dado real da Accenture ou de seus clientes é representado.</span>
+      <span class="t" lang="en">This plate was set by the author for <em>Accenture · One Studio</em> in MMXXIII–MMXXIV. All data, AI responses and metrics shown serve as a conceptual specimen of generative-AI product design, under agreed confidentiality terms. No real Accenture or client data is represented.</span>
+    </p>
+    <div class="case-colophon-meta">Plate IV · Vol. I · MMXXIII–MMXXIV</div>
+    <p class="colo-finis"><span class="t" lang="pt">Finis · fim da prancha</span><span class="t" lang="en">Finis · end of plate</span></p>
+  </section>
+
+  <nav class="folio-nav" aria-label="Navegação entre cases">
+    <a class="verso" href="sports-experience.html" rel="prev">
+      <span class="folio-marker"><span class="t" lang="pt">← Prancha anterior (Verso)</span><span class="t" lang="en">← Previous Plate (Verso)</span></span>
+      <span class="folio-title"><em><span class="t" lang="pt">Prancha III — Sports Experience</span><span class="t" lang="en">Plate III — Sports Experience</span></em></span>
+    </a>
+    <a class="recto" href="../index.html#works" rel="next">
+      <span class="folio-marker"><span class="t" lang="pt">Catálogo (Recto) →</span><span class="t" lang="en">Catalogue (Recto) →</span></span>
+      <span class="folio-title"><em><span class="t" lang="pt">Catálogo de Obras</span><span class="t" lang="en">A Catalogue of Works</span></em></span>
+    </a>
+  </nav>
+
+</main>
+
+<footer class="chrome-bot">
+  <div class="page-counter" aria-hidden="true">
+    <span class="num" data-counter-current>—</span>
+    <span class="of">/ <span data-counter-total>—</span></span>
+  </div>
+  <div class="ink-progress" aria-hidden="true"></div>
+  <div class="page-counter">
+    <span class="of"><span class="t" lang="pt">Prancha</span><span class="t" lang="en">Plate</span></span>
+    <span class="num">I</span>
+  </div>
+</footer>
+
+<script src="./case-template.js"></script>
+<!-- Chrome de case: Index Rerum (⌘K), paridade com a home -->
+<script src="./case-chrome.js"></script>
+
+<!-- Hero "Um sistema, nove mentes": monta a constelação (raios + nós com
+     ícones + rótulos) e o painel dinâmico. Passar o mouse / focar / tocar um
+     programa revela seu domínio e descrição à esquerda. Fonte única de dados. -->
+<script>
+(function () {
+  var band = document.querySelector('.ga-hero-band');
+  if (!band) return;
+  var spokesG = band.querySelector('[data-hero-spokes]');
+  var nodesG  = band.querySelector('[data-hero-nodes]');
+  var dial    = band.querySelector('[data-hero-dial]');
+  var detail  = band.querySelector('[data-hero-detail]');
+  var defPanel = detail && detail.querySelector('[data-hero-default]');
+  if (!spokesG || !nodesG || !detail || !defPanel) return;
+
+  var NS = 'http://www.w3.org/2000/svg';
+  var CX = 360, CY = 320, R = 250, START = -90, STEP = 40, NR = 22;
+
+  // Ticks gravados do anel-mostrador (36 finos + 4 cardeais), no grupo que gira
+  if (dial) {
+    for (var d = 0; d < 360; d += 10) {
+      var major = (d % 90 === 0);
+      var ta = d * Math.PI / 180, ca = Math.cos(ta), sa = Math.sin(ta);
+      var ri = major ? 277 : 283, ro = major ? 295 : 289;
+      var tk = document.createElementNS(NS, 'line');
+      tk.setAttribute('class', 'ga-hb-tick' + (major ? ' ga-hb-tick--major' : ''));
+      tk.setAttribute('x1', (CX + ca * ri).toFixed(1)); tk.setAttribute('y1', (CY + sa * ri).toFixed(1));
+      tk.setAttribute('x2', (CX + ca * ro).toFixed(1)); tk.setAttribute('y2', (CY + sa * ro).toFixed(1));
+      dial.appendChild(tk);
+    }
+  }
+
+  // Ícones reais dos POCs (Material, viewBox 24×24, preenchidos) — herdam fill via .ga-hb-ico.
+  // Chaves mantidas iguais às referenciadas em DATA; agora apontam para os glifos reais dos produtos.
+  var IC = {
+    bell:    '<path d="M4.99994 21C4.14994 21 3.54577 20.6208 3.18744 19.8625C2.82911 19.1042 2.91661 18.4 3.44994 17.75L8.99994 11V5H7.99994C7.71661 5 7.47911 4.90417 7.28744 4.7125C7.09577 4.52083 6.99994 4.28333 6.99994 4C6.99994 3.71667 7.09577 3.47917 7.28744 3.2875C7.47911 3.09583 7.71661 3 7.99994 3H15.9999C16.2833 3 16.5208 3.09583 16.7124 3.2875C16.9041 3.47917 16.9999 3.71667 16.9999 4C16.9999 4.28333 16.9041 4.52083 16.7124 4.7125C16.5208 4.90417 16.2833 5 15.9999 5H14.9999V11L20.5499 17.75C21.0833 18.4 21.1708 19.1042 20.8124 19.8625C20.4541 20.6208 19.8499 21 18.9999 21H4.99994ZM6.99994 18H16.9999L13.5999 14H10.3999L6.99994 18ZM4.99994 19H18.9999L12.9999 11.7V5H10.9999V11.7L4.99994 19Z"/>',
+    code:    '<path d="M9.6 15.6L11 14.175L8.825 12L11 9.825L9.6 8.4L6 12L9.6 15.6ZM14.4 15.6L18 12L14.4 8.4L13 9.825L15.175 12L13 14.175L14.4 15.6ZM5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H19C19.55 3 20.0208 3.19583 20.4125 3.5875C20.8042 3.97917 21 4.45 21 5V19C21 19.55 20.8042 20.0208 20.4125 20.4125C20.0208 20.8042 19.55 21 19 21H5ZM5 19H19V5H5V19Z"/>',
+    doc:     '<path d="M6 22C5.16667 22 4.45833 21.7083 3.875 21.125C3.29167 20.5417 3 19.8333 3 19V16H6V2H21V19C21 19.8333 20.7083 20.5417 20.125 21.125C19.5417 21.7083 18.8333 22 18 22H6ZM18 20C18.2833 20 18.5208 19.9042 18.7125 19.7125C18.9042 19.5208 19 19.2833 19 19V4H8V16H17V19C17 19.2833 17.0958 19.5208 17.2875 19.7125C17.4792 19.9042 17.7167 20 18 20ZM9 9V7H18V9H9ZM9 12V10H18V12H9ZM6 20H15V18H5V19C5 19.2833 5.09583 19.5208 5.2875 19.7125C5.47917 19.9042 5.71667 20 6 20ZM6 20H5H15H6Z"/>',
+    spark:   '<path d="M5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H19C19.55 3 20.0208 3.19583 20.4125 3.5875C20.8042 3.97917 21 4.45 21 5V19C21 19.55 20.8042 20.0208 20.4125 20.4125C20.0208 20.8042 19.55 21 19 21H5ZM5 19H19V5H5V19ZM6 17H18L14.25 12L11.25 16L9 13L6 17ZM8.5 10C8.91667 10 9.27083 9.85417 9.5625 9.5625C9.85417 9.27083 10 8.91667 10 8.5C10 8.08333 9.85417 7.72917 9.5625 7.4375C9.27083 7.14583 8.91667 7 8.5 7C8.08333 7 7.72917 7.14583 7.4375 7.4375C7.14583 7.72917 7 8.08333 7 8.5C7 8.91667 7.14583 9.27083 7.4375 9.5625C7.72917 9.85417 8.08333 10 8.5 10Z"/>',
+    mic:     '<path d="M21 6H19V15H6V17C6 17.55 6.45 18 7 18H18L22 22V7C22 6.45 21.55 6 21 6ZM17 12V3C17 2.45 16.55 2 16 2H3C2.45 2 2 2.45 2 3V17L6 13H16C16.55 13 17 12.55 17 12Z"/>',
+    shield:  '<path d="M10.6 16.05L17.65 9L16.25 7.6L10.6 13.25L7.75 10.4L6.35 11.8L10.6 16.05ZM5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H9.2C9.41667 2.4 9.77917 1.91667 10.2875 1.55C10.7958 1.18333 11.3667 1 12 1C12.6333 1 13.2042 1.18333 13.7125 1.55C14.2208 1.91667 14.5833 2.4 14.8 3H19C19.55 3 20.0208 3.19583 20.4125 3.5875C20.8042 3.97917 21 4.45 21 5V19C21 19.55 20.8042 20.0208 20.4125 20.4125C20.0208 20.8042 19.55 21 19 21H5ZM5 19H19V5H5V19ZM12 4.25C12.2167 4.25 12.3958 4.17917 12.5375 4.0375C12.6792 3.89583 12.75 3.71667 12.75 3.5C12.75 3.28333 12.6792 3.10417 12.5375 2.9625C12.3958 2.82083 12.2167 2.75 12 2.75C11.7833 2.75 11.6042 2.82083 11.4625 2.9625C11.3208 3.10417 11.25 3.28333 11.25 3.5C11.25 3.71667 11.3208 3.89583 11.4625 4.0375C11.6042 4.17917 11.7833 4.25 12 4.25Z"/>',
+    bars:    '<path d="M12 19C13.1 19 14.0417 18.6083 14.825 17.825C15.6083 17.0417 16 16.1 16 15V11C16 9.9 15.6083 8.95833 14.825 8.175C14.0417 7.39167 13.1 7 12 7C10.9 7 9.95833 7.39167 9.175 8.175C8.39167 8.95833 8 9.9 8 11V15C8 16.1 8.39167 17.0417 9.175 17.825C9.95833 18.6083 10.9 19 12 19ZM10 16H14V14H10V16ZM10 12H14V10H10V12ZM12 21C10.9167 21 9.9125 20.7333 8.9875 20.2C8.0625 19.6667 7.33333 18.9333 6.8 18H4V16H6.1C6.05 15.6667 6.02083 15.3333 6.0125 15C6.00417 14.6667 6 14.3333 6 14H4V12H6C6 11.6667 6.00417 11.3333 6.0125 11C6.02083 10.6667 6.05 10.3333 6.1 10H4V8H6.8C7.03333 7.61667 7.29583 7.25833 7.5875 6.925C7.87917 6.59167 8.21667 6.3 8.6 6.05L7 4.4L8.4 3L10.55 5.15C11.0167 5 11.4917 4.925 11.975 4.925C12.4583 4.925 12.9333 5 13.4 5.15L15.6 3L17 4.4L15.35 6.05C15.7333 6.3 16.0792 6.5875 16.3875 6.9125C16.6958 7.2375 16.9667 7.6 17.2 8H20V10H17.9C17.95 10.3333 17.9792 10.6667 17.9875 11C17.9958 11.3333 18 11.6667 18 12H20V14H18C18 14.3333 17.9958 14.6667 17.9875 15C17.9792 15.3333 17.95 15.6667 17.9 16H20V18H17.2C16.6667 18.9333 15.9375 19.6667 15.0125 20.2C14.0875 20.7333 13.0833 21 12 21Z"/>',
+    graph:   '<path d="M20.6 21L15.9 16.3C15.2167 16.8333 14.4625 17.25 13.6375 17.55C12.8125 17.85 11.9333 18 11 18C9.5 18 8.14583 17.6333 6.9375 16.9C5.72917 16.1667 4.775 15.2 4.075 14H6.525C7.09167 14.6167 7.75417 15.1042 8.5125 15.4625C9.27083 15.8208 10.1 16 11 16C12.6667 16 14.0833 15.4167 15.25 14.25C16.4167 13.0833 17 11.6667 17 10C17 8.33333 16.4167 6.91667 15.25 5.75C14.0833 4.58333 12.6667 4 11 4C9.43333 4 8.07917 4.52917 6.9375 5.5875C5.79583 6.64583 5.15833 7.95 5.025 9.5H3.025C3.15833 7.38333 3.9875 5.60417 5.5125 4.1625C7.0375 2.72083 8.86667 2 11 2C13.2333 2 15.125 2.775 16.675 4.325C18.225 5.875 19 7.76667 19 10C19 10.9333 18.85 11.8125 18.55 12.6375C18.25 13.4625 17.8333 14.2167 17.3 14.9L22 19.6L20.6 21ZM9.925 14L8.35 8.8L7.05 12.5H2V11H6L7.65 6.25H9.15L10.675 11.35L11.75 8H13.25L14.75 11H15.5V12.5H13.825L12.65 10.15L11.4 14H9.925Z"/>',
+    chat:    '<path d="M4.9001 21L4.7501 19.725L4.5501 19.625C4.48343 19.5917 4.39176 19.5333 4.2751 19.45L3.0751 19.95L1.9751 18.05L3.0001 17.275V16.75L1.9751 15.95L3.0751 14.05L4.2751 14.55C4.35843 14.5 4.4376 14.45 4.5126 14.4C4.5876 14.35 4.66676 14.3083 4.7501 14.275L4.9001 13H7.1001L7.2501 14.275L7.4501 14.375C7.48343 14.3917 7.5251 14.4167 7.5751 14.45L7.7251 14.55L8.9251 14.05L10.0251 15.95L9.0001 16.725V17.275L14.4751 14.1L13.3501 16.075L13.6501 16.3L9.7001 18.6L8.9251 19.95L7.7251 19.45C7.64176 19.5 7.5626 19.55 7.4876 19.6C7.4126 19.65 7.33343 19.6917 7.2501 19.725L7.1001 21H4.9001ZM6.0001 15.5C5.58343 15.5 5.22926 15.6458 4.9376 15.9375C4.64593 16.2292 4.5001 16.5833 4.5001 17C4.5001 17.4167 4.64593 17.7708 4.9376 18.0625C5.22926 18.3542 5.58343 18.5 6.0001 18.5C6.41676 18.5 6.77093 18.3542 7.0626 18.0625C7.35426 17.7708 7.5001 17.4167 7.5001 17C7.5001 16.5833 7.35426 16.2292 7.0626 15.9375C6.77093 15.6458 6.41676 15.5 6.0001 15.5ZM9.9001 10L9.7501 8.725C9.71676 8.69167 9.6751 8.66667 9.6251 8.65C9.5751 8.63333 9.53343 8.60833 9.5001 8.575V14.075L9.1251 13.425L8.0001 13.9V8.8L7.0001 7.05L8.0001 6.275V5.75L6.9751 4.95L8.0751 3.05L9.2751 3.55C9.35843 3.5 9.4376 3.45 9.5126 3.4C9.5876 3.35 9.66676 3.30833 9.7501 3.275L9.9001 2H12.1001L12.2501 3.275L12.4501 3.375C12.5168 3.40833 12.6084 3.46667 12.7251 3.55L13.9251 3.05L15.0251 4.95L14.0001 5.725V6.25L15.0251 7.05L13.9251 8.95L12.7251 8.45C12.6418 8.5 12.5626 8.55 12.4876 8.6C12.4126 8.65 12.3334 8.69167 12.2501 8.725L12.1001 10H9.9001ZM11.0001 4.5C10.5834 4.5 10.2293 4.64583 9.9376 4.9375C9.64593 5.22917 9.5001 5.58333 9.5001 6C9.5001 6.41667 9.64593 6.77083 9.9376 7.0625C10.2293 7.35417 10.5834 7.5 11.0001 7.5C11.4168 7.5 11.7709 7.35417 12.0626 7.0625C12.3543 6.77083 12.5001 6.41667 12.5001 6C12.5001 5.58333 12.3543 5.22917 12.0626 4.9375C11.7709 4.64583 11.4168 4.5 11.0001 4.5ZM16.9001 21L16.7501 19.725L16.5501 19.625C16.4834 19.5917 16.3918 19.5333 16.2751 19.45L15.0751 19.95L13.9751 18.05L15.0001 17.275V16.75L13.9751 15.975L15.0751 14.05L16.2751 14.55C16.3251 14.5167 16.3584 14.4958 16.3751 14.4875L16.7501 14.3L11.3501 10.5H12.5501L12.6501 9.6L17.5251 13H19.1001L19.2501 14.275L19.4501 14.375C19.4834 14.3917 19.5251 14.4167 19.5751 14.45L19.7251 14.55L20.9251 14.05L22.0251 15.95L21.0001 16.725V17.25L22.0251 18.05L20.9251 19.95L19.7251 19.45C19.6418 19.5 19.5626 19.55 19.4876 19.6C19.4126 19.65 19.3334 19.6917 19.2501 19.725L19.1001 21H16.9001ZM18.0001 15.5C17.5834 15.5 17.2293 15.6458 16.9376 15.9375C16.6459 16.2292 16.5001 16.5833 16.5001 17C16.5001 17.4167 16.6459 17.7708 16.9376 18.0625C17.2293 18.3542 17.5834 18.5 18.0001 18.5C18.4168 18.5 18.7709 18.3542 19.0626 18.0625C19.3543 17.7708 19.5001 17.4167 19.5001 17C19.5001 16.5833 19.3543 16.2292 19.0626 15.9375C18.7709 15.6458 18.4168 15.5 18.0001 15.5Z"/>'
+  };
+
+  var DATA = [
+    { id:'incident', name:'Incident Alchemist', icon:IC.bell,
+      domPt:'DevOps · Confiabilidade', domEn:'DevOps · Reliability',
+      descPt:'Cataloga e identifica incidentes automaticamente — o histórico da área passa a prevenir problemas, não só resolvê-los.',
+      descEn:'Automatically catalogues and identifies incidents — the team’s history starts preventing problems, not just fixing them.' },
+    { id:'code', name:'Code Assistant', icon:IC.code,
+      domPt:'Engenharia', domEn:'Engineering',
+      descPt:'Pair programmer interno rodando totalmente on-premises: um copilot sem enviar código sensível para fora.',
+      descEn:'Internal pair programmer running fully on-premises: a copilot without sending any sensitive code outside.' },
+    { id:'contract', name:'Contract Explorer', icon:IC.doc,
+      domPt:'Jurídico · Base de contratos', domEn:'Legal · Contract base',
+      descPt:'Chat em linguagem natural sobre a base de contratos, com citações rastreáveis até a cláusula exata.',
+      descEn:'Natural-language chat over the contract base, with citations traceable down to the exact clause.' },
+    { id:'campaign', name:'Campaign Genius', icon:IC.spark,
+      domPt:'Marketing · Clientes externos', domEn:'Marketing · External clients',
+      descPt:'Único produto para clientes externos: cria campanhas completas a partir de prompts — do texto à imagem e edição, num só fluxo.',
+      descEn:'The only product for external clients: builds full campaigns from prompts — from copy to image and edit, in one flow.' },
+    { id:'call', name:'Call Analysis', icon:IC.mic,
+      domPt:'Customer Success', domEn:'Customer Success',
+      descPt:'Resume chamadas com clientes em minutos: obstáculos, próximos passos e pontos de dor, sem revisar transcrições à mão.',
+      descEn:'Summarises client calls in minutes: blockers, next steps and pain points, without manually reviewing transcripts.' },
+    { id:'deploy', name:'Deploy Check', icon:IC.shield,
+      domPt:'DevOps · Camada de segurança', domEn:'DevOps · Safety layer',
+      descPt:'Roda antes do deploy e mostra o risco estimado com justificativas; cada decisão fica registrada no audit trail.',
+      descEn:'Runs before deploy and shows estimated risk with justifications; every decision is logged in the audit trail.' },
+    { id:'test', name:'Test Insights', icon:IC.bars,
+      domPt:'Quality Assurance', domEn:'Quality Assurance',
+      descPt:'Prevê o resultado da próxima rodada e sugere onde reforçar a cobertura — separando fato medido, predição e sugestão.',
+      descEn:'Predicts the next run’s outcome and suggests where to add coverage — separating measured fact, prediction and suggestion.' },
+    { id:'impact', name:'Impact Analysis', icon:IC.graph,
+      domPt:'Engenharia', domEn:'Engineering',
+      descPt:'Quantifica o impacto de qualquer ação — deploy, mudança de dados ou de fluxo — em todos os pontos afetados a jusante.',
+      descEn:'Quantifies the impact of any action — deploy, data or flow change — across every downstream point affected.' },
+    { id:'sc', name:'SC Copilot', icon:IC.chat,
+      domPt:'Conhecimento interno · Security-first', domEn:'Internal knowledge · Security-first',
+      descPt:'Copilot interno construído do zero por exigência de segurança — responde sobre processos e políticas sempre citando a fonte.',
+      descEn:'Internal copilot built from scratch for security — answers about processes and policies, always citing the source.' }
+  ];
+
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  var panels = {}, nodes = {};
+  var pinned = null;
+
+  function show(id) {
+    Object.keys(panels).forEach(function (k) { panels[k].classList.toggle('is-shown', k === id); });
+    defPanel.classList.toggle('is-shown', !id);
+    Object.keys(nodes).forEach(function (k) {
+      var on = k === id;
+      nodes[k].g.classList.toggle('is-active', on);
+      nodes[k].spoke.classList.toggle('is-active', on);
+      nodes[k].g.setAttribute('aria-pressed', pinned === k ? 'true' : 'false');
+    });
+    band.classList.toggle('ga-hb-focus', !!id);
+  }
+
+  DATA.forEach(function (p, i) {
+    // painel de detalhe
+    var pn = document.createElement('div');
+    pn.className = 'ga-hb-panel';
+    pn.setAttribute('data-hero-item', p.id);
+    pn.innerHTML =
+      '<span class="ga-hb-dom"><span class="t" lang="pt">' + esc(p.domPt) + '</span><span class="t" lang="en">' + esc(p.domEn) + '</span></span>' +
+      '<h3 class="ga-hb-progname">' + esc(p.name) + '</h3>' +
+      '<p class="ga-hb-desc"><span class="t" lang="pt">' + esc(p.descPt) + '</span><span class="t" lang="en">' + esc(p.descEn) + '</span></p>';
+    detail.appendChild(pn);
+    panels[p.id] = pn;
+
+    // geometria
+    var ang = (START + i * STEP) * Math.PI / 180;
+    var ux = Math.cos(ang), uy = Math.sin(ang);
+    var x = CX + R * ux, y = CY + R * uy;
+
+    // raio
+    var sp = document.createElementNS(NS, 'line');
+    sp.setAttribute('class', 'ga-hb-spoke');
+    sp.setAttribute('x1', x.toFixed(1)); sp.setAttribute('y1', y.toFixed(1));
+    sp.setAttribute('x2', CX); sp.setAttribute('y2', CY);
+    spokesG.appendChild(sp);
+
+    // nó
+    var g = document.createElementNS(NS, 'g');
+    g.setAttribute('class', 'ga-hb-node-g');
+    g.setAttribute('data-id', p.id);
+    g.setAttribute('tabindex', '0');
+    g.setAttribute('role', 'button');
+    g.setAttribute('aria-label', p.name);
+    g.setAttribute('aria-pressed', 'false');
+
+    var core = document.createElementNS(NS, 'g');
+    core.setAttribute('class', 'ga-hb-node-core');
+    var c = document.createElementNS(NS, 'circle');
+    c.setAttribute('class', 'ga-hb-node');
+    c.setAttribute('cx', x.toFixed(1)); c.setAttribute('cy', y.toFixed(1)); c.setAttribute('r', NR);
+    core.appendChild(c);
+    var ico = document.createElementNS(NS, 'g');
+    ico.setAttribute('class', 'ga-hb-ico');
+    ico.setAttribute('transform', 'translate(' + (x - 11).toFixed(1) + ',' + (y - 11).toFixed(1) + ') scale(0.92)');
+    ico.innerHTML = p.icon;
+    core.appendChild(ico);
+    g.appendChild(core);
+
+    // rótulo (nome real, duas linhas)
+    var lx = x + ux * 32, ly = y + uy * 30;
+    var anchor = ux > 0.3 ? 'start' : (ux < -0.3 ? 'end' : 'middle');
+    var words = p.name.split(' ');
+    var line1 = words[0], line2 = words.slice(1).join(' ');
+    var baseY = uy > 0.3 ? ly : (uy < -0.3 ? ly - 11 : ly - 4);
+    var t = document.createElementNS(NS, 'text');
+    t.setAttribute('class', 'ga-hb-name-lbl');
+    t.setAttribute('text-anchor', anchor);
+    var ts1 = document.createElementNS(NS, 'tspan');
+    ts1.setAttribute('x', lx.toFixed(1)); ts1.setAttribute('y', baseY.toFixed(1)); ts1.textContent = line1;
+    t.appendChild(ts1);
+    if (line2) {
+      var ts2 = document.createElementNS(NS, 'tspan');
+      ts2.setAttribute('x', lx.toFixed(1)); ts2.setAttribute('y', (baseY + 11).toFixed(1)); ts2.textContent = line2;
+      t.appendChild(ts2);
+    }
+    g.appendChild(t);
+    nodesG.appendChild(g);
+    nodes[p.id] = { g: g, spoke: sp };
+
+    // interação
+    g.addEventListener('mouseenter', function () { show(p.id); });
+    g.addEventListener('focus', function () { show(p.id); });
+    g.addEventListener('mouseleave', function () { show(pinned); });
+    g.addEventListener('blur', function () { show(pinned); });
+    function toggle(e) { e.preventDefault(); pinned = (pinned === p.id) ? null : p.id; show(pinned); }
+    g.addEventListener('click', toggle);
+    g.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') toggle(e);
+    });
+  });
+})();
+</script>
+
+<!-- Dossiê: monta o índice lateral e sincroniza o capítulo corrente (portado do Lighthouse/Sports) -->
+<script>
+(function () {
+  var dossier = document.querySelector('.ga-dossier');
+  if (!dossier) return;
+  var nav = dossier.querySelector('.ga-dossier__nav');
+  var spine = dossier.querySelector('.ga-dossier__spine');
+  if (!nav || !spine) return;
+  var sections = Array.prototype.slice.call(spine.querySelectorAll('.case-section'));
+  var links = [];
+  sections.forEach(function (sec, i) {
+    var head = sec.querySelector('.section-head');
+    if (!head) return;
+    if (!sec.id) sec.id = 'ch-' + (i + 1);
+    var roman = head.querySelector('.roman');
+    var name = head.querySelector('.name');
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'ga-dossier__link';
+    var r = document.createElement('span'); r.className = 'lk-roman';
+    r.textContent = roman ? roman.textContent.replace(/\.$/, '') : String(i + 1);
+    var n = document.createElement('span'); n.className = 'lk-name';
+    if (name) n.innerHTML = name.innerHTML; else n.textContent = 'Capítulo';
+    btn.appendChild(r); btn.appendChild(n);
+    btn.addEventListener('click', function () {
+      var top = sec.getBoundingClientRect().top + window.pageYOffset - 88;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    });
+    nav.appendChild(btn);
+    links.push({ btn: btn, sec: sec });
+  });
+  var LINE = 150;
+  var activeIdx = -1;
+  function update() {
+    if (!links.length) return;
+    var idx = 0;
+    for (var i = 0; i < links.length; i++) {
+      if (links[i].sec.getBoundingClientRect().top - LINE <= 0) idx = i; else break;
+    }
+    if (idx === activeIdx) return;
+    activeIdx = idx;
+    links.forEach(function (l, k) { l.btn.classList.toggle('is-active', k === idx); });
+  }
+  var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(function () { update(); ticking = false; });
+  }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
+</script>
+
+<!-- Plate-flip: vira a prancha de spotlight para revelar o wireframe do esboço -->
+<script>
+(function () {
+  document.querySelectorAll('.sl-flip-btn').forEach(function (btn) {
+    var card = btn.closest('.sl-plate-flip');
+    if (!card) return;
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var flipped = card.classList.toggle('is-flipped');
+      btn.setAttribute('aria-pressed', flipped ? 'true' : 'false');
+      var verso = card.querySelector('.sl-face--verso');
+      var recto = card.querySelector('.sl-face--recto');
+      if (verso) verso.setAttribute('aria-hidden', flipped ? 'false' : 'true');
+      if (recto) recto.setAttribute('aria-hidden', flipped ? 'true' : 'false');
+    });
+  });
+})();
+</script>
+
+<!-- Lightbox das galerias — versão elaborada, COMPARTILHADA (lightbox.js) -->
+<script src="./lightbox.js"></script>
+
+<!-- Badge "Pesquisa": contorno tracejado desenhado como <svg> inline, sem
+     distorção nas dobras (cantos circulares reais via rx + traço non-scaling). -->
+<script>
+(function () {
+  var NS = "http://www.w3.org/2000/svg";
+  document.querySelectorAll(".st--pesquisa").forEach(function (el) {
+    if (el.querySelector(".st-dash")) return;
+    var svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("class", "st-dash");
+    svg.setAttribute("preserveAspectRatio", "none");
+    var rect = document.createElementNS(NS, "rect");
+    rect.setAttribute("x", "0");
+    rect.setAttribute("y", "0");
+    rect.setAttribute("width", "100%");
+    rect.setAttribute("height", "100%");
+    rect.setAttribute("rx", "12");
+    rect.setAttribute("ry", "12");
+    rect.setAttribute("fill", "none");
+    rect.setAttribute("stroke-width", "1");
+    rect.setAttribute("stroke-dasharray", "2.5 7");
+    rect.setAttribute("stroke-linecap", "round");
+    rect.setAttribute("vector-effect", "non-scaling-stroke");
+    svg.appendChild(rect);
+    el.insertBefore(svg, el.firstChild);
+  });
+})();
+</script>
+</body>
+</html>

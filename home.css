@@ -1,0 +1,157 @@
+/* ════════════════════════════════════════════════════════════
+   HOME — camada de melhorias sobre a home (index.html)
+   Usa os tokens do DS (design-system/tokens.css). Não redeclara :root.
+   Seções: dedicatória ex dono · ícone do chrome (luneta) · index rerum
+   ════════════════════════════════════════════════════════════ */
+
+/* ─── Dedicatória ex dono (?to=Nome) ──────────────────────── */
+.ed-dedication {
+  margin-top: var(--sp-4);
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 20px;            /* compacta: não disputa com o chrome inferior */
+  line-height: var(--lh-snug);
+  color: var(--ink-soft);
+  transform: rotate(-1.6deg);
+  animation: ed-dedic-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.4s backwards;
+}
+
+/* viewports baixos: ainda mais discreta */
+@media (max-height: 760px) {
+  .ed-dedication { font-size: var(--fs-meta); margin-top: var(--sp-3); }
+}
+
+.ed-dedication-name { color: var(--ink); }
+.ed-dedication-sig  { color: var(--oxblood); white-space: nowrap; }
+
+@keyframes ed-dedic-in {
+  from { opacity: 0; transform: rotate(-1.6deg) translateY(8px); }
+  to   { opacity: 1; transform: rotate(-1.6deg) translateY(0); }
+}
+
+body.candle .ed-dedication      { color: var(--ink-soft); }
+body.candle .ed-dedication-name { color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ed-dedication { animation: none; }
+}
+
+/* ─── Ícone do chrome (luneta à esq. da vela) ─────────────────── */
+.ed-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-faint);
+  padding: 4px 8px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: color 0.3s, transform 0.3s;
+}
+.ed-icon:hover,
+.ed-icon:focus-visible { color: var(--oxblood); }
+.ed-icon:focus-visible { outline: 2px solid var(--oxblood); outline-offset: 2px; }
+.ed-icon svg { display: block; }
+
+/* alvo de toque confortável no mobile, em paridade com o lang-toggle */
+@media (max-width: 768px) {
+  .ed-icon { min-width: 44px; min-height: 44px; }
+}
+
+/* ─── Index Rerum (⌘K / clique na luneta) ─────────────────── */
+.ed-index {
+  position: fixed;
+  inset: 0;
+  z-index: 9100;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 14vh var(--sp-5) var(--sp-5);
+  background: rgba(26, 22, 18, 0.45);
+  animation: ed-fade-in 0.2s ease;
+}
+
+.ed-index-panel {
+  width: min(560px, 100%);
+  background: var(--paper-card);
+  border: var(--border-hair-strong);
+  box-shadow: var(--shadow-lens);
+  padding: var(--sp-5) var(--sp-6);
+}
+
+.ed-index-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+
+.ed-index-title {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: var(--fs-h4);
+  color: var(--ink);
+}
+
+.ed-index-hint {
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+}
+
+.ed-index-input {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--sp-2) var(--sp-3);
+  font-family: var(--mono);
+  font-size: var(--fs-meta);
+  color: var(--ink);
+  background: var(--paper);
+  border: var(--border-hair-strong);
+  border-radius: var(--radius-sm);
+}
+.ed-index-input:focus { outline: 2px solid var(--oxblood); outline-offset: 1px; }
+
+.ed-index-list {
+  list-style: none;
+  margin: var(--sp-4) 0 0;
+  padding: 0;
+  max-height: 46vh;
+  overflow-y: auto;
+}
+
+.ed-ix-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-2);
+  font-size: var(--fs-meta);
+  border-bottom: var(--border-hair);
+  cursor: pointer;
+}
+
+.ed-ix-row.sel { background: var(--highlighter); }
+body.candle .ed-ix-row.sel { background: var(--paper-deep); }
+
+.ed-ix-term { font-style: italic; color: var(--ink); }
+.ed-ix-leader {
+  flex: 1;
+  border-bottom: 1px dotted var(--ink-ghost);
+  transform: translateY(-4px);
+}
+.ed-ix-loc {
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.08em;
+  color: var(--oxblood);
+  white-space: nowrap;
+}
+
+.ed-ix-empty {
+  padding: var(--sp-4);
+  text-align: center;
+  font-style: italic;
+  color: var(--ink-faint);
+}
+

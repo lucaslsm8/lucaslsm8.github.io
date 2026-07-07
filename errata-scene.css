@@ -1,0 +1,439 @@
+/* ============================================================
+   ERRATA · CDIV — Cena de livros 3D (404)
+   CSS 3D puro. Reutiliza tokens do design system.
+   Três cenas compartilham o mesmo primitivo .book (cuboide).
+   ============================================================ */
+
+/* --- Gilt local (encadernação) — não existe nos tokens, escopo local --- */
+:root {
+  --gilt:        #c79a3a;
+  --gilt-soft:   #e0bd6a;
+  --pages:       #efe7d0;
+  --pages-line:  #d8cdae;
+}
+
+/* ------------------------------------------------------------
+   PALCO — perspectiva e chão
+   ------------------------------------------------------------ */
+.stage {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  height: clamp(300px, 42vh, 460px);
+  perspective: 1500px;
+  perspective-origin: 50% 42%;
+  touch-action: manipulation;
+}
+
+/* Sombra de chão difusa (não-3D) — ancora a cena no papel */
+.stage::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  width: 78%;
+  height: 56px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center,
+      rgba(26, 22, 18, 0.16), rgba(26, 22, 18, 0.05) 45%, transparent 72%);
+  filter: blur(2px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* O mundo 3D */
+.scene {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  z-index: 1;
+}
+
+/* Cada cena é desenhada só quando ativa */
+.scene[data-for] { display: none; }
+[data-scene="collapse"] .scene[data-for="collapse"],
+[data-scene="eject"]    .scene[data-for="eject"],
+[data-scene="shelf"]    .scene[data-for="shelf"] { display: block; }
+
+/* Ângulos de câmera por cena (translateY abaixa as pilhas no palco) */
+[data-scene="collapse"] .scene { transform: translateY(70px) rotateX(15deg) rotateY(-25deg); }
+[data-scene="eject"]    .scene { transform: translateY(58px) rotateX(9deg)  rotateY(-19deg); }
+[data-scene="shelf"]    .scene { transform: translateY(34px) rotateX(4deg)  rotateY(-13deg); }
+
+/* ------------------------------------------------------------
+   PRIMITIVO — livro como cuboide de 6 faces
+   Dimensões via vars: --w (largura) --d (profundidade) --t (espessura)
+   ------------------------------------------------------------ */
+.book {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+  /* tonalidade default — sobrescrita por paleta */
+  --cover:      var(--paper-deep);
+  --cover-2:    var(--paper-shade);
+  --spine-ink:  var(--ink-soft);
+  --emboss:     rgba(26, 22, 18, 0.16);
+  will-change: transform;
+}
+
+.face {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  backface-visibility: hidden;
+  box-sizing: border-box;
+}
+
+/* CAPA (topo) — frame debossed + leve textura */
+.face--cover {
+  width: var(--w);
+  height: var(--d);
+  margin-left: calc(var(--w) / -2);
+  margin-top: calc(var(--d) / -2);
+  transform: rotateX(90deg) translateZ(calc(var(--t) / 2));
+  background:
+    linear-gradient(135deg, var(--cover-2), var(--cover) 60%);
+  border-radius: 1px 3px 3px 1px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    inset 0 0 24px rgba(26, 22, 18, 0.12);
+}
+/* Frame ornamental na capa */
+.face--cover::before {
+  content: "";
+  position: absolute;
+  inset: 12px 14px;
+  border: 1px solid var(--emboss);
+  border-radius: 1px;
+}
+.face--cover::after {
+  content: "";
+  position: absolute;
+  inset: 18px 20px;
+  border: 1px solid var(--emboss);
+  opacity: 0.55;
+}
+
+/* CONTRACAPA (base) */
+.face--base {
+  width: var(--w);
+  height: var(--d);
+  margin-left: calc(var(--w) / -2);
+  margin-top: calc(var(--d) / -2);
+  transform: rotateX(-90deg) translateZ(calc(var(--t) / 2));
+  background: linear-gradient(135deg, var(--cover), var(--cover-2));
+  border-radius: 1px 3px 3px 1px;
+}
+
+/* LOMBADA (frente) — onde mora o título quando empilhado */
+.face--spine {
+  width: var(--w);
+  height: var(--t);
+  margin-left: calc(var(--w) / -2);
+  margin-top: calc(var(--t) / -2);
+  transform: translateZ(calc(var(--d) / 2));
+  background:
+    linear-gradient(var(--cover-2), var(--cover) 40%, var(--cover) 60%, var(--cover-2));
+  border-radius: 2px 2px 1px 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+/* Nervuras da lombada (bandas) */
+.face--spine::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, transparent, rgba(26,22,18,0.12) 8%, transparent 9%),
+    linear-gradient(90deg, transparent 91%, rgba(26,22,18,0.12) 92%, transparent);
+}
+.spine-label {
+  position: relative;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--spine-ink);
+  white-space: nowrap;
+  padding: 0 10px;
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.12);
+}
+.spine-label .num {
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  opacity: 0.7;
+}
+/* Filete dourado/gilt nas pontas da lombada */
+.face--spine .rule {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  background: var(--spine-ink);
+  opacity: 0.45;
+}
+.face--spine .rule.t { top: 22%; }
+.face--spine .rule.b { bottom: 22%; }
+
+/* Lombada traseira (fechamento) */
+.face--back {
+  width: var(--w);
+  height: var(--t);
+  margin-left: calc(var(--w) / -2);
+  margin-top: calc(var(--t) / -2);
+  transform: rotateY(180deg) translateZ(calc(var(--d) / 2));
+  background: linear-gradient(var(--cover-2), var(--cover));
+}
+
+/* CORTE/FOLHAS (laterais) — miolo de páginas creme */
+.face--fore,
+.face--head {
+  background:
+    repeating-linear-gradient(var(--pages-line) 0 0.5px, var(--pages) 0.5px 2.4px);
+}
+.face--fore {
+  width: var(--d);
+  height: var(--t);
+  margin-left: calc(var(--d) / -2);
+  margin-top: calc(var(--t) / -2);
+  transform: rotateY(90deg) translateZ(calc(var(--w) / 2));
+  box-shadow: inset 0 0 8px rgba(26,22,18,0.10);
+}
+.face--head {
+  width: var(--d);
+  height: var(--t);
+  margin-left: calc(var(--d) / -2);
+  margin-top: calc(var(--t) / -2);
+  transform: rotateY(-90deg) translateZ(calc(var(--w) / 2));
+  box-shadow: inset 0 0 8px rgba(26,22,18,0.12);
+}
+
+/* ============================================================
+   CENA A — COLAPSO: pilhas que tombam no hover
+   ============================================================ */
+.scene[data-for="collapse"] { transform-style: preserve-3d; }
+
+.stack {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-style: preserve-3d;
+  transform: translate3d(var(--stack-x, 0px), 0px, var(--stack-z, 0px));
+  cursor: pointer;
+}
+
+/* livro empilhado — pose de repouso */
+.stack .book {
+  --step: -26px;               /* deslocamento vertical por livro (sobe) */
+  transform:
+    translate3d(var(--jx, 0px), calc(var(--i) * var(--step)), 0px)
+    rotateZ(var(--jrz, 0deg))
+    rotateY(var(--jyaw, 0deg));
+  transition: transform 0.9s var(--ease-out);
+  transition-delay: 0s;
+}
+
+/* pose tombada — vars de queda preenchidas por JS, escalonadas */
+.stack.is-toppled .book {
+  transform:
+    translate3d(calc(var(--jx, 0px) + var(--fx, 0px)),
+                calc(var(--i) * var(--step) + var(--fy, 0px)),
+                var(--fz, 0px))
+    rotateZ(calc(var(--jrz, 0deg) + var(--frz, 0deg)))
+    rotateX(var(--fpitch, 0deg))
+    rotateY(calc(var(--jyaw, 0deg) + var(--fyaw, 0deg)));
+  transition: transform 1.05s var(--ease-power);
+  transition-delay: var(--fdelay, 0s);
+}
+
+/* ============================================================
+   CENA B — O VOLUME AUSENTE: o livro errado salta da pilha
+   ============================================================ */
+.scene[data-for="eject"] .stack .book {
+  --step: -30px;
+  transform:
+    translate3d(var(--jx, 0px), calc(var(--i) * var(--step)), 0px)
+    rotateZ(var(--jrz, 0deg))
+    rotateY(var(--jyaw, 0deg));
+  transition: transform 0.85s var(--ease-out);
+}
+/* o volume marcado desliza para fora e flutua quando a pilha é tocada */
+.scene[data-for="eject"] .stack.is-toppled .book.ejecting {
+  transform:
+    translate3d(calc(var(--jx, 0px) + 230px),
+                calc(var(--i) * var(--step) - 50px),
+                160px)
+    rotateZ(-6deg) rotateX(8deg) rotateY(-26deg);
+  transition: transform 1s var(--ease-power);
+}
+/* os de cima assentam levemente para preencher a falha */
+.scene[data-for="eject"] .stack.is-toppled .book.above {
+  transform:
+    translate3d(var(--jx, 0px),
+                calc(var(--i) * var(--step) + 26px),
+                0px)
+    rotateZ(var(--jrz, 0deg)) rotateY(var(--jyaw, 0deg));
+  transition: transform 0.9s var(--ease-out) 0.12s;
+}
+/* halo de vazio sob o volume que partiu */
+.scene[data-for="eject"] .ejecting .face--spine {
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+/* ============================================================
+   CENA C — ESTANTE 404: livros em pé que se abrem em leque
+   spines revelam 4 · 0 · 4
+   ============================================================ */
+.scene[data-for="shelf"] { }
+
+.shelf {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-style: preserve-3d;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+/* prateleira (laje fina) */
+.shelf-plank {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 560px;
+  height: 150px;
+  margin-left: -280px;
+  margin-top: 70px;
+  transform: rotateX(90deg) translateZ(-6px);
+  background: linear-gradient(var(--paper-deep), var(--paper-shade));
+  box-shadow: 0 0 0 1px var(--hairline), inset 0 2px 6px rgba(26,22,18,0.10);
+  border-radius: 2px;
+}
+.shelf-plank::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg, transparent 0 38px, rgba(26,22,18,0.05) 38px 39px);
+}
+
+.shelf .book {
+  /* livro em pé: lombada estreita e alta para frente */
+  transform:
+    translate3d(var(--sx, 0px), 0px, 0px)
+    rotateZ(var(--lean, 0deg));
+  transition: transform 0.9s var(--ease-out);
+  transform-origin: 50% 100%;
+}
+/* leque: cada livro inclina e se afasta */
+.shelf.is-toppled .book {
+  transform:
+    translate3d(calc(var(--sx, 0px) + var(--spread, 0px)), var(--rise, 0px), var(--fwd, 0px))
+    rotateZ(var(--fan, 0deg));
+  transition: transform 1s var(--ease-power);
+  transition-delay: var(--fdelay, 0s);
+}
+/* lombada grande dos volumes 404 */
+.shelf .book .spine-label {
+  font-family: var(--serif-display);
+  font-style: normal;
+  font-size: 15px;
+}
+.shelf .book.glyph .spine-label {
+  font-size: 30px;
+  font-weight: 400;
+  color: var(--spine-ink);
+}
+
+/* ------------------------------------------------------------
+   ESTADO DE BRILHO no hover (reforço de sombra/realce)
+   ------------------------------------------------------------ */
+.stack .face--cover,
+.shelf .book .face--spine { transition: filter var(--dur-base) var(--ease-out); }
+.stack:hover .face--cover { filter: brightness(1.04); }
+
+/* dica de interação */
+.stage-hint {
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-ghost);
+  z-index: 3;
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+.stage.touched .stage-hint { opacity: 0; }
+
+/* ------------------------------------------------------------
+   PALETAS — cores das capas (escopo no <html data-palette>)
+   ------------------------------------------------------------ */
+/* Mono oxblood: papel + um volume oxblood */
+[data-palette="oxblood"] .book.t1 { --cover:#e3dac0; --cover-2:#efe7d2; --spine-ink:var(--ink-soft); --emboss:rgba(26,22,18,0.14); }
+[data-palette="oxblood"] .book.t2 { --cover:#d8ccab; --cover-2:#e6ddc2; --spine-ink:var(--ink-soft); --emboss:rgba(26,22,18,0.16); }
+[data-palette="oxblood"] .book.t3 { --cover:#cdbf9a; --cover-2:#dccfac; --spine-ink:var(--ink);      --emboss:rgba(26,22,18,0.18); }
+[data-palette="oxblood"] .book.t4 { --cover:#c2b48d; --cover-2:#d0c29c; --spine-ink:var(--ink);      --emboss:rgba(26,22,18,0.18); }
+[data-palette="oxblood"] .book.accent { --cover:var(--oxblood); --cover-2:#8e3029; --spine-ink:var(--paper); --emboss:rgba(255,255,255,0.18); }
+
+/* Mix editorial: oxblood, cobalt, creme alternando */
+[data-palette="editorial"] .book.t1 { --cover:#e6ddc2; --cover-2:#efe7d2; --spine-ink:var(--ink-soft); --emboss:rgba(26,22,18,0.14); }
+[data-palette="editorial"] .book.t2 { --cover:var(--cobalt); --cover-2:#2c4d92; --spine-ink:#dfe6f2; --emboss:rgba(255,255,255,0.16); }
+[data-palette="editorial"] .book.t3 { --cover:#cdbf9a; --cover-2:#dccfac; --spine-ink:var(--ink); --emboss:rgba(26,22,18,0.18); }
+[data-palette="editorial"] .book.t4 { --cover:var(--oxblood); --cover-2:#8e3029; --spine-ink:var(--paper); --emboss:rgba(255,255,255,0.16); }
+[data-palette="editorial"] .book.accent { --cover:var(--ink); --cover-2:#2a241d; --spine-ink:var(--gilt-soft); --emboss:rgba(199,154,58,0.30); }
+
+/* Couro escuro + dourado */
+[data-palette="leather"] .book.t1 { --cover:#3a2f26; --cover-2:#4a3d31; --spine-ink:var(--gilt-soft); --emboss:rgba(199,154,58,0.28); }
+[data-palette="leather"] .book.t2 { --cover:var(--oxblood-deep); --cover-2:#6e211b; --spine-ink:var(--gilt-soft); --emboss:rgba(199,154,58,0.30); }
+[data-palette="leather"] .book.t3 { --cover:#2a241d; --cover-2:#3a3128; --spine-ink:var(--gilt); --emboss:rgba(199,154,58,0.26); }
+[data-palette="leather"] .book.t4 { --cover:#44382c; --cover-2:#564636; --spine-ink:var(--gilt-soft); --emboss:rgba(199,154,58,0.28); }
+[data-palette="leather"] .book.accent { --cover:#1c1813; --cover-2:#2a241d; --spine-ink:var(--gilt); --emboss:rgba(199,154,58,0.40); }
+[data-palette="leather"] .face--fore,
+[data-palette="leather"] .face--head { --pages:#e8dcbf; --pages-line:#cdbf9a; }
+[data-palette="leather"] .spine-label .num { color: var(--gilt); opacity: 0.9; }
+
+/* ------------------------------------------------------------
+   ACESSIBILIDADE
+   ------------------------------------------------------------ */
+@media (hover: none) {
+  .stage-hint::after { content: " · toque"; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* sem queda; a pilha aparece levemente tombada, estática */
+  .stack .book,
+  .scene[data-for="eject"] .stack .book,
+  .shelf .book { transition: none !important; }
+  .stack.is-toppled .book,
+  .shelf.is-toppled .book,
+  .scene[data-for="eject"] .stack.is-toppled .book.ejecting,
+  .scene[data-for="eject"] .stack.is-toppled .book.above { transition: none !important; }
+}
+
+/* ------------------------------------------------------------
+   RESPONSIVO
+   ------------------------------------------------------------ */
+@media (max-width: 768px) {
+  .stage { height: clamp(260px, 38vh, 360px); }
+  [data-scene="collapse"] .scene { transform: translateY(54px) rotateX(15deg) rotateY(-22deg) scale(0.78); }
+  [data-scene="eject"]    .scene { transform: translateY(46px) rotateX(9deg)  rotateY(-17deg) scale(0.8); }
+  [data-scene="shelf"]    .scene { transform: translateY(28px) rotateX(4deg)  rotateY(-11deg) scale(0.72); }
+}
+@media (max-width: 480px) {
+  [data-scene="collapse"] .scene { transform: translateY(40px) rotateX(15deg) rotateY(-20deg) scale(0.6); }
+  [data-scene="eject"]    .scene { transform: translateY(34px) rotateX(9deg)  rotateY(-16deg) scale(0.62); }
+  [data-scene="shelf"]    .scene { transform: translateY(22px) rotateX(4deg)  rotateY(-10deg) scale(0.56); }
+}

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" aria-label="Framer">
-  <path d="M32 12 H88 V44 H56 L88 76 H56 V108 L24 76 V44 H32 Z" fill="#0055FF"/>
-  <path d="M24 44 H88 V12 H32 Z" fill="#39C2FF"/>
-  <path d="M24 76 H56 V108 Z" fill="#003BCE"/>
-</svg>
