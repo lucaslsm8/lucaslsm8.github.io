@@ -58,13 +58,18 @@ const CONTENT = {
         href: "#works"
       }, {
         num: "III.",
-        title: ["Aparato técnico"],
+        title: ["Artes do ofício"],
         page: "xii",
-        href: "#apparatus"
+        href: "#specialties"
       }, {
         num: "IV.",
-        title: ["Correspondência"],
+        title: ["Aparato técnico"],
         page: "xvi",
+        href: "#apparatus"
+      }, {
+        num: "V.",
+        title: ["Correspondência"],
+        page: "xx",
         href: "#contact"
       }]
     },
@@ -370,10 +375,11 @@ const CONTENT = {
       close: "Fechar", prev: "Prancha anterior", next: "Próxima prancha"
     },
     specialties: {
-      label: "Repertório · Senior Product Designer",
+      label: "Capítulo III",
       title: ["Artes do ofício"],
-      page: "xi",
-      intro: "Treze anos de prática end-to-end — do discovery à entrega — unindo estratégia de produto, design centrado no usuário, design systems e experiências AI-native, com liderança cross-functional e mentoria.",
+      page: "xii",
+      intro: "Treze anos de prática end-to-end — do discovery à entrega — unindo estratégia de produto, design centrado no usuário, design systems e experiências AI-native, com liderança cross-functional.",
+      ui: { index: "Índice do ofício", entries: "quatro verbetes", plate: "Prancha", of: "de", keywords: "Palavras-chave", terms: "termos", prev: "Prancha anterior", next: "Próxima prancha", hint: "use as setas ou os marcadores para folhear" },
       items: [
         { roman: "I", img: "images/services/ai.webp", alt: "Estudo de IA generativa",
           title: "IA Generativa", cat: "GenAI · AI-native",
@@ -394,9 +400,9 @@ const CONTENT = {
       ]
     },
     apparatus: {
-      label: "Capítulo III",
+      label: "Capítulo IV",
       title: ["Aparato técnico"],
-      page: "xii",
+      page: "xvi",
       intro: "Instrumentos correntes e cronologia de prática.",
       tools: {
         label: "Instrumentos",
@@ -538,9 +544,9 @@ const CONTENT = {
       }
     },
     contact: {
-      label: "Capítulo IV",
+      label: "Capítulo V",
       title: ["Correspondência"],
-      page: "xvi",
+      page: "xx",
       titleDisplay: ["Vamos", {
         reg: " conversar."
       }],
@@ -637,13 +643,18 @@ const CONTENT = {
         href: "#works"
       }, {
         num: "III.",
-        title: ["Technical apparatus"],
+        title: ["Crafts of the trade"],
         page: "xii",
-        href: "#apparatus"
+        href: "#specialties"
       }, {
         num: "IV.",
-        title: ["Correspondence"],
+        title: ["Technical apparatus"],
         page: "xvi",
+        href: "#apparatus"
+      }, {
+        num: "V.",
+        title: ["Correspondence"],
+        page: "xx",
         href: "#contact"
       }]
     },
@@ -949,10 +960,11 @@ const CONTENT = {
       close: "Close", prev: "Previous plate", next: "Next plate"
     },
     specialties: {
-      label: "Repertoire · Senior Product Designer",
+      label: "Chapter III",
       title: ["Crafts of the trade"],
-      page: "xi",
-      intro: "Thirteen years of end-to-end practice — from discovery to delivery — uniting product strategy, user-centered design, design systems and AI-native experiences, with cross-functional leadership and mentorship.",
+      page: "xii",
+      intro: "Thirteen years of end-to-end practice — from discovery to delivery — uniting product strategy, user-centered design, design systems and AI-native experiences, with cross-functional leadership.",
+      ui: { index: "Index of the craft", entries: "four entries", plate: "Plate", of: "of", keywords: "Keywords", terms: "terms", prev: "Previous plate", next: "Next plate", hint: "use the arrows or markers to leaf through" },
       items: [
         { roman: "I", img: "images/services/ai.webp", alt: "Generative AI study",
           title: "Generative AI", cat: "GenAI · AI-native",
@@ -973,9 +985,9 @@ const CONTENT = {
       ]
     },
     apparatus: {
-      label: "Chapter III",
+      label: "Chapter IV",
       title: ["Technical apparatus"],
-      page: "xii",
+      page: "xvi",
       intro: "Current instruments and chronology of practice.",
       tools: {
         label: "Instruments",
@@ -1117,9 +1129,9 @@ const CONTENT = {
       }
     },
     contact: {
-      label: "Chapter IV",
+      label: "Chapter V",
       title: ["Correspondence"],
-      page: "xvi",
+      page: "xx",
       titleDisplay: ["Let us", {
         reg: " talk."
       }],
@@ -2857,34 +2869,107 @@ function ToolsIndex({ tools }) {
 /* ============================================================
    Specialties — "Artes do ofício" (Repertório)
    ------------------------------------------------------------
-   Grade de pranchas emolduradas (passe-partout creme) com o
-   verbete centrado de cada disciplina. Texto carregado de
-   palavras-chave de Senior Product Designer (ATS / triagem IA).
+   Prancha rotativa: uma disciplina por vez numa prancha
+   emoldurada, com algarismo romano em marca d'água, verbete
+   carregado de palavras-chave de Senior Product Designer
+   (ATS / triagem IA), setas + marcadores + virada automática.
    Fotos em images/services/{ai,ux,ui,ds}.webp. Só tokens do DS.
-   Fica ACIMA do Aparato (ferramentas), como seção própria não
-   numerada (padrão de MinorWorks) — não entra no TOC/scroll-spy.
+   Fica ACIMA do Aparato (ferramentas). Agora é Capítulo III —
+   entra no TOC e no scroll-spy como capítulo próprio.
    ============================================================ */
 function Specialties({ t }) {
   const e = React.createElement;
   const s = t.specialties;
-  return e("section", { className: "specialties page", "data-page": s.page, id: "specialties" },
+  const u = s.ui || {};
+  const items = s.items;
+  const total = items.length;
+
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const secRef = useRef(null);
+  const inViewRef = useRef(false);
+  const reduced = typeof window !== "undefined" && window.matchMedia
+    && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Gentle auto-turn — only while in view and the reader isn't interacting.
+  useEffect(() => {
+    if (reduced) return;
+    const el = secRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => { inViewRef.current = en.isIntersecting; });
+    }, { threshold: 0.4 });
+    io.observe(el);
+    const id = setInterval(() => {
+      if (inViewRef.current && !paused) setActive(a => (a + 1) % total);
+    }, 4600);
+    return () => { io.disconnect(); clearInterval(id); };
+  }, [paused, reduced, total]);
+
+  const go = n => setActive(((n % total) + total) % total);
+  const onKey = ev => {
+    if (ev.key === "ArrowRight" || ev.key === "ArrowDown") { ev.preventDefault(); go(active + 1); }
+    else if (ev.key === "ArrowLeft" || ev.key === "ArrowUp") { ev.preventDefault(); go(active - 1); }
+  };
+
+  const cur = items[active];
+
+  return e("section", { className: "specialties page", "data-page": s.page, id: "specialties", ref: secRef },
     e("div", { className: "spec-wrap" },
       e(Reveal, null,
         e("div", { className: "heading" },
           e("span", { className: "num" }, s.label),
           e("span", { className: "title" }, rich(s.title)),
           e("span", { className: "roman" }, s.page))),
-      e(Reveal, { as: "p", delay: 1, className: "spec-lede" }, s.intro),
-      e("div", { className: "spec-grid" },
-        s.items.map((it, i) => e(Reveal, { key: i, as: "article", className: "spec-card", delay: (i % 4) + 1 },
-          e("div", { className: "spec-mat" },
-            e("div", { className: "spec-frame" },
-              e("img", { src: it.img, alt: it.alt, loading: "lazy" }))),
-          e("h3", { className: "spec-title" }, it.title),
-          e("p", { className: "spec-kick" }, it.cat),
-          e("div", { className: "spec-rule", "aria-hidden": "true" }),
-          e("p", { className: "spec-desc" }, it.desc),
-          e("div", { className: "spec-kw" }, it.kw.map((k, j) => e("span", { key: j }, k))))))));
+      e(Reveal, { as: "p", delay: 1, className: "rep-lede" }, s.intro),
+
+      e(Reveal, { delay: 2 },
+        e("div", { className: "rep-frame" },
+        e("button", { type: "button", className: "rep-arrow rep-arrow--prev",
+          "aria-label": u.prev, onClick: () => go(active - 1) },
+          e("svg", { className: "rep-arrow-i", viewBox: "0 0 24 24", "aria-hidden": "true" },
+            e("path", { d: "M15 5 L8 12 L15 19" }))),
+        e("button", { type: "button", className: "rep-arrow rep-arrow--next",
+          "aria-label": u.next, onClick: () => go(active + 1) },
+          e("svg", { className: "rep-arrow-i", viewBox: "0 0 24 24", "aria-hidden": "true" },
+            e("path", { d: "M9 5 L16 12 L9 19" }))),
+        e("div", { className: "rep-stage",
+            role: "group", "aria-roledescription": "carousel", "aria-label": rich(s.title),
+            tabIndex: 0, onKeyDown: onKey,
+            onMouseEnter: () => setPaused(true),
+            onMouseLeave: () => setPaused(false),
+            onFocus: () => setPaused(true), onBlur: () => setPaused(false) },
+
+          e("span", { className: "rep-ghost", "aria-hidden": "true", key: "g" + active }, cur.roman),
+
+          /* ── Plate image (left) ── */
+          e("div", { className: "rep-shot" },
+            items.map((it, i) => e("img", {
+              key: i, src: it.img, alt: it.alt, loading: "lazy",
+              className: "rep-shot-img" + (i === active ? " is-active" : ""),
+              "aria-hidden": i === active ? null : "true" }))),
+
+          /* ── Entry (right) ── */
+          e("div", { className: "rep-body" },
+            e("p", { className: "rep-kick" },
+              u.plate + " " + cur.roman + " · " + cur.cat),
+            e("h3", { className: "rep-title", key: "t" + active }, cur.title),
+            e("div", { className: "rep-rule", "aria-hidden": "true" }),
+            e("p", { className: "rep-desc", key: "d" + active }, cur.desc),
+            e("div", { className: "rep-kw", key: "k" + active },
+              cur.kw.map((k, j) => e("span", {
+                className: "rep-kw-tag", style: { "--d": (j * 70) + "ms" } }, k))),
+
+            e("div", { className: "rep-ctrl" },
+              e("div", { className: "rep-dots", role: "tablist" },
+                items.map((it, i) => e("button", {
+                  key: i, type: "button", role: "tab",
+                  className: "rep-dot" + (i === active ? " is-active" : ""),
+                  "aria-label": u.plate + " " + it.roman + " — " + it.title,
+                  "aria-selected": i === active ? "true" : "false",
+                  onClick: () => go(i) }))),
+              e("span", { className: "rep-count", "aria-hidden": "true" },
+                "0" + (active + 1) + " / 0" + total))))))));
 }
 
 /* ============================================================
@@ -3423,7 +3508,7 @@ function App() {
 
   // Scroll-spy: destaca capítulo ativo no TOC
   useEffect(() => {
-    const sectionIds = ['preface', 'works', 'apparatus', 'contact'];
+    const sectionIds = ['preface', 'works', 'specialties', 'apparatus', 'contact'];
     const io = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) setActiveSectionId('#' + entry.target.id);
