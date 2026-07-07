@@ -740,3 +740,29 @@ main { position: relative; z-index: var(--z-content); }
   .scroll-cue .arrow { animation: none; }
   .motion-card.run .dot { animation: none; left: calc(100% - 12px); }
 }
+
+
+/* ─── Skip-link (a11y) ─────────────────────────────────────────
+   "Pular para o conteúdo": invisível até receber foco por teclado.
+   Usa tokens do DS; z-index acima de qualquer chrome. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 1200;
+  padding: 10px 18px;
+  background: var(--paper-card, #f7f2e3);
+  color: var(--ink, #1a1612);
+  border: 1px solid var(--oxblood, #7a2620);
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  left: 16px;
+  top: 16px;
+  outline: 2px solid var(--oxblood, #7a2620);
+  outline-offset: 2px;
+}

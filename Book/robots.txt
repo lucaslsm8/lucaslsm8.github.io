@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /projects/case-template.html
 
-Sitemap: https://lucaslsm8.github.io/Book/sitemap.xml
+Sitemap: https://designbylucas.com/sitemap.xml

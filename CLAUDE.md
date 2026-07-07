@@ -18,6 +18,12 @@ Portfólio online do **Lucas Schoenherr** (Senior Product Designer, foco em GenA
 
 ---
 
+## Deploy & estrutura do repo (2026-07-07)
+
+- O GitHub Pages serve a **raiz do repositório** em `https://designbylucas.com` (CNAME na raiz).
+- A raiz é uma **cópia byte-a-byte de `Book/`** — `Book/` é a pasta de trabalho descrita neste arquivo. **Toda edição precisa ser replicada nas duas cópias** (raiz + `Book/`), senão o site publicado diverge. Considerar no futuro eliminar a duplicação (uma única fonte + deploy por Action ou subpasta).
+- `Old/` (site antigo, 40 MB, continha CVs com PII) foi **apagado do repo em 2026-07-07**.
+
 ## Regras ativas (1–9)
 
 Detalhes completos em `memory/project_portfolio_rules.md`.
@@ -52,7 +58,6 @@ Book/
 ├── 404.html                     ← erro (Errata · CDIV), física Matter.js — torre de livros 3D
 ├── errata-scene.css             ← CSS do cuboide 3D da 404 (:root local "gilt" intencional)
 ├── errata-physics.js            ← motor físico da 404 (Matter.js + canvas próprio)
-├── tweaks-panel.jsx             ← painel React (dev); ainda carregado pela 404 via Babel
 ├── CV/                          ← currículos em PDF por idioma × estilo (ver "Currículos (CV)" abaixo)
 │   ├── PT/{Modern,Themed}/      ← Web.pdf (abre no clique) + Print.pdf (botão baixar) + Thumbail.{webp,jpg}
 │   └── EN/{Modern,Themed}/      ← Web.pdf + Print.pdf (sem Thumbail próprio → reusa o PT)
@@ -198,7 +203,7 @@ Faxina a pedido do Lucas. **Apagados** (confirmados um a um antes):
 - `projects/samarco-lab.html` — o sandbox da Mandala/specimen do PMO. Os conceitos já foram portados (e superados) em `pmo-dashboards.html`, então o lab virou peso morto. Removida a linha do `robots.txt` (`Disallow` de página inexistente) e a entrada no mapa de arquivos. **Nota:** `SAMARCO-PMO.md` ainda cita o lab em vários pontos como referência histórica dos protótipos — mantido como registro, mas o arquivo não existe mais. Os comentários "portado do samarco-lab" em `pmo-dashboards.html` seguem válidos como proveniência.
 - `images/sports/notebook-tape.png` — órfão (não referenciado em nenhum HTML/CSS/JS) **e** único raster fora de WebP entre os assets novos.
 - **Mantidos por decisão do Lucas:** `case-template.html` (scaffold) e `vitrine.html` (referência interna do DS) — ambos `noindex`/não-públicos, seguem úteis.
-- **Pendências conhecidas não tocadas nesta faxina:** `mandala-full.png` e `mandala-estrategica.png` continuam PNG (em uso pelo `pmo-dashboards.html`) — violam a invariante "zero raster fora de WebP", conversão adiada. O mapa de arquivos ainda cita `tweaks-panel.jsx`, que já não existe — a linha foi deixada como estava (fora do escopo desta rodada).
+- **Pendências conhecidas não tocadas nesta faxina:** `mandala-full.png` e `mandala-estrategica.png` continuam PNG (em uso pelo `pmo-dashboards.html`) — violam a invariante "zero raster fora de WebP", conversão adiada. ~~O mapa de arquivos ainda cita `tweaks-panel.jsx`~~ (linha removida do mapa em 2026-07-07).
 
 ---
 
@@ -279,3 +284,16 @@ Avaliação no navegador (Playwright headless) revelou problemas que só aparece
 ### Otimização de imagens + reorganização de assets (2026-06-08)
 - **Todos os PNGs decorativos da raiz de `images/` viraram WebP** (transparência preservada — café, lupa, capitulares etc. mantêm alpha). `images/` caiu de ~21 MB → 5,5 MB.
 - **Assets reorganizados em subpastas:** `images/home/` (chrome da home: S, I, Me, cafe, Lupa2, stamp, lights, lights-repeat, paint-front/back/side, Plateia, recto-canvas) e `images/404/` (table). `genai/` e `lighthouse/` inalterados. Referências atualizadas em `catalogue.css`, `catalogue.js`, `quadro-3d.js`, `errata-physics.js` e nas páginas de `projects/`.
+---
+
+## Auditoria + correções (2026-07-07)
+
+Auditoria completa de código+design registrada em **`AUDIT-2026-07-07.md`** (raiz do repo, 18 itens priorizados). Corrigidos nesta rodada (itens 1, 2, 6, 10, 15 — sempre nas DUAS cópias, raiz + `Book/`):
+
+- **SEO (item 1):** todas as 68 ocorrências de `https://lucaslsm8.github.io/Book/` trocadas por `https://designbylucas.com/` — canonical/og:url/og:image/twitter:image na home, 4 cases, design-system.html e case-template.html; URLs do `sitemap.xml`; linha `Sitemap:` do `robots.txt`. Zero referências ao domínio antigo restantes.
+- **`Old/` apagado (item 2):** 127 arquivos removidos do disco e do índice do git (site antigo + `Currículo-EN.pdf`/`Lucas Schoenherr CV.pdf` com PII que estavam públicos). `Book/` mantido por decisão do Lucas.
+- **Git (item 6):** só limpeza segura (`git gc --prune=now`), sem reescrita de histórico — decisão do Lucas. O grosso dos ~300 MB de `.git` é histórico reachable; redução real exigiria `git filter-repo` + force push (adiado).
+- **Skip-links (item 10):** link "Pular para o conteúdo" invisível-até-foco em: home (`index.html`, estático fora da árvore React, bilíngue em linha única, alvo `#preface`), 4 cases (i18n via spans `.t[lang]`, alvo `#conteudo` = id novo no `<main class="book">`) e `design-system.html` (EN, alvo `#content` no `<main>`). CSS `.skip-link` no fim de `catalogue.css` (cobre home + cases) e de `design-system/specimen-page.css`; usa tokens (`--paper-card`/`--ink`/`--oxblood`/`--mono`), `z-index:1200`. `case-template.html` e `vitrine.html` não receberam (não-públicos). **hreflang NÃO foi adicionado** — mantida a recomendação do audit (toggle client-side; aceitável para portfólio).
+- **CLAUDE.md (item 15):** linha fantasma do `tweaks-panel.jsx` removida do mapa (o arquivo não existe e a 404 não carrega Babel); adicionada a seção "Deploy & estrutura do repo" documentando raiz = cópia publicada de `Book/`.
+
+**Pendentes do audit (não pedidos nesta rodada):** CVs Web pesados (4,4–8,8 MB), social cards 1200×630 em JPG, `noindex` na vitrine, recompressão dos `paint-*.webp`, lazy/width-height faltantes (Lighthouse/PMO/Gen.AI), contraste do `--ink-faint` (3,3:1), font-sizes ≤10px, `prefers-reduced-motion` no CSS inline do PMO, 2 PNGs da mandala.
