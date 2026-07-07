@@ -114,7 +114,7 @@ const CONTENT = {
         turnRecto:   "Anverso"
       },
       plates: [{
-        roman: "Placa I",
+        roman: "Quadro I",
         num: "001",
         title: ["Lighthouse", {
           reg: ""
@@ -158,7 +158,7 @@ const CONTENT = {
           side:  "images/home/paint-side.webp"
         }
       }, {
-        roman: "Placa II",
+        roman: "Quadro II",
         num: "002",
         title: ["Dashboards", {
           reg: " PMO"
@@ -204,7 +204,7 @@ const CONTENT = {
           side:  "images/home/paint-side.webp"
         }
       }, {
-        roman: "Placa III",
+        roman: "Quadro III",
         num: "003",
         title: ["Sports", {
           reg: " Experience"
@@ -250,7 +250,7 @@ const CONTENT = {
           side:  "images/home/paint-side.webp"
         }
       }, {
-        roman: "Placa IV",
+        roman: "Quadro IV",
         num: "004",
         title: ["Gen", {
           reg: "."
@@ -699,7 +699,7 @@ const CONTENT = {
         turnRecto:   "Recto"
       },
       plates: [{
-        roman: "Plate I",
+        roman: "Quadro I",
         num: "001",
         title: ["Lighthouse", {
           reg: ""
@@ -743,7 +743,7 @@ const CONTENT = {
           side:  "images/home/paint-side.webp"
         }
       }, {
-        roman: "Plate II",
+        roman: "Quadro II",
         num: "002",
         title: ["PMO", {
           reg: " Dashboards"
@@ -789,7 +789,7 @@ const CONTENT = {
           side:  "images/home/paint-side.webp"
         }
       }, {
-        roman: "Plate III",
+        roman: "Quadro III",
         num: "003",
         title: ["Sports", {
           reg: " Experience"
@@ -835,7 +835,7 @@ const CONTENT = {
           side:  "images/home/paint-side.webp"
         }
       }, {
-        roman: "Plate IV",
+        roman: "Quadro IV",
         num: "004",
         title: ["Gen", {
           reg: "."
@@ -2172,7 +2172,37 @@ function PlateCard({ p, i, t }) {
       )
     ),
     e(Reveal, { className: "plate-grid" },
-      // -------- Coluna meta (esquerda) --------
+      // -------- Coluna conteúdo (esquerda): título · descrição · métricas --------
+      e("div", { className: "plate-content" },
+        // Roman do cabeçalho — só aparece no mobile (reusa o estilo da wide,
+        // .plate-entry__roman). No desktop fica oculto e usa-se o roman grande
+        // da .plate-meta na coluna direita. Ver CSS .plate-content__roman.
+        e("div", { className: "plate-entry__roman plate-content__roman" }, p.roman),
+        e("h3",  { className: "plate-title" }, rich(p.title)),
+        e("div", { className: "plate-sub"   }, p.sub),
+        e("div", { className: "plate-desc"  }, p.desc.map((para, j) =>
+          e("p", { key: j }, rich(para))
+        )),
+        e("div", { className: "plate-stats" }, p.stats.map((s, j) =>
+          e("div", { className: "plate-stat", key: j },
+            e("div", { className: "val" }, s.val),
+            e("div", { className: "lab" }, s.lab)
+          )
+        ))
+      ),
+
+      // -------- Coluna central: quadro 3D (objeto WebGL) --------
+      // Clicar leva à ficha; o botão de flip (na meta) gira o objeto.
+      e("a", {
+        href: p.href,
+        className: "plate-quadro-link",
+        "data-cursor-label": t.cursorLabels.seePlate,
+        "aria-label": t.cursorLabels.seePlate + " — " + p.roman
+      },
+        e("div", { className: "plate-quadro-stage", ref: stageRef, "aria-hidden": "true" })
+      ),
+
+      // -------- Coluna meta (direita): nome do quadro · ficha técnica --------
       e("div", { className: "plate-meta" },
         e("div", { className: "roman" }, p.roman),
         e("dl", null, p.meta.map((m, j) => e(React.Fragment, { key: j },
@@ -2203,37 +2233,8 @@ function PlateCard({ p, i, t }) {
             )
           ),
           e("span", { className: "plate-flip-label" }, flipLabel)
-        )
-      ),
-
-      // -------- Coluna central: quadro 3D (objeto WebGL) --------
-      // Clicar leva à ficha; o botão de flip (na meta) gira o objeto.
-      e("a", {
-        href: p.href,
-        className: "plate-quadro-link",
-        "data-cursor-label": t.cursorLabels.seePlate,
-        "aria-label": t.cursorLabels.seePlate + " \u2014 " + p.roman
-      },
-        e("div", { className: "plate-quadro-stage", ref: stageRef, "aria-hidden": "true" })
-      ),
-
-      // -------- Coluna conteúdo (direita) --------
-      e("div", { className: "plate-content" },
-        // Roman do cabeçalho — só aparece no mobile (reusa o estilo da wide,
-        // .plate-entry__roman). No desktop fica oculto e usa-se o roman grande
-        // da .plate-meta na coluna esquerda. Ver CSS .plate-content__roman.
-        e("div", { className: "plate-entry__roman plate-content__roman" }, p.roman),
-        e("h3",  { className: "plate-title" }, rich(p.title)),
-        e("div", { className: "plate-sub"   }, p.sub),
-        e("div", { className: "plate-desc"  }, p.desc.map((para, j) =>
-          e("p", { key: j }, rich(para))
-        )),
-        e("div", { className: "plate-stats" }, p.stats.map((s, j) =>
-          e("div", { className: "plate-stat", key: j },
-            e("div", { className: "val" }, s.val),
-            e("div", { className: "lab" }, s.lab)
-          )
-        )),
+        ),
+        // Link "ler a ficha completa" — logo abaixo do botão "Verso"
         e("a", {
           href: p.href,
           className: "plate-link"

@@ -835,7 +835,8 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   margin: 0 auto;
   padding: 0 64px;
   display: grid;
-  grid-template-columns: 200px 1.15fr 1fr;
+  /* espelha .plate-grid (agora invertido) para o holofote cair sobre o quadro */
+  grid-template-columns: 1fr 1.15fr 200px;
   gap: 48px;
   align-items: start;
 }
@@ -869,7 +870,9 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   margin: 0 auto;
   padding: 0 64px;
   display: grid;
-  grid-template-columns: 200px 1.15fr 1fr;
+  /* conteúdo (título·descrição·métricas) à esquerda · quadro 3D ao centro ·
+     ficha (nome do quadro + detalhes) à direita. Ver ordem no PlateCard. */
+  grid-template-columns: 1fr 1.15fr 200px;
   gap: 48px;
   align-items: start;
 }
@@ -1476,6 +1479,15 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .plate-link:hover {
   color: var(--oxblood);
   border-color: var(--oxblood);
+}
+/* Na retrato o link agora vive na coluna .plate-meta (logo abaixo do
+   botão "Ver o verso"); ela força uppercase/letter-spacing/mono, que
+   ampliavam o link. Reset local p/ manter o serif itálico original. */
+.plate-meta > .plate-link {
+  text-transform: none;
+  letter-spacing: 0;
+  align-self: start;
+  margin-top: 20px;
 }
 
 /* Plate image variations */
