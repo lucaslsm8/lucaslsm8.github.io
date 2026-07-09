@@ -443,21 +443,14 @@ const CONTENT = {
         label: "Cronologia de prática",
         sup: "tab. iii",
         rows: [{
-          period: "2024",
-          role: "Senior Product Designer",
-          firm: "GenAI · Systems · UI",
-          current: true,
-          bullets: [
-            "Design de POCs e produtos baseados em LLMs.",
-            "Design systems reutilizáveis e governança de componentes.",
-            "Dashboards executivos e visualização de dados."
-          ]
-        }, {
           period: "2022 — 2024",
           role: "Designer de Produto Especialista (UI/UX)",
           firm: "Accenture · One Studio",
+          current: true,
           bullets: [
-            "Lead designer end-to-end em projetos com LLMs in-house na VIVO.",
+            "Design de POCs e produtos baseados em LLMs, incluindo LLMs in-house na VIVO.",
+            "Design systems reutilizáveis e governança de componentes.",
+            "Dashboards executivos e visualização de dados.",
             "Projetos para hospitais e instituições de saúde.",
             "Colaboração na transmissão da Copa do Mundo com a FIFA.",
             "Segurança de barragens e minas para a Vale.",
@@ -1028,21 +1021,14 @@ const CONTENT = {
         label: "Chronology of practice",
         sup: "tab. iii",
         rows: [{
-          period: "2024",
-          role: "Senior Product Designer",
-          firm: "GenAI · Systems · UI",
-          current: true,
-          bullets: [
-            "Design of POCs and LLM-based products.",
-            "Reusable design systems and component governance.",
-            "Executive dashboards and data visualization."
-          ]
-        }, {
           period: "2022 — 2024",
           role: "Specialist Product Designer (UI/UX)",
           firm: "Accenture · One Studio",
+          current: true,
           bullets: [
-            "End-to-end lead designer on projects using in-house LLMs at VIVO.",
+            "Design of POCs and LLM-based products, including in-house LLMs at VIVO.",
+            "Reusable design systems and component governance.",
+            "Executive dashboards and data visualization.",
             "Projects for hospitals and healthcare institutions.",
             "Collaboration on the World Cup broadcast with FIFA.",
             "Dam and mine safety solutions for Vale.",
