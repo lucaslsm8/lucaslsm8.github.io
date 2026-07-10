@@ -33,7 +33,7 @@ const CONTENT = {
       it: "design de produto"
     }, ", com notas sobre método, sistemas e interfaces generativas."],
     smallcaps: "Privately set & published",
-    meta: ["Rio de Janeiro, Brasil", "Treze anos de prática contínua", "Volume I · Composto em 2026"],
+    meta: ["Rio de Janeiro, Brasil", "Treze anos de prática dedicada", "Volume I · Composto em 2026"],
     invite: "Vire a página",
     toc: {
       label: "Sumário",
@@ -603,7 +603,7 @@ const CONTENT = {
       it: "product design"
     }, ", with notes on method, systems, and generative interfaces."],
     smallcaps: "Privately set & published",
-    meta: ["Rio de Janeiro, Brazil", "Thirteen years of unbroken practice", "Volume I · Set in 2026"],
+    meta: ["Rio de Janeiro, Brazil", "Thirteen years of devoted practice", "Volume I · Set in 2026"],
     invite: "Turn the page",
     toc: {
       label: "Contents",
@@ -3425,7 +3425,16 @@ function Errata({ t }) {
    App — root
    ============================================================ */
 function App() {
-  const [lang,            setLang          ] = useState('pt');
+  // Idioma inicial: 1º a escolha salva (mesma chave "ls-portfolio-lang" das
+  // páginas de case), 2º o idioma do navegador (não-PT abre em EN), 3º PT.
+  const [lang,            setLang          ] = useState(() => {
+    try {
+      const saved = localStorage.getItem('ls-portfolio-lang');
+      if (saved === 'pt' || saved === 'en') return saved;
+    } catch (_) {}
+    const nav = (navigator.language || 'pt').toLowerCase();
+    return nav.indexOf('pt') === 0 ? 'pt' : 'en';
+  });
   const [candle,          setCandle        ] = useState(false);
   const [activeSectionId, setActiveSectionId] = useState('');
 
@@ -3438,8 +3447,10 @@ function App() {
   }, [candle]);
 
   // Mantém o atributo lang do <html> em sincronia com o idioma escolhido (a11y)
+  // e persiste a escolha (compartilhada com as páginas de case).
   useEffect(() => {
     document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
+    try { localStorage.setItem('ls-portfolio-lang', lang); } catch (_) {}
   }, [lang]);
 
   // Bússola: gira conforme o scroll

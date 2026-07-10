@@ -198,10 +198,15 @@
 
     const KEY = "ls-portfolio-lang";
     let lang = currentLang();
-    try {
-      const saved = localStorage.getItem(KEY);
-      if (saved === "pt" || saved === "en") lang = saved;
-    } catch (_) {}
+    let saved = null;
+    try { saved = localStorage.getItem(KEY); } catch (_) {}
+    if (saved === "pt" || saved === "en") {
+      lang = saved;
+    } else {
+      // 1ª visita: idioma do navegador decide (não-PT abre em EN)
+      const nav = (navigator.language || "pt").toLowerCase();
+      lang = nav.indexOf("pt") === 0 ? "pt" : "en";
+    }
 
     const apply = (l) => {
       lang = l === "en" ? "en" : "pt";
