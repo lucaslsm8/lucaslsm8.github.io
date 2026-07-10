@@ -85,7 +85,6 @@ Escala 4px-base. Tokens `--sp-1` (4) até `--sp-12` (160).
 | Page chrome top       | `.chrome-top`          | Cabeçalho fixo com running head e troca de idioma           |
 | Page chrome bottom    | `.chrome-bot`          | Rodapé fixo com contador de página e progress bar           |
 | Frontispiece          | `.frontispiece`        | Capa do livro (título display, autor, ornamento)            |
-| Half-title / Epigraph | `.half-title`          | Página de epígrafe                                          |
 | Table of Contents     | `.toc` + `.toc-row`    | Sumário com leader dots                                     |
 | Preface (drop cap)    | `.preface .body`       | Texto longo com drop cap automática no primeiro parágrafo   |
 | Footnotes             | `.footnotes`           | Notas de rodapé numeradas (sincronizadas com `.fn` no corpo)|

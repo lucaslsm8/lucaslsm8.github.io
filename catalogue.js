@@ -35,17 +35,9 @@ const CONTENT = {
     smallcaps: "Privately set & published",
     meta: ["Rio de Janeiro, Brasil", "Treze anos de prática contínua", "Volume I · Composto em 2026"],
     invite: "Vire a página",
-    epigraph: ["O melhor design é ", {
-      em: "discreto"
-    }, ". Sistemas eficazes promovem a ", {
-      em: "criatividade"
-    }, ". Rigor e empatia podem coexistir. A inteligência artificial, em vez de substituir o trabalho humano, ", {
-      em: "amplia seu alcance"
-    }, "."],
-    epigraphAttr: ["— do prefácio", "L. S."],
     toc: {
       label: "Sumário",
-      num: "iii",
+      num: "ii",
       rows: [{
         num: "I.",
         title: ["Prefácio do autor"],
@@ -613,17 +605,9 @@ const CONTENT = {
     smallcaps: "Privately set & published",
     meta: ["Rio de Janeiro, Brazil", "Thirteen years of unbroken practice", "Volume I · Set in 2026"],
     invite: "Turn the page",
-    epigraph: ["The best design is ", {
-      em: "unobtrusive"
-    }, ". Effective systems foster ", {
-      em: "creativity"
-    }, ". Rigor and empathy can coexist. Artificial intelligence, rather than replacing human work, ", {
-      em: "extends its reach"
-    }, "."],
-    epigraphAttr: ["— from the preface", "L. S."],
     toc: {
       label: "Contents",
-      num: "iii",
+      num: "ii",
       rows: [{
         num: "I.",
         title: ["Author's preface"],
@@ -1631,29 +1615,12 @@ function Frontispiece({
     className: "title-meta"
   }, /*#__PURE__*/React.createElement("div", null, t.meta[0]), /*#__PURE__*/React.createElement("div", null, t.meta[1]), /*#__PURE__*/React.createElement("div", {
     className: "em"
-  }, t.meta[2]))), /*#__PURE__*/React.createElement("div", {
-    className: "invitation"
+  }, t.meta[2]))), /*#__PURE__*/React.createElement("a", {
+    className: "invitation",
+    href: "#toc"
   }, /*#__PURE__*/React.createElement("span", null, t.invite), /*#__PURE__*/React.createElement("span", {
     className: "arrow"
   })));
-}
-
-/* ============================================================
-   Half-title / Epigraph
-   ============================================================ */
-function HalfTitle({
-  t
-}) {
-  return /*#__PURE__*/React.createElement("section", {
-    className: "half-title page",
-    "data-page": "ii"
-  }, /*#__PURE__*/React.createElement(Reveal, null, /*#__PURE__*/React.createElement("p", {
-    className: "epigraph"
-  }, rich(t.epigraph)), /*#__PURE__*/React.createElement("div", {
-    className: "attribution"
-  }, t.epigraphAttr[0], /*#__PURE__*/React.createElement("span", {
-    className: "name"
-  }, t.epigraphAttr[1]))));
 }
 
 /* ============================================================
@@ -1665,7 +1632,8 @@ function TOC({
 }) {
   return /*#__PURE__*/React.createElement("section", {
     className: "toc page spread-narrow",
-    "data-page": t.toc.num
+    "data-page": t.toc.num,
+    id: "toc"
   }, /*#__PURE__*/React.createElement(Reveal, null, /*#__PURE__*/React.createElement("div", {
     className: "heading"
   }, /*#__PURE__*/React.createElement("span", {
@@ -3515,7 +3483,6 @@ function App() {
     // Wrapper de conteúdo do livro — chrome fixo fica de fora
     e("main", { className: "book-content" },
       e(Frontispiece,   { t }),
-      e(HalfTitle,      { t }),
       e(TOC,            { t, activeSectionId }),
       e(Preface,        { t }),
       e(Works,          { t }),

@@ -582,44 +582,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 }
 
 /* ============================================================
-   Half-title / Epigraph
-   ============================================================ */
-.half-title {
-  padding: 140px 0 120px;
-  text-align: center;
-}
-.half-title .epigraph {
-  max-width: 720px;
-  margin: 0 auto;
-  font-family: var(--serif);
-  font-size: clamp(22px, 2.2vw, 30px);
-  line-height: 1.45;
-  font-style: italic;
-  color: var(--ink-soft);
-}
-.half-title .epigraph .em {
-  font-style: normal;
-  color: var(--ink);
-}
-.half-title .attribution {
-  margin-top: 36px;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-}
-.half-title .attribution .name {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 14px;
-  letter-spacing: 0;
-  text-transform: none;
-  color: var(--ink-soft);
-  margin-left: 12px;
-}
-
-/* ============================================================
    Table of contents
    ============================================================ */
 .toc {
