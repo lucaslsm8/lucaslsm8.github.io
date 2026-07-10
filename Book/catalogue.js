@@ -94,7 +94,7 @@ const CONTENT = {
       label: "Capítulo II",
       title: ["Catálogo de obras"],
       page: "viii",
-      intro: "Três obras representativas, montadas como telas e dispostas em ordem cronológica decrescente. Examine cada tela de perto com a lupa, vire-a para ver o esboço no verso — ou abra a ficha completa.",
+      intro: "Quatro obras representativas, montadas como telas e dispostas em ordem cronológica decrescente. Examine cada tela de perto com a lupa, vire-a para ver o esboço no verso — ou abra a ficha completa.",
       flip: {
         toVerso:     "Ver o verso",
         toRecto:     "Voltar ao anverso",
@@ -512,7 +512,7 @@ const CONTENT = {
         contextLabel: "Argumento · recto",
         contextBody: [
           "Este volume reúne provas críticas do trabalho de Lucas Schoenherr entre MMXII e MMXXVI, organizadas como pranchas de um catálogo de razão. Cada prancha traz o argumento, o elenco, os atos e as erratas — vocabulário emprestado da tradição editorial e ajustado ao ofício do design de produto.",
-          "O leitor encontrará, encartada nesta página, uma feuille volante com o currículo do autor, disponível para retirada imediata. As demais pranchas seguem em ordem romana, de I a III."
+          "O leitor encontrará, encartada nesta página, uma feuille volante com o currículo do autor, disponível para retirada imediata. As demais pranchas seguem em ordem romana, de I a IV."
         ],
         contextNote: "vide infra",
         gloss: "Currículo do autor, em duas folhas — treze anos de product design, sistemas e interfaces generativas.",
@@ -664,7 +664,7 @@ const CONTENT = {
       label: "Chapter II",
       title: ["Catalogue of works"],
       page: "viii",
-      intro: "Three representative works, mounted as canvases in reverse chronological order. Study each canvas closely with the loupe, turn it to see the sketch on its verso — or open the full entry.",
+      intro: "Four representative works, mounted as canvases in reverse chronological order. Study each canvas closely with the loupe, turn it to see the sketch on its verso — or open the full entry.",
       flip: {
         toVerso:     "See the verso",
         toRecto:     "Return to the recto",
@@ -922,7 +922,7 @@ const CONTENT = {
       hint: "click a plate to enlarge",
       items: [
         { roman: "Plate I", title: "Sírio-Libanês App", tag: "Mobile App · UI/UX", img: "images/other/sirio.webp",
-          desc: "Hospital Sírio-Libanês app: offers the patient journey, scheduling and access to medical records in a clear, welcoming mobile experience.",
+          desc: "Hospital Sírio-Libanês app: brings together scheduling, medical records and the patient journey in a clear, welcoming mobile experience.",
           label: "Sírio-Libanês", labelSub: "Mobile · UI/UX" },
         { roman: "Plate II", title: "Vale News", tag: "Mobile App · UI/UX", img: "images/other/valenews.webp",
           desc: "Vale's internal-communications app delivers news, announcements and organizational culture information directly to employees.",
@@ -1082,7 +1082,7 @@ const CONTENT = {
         contextLabel: "Argument · recto",
         contextBody: [
           "This volume gathers critical proofs of Lucas Schoenherr's work between MMXII and MMXXVI, arranged as plates in a catalogue raisonné. Each plate carries the argument, cast, acts, and errata — a vocabulary borrowed from editorial tradition and adjusted to the craft of product design.",
-          "The reader will find, tipped into this page, a feuille volante with the author's curriculum, available for immediate withdrawal. The remaining plates follow in Roman order, from I to III."
+          "The reader will find, tipped into this page, a feuille volante with the author's curriculum, available for immediate withdrawal. The remaining plates follow in Roman order, from I to IV."
         ],
         contextNote: "vide infra",
         gloss: "The author's curriculum, in two leaves — thirteen years of product design, systems, and generative interfaces.",
