@@ -434,11 +434,23 @@ const CONTENT = {
       cv: {
         label: "Cronologia de prática",
         sup: "tab. iii",
+        nowLabel: "presente",
         rows: [{
+          period: "2024 — presente",
+          role: "Designer de Produto Independente",
+          firm: "Freelancer",
+          current: true,
+          bullets: [
+            "Especialização prática em IA e LLMs (Claude, Cursor, IA generativa) aplicada a fluxos reais de product design: ideação, prototipação rápida e decisões aceleradas.",
+            "Certificações em IA aplicadas ao ofício (2026): Google AI Essentials, pela Google, e Generative AI: The Future of UX UI Design, pela SkillUp.",
+            "Portfólio (designbylucas.com) projetado e codado do zero em HTML/CSS/JS, com design system próprio documentado.",
+            "Estudos de caso enterprise: Gen.AI Vivo, PMO Samarco, Lighthouse (Vale) e Sports Experience (DirecTV/FIFA).",
+            "Iniciativas independentes em gestão financeira e estratégia de negócio, ampliando o repertório de priorização em contextos complexos."
+          ]
+        }, {
           period: "2022 — 2024",
           role: "Designer de Produto Especialista (UI/UX)",
           firm: "Accenture · One Studio",
-          current: true,
           bullets: [
             "Design de POCs e produtos baseados em LLMs, incluindo LLMs in-house na VIVO.",
             "Design systems reutilizáveis e governança de componentes.",
@@ -484,6 +496,16 @@ const CONTENT = {
         label: "Formação",
         sup: "tab. iv",
         rows: [{
+          period: "2026",
+          kind: "Certificação",
+          course: "Google AI Essentials",
+          inst: "Google"
+        }, {
+          period: "2026",
+          kind: "Certificação",
+          course: "Generative AI: The Future of UX UI Design",
+          inst: "SkillUp"
+        }, {
           period: "2022",
           kind: "Pós-graduação",
           course: "User Experience Design and Beyond (UX/UI)",
@@ -1004,11 +1026,23 @@ const CONTENT = {
       cv: {
         label: "Chronology of practice",
         sup: "tab. iii",
+        nowLabel: "present",
         rows: [{
+          period: "2024 — present",
+          role: "Independent Product Designer",
+          firm: "Freelance",
+          current: true,
+          bullets: [
+            "Hands-on specialization in AI and LLMs (Claude, Cursor, generative AI) applied to real product design workflows: ideation, rapid prototyping and faster decisions.",
+            "AI certifications applied to the craft (2026): Google AI Essentials, by Google, and Generative AI: The Future of UX UI Design, by SkillUp.",
+            "Portfolio (designbylucas.com) designed and coded from scratch in HTML/CSS/JS, with its own documented design system.",
+            "Enterprise case studies: Gen.AI Vivo, PMO Samarco, Lighthouse (Vale) and Sports Experience (DirecTV/FIFA).",
+            "Independent ventures in financial management and business strategy, broadening the prioritization repertoire in complex contexts."
+          ]
+        }, {
           period: "2022 — 2024",
           role: "Specialist Product Designer (UI/UX)",
           firm: "Accenture · One Studio",
-          current: true,
           bullets: [
             "Design of POCs and LLM-based products, including in-house LLMs at VIVO.",
             "Reusable design systems and component governance.",
@@ -1054,6 +1088,16 @@ const CONTENT = {
         label: "Education",
         sup: "tab. iv",
         rows: [{
+          period: "2026",
+          kind: "Certificate",
+          course: "Google AI Essentials",
+          inst: "Google"
+        }, {
+          period: "2026",
+          kind: "Certificate",
+          course: "Generative AI: The Future of UX UI Design",
+          inst: "SkillUp"
+        }, {
           period: "2022",
           kind: "Postgraduate",
           course: "User Experience Design and Beyond (UX/UI)",
@@ -2989,7 +3033,7 @@ function Apparatus({
         [CV_FIRST, 2015, 2019, 2022, CV_LAST].map((yr, i) => {
           const left  = ((yr - CV_FIRST) / CV_SPAN * 100).toFixed(2) + "%";
           const label = yr === CV_LAST
-            ? a.cv.rows[0].period
+            ? (a.cv.nowLabel || a.cv.rows[0].period)
             : ["2011","2015","2019","2022"][i];
           return React.createElement("span", {
             key: yr, className: "cv-yr", style: { left }
