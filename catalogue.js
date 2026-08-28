@@ -155,7 +155,7 @@ const CONTENT = {
         title: ["Dashboards", {
           reg: " PMO"
         }],
-        sub: "Samarco · PMO Estratégico · 2025",
+        sub: "Samarco · PMO Estratégico · 2024",
         meta: [{
           dt: "Comissão",
           dd: "Samarco — PMO Estratégico"
@@ -164,7 +164,7 @@ const CONTENT = {
           dd: "Senior Product Designer · End-to-end"
         }, {
           dt: "Período",
-          dd: "2025 (~4 meses)"
+          dd: "2024 (~4 meses)"
         }, {
           dt: "Materiais",
           dd: "Figma, DS de data-viz, sistema RAG"
@@ -747,7 +747,7 @@ const CONTENT = {
         title: ["PMO", {
           reg: " Dashboards"
         }],
-        sub: "Samarco · Strategic PMO · 2025",
+        sub: "Samarco · Strategic PMO · 2024",
         meta: [{
           dt: "Commission",
           dd: "Samarco — Strategic PMO"
@@ -756,7 +756,7 @@ const CONTENT = {
           dd: "Senior Product Designer · End-to-end"
         }, {
           dt: "Period",
-          dd: "2025 (~4 months)"
+          dd: "2024 (~4 months)"
         }, {
           dt: "Materials",
           dd: "Figma, data-viz DS, RAG system"

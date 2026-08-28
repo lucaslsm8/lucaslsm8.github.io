@@ -51,7 +51,7 @@ criados do zero e componentizados no Figma, que substituíram 20+ planilhas reco
 | Autoria do Lucas | **Todos os KPIs customizáveis + o layout do dashboard** são dele |
 | Base técnica | KPIs customizados baseados nos visuais **nativos do Power BI** — restrição real da plataforma (não adianta indicador que o Power BI não renderiza). Isso É parte da história. |
 | Time | Lucas **+ outra designer** + time de PMs, liderança e stakeholders |
-| Período | MMXXV (~4 meses) — confirmar com o Lucas se exibir |
+| Período | MMXXIV (~4 meses) — confirmar com o Lucas se exibir |
 
 **Datas:** sempre em numerais.
 
